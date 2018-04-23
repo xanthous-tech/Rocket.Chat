@@ -54,7 +54,7 @@ export default class MentionsServer extends Mentions {
 			}
 			mentionsAll.push({
 				_id: mention,
-				username: mention
+				username: mention,
 			});
 		});
 		mentions = userMentions.length ? this.getUsers(userMentions) : [];

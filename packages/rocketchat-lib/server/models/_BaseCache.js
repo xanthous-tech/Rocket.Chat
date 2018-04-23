@@ -55,7 +55,7 @@ const ignore = [
 	'emit',
 	'load',
 	'on',
-	'addToAllIndexes'
+	'addToAllIndexes',
 ];
 
 function traceMethodCalls(target) {
@@ -66,7 +66,7 @@ function traceMethodCalls(target) {
 			target._stats[property] = {
 				calls: 0,
 				time: 0,
-				avg: 0
+				avg: 0,
 			};
 			const origMethod = target[property];
 			target[property] = function(...args) {
@@ -105,7 +105,7 @@ function traceMethodCalls(target) {
 		const stats = [];
 		for (const property in target._stats) {
 			if (target._stats.hasOwnProperty(property)) {
-				stats.push([Math.round(target._stats[property].avg*100)/100, property]);
+				stats.push([Math.round(target._stats[property].avg * 100) / 100, property]);
 			}
 		}
 		return _.sortBy(stats, function(record) {
@@ -115,9 +115,9 @@ function traceMethodCalls(target) {
 }
 
 class Adapter {
-	loadDatabase(/*dbname, callback*/) {}
-	saveDatabase(/*dbname, dbstring, callback*/) {}
-	deleteDatabase(/*dbname, callback*/) {}
+	loadDatabase(/* dbname, callback*/) {}
+	saveDatabase(/* dbname, dbstring, callback*/) {}
+	deleteDatabase(/* dbname, callback*/) {}
 }
 
 const db = new loki('rocket.chat.json', {adapter: Adapter});
@@ -311,7 +311,7 @@ class ModelsBaseCache extends EventEmitter {
 		}
 	}
 
-	ensureIndex(fields, type='array') {
+	ensureIndex(fields, type = 'array') {
 		if (!Array.isArray(fields)) {
 			fields = [fields];
 		}
@@ -319,7 +319,7 @@ class ModelsBaseCache extends EventEmitter {
 		this.indexes[fields.join(',')] = {
 			type,
 			fields,
-			data: {}
+			data: {},
 		};
 	}
 
@@ -418,11 +418,9 @@ class ModelsBaseCache extends EventEmitter {
 		}
 	}
 
-	findByIndex(index, keys, options={}) {
+	findByIndex(index, keys, options = {}) {
 		return {
-			fetch: () => {
-				return this.processQueryOptionsOnResult(this._findByIndex(index, keys), options);
-			},
+			fetch: () => this.processQueryOptionsOnResult(this._findByIndex(index, keys), options),
 
 			count: () => {
 				const records = this.findByIndex(index, keys, options).fetch();
@@ -440,7 +438,7 @@ class ModelsBaseCache extends EventEmitter {
 				if (records) {
 					return fn(records);
 				}
-			}
+			},
 		};
 	}
 
@@ -454,7 +452,7 @@ class ModelsBaseCache extends EventEmitter {
 		this.loaded = false;
 		const time = RocketChat.statsTracker.now();
 		const data = this.model.db.find(this.query, this.options).fetch();
-		for (let i=0; i < data.length; i++) {
+		for (let i = 0; i < data.length; i++) {
 			this.insert(data[i]);
 		}
 		console.log(String(data.length), 'records load from', this.collectionName);
@@ -470,7 +468,7 @@ class ModelsBaseCache extends EventEmitter {
 			return;
 		}
 
-		this.model._db.on('change', ({action, id, data/*, oplog*/}) => {
+		this.model._db.on('change', ({action, id, data/* , oplog*/}) => {
 			switch (action) {
 				case 'insert':
 					data._id = id;
@@ -496,7 +494,7 @@ class ModelsBaseCache extends EventEmitter {
 		});
 	}
 
-	processQueryOptionsOnResult(result, options={}) {
+	processQueryOptionsOnResult(result, options = {}) {
 		if (result === undefined || result === null) {
 			return undefined;
 		}
@@ -610,7 +608,7 @@ class ModelsBaseCache extends EventEmitter {
 
 		if (Match.test(query, String)) {
 			return {
-				_id: query
+				_id: query,
 			};
 		}
 
@@ -619,7 +617,7 @@ class ModelsBaseCache extends EventEmitter {
 			for (const field in query) {
 				if (query.hasOwnProperty(field)) {
 					and.push({
-						[field]: query[field]
+						[field]: query[field],
 					});
 				}
 			}
@@ -631,14 +629,12 @@ class ModelsBaseCache extends EventEmitter {
 				const value = query[field];
 				if (value instanceof RegExp && field !== '$regex') {
 					query[field] = {
-						$regex: value
+						$regex: value,
 					};
 				}
 
 				if (field === '$and' || field === '$or') {
-					query[field] = value.map((subValue) => {
-						return this.processQuery(subValue, field);
-					});
+					query[field] = value.map(subValue => this.processQuery(subValue, field));
 				}
 
 				if (Match.test(value, Object) && Object.keys(value).length > 0) {
@@ -650,7 +646,7 @@ class ModelsBaseCache extends EventEmitter {
 		return query;
 	}
 
-	find(query, options={}) {
+	find(query, options = {}) {
 		return {
 			fetch: () => {
 				try {
@@ -668,8 +664,8 @@ class ModelsBaseCache extends EventEmitter {
 			count: () => {
 				try {
 					query = this.processQuery(query);
-					const { limit, skip } = options;
-					return this.processQueryOptionsOnResult(this.collection.find(query), { limit, skip }).length;
+					const {limit, skip} = options;
+					return this.processQueryOptionsOnResult(this.collection.find(query), {limit, skip}).length;
 				} catch (e) {
 					console.error('Exception on cache find for', this.collectionName);
 					console.error('Query:', JSON.stringify(query, null, 2));
@@ -679,9 +675,7 @@ class ModelsBaseCache extends EventEmitter {
 				}
 			},
 
-			forEach: (fn) => {
-				return this.find(query, options).fetch().forEach(fn);
-			},
+			forEach: fn => this.find(query, options).fetch().forEach(fn),
 
 			observe: (obj) => {
 				logger.debug(this.collectionName, 'Falling back observe to model with query:', query);
@@ -696,7 +690,7 @@ class ModelsBaseCache extends EventEmitter {
 			_publishCursor: (cursor, sub, collection) => {
 				logger.debug(this.collectionName, 'Falling back _publishCursor to model with query:', query);
 				return this.model.db.find(...arguments)._publishCursor(cursor, sub, collection);
-			}
+			},
 		};
 	}
 
@@ -718,7 +712,7 @@ class ModelsBaseCache extends EventEmitter {
 	}
 
 	findOneByIds(ids, options) {
-		const query = this.processQuery({ _id: { $in: ids }});
+		const query = this.processQuery({_id: {$in: ids}});
 		return this.processQueryOptionsOnResult(this.collection.findOne(query), options);
 	}
 

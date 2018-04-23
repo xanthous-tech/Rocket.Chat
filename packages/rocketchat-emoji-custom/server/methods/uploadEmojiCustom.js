@@ -5,7 +5,7 @@ Meteor.methods({
 			throw new Meteor.Error('not_authorized');
 		}
 
-		//delete aliases for notification purposes. here, it is a string rather than an array
+		// delete aliases for notification purposes. here, it is a string rather than an array
 		delete emojiData.aliases;
 		const file = new Buffer(binaryContent, 'binary');
 
@@ -17,5 +17,5 @@ Meteor.methods({
 		));
 
 		rs.pipe(ws);
-	}
+	},
 });

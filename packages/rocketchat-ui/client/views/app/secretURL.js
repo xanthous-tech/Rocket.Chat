@@ -7,7 +7,7 @@ Template.secretURL.helpers({
 	ready() {
 		const instance = Template.instance();
 		return typeof instance.subscriptionsReady === 'function' && instance.subscriptionsReady() && instance.hashReady && instance.hashReady.get();
-	}
+	},
 });
 
 Template.secretURL.onCreated(function() {

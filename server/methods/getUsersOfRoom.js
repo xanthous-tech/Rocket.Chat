@@ -1,12 +1,12 @@
 Meteor.methods({
 	getUsersOfRoom(roomId, showAll) {
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'getUsersOfRoom' });
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'getUsersOfRoom'});
 		}
 
 		const room = Meteor.call('canAccessRoom', roomId, Meteor.userId());
 		if (!room) {
-			throw new Meteor.Error('error-invalid-room', 'Invalid room', { method: 'getUsersOfRoom' });
+			throw new Meteor.Error('error-invalid-room', 'Invalid room', {method: 'getUsersOfRoom'});
 		}
 
 		const filter = (record) => {
@@ -22,19 +22,17 @@ Meteor.methods({
 			return record._user.status !== 'offline';
 		};
 
-		const map = (record) => {
-			return {
-				_id: record._user._id,
-				username: record._user.username,
-				name: record._user.name
-			};
-		};
+		const map = record => ({
+			_id: record._user._id,
+			username: record._user.username,
+			name: record._user.name,
+		});
 
 		const records = RocketChat.models.Subscriptions.findByRoomId(roomId).fetch();
 
 		return {
 			total: records.length,
-			records: records.filter(filter).map(map)
+			records: records.filter(filter).map(map),
 		};
-	}
+	},
 });

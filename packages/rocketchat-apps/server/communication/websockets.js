@@ -1,4 +1,4 @@
-import { AppStatus, AppStatusUtils } from '@rocket.chat/apps-ts-definition/AppStatus';
+import {AppStatus, AppStatusUtils} from '@rocket.chat/apps-ts-definition/AppStatus';
 
 export const AppEvents = Object.freeze({
 	APP_ADDED: 'app/added',
@@ -9,7 +9,7 @@ export const AppEvents = Object.freeze({
 	COMMAND_ADDED: 'command/added',
 	COMMAND_DISABLED: 'command/disabled',
 	COMMAND_UPDATED: 'command/updated',
-	COMMAND_REMOVED: 'command/removed'
+	COMMAND_REMOVED: 'command/removed',
 });
 
 export class AppServerListener {
@@ -34,23 +34,23 @@ export class AppServerListener {
 		this.clientStreamer.emit(AppEvents.APP_ADDED, appId);
 	}
 
-	async onAppStatusUpdated({ appId, status }) {
-		this.recieved.set(`${ AppEvents.APP_STATUS_CHANGE }_${ appId }`, { appId, status, when: new Date() });
+	async onAppStatusUpdated({appId, status}) {
+		this.recieved.set(`${ AppEvents.APP_STATUS_CHANGE }_${ appId }`, {appId, status, when: new Date()});
 
 		if (AppStatusUtils.isEnabled(status)) {
 			await this.orch.getManager().enable(appId);
-			this.clientStreamer.emit(AppEvents.APP_STATUS_CHANGE, { appId, status });
+			this.clientStreamer.emit(AppEvents.APP_STATUS_CHANGE, {appId, status});
 		} else if (AppStatusUtils.isDisabled(status)) {
 			await this.orch.getManager().disable(appId, AppStatus.MANUALLY_DISABLED === status);
-			this.clientStreamer.emit(AppEvents.APP_STATUS_CHANGE, { appId, status });
+			this.clientStreamer.emit(AppEvents.APP_STATUS_CHANGE, {appId, status});
 		}
 	}
 
-	async onAppSettingUpdated({ appId, setting }) {
-		this.recieved.set(`${ AppEvents.APP_SETTING_UPDATED }_${ appId }_${ setting.id }`, { appId, setting, when: new Date() });
+	async onAppSettingUpdated({appId, setting}) {
+		this.recieved.set(`${ AppEvents.APP_SETTING_UPDATED }_${ appId }_${ setting.id }`, {appId, setting, when: new Date()});
 
 		await this.orch.getManager().getSettingsManager().updateAppSetting(appId, setting);
-		this.clientStreamer.emit(AppEvents.APP_SETTING_UPDATED, { appId });
+		this.clientStreamer.emit(AppEvents.APP_SETTING_UPDATED, {appId});
 	}
 
 	async onAppRemoved(appId) {
@@ -77,14 +77,14 @@ export class AppServerListener {
 
 export class AppServerNotifier {
 	constructor(orch) {
-		this.engineStreamer = new Meteor.Streamer('apps-engine', { retransmit: false });
+		this.engineStreamer = new Meteor.Streamer('apps-engine', {retransmit: false});
 		this.engineStreamer.serverOnly = true;
 		this.engineStreamer.allowRead('none');
 		this.engineStreamer.allowEmit('all');
 		this.engineStreamer.allowWrite('none');
 
 		// This is used to broadcast to the web clients
-		this.clientStreamer = new Meteor.Streamer('apps', { retransmit: false });
+		this.clientStreamer = new Meteor.Streamer('apps', {retransmit: false});
 		this.clientStreamer.serverOnly = true;
 		this.clientStreamer.allowRead('all');
 		this.clientStreamer.allowEmit('all');
@@ -118,8 +118,8 @@ export class AppServerNotifier {
 			}
 		}
 
-		this.engineStreamer.emit(AppEvents.APP_STATUS_CHANGE, { appId, status });
-		this.clientStreamer.emit(AppEvents.APP_STATUS_CHANGE, { appId, status });
+		this.engineStreamer.emit(AppEvents.APP_STATUS_CHANGE, {appId, status});
+		this.clientStreamer.emit(AppEvents.APP_STATUS_CHANGE, {appId, status});
 	}
 
 	async appSettingsChange(appId, setting) {
@@ -128,8 +128,8 @@ export class AppServerNotifier {
 			return;
 		}
 
-		this.engineStreamer.emit(AppEvents.APP_SETTING_UPDATED, { appId, setting });
-		this.clientStreamer.emit(AppEvents.APP_SETTING_UPDATED, { appId });
+		this.engineStreamer.emit(AppEvents.APP_SETTING_UPDATED, {appId, setting});
+		this.clientStreamer.emit(AppEvents.APP_SETTING_UPDATED, {appId});
 	}
 
 	async commandAdded(command) {

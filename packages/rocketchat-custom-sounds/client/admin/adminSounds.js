@@ -1,6 +1,6 @@
 import s from 'underscore.string';
 
-import { RocketChatTabBar } from 'meteor/rocketchat:lib';
+import {RocketChatTabBar} from 'meteor/rocketchat:lib';
 
 Template.adminSounds.helpers({
 	isReady() {
@@ -30,9 +30,9 @@ Template.adminSounds.helpers({
 	flexData() {
 		return {
 			tabBar: Template.instance().tabBar,
-			data: Template.instance().tabBarData.get()
+			data: Template.instance().tabBarData.get(),
 		};
-	}
+	},
 });
 
 Template.adminSounds.onCreated(function() {
@@ -51,11 +51,11 @@ Template.adminSounds.onCreated(function() {
 		i18nTitle: 'Custom_Sound_Add',
 		icon: 'plus',
 		template: 'adminSoundEdit',
-		openClick(/*e, t*/) {
+		openClick(/* e, t*/) {
 			instance.tabBarData.set();
 			return true;
 		},
-		order: 1
+		order: 1,
 	});
 
 	RocketChat.TabBar.addButton({
@@ -64,7 +64,7 @@ Template.adminSounds.onCreated(function() {
 		i18nTitle: 'Custom_Sound_Info',
 		icon: 'customize',
 		template: 'adminSoundInfo',
-		order: 2
+		order: 2,
 	});
 
 	this.autorun(function() {
@@ -80,12 +80,12 @@ Template.adminSounds.onCreated(function() {
 
 		if (filter) {
 			const filterReg = new RegExp(s.escapeRegExp(filter), 'i');
-			query = { name: filterReg };
+			query = {name: filterReg};
 		}
 
 		const limit = (instance.limit != null) ? instance.limit.get() : 0;
 
-		return RocketChat.models.CustomSounds.find(query, { limit, sort: { name: 1 }}).fetch();
+		return RocketChat.models.CustomSounds.find(query, {limit, sort: {name: 1}}).fetch();
 	};
 });
 
@@ -98,7 +98,7 @@ Template.adminSounds.onRendered(() =>
 
 Template.adminSounds.events({
 	'keydown #sound-filter'(e) {
-		//stop enter key
+		// stop enter key
 		if (e.which === 13) {
 			e.stopPropagation();
 			e.preventDefault();
@@ -131,5 +131,5 @@ Template.adminSounds.events({
 		if ($audio && $audio[0] && $audio[0].play) {
 			$audio[0].play();
 		}
-	}
+	},
 });

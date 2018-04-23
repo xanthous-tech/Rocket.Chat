@@ -1,4 +1,4 @@
-/*globals defaultUserLanguage, KonchatNotification */
+/* globals defaultUserLanguage, KonchatNotification */
 import _ from 'underscore';
 import s from 'underscore.string';
 import toastr from 'toastr';
@@ -6,10 +6,10 @@ import toastr from 'toastr';
 const notificationLabels = {
 	all: 'All_messages',
 	mentions: 'Mentions',
-	nothing: 'Nothing'
+	nothing: 'Nothing',
 };
 
-function checkedSelected(property, value, defaultValue=undefined) {
+function checkedSelected(property, value, defaultValue = undefined) {
 	if (defaultValue && defaultValue.hash) {
 		defaultValue = undefined;
 	}
@@ -34,7 +34,7 @@ Template.accountPreferences.helpers({
 
 		const result = Object.keys(languages).map((key) => {
 			const language = languages[key];
-			return _.extend(language, { key });
+			return _.extend(language, {key});
 		});
 
 		return _.sortBy(result, 'key');
@@ -49,10 +49,10 @@ Template.accountPreferences.helpers({
 		}
 		return result;
 	},
-	checked(property, value, defaultValue=undefined) {
+	checked(property, value, defaultValue = undefined) {
 		return checkedSelected(property, value, defaultValue);
 	},
-	selected(property, value, defaultValue=undefined) {
+	selected(property, value, defaultValue = undefined) {
 		return checkedSelected(property, value, defaultValue);
 	},
 	highlights() {
@@ -92,7 +92,7 @@ Template.accountPreferences.helpers({
 	},
 	notificationsSoundVolume() {
 		return RocketChat.getUserPreference(Meteor.user(), 'notificationsSoundVolume');
-	}
+	},
 });
 
 Template.accountPreferences.onCreated(function() {
@@ -213,7 +213,7 @@ Template.accountPreferences.onCreated(function() {
 					modal.open({
 						title: t('UserDataDownload_Requested'),
 						text: t('UserDataDownload_Requested_Text'),
-						type: 'success'
+						type: 'success',
 					});
 
 					return true;
@@ -224,7 +224,7 @@ Template.accountPreferences.onCreated(function() {
 						modal.open({
 							title: t('UserDataDownload_Requested'),
 							text: t('UserDataDownload_CompletedRequestExisted_Text'),
-							type: 'success'
+							type: 'success',
 						});
 
 						return true;
@@ -233,14 +233,14 @@ Template.accountPreferences.onCreated(function() {
 					modal.open({
 						title: t('UserDataDownload_Requested'),
 						text: t('UserDataDownload_RequestExisted_Text'),
-						type: 'success'
+						type: 'success',
 					});
 					return true;
 				}
 
 				modal.open({
 					title: t('UserDataDownload_Requested'),
-					type: 'success'
+					type: 'success',
 				});
 				return true;
 			}
@@ -285,10 +285,10 @@ Template.accountPreferences.events({
 		e.preventDefault();
 		KonchatNotification.notify({
 			duration: $('input[name=desktopNotificationDuration]').val(),
-			payload: { sender: { username: 'rocket.cat' }
+			payload: {sender: {username: 'rocket.cat'},
 			},
 			title: TAPi18n.__('Desktop_Notification_Test'),
-			text: TAPi18n.__('This_is_a_desktop_notification')
+			text: TAPi18n.__('This_is_a_desktop_notification'),
 		});
 	},
 	'change .audio'(e) {
@@ -301,5 +301,5 @@ Template.accountPreferences.events({
 			const $audio = $(`audio#${ audio }`);
 			return $audio && $audio[0] && $audio[0].play();
 		}
-	}
+	},
 });

@@ -5,7 +5,7 @@ Meteor.methods({
 		check(f, Match.Optional(Boolean));
 		if (!Meteor.userId()) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
-				method: 'toggleFavorite'
+				method: 'toggleFavorite',
 			});
 		}
 
@@ -13,10 +13,10 @@ Meteor.methods({
 		if (!userSubscription) {
 			throw new Meteor.Error('error-invalid-subscription',
 				'You must be part of a room to favorite it',
-				{ method: 'toggleFavorite' }
+				{method: 'toggleFavorite'}
 			);
 		}
 
 		return RocketChat.models.Subscriptions.setFavoriteByRoomIdAndUserId(rid, Meteor.userId(), f);
-	}
+	},
 });

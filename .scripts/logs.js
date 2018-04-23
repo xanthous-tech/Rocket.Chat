@@ -22,7 +22,7 @@ let historyData = (() => {
 
 octokit.authenticate({
 	type: 'token',
-	token: process.env.GITHUB_TOKEN
+	token: process.env.GITHUB_TOKEN,
 });
 const owner = 'RocketChat';
 const repo = 'Rocket.Chat';
@@ -32,7 +32,7 @@ function promiseRetryRateLimit(promiseFn, retryWait = 60000) {
 		function exec() {
 			promiseFn()
 				.then(data => resolve(data))
-				.catch(error => {
+				.catch((error) => {
 					if (error.headers['x-ratelimit-remaining'] === '0') {
 						let reset = error.headers['x-ratelimit-reset'];
 						if (reset) {
@@ -58,11 +58,11 @@ function getPRInfo(number, commit) {
 
 	return promiseRetryRateLimit(() => octokit.pullRequests.get({owner, repo, number}))
 		.catch(onError)
-		.then(pr => {
+		.then((pr) => {
 			const info = {
 				pr: number,
 				title: pr.data.title,
-				userLogin: pr.data.user.login
+				userLogin: pr.data.user.login,
 			};
 			// data.author_association: 'CONTRIBUTOR',
 
@@ -72,8 +72,8 @@ function getPRInfo(number, commit) {
 
 			return promiseRetryRateLimit(() => octokit.pullRequests.getCommits({owner, repo, number}))
 				.catch(onError)
-				.then(commits => {
-					info.contributors = _.unique(_.flatten(commits.data.map(i => {
+				.then((commits) => {
+					info.contributors = _.unique(_.flatten(commits.data.map((i) => {
 						if (!i.author || !i.committer) {
 							return;
 						}
@@ -108,13 +108,13 @@ function getPullRequests(from, to) {
 		date: '%ai',
 		message: '%s',
 		author_name: '%aN',
-		author_email: '%ae'
+		author_email: '%ae',
 	};
 
 	return git.log(logParams).then((log) => {
 		const items = log.all
 			.filter(item => /^(\*\s)[0-9a-z]+$/.test(item.hash))
-			.map(item => {
+			.map((item) => {
 				item.hash = item.hash.replace(/^(\*\s)/, '');
 				return item;
 			})
@@ -126,7 +126,7 @@ function getPullRequests(from, to) {
 			const bar = new ProgressBar('  [:bar] :current/:total :percent :etas', {
 				total: items.length,
 				incomplete: ' ',
-				width: 20
+				width: 20,
 			});
 
 			function process() {
@@ -137,11 +137,9 @@ function getPullRequests(from, to) {
 				const partItems = items.splice(0, 10);
 				bar.tick(partItems.length);
 
-				const promises = partItems.map(item => {
-					return getPRInfo(getPRNumeberFromMessage(item.message, item), item);
-				});
+				const promises = partItems.map(item => getPRInfo(getPRNumeberFromMessage(item.message, item), item));
 
-				return Promise.all(promises).then(result => {
+				return Promise.all(promises).then((result) => {
 					data.push(..._.compact(result));
 					if (items.length) {
 						setTimeout(process, 100);
@@ -173,12 +171,10 @@ function getTags() {
 		tags.push('HEAD');
 
 		return tags
-			.map((item, index) => {
-				return {
-					tag: item,
-					before: index ? tags[--index] : null
-				};
-			})
+			.map((item, index) => ({
+				tag: item,
+				before: index ? tags[--index] : null,
+			}))
 			.filter(item => item.tag === 'HEAD' || semver.gte(item.tag, minTag))
 			.reduce((value, item) => {
 				value[item.tag] = item;
@@ -188,14 +184,14 @@ function getTags() {
 }
 
 function getMissingTags() {
-	return getTags().then(tags => {
+	return getTags().then((tags) => {
 		const missingTags = _.difference(Object.keys(tags), Object.keys(historyData));
 		missingTags.push('HEAD');
 		return _.pick(tags, missingTags);
 	});
 }
 
-getMissingTags().then(missingTags => {
+getMissingTags().then((missingTags) => {
 	console.log('Missing tags:');
 	console.log(JSON.stringify(Object.keys(missingTags), null, 2));
 	missingTags = Object.values(missingTags);
@@ -209,10 +205,10 @@ getMissingTags().then(missingTags => {
 		const from = item.before;
 		const to = item.tag;
 		console.log('Fetching data for tag:', to, `(from ${ from })`);
-		getPullRequests(from, to).then(prs => {
+		getPullRequests(from, to).then((prs) => {
 			// console.log('  ', prs.length, 'item(s) found');
 			historyData = Object.assign(historyData, {
-				[to]: prs
+				[to]: prs,
 			});
 			fs.writeFileSync(historyDataFile, JSON.stringify(historyData, null, 2));
 			loadMissingTag();

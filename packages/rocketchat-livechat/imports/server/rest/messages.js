@@ -1,6 +1,6 @@
 import LivechatVisitors from '../../../server/models/LivechatVisitors';
 
-RocketChat.API.v1.addRoute('livechat/messages', { authRequired: true }, {
+RocketChat.API.v1.addRoute('livechat/messages', {authRequired: true}, {
 	post() {
 		if (!RocketChat.authz.hasPermission(this.userId, 'view-livechat-manager')) {
 			return RocketChat.API.v1.unauthorized();
@@ -46,19 +46,19 @@ RocketChat.API.v1.addRoute('livechat/messages', { authRequired: true }, {
 					_id: Random.id(),
 					rid,
 					token: visitorToken,
-					msg: message.msg
-				}
+					msg: message.msg,
+				},
 			};
 			const sentMessage = RocketChat.Livechat.sendMessage(sendMessage);
 			return {
 				username: sentMessage.u.username,
 				msg: sentMessage.msg,
-				ts: sentMessage.ts
+				ts: sentMessage.ts,
 			};
 		});
 
 		return RocketChat.API.v1.success({
-			messages: sentMessages
+			messages: sentMessages,
 		});
-	}
+	},
 });

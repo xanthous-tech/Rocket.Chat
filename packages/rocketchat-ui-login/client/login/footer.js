@@ -1,12 +1,12 @@
-/*globals defaultUserLanguage */
+/* globals defaultUserLanguage */
 Template.loginFooter.helpers({
 	LanguageVersion() {
 		if (Template.instance().languageVersion.get()) {
 			return TAPi18n.__('Language_Version', {
-				lng: Template.instance().languageVersion.get()
+				lng: Template.instance().languageVersion.get(),
 			});
 		}
-	}
+	},
 });
 
 Template.loginFooter.events({
@@ -16,7 +16,7 @@ Template.loginFooter.events({
 		TAPi18n.setLanguage(userLanguage);
 		moment.locale(userLanguage);
 		return t.languageVersion.set(userLanguage !== defaultUserLanguage() ? defaultUserLanguage() : 'en');
-	}
+	},
 });
 
 Template.loginFooter.onCreated(function() {

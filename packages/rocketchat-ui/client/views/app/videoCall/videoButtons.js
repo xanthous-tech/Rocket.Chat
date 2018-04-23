@@ -10,30 +10,30 @@ Template.videoButtons.helpers({
 	},
 	callInProgress() {
 		return WebRTC.getInstanceByRoomId(Session.get('openedRoom')).callInProgress.get();
-	}
+	},
 });
 
 Template.videoButtons.events({
 	'click .start-video-call'() {
 		return WebRTC.getInstanceByRoomId(Session.get('openedRoom')).startCall({
 			audio: true,
-			video: true
+			video: true,
 		});
 	},
 	'click .start-audio-call'() {
 		return WebRTC.getInstanceByRoomId(Session.get('openedRoom')).startCall({
-			audio: true
+			audio: true,
 		});
 	},
 	'click .join-video-call'() {
 		return WebRTC.getInstanceByRoomId(Session.get('openedRoom')).joinCall({
 			audio: true,
-			video: true
+			video: true,
 		});
 	},
 	'click .join-audio-call'() {
 		return WebRTC.getInstanceByRoomId(Session.get('openedRoom')).joinCall({
-			audio: true
+			audio: true,
 		});
-	}
+	},
 });

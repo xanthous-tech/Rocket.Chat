@@ -1,7 +1,7 @@
 Meteor.methods({
 	'livechat:saveAppearance'(settings) {
 		if (!Meteor.userId() || !RocketChat.authz.hasPermission(Meteor.userId(), 'view-livechat-manager')) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'livechat:saveAppearance' });
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'livechat:saveAppearance'});
 		}
 
 		const validSettings = [
@@ -15,12 +15,10 @@ Meteor.methods({
 			'Livechat_offline_title',
 			'Livechat_offline_title_color',
 			'Livechat_offline_email',
-			'Livechat_conversation_finished_message'
+			'Livechat_conversation_finished_message',
 		];
 
-		const valid = settings.every((setting) => {
-			return validSettings.indexOf(setting._id) !== -1;
-		});
+		const valid = settings.every(setting => validSettings.indexOf(setting._id) !== -1);
 
 		if (!valid) {
 			throw new Meteor.Error('invalid-setting');
@@ -31,5 +29,5 @@ Meteor.methods({
 		});
 
 		return;
-	}
+	},
 });

@@ -4,25 +4,25 @@ import _ from 'underscore';
 Meteor.methods({
 	setReaction(reaction, messageId) {
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'setReaction' });
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'setReaction'});
 		}
 
 		const message = RocketChat.models.Messages.findOneById(messageId);
 
 		if (!message) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'setReaction' });
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'setReaction'});
 		}
 
 		const room = Meteor.call('canAccessRoom', message.rid, Meteor.userId());
 
 		if (!room) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'setReaction' });
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'setReaction'});
 		}
 
 		reaction = `:${ reaction.replace(/:/g, '') }:`;
 
 		if (!RocketChat.emoji.list[reaction] && RocketChat.models.EmojiCustom.findByNameOrAlias(reaction).count() === 0) {
-			throw new Meteor.Error('error-not-allowed', 'Invalid emoji provided.', { method: 'setReaction' });
+			throw new Meteor.Error('error-not-allowed', 'Invalid emoji provided.', {method: 'setReaction'});
 		}
 
 		const user = Meteor.user();
@@ -32,10 +32,10 @@ Meteor.methods({
 				_id: Random.id(),
 				rid: room._id,
 				ts: new Date(),
-				msg: TAPi18n.__('You_have_been_muted', {}, user.language)
+				msg: TAPi18n.__('You_have_been_muted', {}, user.language),
 			});
 			return false;
-		} else if (!RocketChat.models.Subscriptions.findOne({ rid: message.rid })) {
+		} else if (!RocketChat.models.Subscriptions.findOne({rid: message.rid})) {
 			return false;
 		}
 
@@ -60,7 +60,7 @@ Meteor.methods({
 			}
 			if (!message.reactions[reaction]) {
 				message.reactions[reaction] = {
-					usernames: []
+					usernames: [],
 				};
 			}
 			message.reactions[reaction].usernames.push(user.username);
@@ -72,5 +72,5 @@ Meteor.methods({
 		msgStream.emit(message.rid, message);
 
 		return;
-	}
+	},
 });

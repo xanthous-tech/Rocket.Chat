@@ -9,25 +9,25 @@ Meteor.methods({
 		}
 
 		if (!s.trim(emojiData.name)) {
-			throw new Meteor.Error('error-the-field-is-required', 'The field Name is required', { method: 'insertOrUpdateEmoji', field: 'Name' });
+			throw new Meteor.Error('error-the-field-is-required', 'The field Name is required', {method: 'insertOrUpdateEmoji', field: 'Name'});
 		}
 
-		//allow all characters except colon, whitespace, comma, >, <, &, ", ', /, \, (, )
-		//more practical than allowing specific sets of characters; also allows foreign languages
+		// allow all characters except colon, whitespace, comma, >, <, &, ", ', /, \, (, )
+		// more practical than allowing specific sets of characters; also allows foreign languages
 		const nameValidation = /[\s,:><&"'\/\\\(\)]/;
 		const aliasValidation = /[:><&\|"'\/\\\(\)]/;
 
-		//silently strip colon; this allows for uploading :emojiname: as emojiname
+		// silently strip colon; this allows for uploading :emojiname: as emojiname
 		emojiData.name = emojiData.name.replace(/:/g, '');
 		emojiData.aliases = emojiData.aliases.replace(/:/g, '');
 
 		if (nameValidation.test(emojiData.name)) {
-			throw new Meteor.Error('error-input-is-not-a-valid-field', `${ emojiData.name } is not a valid name`, { method: 'insertOrUpdateEmoji', input: emojiData.name, field: 'Name' });
+			throw new Meteor.Error('error-input-is-not-a-valid-field', `${ emojiData.name } is not a valid name`, {method: 'insertOrUpdateEmoji', input: emojiData.name, field: 'Name'});
 		}
 
 		if (emojiData.aliases) {
 			if (aliasValidation.test(emojiData.aliases)) {
-				throw new Meteor.Error('error-input-is-not-a-valid-field', `${ emojiData.aliases } is not a valid alias set`, { method: 'insertOrUpdateEmoji', input: emojiData.aliases, field: 'Alias_Set' });
+				throw new Meteor.Error('error-input-is-not-a-valid-field', `${ emojiData.aliases } is not a valid alias set`, {method: 'insertOrUpdateEmoji', input: emojiData.aliases, field: 'Alias_Set'});
 			}
 			emojiData.aliases = emojiData.aliases.split(/[\s,]/);
 			emojiData.aliases = emojiData.aliases.filter(Boolean);
@@ -51,15 +51,15 @@ Meteor.methods({
 		}
 
 		if (matchingResults.length > 0) {
-			throw new Meteor.Error('Custom_Emoji_Error_Name_Or_Alias_Already_In_Use', 'The custom emoji or one of its aliases is already in use', { method: 'insertOrUpdateEmoji' });
+			throw new Meteor.Error('Custom_Emoji_Error_Name_Or_Alias_Already_In_Use', 'The custom emoji or one of its aliases is already in use', {method: 'insertOrUpdateEmoji'});
 		}
 
 		if (!emojiData._id) {
-			//insert emoji
+			// insert emoji
 			const createEmoji = {
 				name: emojiData.name,
 				aliases: emojiData.aliases,
-				extension: emojiData.extension
+				extension: emojiData.extension,
 			};
 
 			const _id = RocketChat.models.EmojiCustom.create(createEmoji);
@@ -68,7 +68,7 @@ Meteor.methods({
 
 			return _id;
 		} else {
-			//update emoji
+			// update emoji
 			if (emojiData.newFile) {
 				RocketChatFileEmojiCustomInstance.deleteFile(encodeURIComponent(`${ emojiData.name }.${ emojiData.extension }`));
 				RocketChatFileEmojiCustomInstance.deleteFile(encodeURIComponent(`${ emojiData.name }.${ emojiData.previousExtension }`));
@@ -102,5 +102,5 @@ Meteor.methods({
 
 			return true;
 		}
-	}
+	},
 });

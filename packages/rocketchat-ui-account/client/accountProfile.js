@@ -2,26 +2,24 @@ import _ from 'underscore';
 import s from 'underscore.string';
 import toastr from 'toastr';
 
-const validateEmail = (email) => /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+const validateEmail = email => /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
 const validateUsername = (username) => {
 	const reg = new RegExp(`^${ RocketChat.settings.get('UTF8_Names_Validation') }$`);
 	return reg.test(username);
 };
-const validateName = (name) => name.length;
+const validateName = name => name.length;
 const filterNames = (old) => {
 	const reg = new RegExp(`^${ RocketChat.settings.get('UTF8_Names_Validation') }$`);
 	return [...old.replace(' ', '').toLocaleLowerCase()].filter(f => reg.test(f)).join('');
 };
-const filterEmail = (old) => {
-	return old.replace(' ', '');
-};
+const filterEmail = old => old.replace(' ', '');
 const setAvatar = function(event, template) {
 	const {blob, contentType, service} = this.suggestion;
 
 	template.avatar.set({
 		service,
 		contentType,
-		blob
+		blob,
 	});
 };
 const loginWith = function(event, template) {
@@ -57,14 +55,12 @@ Template.accountProfile.helpers({
 	services() {
 		const suggestions = Template.instance().suggestions.get();
 		return ['gravatar', 'facebook', 'google', 'github', 'gitlab', 'linkedIn', 'twitter']
-			.map((service) => {
-				return {
-					name: service,
-					// TODO: improve this fix
-					service: !suggestions.avatars[service.toLowerCase()] ? RocketChat.settings.get(`Accounts_OAuth_${ s.capitalize(service.toLowerCase()) }`) : false,
-					suggestion: suggestions.avatars[service.toLowerCase()]
-				};
-			})
+			.map(service => ({
+				name: service,
+				// TODO: improve this fix
+				service: !suggestions.avatars[service.toLowerCase()] ? RocketChat.settings.get(`Accounts_OAuth_${ s.capitalize(service.toLowerCase()) }`) : false,
+				suggestion: suggestions.avatars[service.toLowerCase()],
+			}))
 			.filter(({service, suggestion}) => service || suggestion);
 	},
 	initialsUsername() {
@@ -92,7 +88,7 @@ Template.accountProfile.helpers({
 		const user = Meteor.user();
 		const {customFields = {}} = user;
 		if (instance.view.isRendered) {
-			if (instance.findAll('[data-customfield="true"]').some(el => {
+			if (instance.findAll('[data-customfield="true"]').some((el) => {
 				const key = el.getAttribute('name');
 				const value = customFields[key] || '';
 				return el.value !== value;
@@ -143,7 +139,7 @@ Template.accountProfile.helpers({
 	},
 	customFields() {
 		return Meteor.user().customFields;
-	}
+	},
 });
 
 Template.accountProfile.onCreated(function() {
@@ -163,7 +159,7 @@ Template.accountProfile.onCreated(function() {
 	self.getSuggestions = function() {
 		self.suggestions.set(undefined);
 		Meteor.call('getAvatarSuggestion', function(error, avatars) {
-			self.suggestions.set({ ready: true, avatars });
+			self.suggestions.set({ready: true, avatars});
 		});
 	};
 	self.getSuggestions();
@@ -197,7 +193,7 @@ Template.accountProfile.onCreated(function() {
 			Meteor.call('setAvatarFromService', ...params, function(err) {
 				if (err && err.details && err.details.timeToReset) {
 					toastr.error(t('error-too-many-requests', {
-						seconds: parseInt(err.details.timeToReset / 1000)
+						seconds: parseInt(err.details.timeToReset / 1000),
 					}));
 				} else {
 					toastr.success(t('Avatar_changed_successfully'));
@@ -294,7 +290,7 @@ Template.accountProfile.events({
 		Meteor.call('resetAvatar', function(err) {
 			if (err && err.details && err.details.timeToReset) {
 				toastr.error(t('error-too-many-requests', {
-					seconds: parseInt(err.details.timeToReset / 1000)
+					seconds: parseInt(err.details.timeToReset / 1000),
 				}));
 			} else {
 				toastr.success(t('Avatar_changed_successfully'));
@@ -311,8 +307,8 @@ Template.accountProfile.events({
 			suggestion: {
 				service: 'url',
 				blob: url,
-				contentType: ''
-			}
+				contentType: '',
+			},
 		}, [e, instance, ...args]);
 	},
 	'input .js-avatar-url-input'(e, instance) {
@@ -369,7 +365,7 @@ Template.accountProfile.events({
 			showCancelButton: true,
 			closeOnConfirm: false,
 			confirmButtonText: t('Save'),
-			cancelButtonText: t('Cancel')
+			cancelButtonText: t('Cancel'),
 		}, (typedPassword) => {
 			if (typedPassword) {
 				toastr.remove();
@@ -411,7 +407,7 @@ Template.accountProfile.events({
 				showCancelButton: true,
 				closeOnConfirm: false,
 				confirmButtonText: t('Delete'),
-				cancelButtonText: t('Cancel')
+				cancelButtonText: t('Cancel'),
 			}, (typedPassword) => {
 				if (typedPassword) {
 					toastr.remove();
@@ -437,7 +433,7 @@ Template.accountProfile.events({
 				showCancelButton: true,
 				closeOnConfirm: false,
 				confirmButtonText: t('Delete'),
-				cancelButtonText: t('Cancel')
+				cancelButtonText: t('Cancel'),
 			}, (deleteConfirmation) => {
 				const user = Meteor.user();
 				if (deleteConfirmation === (user && user.username)) {
@@ -479,7 +475,7 @@ Template.accountProfile.events({
 		if (!files || files.length === 0) {
 			files = (e.dataTransfer && e.dataTransfer.files) || [];
 		}
-		Object.keys(files).forEach(key => {
+		Object.keys(files).forEach((key) => {
 			const blob = files[key];
 			if (!/image\/.+/.test(blob.type)) {
 				return;
@@ -490,11 +486,11 @@ Template.accountProfile.events({
 				template.avatar.set({
 					service: 'upload',
 					contentType: blob.type,
-					blob: reader.result
+					blob: reader.result,
 				});
 				RocketChat.callbacks.run('userAvatarSet', 'upload');
 			};
 		});
-	}
+	},
 
 });

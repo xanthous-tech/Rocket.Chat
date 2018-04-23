@@ -22,7 +22,7 @@ Meteor.methods({
 			if (lastOperation.createdAt > yesterday) {
 				return {
 					requested: false,
-					exportOperation: lastOperation
+					exportOperation: lastOperation,
 				};
 			}
 		}
@@ -50,14 +50,14 @@ Meteor.methods({
 			assetsPath: assetsFolder,
 			fileList: [],
 			generatedFile: null,
-			fullExport
+			fullExport,
 		};
 
 		RocketChat.models.ExportOperations.create(exportOperation);
 
 		return {
 			requested: true,
-			exportOperation
+			exportOperation,
 		};
-	}
+	},
 });

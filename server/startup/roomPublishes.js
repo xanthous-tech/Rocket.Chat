@@ -17,8 +17,8 @@ Meteor.startup(function() {
 				description: 1,
 				sysMes: 1,
 				joinCodeRequired: 1,
-				streamingOptions: 1
-			}
+				streamingOptions: 1,
+			},
 		};
 
 		if (RocketChat.authz.hasPermission(this.userId, 'view-c-room')) {
@@ -51,14 +51,14 @@ Meteor.startup(function() {
 				description: 1,
 				sysMes: 1,
 				tokenpass: 1,
-				streamingOptions: 1
-			}
+				streamingOptions: 1,
+			},
 		};
 
 		const user = RocketChat.models.Users.findOneById(this.userId, {
 			fields: {
-				username: 1
-			}
+				username: 1,
+			},
 		});
 
 		return RocketChat.models.Rooms.findByTypeAndNameContainingUsername('p', identifier, user.username, options);
@@ -73,14 +73,14 @@ Meteor.startup(function() {
 				u: 1,
 				usernames: 1,
 				topic: 1,
-				jitsiTimeout: 1
-			}
+				jitsiTimeout: 1,
+			},
 		};
 
 		const user = RocketChat.models.Users.findOneById(this.userId, {
 			fields: {
-				username: 1
-			}
+				username: 1,
+			},
 		});
 
 		if (RocketChat.authz.hasAtLeastOnePermission(this.userId, ['view-d-room', 'view-joined-room'])) {

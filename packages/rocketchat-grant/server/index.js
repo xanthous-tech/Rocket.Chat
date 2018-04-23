@@ -1,13 +1,13 @@
-import { WebApp } from 'meteor/webapp';
+import {WebApp} from 'meteor/webapp';
 import session from 'express-session';
 import Grant from 'grant-express';
 import fiber from 'fibers';
 
-import { GrantError } from './error';
-import { generateConfig } from './grant';
-import { path, generateCallback, generateAppCallback } from './routes';
-import { middleware as redirect } from './redirect';
-import Providers, { middleware as providers } from './providers';
+import {GrantError} from './error';
+import {generateConfig} from './grant';
+import {path, generateCallback, generateAppCallback} from './routes';
+import {middleware as redirect} from './redirect';
+import Providers, {middleware as providers} from './providers';
 import Settings from './settings';
 
 let grant;
@@ -15,7 +15,7 @@ let grant;
 WebApp.connectHandlers.use(session({
 	secret: 'grant',
 	resave: true,
-	saveUninitialized: true
+	saveUninitialized: true,
 }));
 
 // grant
@@ -53,5 +53,5 @@ export {
 	generateAppCallback,
 	Providers,
 	Settings,
-	GrantError
+	GrantError,
 };

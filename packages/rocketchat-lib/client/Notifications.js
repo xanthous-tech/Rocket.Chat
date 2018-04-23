@@ -55,9 +55,7 @@ RocketChat.Notifications = new class {
 		return this.streamAll.on(eventName, callback);
 	}
 	onLogged(eventName, callback) {
-		return this.onLogin(() => {
-			return this.streamLogged.on(eventName, callback);
-		});
+		return this.onLogin(() => this.streamLogged.on(eventName, callback));
 	}
 	onRoom(room, eventName, callback) {
 		if (this.debug === true) {

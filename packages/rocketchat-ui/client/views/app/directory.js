@@ -13,14 +13,14 @@ function timeAgo(time) {
 
 function directorySearch(config, cb) {
 	return Meteor.call('browseChannels', config, (err, results) => {
-		cb(results && results.length && results.map(result => {
+		cb(results && results.length && results.map((result) => {
 			if (config.type === 'channels') {
 				return {
 					name: result.name,
 					users: result.usernames.length,
 					createdAt: timeAgo(result.ts),
 					description: result.description,
-					archived: result.archived
+					archived: result.archived,
 				};
 			}
 
@@ -28,7 +28,7 @@ function directorySearch(config, cb) {
 				return {
 					name: result.name,
 					username: result.username,
-					createdAt: timeAgo(result.createdAt)
+					createdAt: timeAgo(result.createdAt),
 				};
 			}
 		}));
@@ -45,11 +45,11 @@ Template.directory.helpers({
 	sortIcon(key) {
 		const {
 			sortDirection,
-			searchSortBy
+			searchSortBy,
 		} = Template.instance();
 
 		return key === searchSortBy.get() && sortDirection.get() !== 'asc' ? 'sort-up' : 'sort-down';
-	}
+	},
 });
 
 Template.directory.events({
@@ -106,7 +106,7 @@ Template.directory.events({
 	},
 	'click .rc-directory-plus'() {
 		FlowRouter.go('create-channel');
-	}
+	},
 });
 
 Template.directory.onRendered(function() {
@@ -123,7 +123,7 @@ Template.directory.onRendered(function() {
 			sortBy: this.searchSortBy.get(),
 			sortDirection: this.sortDirection.get(),
 			limit: this.limit.get(),
-			page: this.page.get()
+			page: this.page.get(),
 		};
 		if (this.end.get() || this.loading) {
 			return;

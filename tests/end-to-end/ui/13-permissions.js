@@ -7,7 +7,7 @@ import admin from '../../pageobjects/administration.page';
 import mainContent from '../../pageobjects/main-content.page';
 import {checkIfUserIsValid} from '../../data/checks';
 
-//test data imports
+// test data imports
 import {checkIfUserIsAdmin} from '../../data/checks';
 import {username, email, password, adminUsername, adminEmail, adminPassword} from '../../data/user.js';
 
@@ -185,11 +185,11 @@ describe.skip('[Permissions]', () => {
 		});
 
 		it.skip('it should not be able to delete own message ', () => {
-			//waiting for changes in the delete-message permission
+			// waiting for changes in the delete-message permission
 		});
 
 		it.skip('it should not be able to edit own message ', () => {
-			//waiting for changes in the edit-message permission
+			// waiting for changes in the edit-message permission
 		});
 	});
 });

@@ -5,7 +5,7 @@ import 'codemirror/lib/codemirror.css';
 import CodeMirror from 'codemirror/lib/codemirror.js';
 
 Template.CodeMirror.rendered = function() {
-	const options = this.data.options || { lineNumbers: true };
+	const options = this.data.options || {lineNumbers: true};
 	const textarea = this.find('textarea');
 	const editor = CodeMirror.fromTextArea(textarea, options);
 
@@ -46,5 +46,5 @@ Template.CodeMirror.helpers({
 
 	editorName() {
 		return this.name || 'code-mirror-textarea';
-	}
+	},
 });

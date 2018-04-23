@@ -15,7 +15,7 @@ function openRoom(type, name) {
 			}
 
 			if (RoomManager.open(type + name).ready() !== true) {
-				BlazeLayout.render('main', { modal: RocketChat.Layout.isEmbedded(), center: 'loading' });
+				BlazeLayout.render('main', {modal: RocketChat.Layout.isEmbedded(), center: 'loading'});
 				return;
 			}
 			if (currentTracker) {
@@ -43,7 +43,7 @@ function openRoom(type, name) {
 							return BlazeLayout.render('main', {center: 'roomNotFound'});
 						} else {
 							delete record.$loki;
-							RocketChat.models.Rooms.upsert({ _id: record._id }, _.omit(record, '_id'));
+							RocketChat.models.Rooms.upsert({_id: record._id}, _.omit(record, '_id'));
 							RoomManager.close(type + name);
 							return openRoom(type, name);
 						}
@@ -84,7 +84,7 @@ function openRoom(type, name) {
 			}
 
 			if (FlowRouter.getQueryParam('msg')) {
-				const msg = { _id: FlowRouter.getQueryParam('msg'), rid: room._id };
+				const msg = {_id: FlowRouter.getQueryParam('msg'), rid: room._id};
 				RoomHistoryManager.getSurroundingMessages(msg);
 			}
 
@@ -92,5 +92,5 @@ function openRoom(type, name) {
 		})
 	);
 }
-export { openRoom };
+export {openRoom};
 this.openRoom = openRoom;

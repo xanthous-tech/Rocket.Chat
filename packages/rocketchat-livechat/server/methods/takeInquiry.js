@@ -1,20 +1,20 @@
 Meteor.methods({
 	'livechat:takeInquiry'(inquiryId) {
 		if (!Meteor.userId() || !RocketChat.authz.hasPermission(Meteor.userId(), 'view-l-room')) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'livechat:takeInquiry' });
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'livechat:takeInquiry'});
 		}
 
 		const inquiry = RocketChat.models.LivechatInquiry.findOneById(inquiryId);
 
 		if (!inquiry || inquiry.status === 'taken') {
-			throw new Meteor.Error('error-not-allowed', 'Inquiry already taken', { method: 'livechat:takeInquiry' });
+			throw new Meteor.Error('error-not-allowed', 'Inquiry already taken', {method: 'livechat:takeInquiry'});
 		}
 
 		const user = RocketChat.models.Users.findOneById(Meteor.userId());
 
 		const agent = {
 			agentId: user._id,
-			username: user.username
+			username: user.username,
 		};
 
 		// add subscription
@@ -29,12 +29,12 @@ Meteor.methods({
 			code: inquiry.code,
 			u: {
 				_id: agent.agentId,
-				username: agent.username
+				username: agent.username,
 			},
 			t: 'l',
 			desktopNotifications: 'all',
 			mobilePushNotifications: 'all',
-			emailNotifications: 'all'
+			emailNotifications: 'all',
 		};
 		RocketChat.models.Subscriptions.insert(subscriptionData);
 
@@ -45,7 +45,7 @@ Meteor.methods({
 
 		room.servedBy = {
 			_id: agent.agentId,
-			username: agent.username
+			username: agent.username,
 		};
 
 		// mark inquiry as taken
@@ -58,10 +58,10 @@ Meteor.methods({
 
 		RocketChat.Livechat.stream.emit(room._id, {
 			type: 'agentData',
-			data: RocketChat.models.Users.getAgentInfo(agent.agentId)
+			data: RocketChat.models.Users.getAgentInfo(agent.agentId),
 		});
 
 		// return room corresponding to inquiry (for redirecting agent to the room route)
 		return room;
-	}
+	},
 });

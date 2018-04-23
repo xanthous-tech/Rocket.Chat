@@ -8,8 +8,8 @@ export const upsertMessage = ({msg, subscription}) => {
 		msg.ignored = true;
 	}
 	const roles = [
-		(userId && UserRoles.findOne(userId, { fields: { roles: 1 }})) || {},
-		(userId && RoomRoles.findOne({rid: msg.rid, 'u._id': userId})) || {}
+		(userId && UserRoles.findOne(userId, {fields: {roles: 1}})) || {},
+		(userId && RoomRoles.findOne({rid: msg.rid, 'u._id': userId})) || {},
 	].map(e => e.roles);
 	msg.roles = _.union.apply(_.union, roles);
 	return ChatMessage.upsert({_id: msg._id}, msg);
@@ -28,7 +28,7 @@ export const RoomHistoryManager = new class {
 				isLoading: new ReactiveVar(false),
 				unreadNotLoaded: new ReactiveVar(0),
 				firstUnread: new ReactiveVar,
-				loaded: undefined
+				loaded: undefined,
 			};
 		}
 
@@ -50,7 +50,7 @@ export const RoomHistoryManager = new class {
 		// lastMessage ?= ChatMessage.findOne({rid: rid}, {sort: {ts: 1}})
 
 		if (lastMessage != null) {
-			({ ts } = lastMessage);
+			({ts} = lastMessage);
 		} else {
 			ts = undefined;
 		}
@@ -60,7 +60,7 @@ export const RoomHistoryManager = new class {
 
 		const subscription = ChatSubscription.findOne({rid});
 		if (subscription != null) {
-			({ ls } = subscription);
+			({ls} = subscription);
 			typeName = subscription.t + subscription.name;
 		} else {
 			const curRoomDoc = ChatRoom.findOne({_id: rid});
@@ -127,7 +127,7 @@ export const RoomHistoryManager = new class {
 			typeName = (curRoomDoc != null ? curRoomDoc.t : undefined) + (curRoomDoc != null ? curRoomDoc.name : undefined);
 		}
 
-		const { ts } = lastMessage;
+		const {ts} = lastMessage;
 
 		if (ts) {
 			return Meteor.call('loadNextMessages', rid, ts, limit, function(err, result) {
@@ -161,9 +161,9 @@ export const RoomHistoryManager = new class {
 		if (ChatMessage.findOne(message._id)) {
 			const wrapper = $('.messages-box .wrapper');
 			const msgElement = $(`#${ message._id }`, wrapper);
-			const pos = (wrapper.scrollTop() + msgElement.offset().top) - (wrapper.height()/2);
+			const pos = (wrapper.scrollTop() + msgElement.offset().top) - (wrapper.height() / 2);
 			wrapper.animate({
-				scrollTop: pos
+				scrollTop: pos,
 			}, 500);
 			msgElement.addClass('highlight');
 
@@ -176,7 +176,7 @@ export const RoomHistoryManager = new class {
 		} else {
 			const room = this.getRoom(message.rid);
 			room.isLoading.set(true);
-			ChatMessage.remove({ rid: message.rid });
+			ChatMessage.remove({rid: message.rid});
 
 			let typeName = undefined;
 
@@ -201,9 +201,9 @@ export const RoomHistoryManager = new class {
 					RoomManager.updateMentionsMarksOfRoom(typeName);
 					const wrapper = $('.messages-box .wrapper');
 					const msgElement = $(`#${ message._id }`, wrapper);
-					const pos = (wrapper.scrollTop() + msgElement.offset().top) - (wrapper.height()/2);
+					const pos = (wrapper.scrollTop() + msgElement.offset().top) - (wrapper.height() / 2);
 					wrapper.animate({
-						scrollTop: pos
+						scrollTop: pos,
 					}, 500);
 
 					msgElement.addClass('highlight');
@@ -251,7 +251,7 @@ export const RoomHistoryManager = new class {
 	}
 
 	clear(rid) {
-		ChatMessage.remove({ rid });
+		ChatMessage.remove({rid});
 		if (this.histories[rid] != null) {
 			this.histories[rid].hasMore.set(true);
 			this.histories[rid].isLoading.set(false);

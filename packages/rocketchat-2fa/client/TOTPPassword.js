@@ -22,10 +22,10 @@ Meteor.loginWithPasswordAndTOTP = function(selector, password, code, callback) {
 			totp: {
 				login: {
 					user: selector,
-					password: Accounts._hashPassword(password)
+					password: Accounts._hashPassword(password),
 				},
-				code
-			}
+				code,
+			},
 		}],
 		userCallback(error) {
 			if (error) {
@@ -33,7 +33,7 @@ Meteor.loginWithPasswordAndTOTP = function(selector, password, code, callback) {
 			} else {
 				callback && callback();
 			}
-		}
+		},
 	});
 };
 
@@ -53,7 +53,7 @@ Meteor.loginWithPassword = function(email, password, cb) {
 			showCancelButton: true,
 			closeOnConfirm: true,
 			confirmButtonText: t('Verify'),
-			cancelButtonText: t('Cancel')
+			cancelButtonText: t('Cancel'),
 		}, (code) => {
 			if (code === false) {
 				return cb();

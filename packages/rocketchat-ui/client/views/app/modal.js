@@ -66,7 +66,7 @@ this.modal = {
 
 			modal.close();
 		}
-	}
+	},
 };
 
 Template.rc_modal.helpers({
@@ -75,7 +75,7 @@ Template.rc_modal.helpers({
 	},
 	modalIcon() {
 		return `modal-${ this.type }`;
-	}
+	},
 });
 
 Template.rc_modal.onRendered(function() {
@@ -121,5 +121,5 @@ Template.rc_modal.events({
 			e.stopPropagation();
 			modal.close();
 		}
-	}
+	},
 });

@@ -6,7 +6,7 @@ Meteor.methods({
 
 		if (!Meteor.userId()) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
-				method: 'eraseRoom'
+				method: 'eraseRoom',
 			});
 		}
 
@@ -14,7 +14,7 @@ Meteor.methods({
 
 		if (!room) {
 			throw new Meteor.Error('error-invalid-room', 'Invalid room', {
-				method: 'eraseRoom'
+				method: 'eraseRoom',
 			});
 		}
 
@@ -24,8 +24,8 @@ Meteor.methods({
 			return RocketChat.models.Rooms.removeById(rid);
 		} else {
 			throw new Meteor.Error('error-not-allowed', 'Not allowed', {
-				method: 'eraseRoom'
+				method: 'eraseRoom',
 			});
 		}
-	}
+	},
 });

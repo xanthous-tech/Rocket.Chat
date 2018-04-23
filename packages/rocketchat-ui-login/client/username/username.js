@@ -5,7 +5,7 @@ Template.username.onCreated(function() {
 	return Meteor.call('getUsernameSuggestion', function(error, username) {
 		self.username.set({
 			ready: true,
-			username
+			username,
 		});
 		return Meteor.defer(() => self.find('input').focus());
 	});
@@ -14,7 +14,7 @@ Template.username.onCreated(function() {
 Template.username.helpers({
 	username() {
 		return Template.instance().username.get();
-	}
+	},
 });
 
 Template.username.events({
@@ -63,5 +63,5 @@ Template.username.events({
 			instance.username.set(username);
 			return RocketChat.callbacks.run('usernameSet');
 		});
-	}
+	},
 });

@@ -30,7 +30,7 @@ this.ChatMessages = class ChatMessages {
 	}
 
 	recordInputAsDraft() {
-		const { id } = this.editing;
+		const {id} = this.editing;
 
 		const message = this.getMessageById(id);
 		const record = this.records[id] || {};
@@ -70,12 +70,12 @@ this.ChatMessages = class ChatMessages {
 	}
 
 	toPrevMessage() {
-		const { index } = this.editing;
+		const {index} = this.editing;
 		return this.editByIndex((index != null) ? index - 1 : undefined);
 	}
 
 	toNextMessage() {
-		const { index } = this.editing;
+		const {index} = this.editing;
 		if (!this.editByIndex(index + 1)) { return this.clearEditing(); }
 	}
 
@@ -187,10 +187,10 @@ this.ChatMessages = class ChatMessages {
 
 			let msg = '';
 			const reply = $(input).data('reply');
-			if (reply!==undefined) {
+			if (reply !== undefined) {
 				const url = RocketChat.MessageAction.getPermaLink(reply._id);
 				msg = `[ ](${ url }) `;
-				const roomInfo = RocketChat.models.Rooms.findOne(reply.rid, { fields: { t: 1 } });
+				const roomInfo = RocketChat.models.Rooms.findOne(reply.rid, {fields: {t: 1}});
 				if (roomInfo.t !== 'd' && reply.u.username !== Meteor.user().username) {
 					msg += `@${ reply.u.username } `;
 				}
@@ -200,12 +200,12 @@ this.ChatMessages = class ChatMessages {
 				.removeData('reply')
 				.trigger('dataChange');
 
-			const msgObject = { _id: Random.id(), rid, msg};
+			const msgObject = {_id: Random.id(), rid, msg};
 
 			if (msg.slice(0, 2) === '+:') {
 				const reaction = msg.slice(1).trim();
 				if (RocketChat.emoji.list[reaction]) {
-					const lastMessage = ChatMessage.findOne({rid}, { fields: { ts: 1 }, sort: { ts: -1 }});
+					const lastMessage = ChatMessage.findOne({rid}, {fields: {ts: 1}, sort: {ts: -1}});
 					Meteor.call('setReaction', reaction, lastMessage._id);
 					input.value = '';
 					$(input).trigger('change').trigger('input');
@@ -214,7 +214,7 @@ this.ChatMessages = class ChatMessages {
 			}
 
 			// Run to allow local encryption, and maybe other client specific actions to be run before send
-			return RocketChat.promises.run('onClientBeforeSendMessage', msgObject).then(msgObject => {
+			return RocketChat.promises.run('onClientBeforeSendMessage', msgObject).then((msgObject) => {
 
 				// checks for the final msgObject.msg size before actually sending the message
 				if (this.isMessageTooLong(msgObject.msg)) {
@@ -237,7 +237,7 @@ this.ChatMessages = class ChatMessages {
 				this.hasValue.set(false);
 				this.stopTyping(rid);
 
-				//Check if message starts with /command
+				// Check if message starts with /command
 				if (msg[0] === '/') {
 					const match = msg.match(/^\/([^\s]+)(?:\s+(.*))?$/m);
 					if (match) {
@@ -251,7 +251,7 @@ this.ChatMessages = class ChatMessages {
 								if (commandOptions.clientOnly) {
 									commandOptions.callback(command, param, msgObject);
 								} else {
-									Meteor.call('slashCommand', {cmd: command, params: param, msg: msgObject }, (err, result) => typeof commandOptions.result === 'function' && commandOptions.result(err, result, {cmd: command, params: param, msg: msgObject }));
+									Meteor.call('slashCommand', {cmd: command, params: param, msg: msgObject}, (err, result) => typeof commandOptions.result === 'function' && commandOptions.result(err, result, {cmd: command, params: param, msg: msgObject}));
 								}
 
 								return;
@@ -263,14 +263,14 @@ this.ChatMessages = class ChatMessages {
 								_id: Random.id(),
 								rid,
 								ts: new Date,
-								msg: TAPi18n.__('No_such_command', { command: match[1] }),
+								msg: TAPi18n.__('No_such_command', {command: match[1]}),
 								u: {
-									username: RocketChat.settings.get('InternalHubot_Username')
+									username: RocketChat.settings.get('InternalHubot_Username'),
 								},
-								private: true
+								private: true,
 							};
 
-							ChatMessage.upsert({ _id: invalidCommandMsg._id }, invalidCommandMsg);
+							ChatMessage.upsert({_id: invalidCommandMsg._id}, invalidCommandMsg);
 							return;
 						}
 					}
@@ -306,14 +306,14 @@ this.ChatMessages = class ChatMessages {
 			confirmButtonColor: '#DD6B55',
 			confirmButtonText: t('Yes_delete_it'),
 			cancelButtonText: t('Cancel'),
-			html: false
+			html: false,
 		}, () => {
 			modal.open({
 				title: t('Deleted'),
 				text: t('Your_entry_has_been_deleted'),
 				type: 'success',
 				timer: 1000,
-				showConfirmButton: false
+				showConfirmButton: false,
 			});
 
 			if (this.editing.id === message._id) {
@@ -340,7 +340,7 @@ this.ChatMessages = class ChatMessages {
 			}
 		}
 
-		return Meteor.call('deleteMessage', { _id: message._id }, function(error) {
+		return Meteor.call('deleteMessage', {_id: message._id}, function(error) {
 			if (error) {
 				return handleError(error);
 			}
@@ -367,7 +367,7 @@ this.ChatMessages = class ChatMessages {
 
 	update(id, rid, msg, isDescription) {
 		if ((s.trim(msg) !== '') || (isDescription === true)) {
-			Meteor.call('updateMessage', { _id: id, msg, rid });
+			Meteor.call('updateMessage', {_id: id, msg, rid});
 			this.clearEditing();
 			return this.stopTyping(rid);
 		}
@@ -427,7 +427,7 @@ this.ChatMessages = class ChatMessages {
 			34, // Page Down
 			35, // Page Up
 			144, // Num Lock
-			145 // Scroll Lock
+			145, // Scroll Lock
 		];
 		for (i = 35; i <= 40; i++) { keyCodes.push(i); } // Home, End, Arrow Keys
 		for (i = 112; i <= 123; i++) { keyCodes.push(i); } // F1 - F12
@@ -456,7 +456,7 @@ this.ChatMessages = class ChatMessages {
 					this.send(rid, input);
 					return;
 				} else if (!event.shiftKey) {
-					return input.value +='\n';
+					return input.value += '\n';
 				}
 			} else if (sendOnEnter === 'alternative') {
 				if (event.shiftKey || event.ctrlKey || event.altKey || event.metaKey) { // Enter with shift/ctrl/alt
@@ -467,7 +467,6 @@ this.ChatMessages = class ChatMessages {
 				}
 			}
 		}
-
 
 
 		if (k === 9) { // Tab
@@ -524,7 +523,7 @@ this.ChatMessages = class ChatMessages {
 		// }
 	}
 
-	valueChanged(/*rid, event*/) {
+	valueChanged(/* rid, event*/) {
 		if (this.input.value.length === 1) {
 			return this.determineInputDirection();
 		}

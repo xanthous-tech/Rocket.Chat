@@ -75,17 +75,17 @@ WebApp.connectHandlers.stack.unshift({
 			hostname: instance.extraInformation.host,
 			port: instance.extraInformation.port,
 			path: req.originalUrl,
-			method: 'POST'
+			method: 'POST',
 		};
 
 		const proxy = http.request(options, function(proxy_res) {
 			proxy_res.pipe(res, {
-				end: true
+				end: true,
 			});
 		});
 
 		req.pipe(proxy, {
-			end: true
+			end: true,
 		});
-	})
+	}),
 });

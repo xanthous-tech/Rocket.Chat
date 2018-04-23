@@ -1,4 +1,4 @@
-import { RoomTypesCommon } from '../../lib/RoomTypesCommon';
+import {RoomTypesCommon} from '../../lib/RoomTypesCommon';
 
 RocketChat.roomTypes = new class roomTypesServer extends RoomTypesCommon {
 	/**

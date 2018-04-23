@@ -1,41 +1,37 @@
-import { AccountsServer } from 'meteor/rocketchat:accounts';
-import { RocketChat } from 'meteor/rocketchat:lib';
-import { Accounts } from 'meteor/accounts-base';
-import { Meteor } from 'meteor/meteor';
+import {AccountsServer} from 'meteor/rocketchat:accounts';
+import {RocketChat} from 'meteor/rocketchat:lib';
+import {Accounts} from 'meteor/accounts-base';
+import {Meteor} from 'meteor/meteor';
 
-import { GrantError } from './error';
+import {GrantError} from './error';
 import Providers from './providers';
 
-const setAvatarFromUrl = (userId, url) => {
-	return new Promise((resolve, reject) => {
-		Meteor.runAsUser(userId, () => {
-			Meteor.call('setAvatarFromService', url, '', 'url', (err) => {
-				if (err) {
-					if (err.details.timeToReset && err.details.timeToReset) {
-						reject((t('error-too-many-requests', {
-							seconds: parseInt(err.details.timeToReset / 1000)
-						})));
-					} else {
-						reject(t('Avatar_url_invalid_or_error'));
-					}
+const setAvatarFromUrl = (userId, url) => new Promise((resolve, reject) => {
+	Meteor.runAsUser(userId, () => {
+		Meteor.call('setAvatarFromService', url, '', 'url', (err) => {
+			if (err) {
+				if (err.details.timeToReset && err.details.timeToReset) {
+					reject((t('error-too-many-requests', {
+						seconds: parseInt(err.details.timeToReset / 1000),
+					})));
 				} else {
-					resolve();
+					reject(t('Avatar_url_invalid_or_error'));
 				}
-			});
+			} else {
+				resolve();
+			}
 		});
 	});
-};
+});
 
-const findUserByOAuthId = (providerName, id) => {
-	return RocketChat.models.Users.findOne({ [`settings.profile.oauth.${ providerName }`]: id });
-};
+const findUserByOAuthId = (providerName, id) => RocketChat.models.Users.findOne({[`settings.profile.oauth.${ providerName }`]: id});
 
 const addOAuthIdToUserProfile = (user, providerName, providerId) => {
 	const profile = Object.assign({}, user.settings.profile, {
 		oauth: {
 			...user.settings.profile.oauth,
-			[providerName]: providerId
-		}
+			[providerName]: providerId,
+		},
 	});
 
 	RocketChat.models.Users.setProfile(user.id, profile);
@@ -82,27 +78,27 @@ export async function authenticate(providerName, req) {
 	if (user) {
 		addOAuthIdToUserProfile(user, providerName, userData.id);
 
-		const loginResult = await AccountsServer.loginWithUser({ id: user.id });
+		const loginResult = await AccountsServer.loginWithUser({id: user.id});
 
 		tokens = loginResult.tokens;
 	} else {
 		const id = Accounts.createUser({
 			email: userData.email,
-			username: userData.username
+			username: userData.username,
 		});
 
 		RocketChat.models.Users.setProfile(id, {
 			avatar: userData.avatar,
 			oauth: {
-				[providerName]: userData.id
-			}
+				[providerName]: userData.id,
+			},
 		});
 		RocketChat.models.Users.setName(id, userData.name);
 		RocketChat.models.Users.setEmailVerified(id, userData.email);
 
 		await setAvatarFromUrl(id, userData.avatar);
 
-		const loginResult = await AccountsServer.loginWithUser({ id });
+		const loginResult = await AccountsServer.loginWithUser({id});
 
 		tokens = loginResult.tokens;
 	}

@@ -7,18 +7,18 @@ export const RoomSettingsEnum = {
 	REACT_WHEN_READ_ONLY: 'reactWhenReadOnly',
 	ARCHIVE_OR_UNARCHIVE: 'archiveOrUnarchive',
 	JOIN_CODE: 'joinCode',
-	BROADCAST: 'broadcast'
+	BROADCAST: 'broadcast',
 };
 
 export const UiTextContext = {
 	CLOSE_WARNING: 'closeWarning',
 	HIDE_WARNING: 'hideWarning',
 	LEAVE_WARNING: 'leaveWarning',
-	NO_ROOMS_SUBSCRIBED: 'noRoomsSubscribed'
+	NO_ROOMS_SUBSCRIBED: 'noRoomsSubscribed',
 };
 
 export class RoomTypeRouteConfig {
-	constructor({ name, path }) {
+	constructor({name, path}) {
 		if (typeof name !== 'undefined' && (typeof name !== 'string' || name.length === 0)) {
 			throw new Error('The name must be a string.');
 		}
@@ -47,7 +47,7 @@ export class RoomTypeConfig {
 		icon,
 		header,
 		label,
-		route
+		route,
 	}) {
 		if (typeof identifier !== 'string' || identifier.length === 0) {
 			throw new Error('The identifier must be a string.');

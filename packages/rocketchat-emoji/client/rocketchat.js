@@ -1,15 +1,15 @@
 RocketChat.emoji = {
 	packages: {
 		base: {
-			emojiCategories: { recent: 'Frequently_Used' },
+			emojiCategories: {recent: 'Frequently_Used'},
 			emojisByCategory: {
-				recent: []
+				recent: [],
 			},
 			toneList: {},
 			render(html) {
 				return html;
-			}
-		}
+			},
+		},
 	},
-	list: {}
+	list: {},
 };

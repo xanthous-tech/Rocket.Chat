@@ -1,4 +1,4 @@
-import { AppStorage } from '@rocket.chat/apps-engine/server/storage';
+import {AppStorage} from '@rocket.chat/apps-engine/server/storage';
 
 export class AppRealStorage extends AppStorage {
 	constructor(data) {
@@ -14,7 +14,7 @@ export class AppRealStorage extends AppStorage {
 			let doc;
 
 			try {
-				doc = this.db.findOne({ $or: [{ id: item.id }, { 'info.nameSlug': item.info.nameSlug }] });
+				doc = this.db.findOne({$or: [{id: item.id}, {'info.nameSlug': item.info.nameSlug}]});
 			} catch (e) {
 				return reject(e);
 			}
@@ -39,7 +39,7 @@ export class AppRealStorage extends AppStorage {
 			let doc;
 
 			try {
-				doc = this.db.findOne({ $or: [ {_id: id }, { id } ]});
+				doc = this.db.findOne({$or: [{_id: id}, {id}]});
 			} catch (e) {
 				return reject(e);
 			}
@@ -64,7 +64,7 @@ export class AppRealStorage extends AppStorage {
 
 			const items = new Map();
 
-			docs.forEach((i) => items.set(i.id, i));
+			docs.forEach(i => items.set(i.id, i));
 
 			resolve(items);
 		});
@@ -73,24 +73,24 @@ export class AppRealStorage extends AppStorage {
 	update(item) {
 		return new Promise((resolve, reject) => {
 			try {
-				this.db.update({ id: item.id }, item);
+				this.db.update({id: item.id}, item);
 			} catch (e) {
 				return reject(e);
 			}
 
-			this.retrieveOne(item.id).then((updated) => resolve(updated)).catch((err) => reject(err));
+			this.retrieveOne(item.id).then(updated => resolve(updated)).catch(err => reject(err));
 		});
 	}
 
 	remove(id) {
 		return new Promise((resolve, reject) => {
 			try {
-				this.db.remove({ id });
+				this.db.remove({id});
 			} catch (e) {
 				return reject(e);
 			}
 
-			resolve({ success: true });
+			resolve({success: true});
 		});
 	}
 }

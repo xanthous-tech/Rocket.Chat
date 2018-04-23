@@ -2,7 +2,7 @@ Package.describe({
 	name: 'rocketchat:lib',
 	version: '0.0.1',
 	summary: 'RocketChat libraries',
-	git: ''
+	git: '',
 });
 
 Package.onUse(function(api) {
@@ -49,7 +49,7 @@ Package.onUse(function(api) {
 		'lib/roomTypes/index.js',
 		'lib/roomTypes/private.js',
 		'lib/roomTypes/public.js',
-		'lib/roomTypes/unread.js'
+		'lib/roomTypes/unread.js',
 	]);
 
 	// COMMON LIB

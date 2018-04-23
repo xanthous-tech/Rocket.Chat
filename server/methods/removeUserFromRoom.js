@@ -2,20 +2,20 @@ Meteor.methods({
 	removeUserFromRoom(data) {
 		check(data, Match.ObjectIncluding({
 			rid: String,
-			username: String
+			username: String,
 		}));
 
 		const fromId = Meteor.userId();
 
 		if (!fromId) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
-				method: 'removeUserFromRoom'
+				method: 'removeUserFromRoom',
 			});
 		}
 
 		if (!RocketChat.authz.hasPermission(fromId, 'remove-user', data.rid)) {
 			throw new Meteor.Error('error-not-allowed', 'Not allowed', {
-				method: 'removeUserFromRoom'
+				method: 'removeUserFromRoom',
 			});
 		}
 
@@ -23,13 +23,13 @@ Meteor.methods({
 
 		if (!room || room.t === 'd') {
 			throw new Meteor.Error('error-not-allowed', 'Not allowed', {
-				method: 'removeUserFromRoom'
+				method: 'removeUserFromRoom',
 			});
 		}
 
 		if (Array.isArray(room.usernames) === false || room.usernames.includes(data.username) === false) {
 			throw new Meteor.Error('error-user-not-in-room', 'User is not in this room', {
-				method: 'removeUserFromRoom'
+				method: 'removeUserFromRoom',
 			});
 		}
 
@@ -40,7 +40,7 @@ Meteor.methods({
 
 			if (numOwners === 1) {
 				throw new Meteor.Error('error-you-are-last-owner', 'You are the last owner. Please set new owner before leaving the room.', {
-					method: 'removeUserFromRoom'
+					method: 'removeUserFromRoom',
 				});
 			}
 		}
@@ -58,10 +58,10 @@ Meteor.methods({
 		RocketChat.models.Messages.createUserRemovedWithRoomIdAndUser(data.rid, removedUser, {
 			u: {
 				_id: fromUser._id,
-				username: fromUser.username
-			}
+				username: fromUser.username,
+			},
 		});
 
 		return true;
-	}
+	},
 });

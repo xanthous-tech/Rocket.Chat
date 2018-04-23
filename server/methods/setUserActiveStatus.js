@@ -5,13 +5,13 @@ Meteor.methods({
 
 		if (!Meteor.userId()) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
-				method: 'setUserActiveStatus'
+				method: 'setUserActiveStatus',
 			});
 		}
 
 		if (RocketChat.authz.hasPermission(Meteor.userId(), 'edit-other-user-active-status') !== true) {
 			throw new Meteor.Error('error-not-allowed', 'Not allowed', {
-				method: 'setUserActiveStatus'
+				method: 'setUserActiveStatus',
 			});
 		}
 
@@ -37,7 +37,7 @@ Meteor.methods({
 					to: destinations,
 					from: RocketChat.settings.get('From_Email'),
 					subject: Accounts.emailTemplates.userActivated.subject({active}),
-					html: Accounts.emailTemplates.userActivated.html({active, name: user.name, username: user.username})
+					html: Accounts.emailTemplates.userActivated.html({active, name: user.name, username: user.username}),
 				};
 
 				Meteor.defer(() => Email.send(email));
@@ -47,5 +47,5 @@ Meteor.methods({
 		}
 
 		return false;
-	}
+	},
 });

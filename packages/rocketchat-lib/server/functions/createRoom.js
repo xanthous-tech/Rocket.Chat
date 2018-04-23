@@ -2,18 +2,18 @@
 import _ from 'underscore';
 import s from 'underscore.string';
 
-RocketChat.createRoom = function(type, name, owner, members, readOnly, extraData={}) {
+RocketChat.createRoom = function(type, name, owner, members, readOnly, extraData = {}) {
 	name = s.trim(name);
 	owner = s.trim(owner);
 	members = [].concat(members);
 
 	if (!name) {
-		throw new Meteor.Error('error-invalid-name', 'Invalid name', { function: 'RocketChat.createRoom' });
+		throw new Meteor.Error('error-invalid-name', 'Invalid name', {function: 'RocketChat.createRoom'});
 	}
 
-	owner = RocketChat.models.Users.findOneByUsername(owner, { fields: { username: 1 }});
+	owner = RocketChat.models.Users.findOneByUsername(owner, {fields: {username: 1}});
 	if (!owner) {
-		throw new Meteor.Error('error-invalid-user', 'Invalid user', { function: 'RocketChat.createRoom' });
+		throw new Meteor.Error('error-invalid-user', 'Invalid user', {function: 'RocketChat.createRoom'});
 	}
 
 	if (!_.contains(members, owner.username)) {
@@ -34,12 +34,12 @@ RocketChat.createRoom = function(type, name, owner, members, readOnly, extraData
 		usernames: members,
 		u: {
 			_id: owner._id,
-			username: owner.username
-		}
+			username: owner.username,
+		},
 	}, extraData, {
 		ts: now,
 		ro: readOnly === true,
-		sysMes: readOnly !== true
+		sysMes: readOnly !== true,
 	});
 
 	if (Apps && Apps.isLoaded()) {
@@ -64,7 +64,7 @@ RocketChat.createRoom = function(type, name, owner, members, readOnly, extraData
 	room = RocketChat.models.Rooms.createWithFullRoomData(room);
 
 	for (const username of members) {
-		const member = RocketChat.models.Users.findOneByUsername(username, { fields: { username: 1 }});
+		const member = RocketChat.models.Users.findOneByUsername(username, {fields: {username: 1}});
 		if (!member) {
 			continue;
 		}
@@ -74,7 +74,7 @@ RocketChat.createRoom = function(type, name, owner, members, readOnly, extraData
 			RocketChat.models.Rooms.muteUsernameByRoomId(room._id, username);
 		}
 
-		const extra = { open: true };
+		const extra = {open: true};
 
 		if (username === owner.username) {
 			extra.ls = now;
@@ -103,6 +103,6 @@ RocketChat.createRoom = function(type, name, owner, members, readOnly, extraData
 
 	return {
 		rid: room._id,
-		name: room.name
+		name: room.name,
 	};
 };

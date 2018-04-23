@@ -5,8 +5,8 @@ const config = {
 	identityPath: '/oauth/me',
 	addAutopublishFields: {
 		forLoggedInUser: ['services.wordpress'],
-		forOtherUsers: ['services.wordpress.user_login']
-	}
+		forOtherUsers: ['services.wordpress.user_login'],
+	},
 };
 
 const WordPress = new CustomOAuth('wordpress', config);

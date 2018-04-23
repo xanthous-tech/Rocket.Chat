@@ -23,9 +23,7 @@ RocketChat.messageBox.actions = new class {
 			this.actions[group] = [];
 		}
 
-		const actionExists = this.actions[group].find((action) => {
-			return action.label === label;
-		});
+		const actionExists = this.actions[group].find(action => action.label === label);
 
 		if (actionExists) {
 			return;

@@ -8,22 +8,22 @@ RocketChat.setUserAvatar = function(user, dataURI, contentType, service) {
 		let result = null;
 
 		try {
-			result = HTTP.get(dataURI, { npmRequestOptions: {encoding: 'binary'} });
+			result = HTTP.get(dataURI, {npmRequestOptions: {encoding: 'binary'}});
 		} catch (error) {
 			if (!error.response || error.response.statusCode !== 404) {
 				console.log(`Error while handling the setting of the avatar from a url (${ dataURI }) for ${ user.username }:`, error);
-				throw new Meteor.Error('error-avatar-url-handling', `Error while handling avatar setting from a URL (${ dataURI }) for ${ user.username }`, { function: 'RocketChat.setUserAvatar', url: dataURI, username: user.username });
+				throw new Meteor.Error('error-avatar-url-handling', `Error while handling avatar setting from a URL (${ dataURI }) for ${ user.username }`, {function: 'RocketChat.setUserAvatar', url: dataURI, username: user.username});
 			}
 		}
 
 		if (result.statusCode !== 200) {
 			console.log(`Not a valid response, ${ result.statusCode }, from the avatar url: ${ dataURI }`);
-			throw new Meteor.Error('error-avatar-invalid-url', `Invalid avatar URL: ${ dataURI }`, { function: 'RocketChat.setUserAvatar', url: dataURI });
+			throw new Meteor.Error('error-avatar-invalid-url', `Invalid avatar URL: ${ dataURI }`, {function: 'RocketChat.setUserAvatar', url: dataURI});
 		}
 
 		if (!/image\/.+/.test(result.headers['content-type'])) {
 			console.log(`Not a valid content-type from the provided url, ${ result.headers['content-type'] }, from the avatar url: ${ dataURI }`);
-			throw new Meteor.Error('error-avatar-invalid-url', `Invalid avatar URL: ${ dataURI }`, { function: 'RocketChat.setUserAvatar', url: dataURI });
+			throw new Meteor.Error('error-avatar-invalid-url', `Invalid avatar URL: ${ dataURI }`, {function: 'RocketChat.setUserAvatar', url: dataURI});
 		}
 
 		encoding = 'binary';
@@ -46,7 +46,7 @@ RocketChat.setUserAvatar = function(user, dataURI, contentType, service) {
 	const file = {
 		userId: user._id,
 		type: contentType,
-		size: buffer.length
+		size: buffer.length,
 	};
 
 	fileStore.insert(file, buffer, () => {

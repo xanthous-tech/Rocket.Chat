@@ -17,14 +17,14 @@ Meteor.startup(function() {
 			});
 		},
 		condition(message) {
-			if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null && RocketChat.settings.get('Message_AllowStarring')) {
+			if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null && RocketChat.settings.get('Message_AllowStarring')) {
 				return false;
 			}
 
 			return !_.findWhere(message.starred, {_id: Meteor.userId()});
 		},
 		order: 10,
-		group: 'menu'
+		group: 'menu',
 	});
 
 	RocketChat.MessageAction.addButton({
@@ -42,14 +42,14 @@ Meteor.startup(function() {
 			});
 		},
 		condition(message) {
-			if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null && RocketChat.settings.get('Message_AllowStarring')) {
+			if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null && RocketChat.settings.get('Message_AllowStarring')) {
 				return false;
 			}
 
 			return Boolean(_.findWhere(message.starred, {_id: Meteor.userId()}));
 		},
 		order: 10,
-		group: 'menu'
+		group: 'menu',
 	});
 
 	RocketChat.MessageAction.addButton({
@@ -65,13 +65,13 @@ Meteor.startup(function() {
 			RoomHistoryManager.getSurroundingMessages(message, 50);
 		},
 		condition(message) {
-			if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null) {
+			if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null) {
 				return false;
 			}
 			return true;
 		},
 		order: 100,
-		group: 'menu'
+		group: 'menu',
 	});
 
 	RocketChat.MessageAction.addButton({
@@ -86,12 +86,12 @@ Meteor.startup(function() {
 			toastr.success(TAPi18n.__('Copied'));
 		},
 		condition(message) {
-			if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null) {
+			if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null) {
 				return false;
 			}
 			return true;
 		},
 		order: 101,
-		group: 'menu'
+		group: 'menu',
 	});
 });

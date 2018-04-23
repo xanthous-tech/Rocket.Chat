@@ -17,8 +17,8 @@ function fallbackDefaultAccountSystem(bind, username, password) {
 		user: username,
 		password: {
 			digest: SHA256(password),
-			algorithm: 'sha-256'
-		}
+			algorithm: 'sha-256',
+		},
 	};
 
 	return Accounts._runLoginHandlers(bind, loginRequest);
@@ -36,13 +36,13 @@ const CROWD = class CROWD {
 
 		this.options = {
 			crowd: {
-				base: url
+				base: url,
 			},
 			application: {
 				name: RocketChat.settings.get('CROWD_APP_USERNAME'),
-				password: RocketChat.settings.get('CROWD_APP_PASSWORD')
+				password: RocketChat.settings.get('CROWD_APP_PASSWORD'),
 			},
-			rejectUnauthorized: RocketChat.settings.get('CROWD_Reject_Unauthorized')
+			rejectUnauthorized: RocketChat.settings.get('CROWD_Reject_Unauthorized'),
 		};
 
 		this.crowdClient = new AtlassianCrowd(this.options);
@@ -76,7 +76,7 @@ const CROWD = class CROWD {
 			username: userResponse.name,
 			email: userResponse.email,
 			password,
-			active: userResponse.active
+			active: userResponse.active,
 		};
 
 		return user;
@@ -87,10 +87,10 @@ const CROWD = class CROWD {
 			username: crowdUser.username,
 			emails: [{
 				address : crowdUser.email,
-				verified: true
+				verified: true,
 			}],
 			password: crowdUser.password,
-			active: crowdUser.active
+			active: crowdUser.active,
 		};
 
 		if (crowdUser.displayname) {
@@ -98,7 +98,7 @@ const CROWD = class CROWD {
 		}
 
 		Meteor.users.update(id, {
-			$set: user
+			$set: user,
 		});
 	}
 
@@ -121,7 +121,7 @@ const CROWD = class CROWD {
 						username: userResponse.name,
 						email: userResponse.email,
 						password: userResponse.password,
-						active: userResponse.active
+						active: userResponse.active,
 					};
 
 					self.syncDataToUser(crowdUser, user._id);
@@ -133,7 +133,7 @@ const CROWD = class CROWD {
 	addNewUser(crowdUser) {
 		const userQuery = {
 			crowd: true,
-			username: crowdUser.username
+			username: crowdUser.username,
 		};
 
 		// find our existinmg user if they exist
@@ -144,15 +144,15 @@ const CROWD = class CROWD {
 
 			Meteor.users.update(user._id, {
 				$push: {
-					'services.resume.loginTokens': Accounts._hashStampedToken(stampedToken)
-				}
+					'services.resume.loginTokens': Accounts._hashStampedToken(stampedToken),
+				},
 			});
 
 			this.syncDataToUser(crowdUser, user._id);
 
 			return {
 				userId: user._id,
-				token: stampedToken.token
+				token: stampedToken.token,
 			};
 		} else {
 			try {
@@ -164,16 +164,16 @@ const CROWD = class CROWD {
 			const updateUser = {
 				name: crowdUser.displayname,
 				crowd: true,
-				active: crowdUser.active
+				active: crowdUser.active,
 			};
 
 			Meteor.users.update(crowdUser._id, {
-				$set: updateUser
+				$set: updateUser,
 			});
 		}
 
 		return {
-			userId: crowdUser._id
+			userId: crowdUser._id,
 		};
 	}
 };
@@ -227,11 +227,11 @@ Meteor.methods({
 	crowd_test_connection() {
 		const user = Meteor.user();
 		if (!user) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'crowd_test_connection' });
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'crowd_test_connection'});
 		}
 
 		if (!RocketChat.authz.hasRole(user._id, 'admin')) {
-			throw new Meteor.Error('error-not-authorized', 'Not authorized', { method: 'crowd_test_connection' });
+			throw new Meteor.Error('error-not-authorized', 'Not authorized', {method: 'crowd_test_connection'});
 		}
 
 		if (RocketChat.settings.get('CROWD_Enable') !== true) {
@@ -244,12 +244,12 @@ Meteor.methods({
 			crowd.checkConnection();
 		} catch (error) {
 			logger.error('Invalid crowd connection details, check the url and application username/password and make sure this server is allowed to speak to crowd');
-			throw new Meteor.Error('Invalid connection details', '', { method: 'crowd_test_connection' });
+			throw new Meteor.Error('Invalid connection details', '', {method: 'crowd_test_connection'});
 		}
 
 		return {
 			message: 'Connection success',
-			params: []
+			params: [],
 		};
-	}
+	},
 });

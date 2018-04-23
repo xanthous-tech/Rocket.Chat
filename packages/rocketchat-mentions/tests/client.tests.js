@@ -7,7 +7,7 @@ let mention;
 beforeEach(function functionName() {
 	mention = new Mentions({
 		pattern: '[0-9a-zA-Z-_.]+',
-		me: () => 'me'
+		me: () => 'me',
 	});
 });
 describe('Mention', function() {
@@ -15,12 +15,12 @@ describe('Mention', function() {
 		const regexp = '[0-9a-zA-Z-_.]+';
 		beforeEach(() => mention.pattern = () => regexp);
 		describe('by function', function functionName() {
-			it(`should be equal to ${ regexp }`, ()=> {
+			it(`should be equal to ${ regexp }`, () => {
 				assert.equal(regexp, mention.pattern);
 			});
 		});
 		describe('by const', function functionName() {
-			it(`should be equal to ${ regexp }`, ()=> {
+			it(`should be equal to ${ regexp }`, () => {
 				assert.equal(regexp, mention.pattern);
 			});
 		});
@@ -42,13 +42,13 @@ describe('Mention', function() {
 		const me = 'me';
 		describe('by function', function functionName() {
 			beforeEach(() => mention.me = () => me);
-			it(`should be equal to ${ me }`, ()=> {
+			it(`should be equal to ${ me }`, () => {
 				assert.equal(me, mention.me);
 			});
 		});
 		describe('by const', function functionName() {
 			beforeEach(() => mention.me = me);
-			it(`should be equal to ${ me }`, ()=> {
+			it(`should be equal to ${ me }`, () => {
 				assert.equal(me, mention.me);
 			});
 		});
@@ -58,9 +58,9 @@ describe('Mention', function() {
 			const result = [];
 			[
 				'#rocket.cat',
-				'hello rocket.cat how are you?'
+				'hello rocket.cat how are you?',
 			]
-				.forEach(text => {
+				.forEach((text) => {
 					it(`should return "${ JSON.stringify(result) }" from "${ text }"`, () => {
 						assert.deepEqual(result, mention.getUserMentions(text));
 					});
@@ -75,9 +75,9 @@ describe('Mention', function() {
 				'hello,@rocket.cat',
 				'@rocket.cat, hello',
 				'@rocket.cat,hello',
-				'hello @rocket.cat how are you?'
+				'hello @rocket.cat how are you?',
 			]
-				.forEach(text => {
+				.forEach((text) => {
 					it(`should return "${ JSON.stringify(result) }" from "${ text }"`, () => {
 						assert.deepEqual(result, mention.getUserMentions(text));
 					});
@@ -99,9 +99,9 @@ describe('Mention', function() {
 				' @rocket.cat @all ',
 				'hello @rocket.cat and @all',
 				'@rocket.cat, hello @all',
-				'hello @rocket.cat and @all how are you?'
+				'hello @rocket.cat and @all how are you?',
 			]
-				.forEach(text => {
+				.forEach((text) => {
 					it(`should return "${ JSON.stringify(result) }" from "${ text }"`, () => {
 						assert.deepEqual(result, mention.getUserMentions(text));
 					});
@@ -114,9 +114,9 @@ describe('Mention', function() {
 			const result = [];
 			[
 				'@rocket.cat',
-				'hello rocket.cat how are you?'
+				'hello rocket.cat how are you?',
 			]
-				.forEach(text => {
+				.forEach((text) => {
 					it(`should return "${ JSON.stringify(result) }" from "${ text }"`, () => {
 						assert.deepEqual(result, mention.getChannelMentions(text));
 					});
@@ -129,8 +129,8 @@ describe('Mention', function() {
 				' #general ',
 				'hello #general',
 				'#general, hello',
-				'hello #general, how are you?'
-			].forEach(text => {
+				'hello #general, how are you?',
+			].forEach((text) => {
 				it(`should return "${ JSON.stringify(result) }" from "${ text }"`, () => {
 					assert.deepEqual(result, mention.getChannelMentions(text));
 				});
@@ -152,8 +152,8 @@ describe('Mention', function() {
 				' #general #other',
 				'hello #general and #other',
 				'#general, hello #other',
-				'hello #general #other, how are you?'
-			].forEach(text => {
+				'hello #general #other, how are you?',
+			].forEach((text) => {
 				it(`should return "${ JSON.stringify(result) }" from "${ text }"`, () => {
 					assert.deepEqual(result, mention.getChannelMentions(text));
 				});
@@ -162,8 +162,8 @@ describe('Mention', function() {
 		describe('for url with fragments', () => {
 			const result = [];
 			[
-				'http://localhost/#general'
-			].forEach(text => {
+				'http://localhost/#general',
+			].forEach((text) => {
 				it(`should return nothing from "${ text }"`, () => {
 					assert.deepEqual(result, mention.getChannelMentions(text));
 				});
@@ -172,8 +172,8 @@ describe('Mention', function() {
 		describe('for messages with url and channels', () => {
 			const result = ['#general'];
 			[
-				'http://localhost/#general #general'
-			].forEach(text => {
+				'http://localhost/#general #general',
+			].forEach((text) => {
 				it(`should return "${ JSON.stringify(result) }" from "${ text }"`, () => {
 					assert.deepEqual(result, mention.getChannelMentions(text));
 				});
@@ -184,7 +184,7 @@ describe('Mention', function() {
 });
 const message = {
 	mentions:[{username:'rocket.cat', name: 'Rocket.Cat'}, {username:'admin', name: 'Admin'}, {username: 'me', name: 'Me'}],
-	channels: [{name: 'general'}, {name: 'rocket.cat'}]
+	channels: [{name: 'general'}, {name: 'rocket.cat'}],
 };
 describe('replace methods', function() {
 	describe('replaceUsers', () => {

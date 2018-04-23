@@ -1,6 +1,6 @@
 /* globals getEmojiUrlFromName:true, updateEmojiCustom:true, deleteEmojiCustom:true, isSetNotNull */
 RocketChat.emoji.packages.emojiCustom = {
-	emojiCategories: { rocket: 'Custom' },
+	emojiCategories: {rocket: 'Custom'},
 	toneList: {},
 	list: [],
 
@@ -18,16 +18,16 @@ RocketChat.emoji.packages.emojiCustom = {
 
 				let dataCheck = RocketChat.emoji.list[shortname];
 				if (dataCheck.hasOwnProperty('aliasOf')) {
-					emojiAlias = dataCheck['aliasOf'];
+					emojiAlias = dataCheck.aliasOf;
 					dataCheck = RocketChat.emoji.list[`:${ emojiAlias }:`];
 				}
 
-				return `<span class="emoji" style="background-image:url(${ getEmojiUrlFromName(emojiAlias, dataCheck['extension']) });" data-emoji="${ emojiAlias }" title="${ shortname }">${ shortname }</span>`;
+				return `<span class="emoji" style="background-image:url(${ getEmojiUrlFromName(emojiAlias, dataCheck.extension) });" data-emoji="${ emojiAlias }" title="${ shortname }">${ shortname }</span>`;
 			}
 		});
 
 		return html;
-	}
+	},
 };
 
 getEmojiUrlFromName = function(name, extension) {
@@ -105,7 +105,7 @@ updateEmojiCustom = function(emojiData) {
 		RocketChat.emoji.packages.emojiCustom.emojisByCategory.rocket.push(`${ emojiData.name }`);
 		RocketChat.emoji.packages.emojiCustom.list.push(`:${ emojiData.name }:`);
 	}
-	RocketChat.emoji.list[`:${ emojiData.name }:`] = Object.assign({ emojiPackage: 'emojiCustom' }, RocketChat.emoji.list[`:${ emojiData.name }:`], emojiData);
+	RocketChat.emoji.list[`:${ emojiData.name }:`] = Object.assign({emojiPackage: 'emojiCustom'}, RocketChat.emoji.list[`:${ emojiData.name }:`], emojiData);
 	if (currentAliases) {
 		for (const alias of emojiData.aliases) {
 			RocketChat.emoji.packages.emojiCustom.list.push(`:${ alias }:`);
@@ -117,14 +117,14 @@ updateEmojiCustom = function(emojiData) {
 
 	const url = getEmojiUrlFromName(emojiData.name, emojiData.extension);
 
-	//update in admin interface
+	// update in admin interface
 	if (previousExists && emojiData.name !== emojiData.previousName) {
 		$(document).find(`.emojiAdminPreview-image[data-emoji='${ emojiData.previousName }']`).css('background-image', `url('${ url })'`).attr('data-emoji', `${ emojiData.name }`);
 	} else {
 		$(document).find(`.emojiAdminPreview-image[data-emoji='${ emojiData.name }']`).css('background-image', `url('${ url }')`);
 	}
 
-	//update in picker
+	// update in picker
 	if (previousExists && emojiData.name !== emojiData.previousName) {
 		$(document).find(`li[data-emoji='${ emojiData.previousName }'] span`).css('background-image', `url('${ url }')`).attr('data-emoji', `${ emojiData.name }`);
 		$(document).find(`li[data-emoji='${ emojiData.previousName }']`).attr('data-emoji', `${ emojiData.name }`).attr('class', `emoji-${ emojiData.name }`);
@@ -132,7 +132,7 @@ updateEmojiCustom = function(emojiData) {
 		$(document).find(`li[data-emoji='${ emojiData.name }'] span`).css('background-image', `url('${ url }')`);
 	}
 
-	//update in picker and opened rooms
+	// update in picker and opened rooms
 	for (key in RoomManager.openedRooms) {
 		if (RoomManager.openedRooms.hasOwnProperty(key)) {
 			const room = RoomManager.openedRooms[key];
@@ -149,17 +149,17 @@ updateEmojiCustom = function(emojiData) {
 
 Meteor.startup(() =>
 	Meteor.call('listEmojiCustom', (error, result) => {
-		RocketChat.emoji.packages.emojiCustom.emojisByCategory = { rocket: [] };
+		RocketChat.emoji.packages.emojiCustom.emojisByCategory = {rocket: []};
 		for (const emoji of result) {
 			RocketChat.emoji.packages.emojiCustom.emojisByCategory.rocket.push(emoji.name);
 			RocketChat.emoji.packages.emojiCustom.list.push(`:${ emoji.name }:`);
 			RocketChat.emoji.list[`:${ emoji.name }:`] = emoji;
 			RocketChat.emoji.list[`:${ emoji.name }:`].emojiPackage = 'emojiCustom';
-			for (const alias of emoji['aliases']) {
+			for (const alias of emoji.aliases) {
 				RocketChat.emoji.packages.emojiCustom.list.push(`:${ alias }:`);
 				RocketChat.emoji.list[`:${ alias }:`] = {
 					emojiPackage: 'emojiCustom',
-					aliasOf: emoji.name
+					aliasOf: emoji.name,
 				};
 			}
 		}

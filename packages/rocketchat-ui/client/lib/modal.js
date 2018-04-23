@@ -3,8 +3,8 @@ this.Modal = (function() {
 	const self = {};
 	const win = $(window);
 
-	//mistérios da vida c.483: Pq a self.$window diz ter 100% da janela via css mas na verdade ocupa menos de 100% da tela?
-	//isso impede que o retorno da janela ao normal quando não mais necessária a classe fluid. (comportamento dançante)
+	// mistérios da vida c.483: Pq a self.$window diz ter 100% da janela via css mas na verdade ocupa menos de 100% da tela?
+	// isso impede que o retorno da janela ao normal quando não mais necessária a classe fluid. (comportamento dançante)
 
 	function focus() {
 		if (self.$modal) {
@@ -104,5 +104,5 @@ this.Modal = (function() {
 		}
 	}
 
-	return { init, open, close, focus, setContent };
+	return {init, open, close, focus, setContent};
 }());

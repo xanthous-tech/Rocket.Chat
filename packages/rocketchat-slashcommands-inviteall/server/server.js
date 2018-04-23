@@ -28,8 +28,8 @@ function inviteAll(type) {
 				ts: new Date(),
 				msg: TAPi18n.__('Channel_doesnt_exist', {
 					postProcess: 'sprintf',
-					sprintf: [channel]
-				}, currentUser.language)
+					sprintf: [channel],
+				}, currentUser.language),
 			});
 		}
 		const users = baseChannel.usernames || [];
@@ -37,7 +37,7 @@ function inviteAll(type) {
 		try {
 			if (users.length > RocketChat.settings.get('API_User_Limit')) {
 				throw new Meteor.Error('error-user-limit-exceeded', 'User Limit Exceeded', {
-					method: 'addAllToRoom'
+					method: 'addAllToRoom',
 				});
 			}
 
@@ -49,20 +49,20 @@ function inviteAll(type) {
 					ts: new Date(),
 					msg: TAPi18n.__('Channel_created', {
 						postProcess: 'sprintf',
-						sprintf: [channel]
-					}, currentUser.language)
+						sprintf: [channel],
+					}, currentUser.language),
 				});
 			} else {
 				Meteor.call('addUsersToRoom', {
 					rid: targetChannel._id,
-					users
+					users,
 				});
 			}
 			return RocketChat.Notifications.notifyUser(Meteor.userId(), 'message', {
 				_id: Random.id(),
 				rid: item.rid,
 				ts: new Date(),
-				msg: TAPi18n.__('Users_added', null, currentUser.language)
+				msg: TAPi18n.__('Users_added', null, currentUser.language),
 			});
 		} catch (e) {
 			const msg = e.error === 'cant-invite-for-direct-room' ? 'Cannot_invite_users_to_direct_rooms' : e.error;
@@ -70,7 +70,7 @@ function inviteAll(type) {
 				_id: Random.id(),
 				rid: item.rid,
 				ts: new Date(),
-				msg: TAPi18n.__(msg, null, currentUser.language)
+				msg: TAPi18n.__(msg, null, currentUser.language),
 			});
 		}
 	};
@@ -78,10 +78,10 @@ function inviteAll(type) {
 
 RocketChat.slashCommands.add('invite-all-to', inviteAll('to'), {
 	description: 'Invite_user_to_join_channel_all_to',
-	params: '#room'
+	params: '#room',
 });
 RocketChat.slashCommands.add('invite-all-from', inviteAll('from'), {
 	description: 'Invite_user_to_join_channel_all_from',
-	params: '#room'
+	params: '#room',
 });
 module.exports = inviteAll;

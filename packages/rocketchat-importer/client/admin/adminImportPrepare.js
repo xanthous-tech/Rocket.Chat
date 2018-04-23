@@ -1,4 +1,4 @@
-import { Importers } from 'meteor/rocketchat:importer';
+import {Importers} from 'meteor/rocketchat:importer';
 import toastr from 'toastr';
 
 Template.adminImportPrepare.helpers({
@@ -24,7 +24,7 @@ Template.adminImportPrepare.helpers({
 	},
 	message_count() {
 		return Template.instance().message_count.get();
-	}
+	},
 });
 
 Template.adminImportPrepare.events({
@@ -33,7 +33,7 @@ Template.adminImportPrepare.events({
 		if (!importer || !importer.key) { return; }
 
 		const e = event.originalEvent || event;
-		let { files } = e.target;
+		let {files} = e.target;
 		if (!files || (files.length === 0)) {
 			files = (e.dataTransfer != null ? e.dataTransfer.files : undefined) || [];
 		}
@@ -86,7 +86,7 @@ Template.adminImportPrepare.events({
 			channel.do_import = $(`[name=${ channel.channel_id }]`).is(':checked');
 		}
 
-		Meteor.call('startImport', FlowRouter.getParam('importer'), { users: template.users.get(), channels: template.channels.get() }, function(error) {
+		Meteor.call('startImport', FlowRouter.getParam('importer'), {users: template.users.get(), channels: template.channels.get()}, function(error) {
 			if (error) {
 				console.warn('Error on starting the import:', error);
 				handleError(error);
@@ -111,14 +111,14 @@ Template.adminImportPrepare.events({
 	},
 
 	'click .button.uncheck-deleted-users'(event, template) {
-		Array.from(template.users.get()).filter((user) => user.is_deleted).map((user) =>
+		Array.from(template.users.get()).filter(user => user.is_deleted).map(user =>
 			$(`[name=${ user.user_id }]`).attr('checked', false));
 	},
 
 	'click .button.uncheck-archived-channels'(event, template) {
-		Array.from(template.channels.get()).filter((channel) => channel.is_archived).map((channel) =>
+		Array.from(template.channels.get()).filter(channel => channel.is_archived).map(channel =>
 			$(`[name=${ channel.channel_id }]`).attr('checked', false));
-	}
+	},
 });
 
 
@@ -133,7 +133,7 @@ Template.adminImportPrepare.onCreated(function() {
 	function loadSelection(progress) {
 		if ((progress != null ? progress.step : undefined)) {
 			switch (progress.step) {
-				//When the import is running, take the user to the progress page
+				// When the import is running, take the user to the progress page
 				case 'importer_importing_started':
 				case 'importer_importing_users':
 				case 'importer_importing_channels':

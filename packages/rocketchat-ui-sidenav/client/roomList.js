@@ -1,7 +1,7 @@
 /* globals RocketChat */
 import _ from 'underscore';
 
-import { UiTextContext } from 'meteor/rocketchat:lib';
+import {UiTextContext} from 'meteor/rocketchat:lib';
 
 Template.roomList.helpers({
 	rooms() {
@@ -19,7 +19,7 @@ Template.roomList.helpers({
 		const user = Meteor.user();
 		const sortBy = RocketChat.getUserPreference(user, 'sidebarSortby') || 'alphabetical';
 		const query = {
-			open: true
+			open: true,
 		};
 
 		const sort = {};
@@ -52,15 +52,15 @@ Template.roomList.helpers({
 			}
 
 			if (['c', 'p'].includes(this.identifier)) {
-				query.tokens = { $exists: false };
+				query.tokens = {$exists: false};
 			} else if (this.identifier === 'tokens' && user && user.services && user.services.tokenpass) {
-				query.tokens = { $exists: true };
+				query.tokens = {$exists: true};
 			}
 
 			if (RocketChat.getUserPreference(user, 'sidebarShowUnread')) {
 				query.$or = [
 					{alert: {$ne: true}},
-					{hideUnreadStatus: true}
+					{hideUnreadStatus: true},
 				];
 			}
 			query.t = {$in: types};
@@ -74,11 +74,11 @@ Template.roomList.helpers({
 			RocketChat.models.Rooms.find();
 			const rooms = RocketChat.models.Rooms._collection._docs._map;
 
-			return _.sortBy(list.map(sub => {
+			return _.sortBy(list.map((sub) => {
 				const lm = rooms[sub.rid] && rooms[sub.rid]._updatedAt;
 				return {
 					...sub,
-					lm: lm && lm.toISOString && lm.toISOString()
+					lm: lm && lm.toISOString && lm.toISOString(),
 				};
 			}), 'lm').reverse();
 		}
@@ -113,5 +113,5 @@ Template.roomList.helpers({
 
 	showRoomCounter() {
 		return RocketChat.getUserPreference(Meteor.user(), 'roomCounterSidebar');
-	}
+	},
 });

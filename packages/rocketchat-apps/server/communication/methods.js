@@ -23,7 +23,7 @@ export class AppMethods {
 
 			'apps/is-loaded'() {
 				return instance.isLoaded();
-			}
+			},
 		});
 	}
 }

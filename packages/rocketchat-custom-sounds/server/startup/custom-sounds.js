@@ -25,14 +25,14 @@ Meteor.startup(function() {
 
 	this.RocketChatFileCustomSoundsInstance = new RocketChatStore({
 		name: 'custom_sounds',
-		absolutePath: path
+		absolutePath: path,
 	});
 
 	self = this;
 
-	return WebApp.connectHandlers.use('/custom-sounds/', Meteor.bindEnvironment(function(req, res/*, next*/) {
+	return WebApp.connectHandlers.use('/custom-sounds/', Meteor.bindEnvironment(function(req, res/* , next*/) {
 		const params =
-			{ sound: decodeURIComponent(req.url.replace(/^\//, '').replace(/\?.*$/, '')) };
+			{sound: decodeURIComponent(req.url.replace(/^\//, '').replace(/\?.*$/, ''))};
 
 		if (_.isEmpty(params.sound)) {
 			res.writeHead(403);

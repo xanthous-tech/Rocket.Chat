@@ -22,7 +22,7 @@ const acEvents = {
 	},
 	'blur [name="users"]'(e, t) {
 		t.ac.onBlur(e);
-	}
+	},
 };
 
 const filterNames = (old) => {
@@ -44,7 +44,7 @@ Template.inviteUsers.helpers({
 	autocomplete(key) {
 		const instance = Template.instance();
 		const param = instance.ac[key];
-		return typeof param === 'function' ? param.apply(instance.ac): param;
+		return typeof param === 'function' ? param.apply(instance.ac) : param;
 	},
 	items() {
 		return Template.instance().ac.filteredList();
@@ -59,12 +59,12 @@ Template.inviteUsers.helpers({
 				return `@${ f.length === 0 ? text : text.replace(new RegExp(filter), function(part) {
 					return `<strong>${ part }</strong>`;
 				}) }`;
-			}
+			},
 		};
 	},
 	selectedUsers() {
 		return Template.instance().selectedUsers.get();
-	}
+	},
 });
 
 Template.inviteUsers.events({
@@ -93,7 +93,7 @@ Template.inviteUsers.events({
 
 		Meteor.call('addUsersToRoom', {
 			rid: Session.get('openedRoom'),
-			users
+			users,
 		}, function(err) {
 			if (err) {
 				return toastr.error(err);
@@ -101,7 +101,7 @@ Template.inviteUsers.events({
 			toastr.success(t('Users_added'));
 			instance.selectedUsers.set([]);
 		});
-	}
+	},
 });
 
 Template.inviteUsers.onRendered(function() {
@@ -128,7 +128,7 @@ Template.inviteUsers.onCreated(function() {
 	this.ac = new AutoComplete({
 		selector:{
 			item: '.rc-popup-list__item',
-			container: '.rc-popup-list__list'
+			container: '.rc-popup-list__list',
 		},
 
 		limit: 10,
@@ -142,10 +142,10 @@ Template.inviteUsers.onCreated(function() {
 			filter,
 			doNotChangeWidth: false,
 			selector(match) {
-				return { term: match };
+				return {term: match};
 			},
-			sort: 'username'
-		}]
+			sort: 'username',
+		}],
 	});
 	this.ac.tmplInst = this;
 });

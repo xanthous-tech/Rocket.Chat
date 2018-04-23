@@ -13,12 +13,12 @@ Template.membersList.helpers({
 	},
 
 	isGroupChat() {
-		const room = ChatRoom.findOne(this.rid, { reactive: false });
+		const room = ChatRoom.findOne(this.rid, {reactive: false});
 		return RocketChat.roomTypes.roomTypes[room.t].isGroupChat();
 	},
 
 	isDirectChat() {
-		return ChatRoom.findOne(this.rid, { reactive: false }).t === 'd';
+		return ChatRoom.findOne(this.rid, {reactive: false}).t === 'd';
 	},
 
 	seeAll() {
@@ -53,7 +53,7 @@ Template.membersList.helpers({
 			let utcOffset;
 			if (onlineUsers[user.username] != null) {
 				totalOnline++;
-				({ utcOffset } = onlineUsers[user.username]);
+				({utcOffset} = onlineUsers[user.username]);
 
 				if (utcOffset != null) {
 					if (utcOffset === userUtcOffset) {
@@ -70,7 +70,7 @@ Template.membersList.helpers({
 				user,
 				status: (onlineUsers[user.username] != null ? onlineUsers[user.username].status : 'offline'),
 				muted: Array.from(roomMuted).includes(user.username),
-				utcOffset
+				utcOffset,
 			};
 		});
 
@@ -98,7 +98,7 @@ Template.membersList.helpers({
 			loading: Template.instance().loading.get(),
 			totalOnline,
 			users,
-			hasMore
+			hasMore,
 		};
 		return ret;
 	},
@@ -106,9 +106,7 @@ Template.membersList.helpers({
 	canAddUser() {
 		const roomData = Session.get(`roomData${ this._id }`);
 		if (!roomData) { return ''; }
-		return (() => {
-			return RocketChat.roomTypes.roomTypes[roomData.t].canAddUser(roomData);
-		})();
+		return (() => RocketChat.roomTypes.roomTypes[roomData.t].canAddUser(roomData))();
 	},
 
 	autocompleteSettingsAddUser() {
@@ -124,14 +122,14 @@ Template.membersList.helpers({
 					noMatchTemplate: Template.userSearchEmpty,
 					matchAll: true,
 					filter: {
-						exceptions: [Meteor.user().username]
+						exceptions: [Meteor.user().username],
 					},
 					selector(match) {
-						return { term: match };
+						return {term: match};
 					},
-					sort: 'username'
-				}
-			]
+					sort: 'username',
+				},
+			],
 		};
 	},
 
@@ -147,7 +145,7 @@ Template.membersList.helpers({
 	},
 
 	userInfoDetail() {
-		const room = ChatRoom.findOne(this.rid, { fields: { t: 1 } });
+		const room = ChatRoom.findOne(this.rid, {fields: {t: 1}});
 
 		return {
 			tabBar: Template.currentData().tabBar,
@@ -155,7 +153,7 @@ Template.membersList.helpers({
 			clear: Template.instance().clearUserDetail,
 			showAll: RocketChat.roomTypes.roomTypes[room.t].userDetailShowAll(room) || false,
 			hideAdminControls: RocketChat.roomTypes.roomTypes[room.t].userDetailShowAdmin(room) || false,
-			video: ['d'].includes(room != null ? room.t : undefined)
+			video: ['d'].includes(room != null ? room.t : undefined),
 		};
 	},
 	displayName() {
@@ -171,7 +169,7 @@ Template.membersList.events({
 		Template.parentData(0).tabBar.setTemplate('inviteUsers');
 		Template.parentData(0).tabBar.setData({
 			label: 'Add_users',
-			icon: 'user'
+			icon: 'user',
 		});
 
 		Template.parentData(0).tabBar.open();
@@ -198,8 +196,8 @@ Template.membersList.events({
 		const _actions = getActions({
 			user: this.user.user,
 			hideAdminControls: RocketChat.roomTypes.roomTypes[room.t].userDetailShowAdmin(room) || false,
-			directActions: RocketChat.roomTypes.roomTypes[room.t].userDetailShowAll(room) || false
-		}).map(action => typeof action === 'function' ? action.call(this): action).filter(action => action && (!action.condition || action.condition.call(this)));
+			directActions: RocketChat.roomTypes.roomTypes[room.t].userDetailShowAll(room) || false,
+		}).map(action => typeof action === 'function' ? action.call(this) : action).filter(action => action && (!action.condition || action.condition.call(this)));
 		const groups = [];
 		const columns = [];
 		const admin = _actions.filter(action => action.group === 'admin');
@@ -223,23 +221,23 @@ Template.membersList.events({
 			columns,
 			mousePosition: () => ({
 				x: e.currentTarget.getBoundingClientRect().right + 10,
-				y: e.currentTarget.getBoundingClientRect().bottom + 100
+				y: e.currentTarget.getBoundingClientRect().bottom + 100,
 			}),
 			customCSSProperties: () => ({
 				top:  `${ e.currentTarget.getBoundingClientRect().bottom + 10 }px`,
-				left: isRtl() ? `${ e.currentTarget.getBoundingClientRect().left - 10 }px` : undefined
+				left: isRtl() ? `${ e.currentTarget.getBoundingClientRect().left - 10 }px` : undefined,
 			}),
 			data: {
 				rid: this._id,
 				username: instance.data.username,
-				instance
+				instance,
 			},
 			offsetHorizontal: 15,
 			activeElement: e.currentTarget,
 			currentTarget: e.currentTarget,
 			onDestroyed:() => {
 				e.currentTarget.parentElement.classList.remove('active');
-			}
+			},
 		};
 		e.stopPropagation();
 		popover.open(config);
@@ -249,7 +247,7 @@ Template.membersList.events({
 		const roomData = Session.get(`roomData${ template.data.rid }`);
 
 		if (RocketChat.roomTypes.roomTypes[roomData.t].canAddUser(roomData)) {
-			return Meteor.call('addUserToRoom', { rid: roomData._id, username: doc.username }, function(error) {
+			return Meteor.call('addUserToRoom', {rid: roomData._id, username: doc.username}, function(error) {
 				if (error) {
 					return handleError(error);
 				}
@@ -261,7 +259,7 @@ Template.membersList.events({
 
 	'click .show-more-users'(e, instance) {
 		return instance.usersLimit.set(instance.usersLimit.get() + 100);
-	}
+	},
 });
 
 Template.membersList.onCreated(function() {
@@ -292,12 +290,10 @@ Template.membersList.onCreated(function() {
 
 	this.clearUserDetail = () => {
 		this.showDetail.set(false);
-		return setTimeout(() => {
-			return this.clearRoomUserDetail();
-		}, 500);
+		return setTimeout(() => this.clearRoomUserDetail(), 500);
 	};
 
-	this.showUserDetail = username => {
+	this.showUserDetail = (username) => {
 		this.showDetail.set(username != null);
 		return this.userDetail.set(username);
 	};

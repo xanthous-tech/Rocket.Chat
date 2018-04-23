@@ -26,7 +26,7 @@ Template.sidebarItem.helpers({
 	},
 	isLivechatQueue() {
 		return this.pathSection === 'livechat-queue';
-	}
+	},
 });
 
 Template.sidebarItem.onCreated(function() {
@@ -96,9 +96,9 @@ Template.sidebarItem.events({
 			return !(((roomData.cl != null) && !roomData.cl) || (['d', 'l'].includes(roomData.t)));
 		};
 
-		const canFavorite = RocketChat.settings.get('Favorite_Rooms') && ChatSubscription.find({ rid: this.rid }).count() > 0;
+		const canFavorite = RocketChat.settings.get('Favorite_Rooms') && ChatSubscription.find({rid: this.rid}).count() > 0;
 		const isFavorite = () => {
-			const sub = ChatSubscription.findOne({ rid: this.rid }, { fields: { f: 1 } });
+			const sub = ChatSubscription.findOne({rid: this.rid}, {fields: {f: 1}});
 			if (((sub != null ? sub.f : undefined) != null) && sub.f) {
 				return true;
 			}
@@ -109,7 +109,7 @@ Template.sidebarItem.events({
 			icon: 'eye-off',
 			name: t('Hide_room'),
 			type: 'sidebar-item',
-			id: 'hide'
+			id: 'hide',
 		}];
 
 		if (this.alert) {
@@ -117,14 +117,14 @@ Template.sidebarItem.events({
 				icon: 'flag',
 				name: t('Mark_as_read'),
 				type: 'sidebar-item',
-				id: 'read'
+				id: 'read',
 			});
 		} else {
 			items.push({
 				icon: 'flag',
 				name: t('Mark_as_unread'),
 				type: 'sidebar-item',
-				id: 'unread'
+				id: 'unread',
 			});
 		}
 
@@ -134,7 +134,7 @@ Template.sidebarItem.events({
 				name: t(isFavorite() ? 'Unfavorite' : 'Favorite'),
 				modifier: isFavorite() ? 'star-filled' : 'star',
 				type: 'sidebar-item',
-				id: 'favorite'
+				id: 'favorite',
 			});
 		}
 
@@ -144,7 +144,7 @@ Template.sidebarItem.events({
 				name: t('Leave_room'),
 				type: 'sidebar-item',
 				id: 'leave',
-				modifier: 'error'
+				modifier: 'error',
 			});
 		}
 
@@ -154,20 +154,20 @@ Template.sidebarItem.events({
 				{
 					groups: [
 						{
-							items
-						}
-					]
-				}
+							items,
+						},
+					],
+				},
 			],
 			data: {
 				template: this.t,
 				rid: this.rid,
-				name: this.name
+				name: this.name,
 			},
 			currentTarget: e.currentTarget,
-			offsetHorizontal: -e.currentTarget.clientWidth
+			offsetHorizontal: -e.currentTarget.clientWidth,
 		};
 
 		popover.open(config);
-	}
+	},
 });

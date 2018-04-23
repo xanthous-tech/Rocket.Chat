@@ -21,7 +21,7 @@ Meteor.methods({
 			offlineUnavailableMessage: null,
 			displayOfflineForm: null,
 			videoCall: null,
-			conversationFinishedMessage: null
+			conversationFinishedMessage: null,
 		};
 
 		const room = RocketChat.models.Rooms.findOpenByVisitorToken(visitorToken, {
@@ -32,8 +32,8 @@ Meteor.methods({
 				u: 1,
 				usernames: 1,
 				v: 1,
-				servedBy: 1
-			}
+				servedBy: 1,
+			},
 		}).fetch();
 
 		if (room && room.length > 0) {
@@ -44,8 +44,8 @@ Meteor.methods({
 			fields: {
 				name: 1,
 				username: 1,
-				visitorEmails: 1
-			}
+				visitorEmails: 1,
+			},
 		});
 
 		if (room) {
@@ -84,5 +84,5 @@ Meteor.methods({
 		info.online = RocketChat.models.Users.findOnlineAgents().count() > 0;
 
 		return info;
-	}
+	},
 });

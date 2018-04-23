@@ -5,14 +5,14 @@ class ModelReadReceipts extends RocketChat.models._Base {
 		this.tryEnsureIndex({
 			roomId: 1,
 			userId: 1,
-			messageId: 1
+			messageId: 1,
 		}, {
-			unique: 1
+			unique: 1,
 		});
 	}
 
 	findByMessageId(messageId) {
-		return this.find({ messageId });
+		return this.find({messageId});
 	}
 }
 

@@ -5,7 +5,7 @@ export class DirectMessageRoomRoute extends RoomTypeRouteConfig {
 	constructor() {
 		super({
 			name: 'direct',
-			path: '/direct/:username'
+			path: '/direct/:username',
 		});
 	}
 
@@ -24,14 +24,14 @@ export class DirectMessageRoomType extends RoomTypeConfig {
 			identifier: 'd',
 			order: 50,
 			label: 'Direct_Messages',
-			route: new DirectMessageRoomRoute()
+			route: new DirectMessageRoomRoute(),
 		});
 	}
 
 	findRoom(identifier) {
 		const query = {
 			t: 'd',
-			name: identifier
+			name: identifier,
 		};
 
 		const subscription = ChatSubscription.findOne(query);

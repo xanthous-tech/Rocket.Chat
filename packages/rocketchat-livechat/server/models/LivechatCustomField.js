@@ -10,7 +10,7 @@ class LivechatCustomField extends RocketChat.models._Base {
 
 	// FIND
 	findOneById(_id, options) {
-		const query = { _id };
+		const query = {_id};
 
 		return this.findOne(query, options);
 	}
@@ -19,13 +19,13 @@ class LivechatCustomField extends RocketChat.models._Base {
 		const record = {
 			label,
 			scope,
-			visibility
+			visibility,
 		};
 
 		_.extend(record, extraData);
 
 		if (_id) {
-			this.update({ _id }, { $set: record });
+			this.update({_id}, {$set: record});
 		} else {
 			record._id = field;
 			_id = this.insert(record);
@@ -36,7 +36,7 @@ class LivechatCustomField extends RocketChat.models._Base {
 
 	// REMOVE
 	removeById(_id) {
-		const query = { _id };
+		const query = {_id};
 
 		return this.remove(query);
 	}

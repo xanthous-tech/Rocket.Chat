@@ -5,7 +5,7 @@ RocketChat.Migrations.add({
 			t: 'p',
 			usernames: {$size: 2},
 			u: {$exists: false},
-			name: {$exists: false}
+			name: {$exists: false},
 		};
 
 		const rooms = RocketChat.models.Rooms.find(query).fetch();
@@ -15,5 +15,5 @@ RocketChat.Migrations.add({
 			RocketChat.models.Rooms.update({_id: {$in: rids}}, {$set: {t: 'd'}}, {multi: true});
 			RocketChat.models.Subscriptions.update({rid: {$in: rids}}, {$set: {t: 'd'}}, {multi: true});
 		}
-	}
+	},
 });

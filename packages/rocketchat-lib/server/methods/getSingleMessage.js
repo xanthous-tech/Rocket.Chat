@@ -3,7 +3,7 @@ Meteor.methods({
 		check(msgId, String);
 
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'getSingleMessage' });
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'getSingleMessage'});
 		}
 
 		const msg = RocketChat.models.Messages.findOneById(msgId);
@@ -15,5 +15,5 @@ Meteor.methods({
 		Meteor.call('canAccessRoom', msg.rid, Meteor.userId());
 
 		return msg;
-	}
+	},
 });

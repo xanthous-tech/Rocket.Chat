@@ -11,7 +11,7 @@ const keys = {
 	ARROW_LEFT: 37,
 	ARROW_UP: 38,
 	ARROW_RIGHT: 39,
-	ARROW_DOWN: 40
+	ARROW_DOWN: 40,
 };
 
 function getCursorPosition(input) {
@@ -291,7 +291,7 @@ Template.messagePopup.events({
 		template.enterValue();
 		template.open.set(false);
 		return toolbarSearch.clear();
-	}
+	},
 });
 
 Template.messagePopup.helpers({
@@ -310,5 +310,5 @@ Template.messagePopup.helpers({
 	},
 	sidebarWidth() {
 		return `${ document.querySelector('.sidebar').offsetWidth }px`;
-	}
+	},
 });

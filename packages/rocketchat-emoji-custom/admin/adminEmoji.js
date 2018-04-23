@@ -1,6 +1,6 @@
 import s from 'underscore.string';
 
-import { RocketChatTabBar } from 'meteor/rocketchat:lib';
+import {RocketChatTabBar} from 'meteor/rocketchat:lib';
 
 Template.adminEmoji.helpers({
 	isReady() {
@@ -30,9 +30,9 @@ Template.adminEmoji.helpers({
 	flexData() {
 		return {
 			tabBar: Template.instance().tabBar,
-			data: Template.instance().tabBarData.get()
+			data: Template.instance().tabBarData.get(),
 		};
-	}
+	},
 });
 
 Template.adminEmoji.onCreated(function() {
@@ -51,7 +51,7 @@ Template.adminEmoji.onCreated(function() {
 		i18nTitle: 'Custom_Emoji_Add',
 		icon: 'plus',
 		template: 'adminEmojiEdit',
-		order: 1
+		order: 1,
 	});
 
 	RocketChat.TabBar.addButton({
@@ -60,7 +60,7 @@ Template.adminEmoji.onCreated(function() {
 		i18nTitle: 'Custom_Emoji_Info',
 		icon: 'customize',
 		template: 'adminEmojiInfo',
-		order: 2
+		order: 2,
 	});
 
 	this.autorun(function() {
@@ -76,12 +76,12 @@ Template.adminEmoji.onCreated(function() {
 
 		if (filter) {
 			const filterReg = new RegExp(s.escapeRegExp(filter), 'i');
-			query = { $or: [ { name: filterReg }, {aliases: filterReg } ] };
+			query = {$or: [{name: filterReg}, {aliases: filterReg}]};
 		}
 
 		const limit = (instance.limit != null) ? instance.limit.get() : 0;
 
-		return RocketChat.models.EmojiCustom.find(query, { limit, sort: { name: 1 }}).fetch();
+		return RocketChat.models.EmojiCustom.find(query, {limit, sort: {name: 1}}).fetch();
 	};
 });
 
@@ -94,7 +94,7 @@ Template.adminEmoji.onRendered(() =>
 
 Template.adminEmoji.events({
 	'keydown #emoji-filter'(e) {
-		//stop enter key
+		// stop enter key
 		if (e.which === 13) {
 			e.stopPropagation();
 			e.preventDefault();
@@ -117,5 +117,5 @@ Template.adminEmoji.events({
 		e.preventDefault();
 		e.stopPropagation();
 		t.limit.set(t.limit.get() + 50);
-	}
+	},
 });

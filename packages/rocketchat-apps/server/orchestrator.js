@@ -1,9 +1,9 @@
-import { RealAppBridges } from './bridges';
-import { AppMethods, AppsRestApi, AppServerNotifier } from './communication';
-import { AppMessagesConverter, AppRoomsConverter, AppSettingsConverter, AppUsersConverter } from './converters';
-import { AppsLogsModel, AppsModel, AppsPersistenceModel, AppRealStorage, AppRealLogsStorage } from './storage';
+import {RealAppBridges} from './bridges';
+import {AppMethods, AppsRestApi, AppServerNotifier} from './communication';
+import {AppMessagesConverter, AppRoomsConverter, AppSettingsConverter, AppUsersConverter} from './converters';
+import {AppsLogsModel, AppsModel, AppsPersistenceModel, AppRealStorage, AppRealLogsStorage} from './storage';
 
-import { AppManager } from '@rocket.chat/apps-engine/server/AppManager';
+import {AppManager} from '@rocket.chat/apps-engine/server/AppManager';
 
 class AppServerOrchestrator {
 	constructor() {
@@ -85,6 +85,6 @@ Meteor.startup(function _appServerOrchestrator() {
 	global.Apps = new AppServerOrchestrator();
 
 	global.Apps.getManager().load()
-		.then((affs) => console.log(`...done loading ${ affs.length }! ;)`))
-		.catch((err) => console.warn('...failed!', err));
+		.then(affs => console.log(`...done loading ${ affs.length }! ;)`))
+		.catch(err => console.warn('...failed!', err));
 });

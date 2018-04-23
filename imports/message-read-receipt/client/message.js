@@ -1,4 +1,4 @@
-import { Template } from 'meteor/templating';
+import {Template} from 'meteor/templating';
 
 Template.message.helpers({
 	readReceipt() {
@@ -7,7 +7,7 @@ Template.message.helpers({
 		}
 
 		return {
-			readByEveryone: (!this.unread && 'read') || 'color-component-color'
+			readByEveryone: (!this.unread && 'read') || 'color-component-color',
 		};
-	}
+	},
 });

@@ -24,7 +24,7 @@ Template.sortlist.helpers({
 	checked,
 	bold(...props) {
 		return checked(...props) ? 'rc-popover__item--bold' : '';
-	}
+	},
 });
 
 Template.sortlist.events({
@@ -37,10 +37,10 @@ Template.sortlist.events({
 			value = !value;
 		}
 		Meteor.call('saveUserPreferences', {
-			[name] : value
+			[name] : value,
 		});
 		popover.close();
-	}
+	},
 });
 
 Template.sortlist.onRendered(function() {

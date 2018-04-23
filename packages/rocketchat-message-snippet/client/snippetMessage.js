@@ -9,17 +9,17 @@ Meteor.methods({
 			return false;
 		}
 
-		const subscription = RocketChat.models.Subscriptions.findOne({ rid: message.rid, 'u._id': Meteor.userId() });
+		const subscription = RocketChat.models.Subscriptions.findOne({rid: message.rid, 'u._id': Meteor.userId()});
 
 		if (subscription === undefined) {
 			return false;
 		}
 		ChatMessage.update({
-			_id: message._id
+			_id: message._id,
 		}, {
 			$set: {
-				snippeted: true
-			}
+				snippeted: true,
+			},
 		});
-	}
+	},
 });

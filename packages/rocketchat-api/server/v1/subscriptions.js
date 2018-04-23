@@ -1,6 +1,6 @@
-RocketChat.API.v1.addRoute('subscriptions.get', { authRequired: true }, {
+RocketChat.API.v1.addRoute('subscriptions.get', {authRequired: true}, {
 	get() {
-		const { updatedSince } = this.queryParams;
+		const {updatedSince} = this.queryParams;
 
 		let updatedSinceDate;
 		if (updatedSince) {
@@ -17,17 +17,17 @@ RocketChat.API.v1.addRoute('subscriptions.get', { authRequired: true }, {
 		if (Array.isArray(result)) {
 			result = {
 				update: result,
-				remove: []
+				remove: [],
 			};
 		}
 
 		return RocketChat.API.v1.success(result);
-	}
+	},
 });
 
-RocketChat.API.v1.addRoute('subscriptions.getOne', { authRequired: true }, {
+RocketChat.API.v1.addRoute('subscriptions.getOne', {authRequired: true}, {
 	get() {
-		const { roomId } = this.requestParams();
+		const {roomId} = this.requestParams();
 
 		if (!roomId) {
 			return RocketChat.API.v1.failure('The \'roomId\' param is required');
@@ -37,14 +37,14 @@ RocketChat.API.v1.addRoute('subscriptions.getOne', { authRequired: true }, {
 			fields: {
 				_room: 0,
 				_user: 0,
-				$loki: 0
-			}
+				$loki: 0,
+			},
 		});
 
 		return RocketChat.API.v1.success({
-			subscription
+			subscription,
 		});
-	}
+	},
 });
 
 /**
@@ -55,10 +55,10 @@ RocketChat.API.v1.addRoute('subscriptions.getOne', { authRequired: true }, {
 	Params:
 		- rid: The rid of the room to be marked as read.
  */
-RocketChat.API.v1.addRoute('subscriptions.read', { authRequired: true }, {
+RocketChat.API.v1.addRoute('subscriptions.read', {authRequired: true}, {
 	post() {
 		check(this.bodyParams, {
-			rid: String
+			rid: String,
 		});
 
 		Meteor.runAsUser(this.userId, () =>
@@ -66,6 +66,6 @@ RocketChat.API.v1.addRoute('subscriptions.read', { authRequired: true }, {
 		);
 
 		return RocketChat.API.v1.success();
-	}
+	},
 });
 

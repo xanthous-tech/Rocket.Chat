@@ -30,7 +30,7 @@ const fields = {
 	disableNotifications: 1,
 	hideUnreadStatus: 1,
 	muteGroupMentions: 1,
-	ignored: 1
+	ignored: 1,
 };
 
 Meteor.methods({
@@ -41,7 +41,7 @@ Meteor.methods({
 
 		this.unblock();
 
-		const options = { fields };
+		const options = {fields};
 
 		const records = RocketChat.models.Subscriptions.findByUserId(Meteor.userId(), options).fetch();
 
@@ -51,31 +51,31 @@ Meteor.methods({
 					return record._updatedAt > updatedAt;
 				}),
 				remove: RocketChat.models.Subscriptions.trashFindDeletedAfter(updatedAt, {
-					'u._id': Meteor.userId()
+					'u._id': Meteor.userId(),
 				}, {
 					fields: {
 						_id: 1,
-						_deletedAt: 1
-					}
-				}).fetch()
+						_deletedAt: 1,
+					},
+				}).fetch(),
 			};
 		}
 
 		return records;
-	}
+	},
 });
 
 RocketChat.models.Subscriptions.on('changed', function(type, subscription) {
 	RocketChat.Notifications.notifyUserInThisInstance(subscription.u._id, 'subscriptions-changed', type, RocketChat.models.Subscriptions.processQueryOptionsOnResult(subscription, {
-		fields
+		fields,
 	}));
 });
 
 // TODO needs improvement
 // We are sending the record again cuz any update on subscription will send the record without the fname (join)
 // Then we need to sent it again listening to the join event.
-RocketChat.models.Subscriptions.on('join:fname:inserted', function(subscription/*, user*/) {
+RocketChat.models.Subscriptions.on('join:fname:inserted', function(subscription/* , user*/) {
 	RocketChat.Notifications.notifyUserInThisInstance(subscription.u._id, 'subscriptions-changed', 'changed', RocketChat.models.Subscriptions.processQueryOptionsOnResult(subscription, {
-		fields
+		fields,
 	}));
 });

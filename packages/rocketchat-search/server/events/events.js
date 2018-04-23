@@ -3,9 +3,9 @@ import SearchLogger from '../logger/logger';
 
 class EventService {
 
-	/*eslint no-unused-vars: [2, { "args": "none" }]*/
+	/* eslint no-unused-vars: [2, { "args": "none" }]*/
 	_pushError(name, value, payload) {
-		//TODO implement a (performant) cache
+		// TODO implement a (performant) cache
 		SearchLogger.debug(`Error on event '${ name }' with id '${ value }'`);
 	}
 
@@ -33,7 +33,7 @@ RocketChat.callbacks.add('afterDeleteMessage', function(m) {
  * Listen to user and room changes via cursor
  */
 
-RocketChat.models.Users.on('changed', (type, user)=>{
+RocketChat.models.Users.on('changed', (type, user) => {
 	if (type === 'inserted' || type === 'updated') {
 		eventService.promoteEvent('user.save', user._id, user);
 	}
@@ -42,7 +42,7 @@ RocketChat.models.Users.on('changed', (type, user)=>{
 	}
 });
 
-RocketChat.models.Rooms.on('changed', (type, room)=>{
+RocketChat.models.Rooms.on('changed', (type, room) => {
 	if (type === 'inserted' || type === 'updated') {
 		eventService.promoteEvent('room.save', room._id, room);
 	}

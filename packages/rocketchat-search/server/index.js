@@ -9,5 +9,5 @@ import SearchProvider from './model/provider';
 
 export {
 	searchProviderService,
-	SearchProvider
+	SearchProvider,
 };

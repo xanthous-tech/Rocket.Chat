@@ -9,24 +9,24 @@ class LivechatDepartment extends RocketChat.models._Base {
 
 		this.tryEnsureIndex({
 			numAgents: 1,
-			enabled: 1
+			enabled: 1,
 		});
 	}
 
 	// FIND
 	findOneById(_id, options) {
-		const query = { _id };
+		const query = {_id};
 
 		return this.findOne(query, options);
 	}
 
 	findByDepartmentId(_id, options) {
-		const query = { _id };
+		const query = {_id};
 
 		return this.find(query, options);
 	}
 
-	createOrUpdateDepartment(_id, { enabled, name, description, showOnRegistration }, agents) {
+	createOrUpdateDepartment(_id, {enabled, name, description, showOnRegistration}, agents) {
 		agents = [].concat(agents);
 
 		const record = {
@@ -34,11 +34,11 @@ class LivechatDepartment extends RocketChat.models._Base {
 			name,
 			description,
 			numAgents: agents.length,
-			showOnRegistration
+			showOnRegistration,
 		};
 
 		if (_id) {
-			this.update({ _id }, { $set: record });
+			this.update({_id}, {$set: record});
 		} else {
 			_id = this.insert(record);
 		}
@@ -57,24 +57,24 @@ class LivechatDepartment extends RocketChat.models._Base {
 				departmentId: _id,
 				username: agent.username,
 				count: agent.count ? parseInt(agent.count) : 0,
-				order: agent.order ? parseInt(agent.order) : 0
+				order: agent.order ? parseInt(agent.order) : 0,
 			});
 		});
 
-		return _.extend(record, { _id });
+		return _.extend(record, {_id});
 	}
 
 	// REMOVE
 	removeById(_id) {
-		const query = { _id };
+		const query = {_id};
 
 		return this.remove(query);
 	}
 
 	findEnabledWithAgents() {
 		const query = {
-			numAgents: { $gt: 0 },
-			enabled: true
+			numAgents: {$gt: 0},
+			enabled: true,
 		};
 		return this.find(query);
 	}

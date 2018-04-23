@@ -26,7 +26,7 @@ Template.visitorInfo.helpers({
 	},
 
 	room() {
-		return ChatRoom.findOne({ _id: this.rid });
+		return ChatRoom.findOne({_id: this.rid});
 	},
 
 	joinTags() {
@@ -54,9 +54,9 @@ Template.visitorInfo.helpers({
 				if (livechatData.hasOwnProperty(_id)) {
 					const customFields = Template.instance().customFields.get();
 					if (customFields) {
-						const field = _.findWhere(customFields, { _id });
+						const field = _.findWhere(customFields, {_id});
 						if (field && field.visibility !== 'hidden') {
-							fields.push({ label: field.label, value: livechatData[_id] });
+							fields.push({label: field.label, value: livechatData[_id]});
 						}
 					}
 				}
@@ -98,7 +98,7 @@ Template.visitorInfo.helpers({
 			},
 			cancel() {
 				instance.action.set();
-			}
+			},
 		};
 	},
 
@@ -113,12 +113,12 @@ Template.visitorInfo.helpers({
 			},
 			cancel() {
 				instance.action.set();
-			}
+			},
 		};
 	},
 
 	roomOpen() {
-		const room = ChatRoom.findOne({ _id: this.rid });
+		const room = ChatRoom.findOne({_id: this.rid});
 
 		return room.open;
 	},
@@ -140,11 +140,11 @@ Template.visitorInfo.helpers({
 
 		const data = Template.currentData();
 		if (data && data.rid) {
-			const subscription = RocketChat.models.Subscriptions.findOne({ rid: data.rid });
+			const subscription = RocketChat.models.Subscriptions.findOne({rid: data.rid});
 			return subscription !== undefined;
 		}
 		return false;
-	}
+	},
 });
 
 Template.visitorInfo.events({
@@ -161,7 +161,7 @@ Template.visitorInfo.events({
 			type: 'input',
 			inputPlaceholder: t('Please_add_a_comment'),
 			showCancelButton: true,
-			closeOnConfirm: false
+			closeOnConfirm: false,
 		}, (inputValue) => {
 			if (!inputValue) {
 				modal.showInputError(t('Please_add_a_comment_to_close_the_room'));
@@ -173,7 +173,7 @@ Template.visitorInfo.events({
 				return false;
 			}
 
-			Meteor.call('livechat:closeRoom', this.rid, inputValue, function(error/*, result*/) {
+			Meteor.call('livechat:closeRoom', this.rid, inputValue, function(error/* , result*/) {
 				if (error) {
 					return handleError(error);
 				}
@@ -182,7 +182,7 @@ Template.visitorInfo.events({
 					text: t('Chat_closed_successfully'),
 					type: 'success',
 					timer: 1000,
-					showConfirmButton: false
+					showConfirmButton: false,
 				});
 			});
 		});
@@ -197,9 +197,9 @@ Template.visitorInfo.events({
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: t('Yes')
+			confirmButtonText: t('Yes'),
 		}, () => {
-			Meteor.call('livechat:returnAsInquiry', this.rid, function(error/*, result*/) {
+			Meteor.call('livechat:returnAsInquiry', this.rid, function(error/* , result*/) {
 				if (error) {
 					console.log(error);
 				} else {
@@ -214,7 +214,7 @@ Template.visitorInfo.events({
 		event.preventDefault();
 
 		instance.action.set('forward');
-	}
+	},
 });
 
 Template.visitorInfo.onCreated(function() {
@@ -241,10 +241,10 @@ Template.visitorInfo.onCreated(function() {
 			}
 		});
 
-		this.subscribe('livechat:visitorInfo', { rid: currentData.rid });
+		this.subscribe('livechat:visitorInfo', {rid: currentData.rid});
 	}
 
 	this.autorun(() => {
-		this.user.set(LivechatVisitor.findOne({ '_id': this.visitorId.get() }));
+		this.user.set(LivechatVisitor.findOne({_id: this.visitorId.get()}));
 	});
 });

@@ -9,7 +9,7 @@ RocketChat.messageBox.actions.add('Create_new', 'Video_message', {
 	condition: () => (navigator.getUserMedia || navigator.webkitGetUserMedia) && RocketChat.settings.get('FileUpload_Enabled') && RocketChat.settings.get('Message_VideoRecorderEnabled') && (!RocketChat.settings.get('FileUpload_MediaTypeWhiteList') || RocketChat.settings.get('FileUpload_MediaTypeWhiteList').match(/video\/webm|video\/\*/i)),
 	action({messageBox}) {
 		return VRecDialog.opened ? VRecDialog.close() : VRecDialog.open(messageBox);
-	}
+	},
 });
 
 RocketChat.messageBox.actions.add('Add_files_from', 'Computer', {
@@ -23,19 +23,19 @@ RocketChat.messageBox.actions.add('Add_files_from', 'Computer', {
 		$input.attr({
 			id: 'fileupload-input',
 			type: 'file',
-			multiple: 'multiple'
+			multiple: 'multiple',
 		});
 
 		$(document.body).append($input);
 
 		$input.one('change', function(e) {
-			const filesToUpload = [...e.target.files].map(file => {
+			const filesToUpload = [...e.target.files].map((file) => {
 				Object.defineProperty(file, 'type', {
-					value: mime.lookup(file.name)
+					value: mime.lookup(file.name),
 				});
 				return {
 					file,
-					name: file.name
+					name: file.name,
 				};
 			});
 
@@ -49,7 +49,7 @@ RocketChat.messageBox.actions.add('Add_files_from', 'Computer', {
 		if ((typeof device !== 'undefined' && device.platform && device.platform.toLocaleLowerCase() === 'ios') || navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {
 			$input.click();
 		}
-	}
+	},
 });
 
 RocketChat.messageBox.actions.add('Share', 'My_location', {
@@ -68,7 +68,7 @@ RocketChat.messageBox.actions.add('Share', 'My_location', {
 			showCancelButton: true,
 			closeOnConfirm: true,
 			closeOnCancel: true,
-			html: true
+			html: true,
 		}, function(isConfirm) {
 			if (isConfirm !== true) {
 				return;
@@ -79,9 +79,9 @@ RocketChat.messageBox.actions.add('Share', 'My_location', {
 				msg: '',
 				location: {
 					type: 'Point',
-					coordinates: [longitude, latitude]
-				}
+					coordinates: [longitude, latitude],
+				},
 			});
 		});
-	}
+	},
 });

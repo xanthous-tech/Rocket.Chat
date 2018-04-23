@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 /* globals expect */
 
-import {getCredentials, api, request, credentials } from '../../data/api-data.js';
+import {getCredentials, api, request, credentials} from '../../data/api-data.js';
 
 describe('[EmojiCustom]', function() {
 	this.retries(0);

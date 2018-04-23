@@ -24,7 +24,7 @@ Meteor.methods({
 
 		if (!Meteor.userId() && RocketChat.settings.get('Accounts_AllowAnonymousRead') === false) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
-				method: 'loadHistory'
+				method: 'loadHistory',
 			});
 		}
 
@@ -41,6 +41,6 @@ Meteor.methods({
 			return false;
 		}
 
-		return RocketChat.loadMessageHistory({ userId: fromId, rid, end, limit, ls });
-	}
+		return RocketChat.loadMessageHistory({userId: fromId, rid, end, limit, ls});
+	},
 });

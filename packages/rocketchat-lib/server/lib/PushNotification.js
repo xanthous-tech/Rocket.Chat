@@ -16,7 +16,7 @@ class PushNotification {
 		return hash;
 	}
 
-	send({ roomName, roomId, username, message, usersTo, payload, badge = 1, category }) {
+	send({roomName, roomId, username, message, usersTo, payload, badge = 1, category}) {
 		let title;
 		if (roomName && roomName !== '') {
 			title = `${ roomName }`;
@@ -37,13 +37,13 @@ class PushNotification {
 			gcm: {
 				style: 'inbox',
 				summaryText: '%n% new messages',
-				image: RocketChat.getURL(icon, { full: true })
-			}
+				image: RocketChat.getURL(icon, {full: true}),
+			},
 		};
 
 		if (category !== '') {
 			config.apn = {
-				category
+				category,
 			};
 		}
 

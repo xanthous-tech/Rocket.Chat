@@ -47,7 +47,7 @@ Template.RocketSearch.onCreated(function() {
 		settings: {},
 		parentPayload: {},
 		payload: {},
-		search: _search
+		search: _search,
 	};
 
 	this.search = (value) => {
@@ -64,7 +64,7 @@ Template.RocketSearch.onCreated(function() {
 
 		Meteor.call('rocketchatSearch.suggest', value, {rid:Session.get('openedRoom'), uid:Meteor.userId()}, this.scope.parentPayload, _p, (err, result) => {
 			if (err) {
-				//TODO what should happen
+				// TODO what should happen
 			} else {
 				this.suggestionActive.set(undefined);
 				this.suggestions.set(result);
@@ -98,12 +98,12 @@ Template.RocketSearch.events = {
 		const suggestionActive = t.suggestionActive.get();
 
 		if (evt.keyCode === 40 && suggestions) {
-			t.suggestionActive.set((suggestionActive !== undefined && suggestionActive < suggestions.length-1) ? suggestionActive +1 : 0);
+			t.suggestionActive.set((suggestionActive !== undefined && suggestionActive < suggestions.length - 1) ? suggestionActive + 1 : 0);
 			return;
 		}
 
 		if (evt.keyCode === 38 && suggestions) {
-			t.suggestionActive.set((suggestionActive !== undefined && suggestionActive === 0) ? suggestions.length-1 : suggestionActive-1);
+			t.suggestionActive.set((suggestionActive !== undefined && suggestionActive === 0) ? suggestions.length - 1 : suggestionActive - 1);
 			return;
 		}
 	},
@@ -140,7 +140,7 @@ Template.RocketSearch.events = {
 	},
 	'mouseenter .rocket-search-suggestion-item'(e, t) {
 		t.suggestionActive.set(t.suggestions.get().indexOf(this));
-	}
+	},
 };
 
 Template.RocketSearch.helpers({
@@ -167,16 +167,16 @@ Template.RocketSearch.helpers({
 	},
 	suggestionSelected(index) {
 		return Template.instance().suggestionActive.get() === index ? 'active' : '';
-	}
+	},
 
 });
 
-//add closer to suggestions
+// add closer to suggestions
 Template.RocketSearch.onRendered(function() {
-	$(document).on(`click.suggestionclose.${ this.data.rid }`, ()=>{
-		//if (e.target.id !== 'rocket-search-suggestions' && !$(e.target).parents('#rocket-search-suggestions').length) {
+	$(document).on(`click.suggestionclose.${ this.data.rid }`, () => {
+		// if (e.target.id !== 'rocket-search-suggestions' && !$(e.target).parents('#rocket-search-suggestions').length) {
 		this.suggestions.set();
-		//}
+		// }
 	});
 });
 

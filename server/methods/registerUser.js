@@ -8,27 +8,27 @@ Meteor.methods({
 		if (AllowAnonymousRead === true && AllowAnonymousWrite === true && formData.email == null) {
 			const userId = Accounts.insertUserDoc({}, {
 				globalRoles: [
-					'anonymous'
-				]
+					'anonymous',
+				],
 			});
 
-			const { id, token } = Accounts._loginUser(this, userId);
+			const {id, token} = Accounts._loginUser(this, userId);
 
-			return { id, token };
+			return {id, token};
 		} else {
 			check(formData, Match.ObjectIncluding({
 				email: String,
 				pass: String,
 				name: String,
 				secretURL: Match.Optional(String),
-				reason: Match.Optional(String)
+				reason: Match.Optional(String),
 			}));
 		}
 
 		if (RocketChat.settings.get('Accounts_RegistrationForm') === 'Disabled') {
-			throw new Meteor.Error('error-user-registration-disabled', 'User registration is disabled', { method: 'registerUser' });
+			throw new Meteor.Error('error-user-registration-disabled', 'User registration is disabled', {method: 'registerUser'});
 		} else if (RocketChat.settings.get('Accounts_RegistrationForm') === 'Secret URL' && (!formData.secretURL || formData.secretURL !== RocketChat.settings.get('Accounts_RegistrationForm_SecretURL'))) {
-			throw new Meteor.Error ('error-user-registration-secret', 'User registration is only allowed via Secret URL', { method: 'registerUser' });
+			throw new Meteor.Error ('error-user-registration-secret', 'User registration is only allowed via Secret URL', {method: 'registerUser'});
 		}
 
 		RocketChat.validateEmailDomain(formData.email);
@@ -37,7 +37,7 @@ Meteor.methods({
 			email: s.trim(formData.email.toLowerCase()),
 			password: formData.pass,
 			name: formData.name,
-			reason: formData.reason
+			reason: formData.reason,
 		};
 
 		// Check if user has already been imported and never logged in. If so, set password and let it through
@@ -73,5 +73,5 @@ Meteor.methods({
 		}
 
 		return userId;
-	}
+	},
 });

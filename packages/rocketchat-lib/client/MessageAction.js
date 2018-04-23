@@ -95,7 +95,7 @@ RocketChat.MessageAction = new class {
 
 	getPermaLink(msgId) {
 		const roomData = ChatSubscription.findOne({
-			rid: Session.get('openedRoom')
+			rid: Session.get('openedRoom'),
 		});
 		let routePath = document.location.pathname;
 		if (roomData) {
@@ -128,7 +128,7 @@ Meteor.startup(function() {
 			return true;
 		},
 		order: 1,
-		group: 'menu'
+		group: 'menu',
 	});
 
 	RocketChat.MessageAction.addButton({
@@ -142,7 +142,7 @@ Meteor.startup(function() {
 		},
 		condition(message) {
 			if (RocketChat.models.Subscriptions.findOne({
-				rid: message.rid
+				rid: message.rid,
 			}) == null) {
 				return false;
 			}
@@ -168,7 +168,7 @@ Meteor.startup(function() {
 			}
 		},
 		order: 2,
-		group: 'menu'
+		group: 'menu',
 	});
 
 	RocketChat.MessageAction.addButton({
@@ -211,7 +211,7 @@ Meteor.startup(function() {
 			}
 		},
 		order: 3,
-		group: 'menu'
+		group: 'menu',
 	});
 
 	RocketChat.MessageAction.addButton({
@@ -238,7 +238,7 @@ Meteor.startup(function() {
 			return true;
 		},
 		order: 4,
-		group: 'menu'
+		group: 'menu',
 	});
 
 	RocketChat.MessageAction.addButton({
@@ -264,7 +264,7 @@ Meteor.startup(function() {
 			return true;
 		},
 		order: 5,
-		group: 'menu'
+		group: 'menu',
 	});
 
 	RocketChat.MessageAction.addButton({
@@ -288,9 +288,8 @@ Meteor.startup(function() {
 			return true;
 		},
 		order: 6,
-		group: 'menu'
+		group: 'menu',
 	});
-
 
 
 	RocketChat.MessageAction.addButton({
@@ -300,7 +299,7 @@ Meteor.startup(function() {
 		context: ['message', 'message-mobile'],
 		action() {
 			const [, {rid, u: {_id}}] = this._arguments;
-			Meteor.call('ignoreUser', { rid, userId:_id, ignore: true}, success(() => toastr.success(t('User_has_been_ignored'))));
+			Meteor.call('ignoreUser', {rid, userId:_id, ignore: true}, success(() => toastr.success(t('User_has_been_ignored'))));
 		},
 		condition(message) {
 			const subscription = RocketChat.models.Subscriptions.findOne({rid: message.rid});
@@ -308,7 +307,7 @@ Meteor.startup(function() {
 			return Meteor.userId() !== message.u._id && !(subscription.ignored && subscription.ignored.indexOf(message.u._id) > -1);
 		},
 		order: 20,
-		group: 'menu'
+		group: 'menu',
 	});
 
 	RocketChat.MessageAction.addButton({
@@ -318,7 +317,7 @@ Meteor.startup(function() {
 		context: ['message', 'message-mobile'],
 		action() {
 			const [, {rid, u: {_id}}] = this._arguments;
-			Meteor.call('ignoreUser', { rid, userId:_id, ignore: false}, success(() => toastr.success(t('User_has_been_unignored'))));
+			Meteor.call('ignoreUser', {rid, userId:_id, ignore: false}, success(() => toastr.success(t('User_has_been_unignored'))));
 
 		},
 		condition(message) {
@@ -326,9 +325,8 @@ Meteor.startup(function() {
 			return Meteor.userId() !== message.u._id && subscription.ignored && subscription.ignored.indexOf(message.u._id) > -1;
 		},
 		order: 20,
-		group: 'menu'
+		group: 'menu',
 	});
-
 
 
 });

@@ -3,31 +3,31 @@ Meteor.methods({
 	saveRoomSettings(rid, settings, value) {
 		if (!Meteor.userId()) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
-				'function': 'RocketChat.saveRoomName'
+				function: 'RocketChat.saveRoomName',
 			});
 		}
 		if (!Match.test(rid, String)) {
 			throw new Meteor.Error('error-invalid-room', 'Invalid room', {
-				method: 'saveRoomSettings'
+				method: 'saveRoomSettings',
 			});
 		}
 
 		if (typeof settings !== 'object') {
 			settings = {
-				[settings] : value
+				[settings] : value,
 			};
 		}
 
 		if (!Object.keys(settings).every(key => fields.includes(key))) {
 			throw new Meteor.Error('error-invalid-settings', 'Invalid settings provided', {
-				method: 'saveRoomSettings'
+				method: 'saveRoomSettings',
 			});
 		}
 
 		if (!RocketChat.authz.hasPermission(Meteor.userId(), 'edit-room', rid)) {
 			throw new Meteor.Error('error-action-not-allowed', 'Editing room is not allowed', {
 				method: 'saveRoomSettings',
-				action: 'Editing_room'
+				action: 'Editing_room',
 			});
 		}
 
@@ -36,41 +36,41 @@ Meteor.methods({
 		if (room.broadcast && (settings.readOnly || settings.reactWhenReadOnly)) {
 			throw new Meteor.Error('error-action-not-allowed', 'Editing readOnly/reactWhenReadOnly are not allowed for broadcast rooms', {
 				method: 'saveRoomSettings',
-				action: 'Editing_room'
+				action: 'Editing_room',
 			});
 		}
 
 		if (!room) {
 			throw new Meteor.Error('error-invalid-room', 'Invalid room', {
-				method: 'saveRoomSettings'
+				method: 'saveRoomSettings',
 			});
 		}
 
 		const user = Meteor.user();
 
-		Object.keys(settings).forEach(setting => {
+		Object.keys(settings).forEach((setting) => {
 			const value = settings[setting];
 			if (settings === 'default' && !RocketChat.authz.hasPermission(this.userId, 'view-room-administration')) {
 				throw new Meteor.Error('error-action-not-allowed', 'Viewing room administration is not allowed', {
 					method: 'saveRoomSettings',
-					action: 'Viewing_room_administration'
+					action: 'Viewing_room_administration',
 				});
 			}
 			if (setting === 'roomType' && value !== room.t && value === 'c' && !RocketChat.authz.hasPermission(this.userId, 'create-c')) {
 				throw new Meteor.Error('error-action-not-allowed', 'Changing a private group to a public channel is not allowed', {
 					method: 'saveRoomSettings',
-					action: 'Change_Room_Type'
+					action: 'Change_Room_Type',
 				});
 			}
 			if (setting === 'roomType' && value !== room.t && value === 'p' && !RocketChat.authz.hasPermission(this.userId, 'create-p')) {
 				throw new Meteor.Error('error-action-not-allowed', 'Changing a public channel to a private room is not allowed', {
 					method: 'saveRoomSettings',
-					action: 'Change_Room_Type'
+					action: 'Change_Room_Type',
 				});
 			}
 		});
 
-		Object.keys(settings).forEach(setting => {
+		Object.keys(settings).forEach((setting) => {
 			const value = settings[setting];
 			switch (setting) {
 				case 'roomName':
@@ -101,8 +101,8 @@ Meteor.methods({
 						require: String,
 						tokens: [{
 							token: String,
-							balance: String
-						}]
+							balance: String,
+						}],
 					});
 					RocketChat.saveRoomTokenpass(rid, value);
 					break;
@@ -134,7 +134,7 @@ Meteor.methods({
 
 		return {
 			result: true,
-			rid: room._id
+			rid: room._id,
 		};
-	}
+	},
 });

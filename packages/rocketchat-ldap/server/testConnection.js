@@ -4,11 +4,11 @@ Meteor.methods({
 	ldap_test_connection() {
 		const user = Meteor.user();
 		if (!user) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'ldap_test_connection' });
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'ldap_test_connection'});
 		}
 
 		if (!RocketChat.authz.hasRole(user._id, 'admin')) {
-			throw new Meteor.Error('error-not-authorized', 'Not authorized', { method: 'ldap_test_connection' });
+			throw new Meteor.Error('error-not-authorized', 'Not authorized', {method: 'ldap_test_connection'});
 		}
 
 		if (RocketChat.settings.get('LDAP_Enable') !== true) {
@@ -32,7 +32,7 @@ Meteor.methods({
 
 		return {
 			message: 'Connection_success',
-			params: []
+			params: [],
 		};
-	}
+	},
 });

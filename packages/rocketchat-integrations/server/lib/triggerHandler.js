@@ -23,7 +23,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 
 			removed: (record) => {
 				this.removeIntegration(record);
-			}
+			},
 		});
 	}
 
@@ -32,7 +32,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 		let channels;
 		if (record.event && !RocketChat.integrations.outgoingEvents[record.event].use.channel) {
 			logger.outgoing.debug('The integration doesnt rely on channels.');
-			//We don't use any channels, so it's special ;)
+			// We don't use any channels, so it's special ;)
 			channels = ['__any'];
 		} else if (_.isEmpty(record.channel)) {
 			logger.outgoing.debug('The integration had an empty channel property, so it is going on all the public channels.');
@@ -67,10 +67,10 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 		return false;
 	}
 
-	updateHistory({ historyId, step, integration, event, data, triggerWord, ranPrepareScript, prepareSentMessage, processSentMessage, resultMessage, finished, url, httpCallData, httpError, httpResult, error, errorStack }) {
+	updateHistory({historyId, step, integration, event, data, triggerWord, ranPrepareScript, prepareSentMessage, processSentMessage, resultMessage, finished, url, httpCallData, httpError, httpResult, error, errorStack}) {
 		const history = {
 			type: 'outgoing-webhook',
-			step
+			step,
 		};
 
 		// Usually is only added on initial insert
@@ -145,36 +145,36 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 		}
 
 		if (historyId) {
-			RocketChat.models.IntegrationHistory.update({ _id: historyId }, { $set: history });
+			RocketChat.models.IntegrationHistory.update({_id: historyId}, {$set: history});
 			return historyId;
 		} else {
 			history._createdAt = new Date();
-			return RocketChat.models.IntegrationHistory.insert(Object.assign({ _id: Random.id() }, history));
+			return RocketChat.models.IntegrationHistory.insert(Object.assign({_id: Random.id()}, history));
 		}
 	}
 
-	//Trigger is the trigger, nameOrId is a string which is used to try and find a room, room is a room, message is a message, and data contains "user_name" if trigger.impersonateUser is truthful.
-	sendMessage({ trigger, nameOrId = '', room, message, data }) {
+	// Trigger is the trigger, nameOrId is a string which is used to try and find a room, room is a room, message is a message, and data contains "user_name" if trigger.impersonateUser is truthful.
+	sendMessage({trigger, nameOrId = '', room, message, data}) {
 		let user;
-		//Try to find the user who we are impersonating
+		// Try to find the user who we are impersonating
 		if (trigger.impersonateUser) {
 			user = RocketChat.models.Users.findOneByUsername(data.user_name);
 		}
 
-		//If they don't exist (aka the trigger didn't contain a user) then we set the user based upon the
-		//configured username for the integration since this is required at all times.
+		// If they don't exist (aka the trigger didn't contain a user) then we set the user based upon the
+		// configured username for the integration since this is required at all times.
 		if (!user) {
 			user = RocketChat.models.Users.findOneByUsername(trigger.username);
 		}
 
 		let tmpRoom;
 		if (nameOrId || trigger.targetRoom || message.channel) {
-			tmpRoom = RocketChat.getRoomByNameOrIdWithOptionToJoin({ currentUserId: user._id, nameOrId: nameOrId || message.channel || trigger.targetRoom, errorOnEmpty: false }) || room;
+			tmpRoom = RocketChat.getRoomByNameOrIdWithOptionToJoin({currentUserId: user._id, nameOrId: nameOrId || message.channel || trigger.targetRoom, errorOnEmpty: false}) || room;
 		} else {
 			tmpRoom = room;
 		}
 
-		//If no room could be found, we won't be sending any messages but we'll warn in the logs
+		// If no room could be found, we won't be sending any messages but we'll warn in the logs
 		if (!tmpRoom) {
 			logger.outgoing.warn(`The Integration "${ trigger.name }" doesn't have a room configured nor did it provide a room to send the message to.`);
 			return;
@@ -182,12 +182,12 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 
 		logger.outgoing.debug(`Found a room for ${ trigger.name } which is: ${ tmpRoom.name } with a type of ${ tmpRoom.t }`);
 
-		message.bot = { i: trigger._id };
+		message.bot = {i: trigger._id};
 
 		const defaultValues = {
 			alias: trigger.alias,
 			avatar: trigger.avatar,
-			emoji: trigger.emoji
+			emoji: trigger.emoji,
 		};
 
 		if (tmpRoom.t === 'd') {
@@ -205,24 +205,24 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 			_, s, console, moment,
 			Store: {
 				set: (key, val) => store[key] = val,
-				get: (key) => store[key]
+				get: key => store[key],
 			},
 			HTTP: (method, url, options) => {
 				try {
 					return {
-						result: HTTP.call(method, url, options)
+						result: HTTP.call(method, url, options),
 					};
 				} catch (error) {
-					return { error };
+					return {error};
 				}
-			}
+			},
 		};
 
-		Object.keys(RocketChat.models).filter(k => !k.startsWith('_')).forEach(k => {
+		Object.keys(RocketChat.models).filter(k => !k.startsWith('_')).forEach((k) => {
 			sandbox[k] = RocketChat.models[k];
 		});
 
-		return { store, sandbox };
+		return {store, sandbox};
 	}
 
 	getIntegrationScript(integration) {
@@ -232,7 +232,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 		}
 
 		const script = integration.scriptCompiled;
-		const { store, sandbox } = this.buildSandbox();
+		const {store, sandbox} = this.buildSandbox();
 
 		let vmScript;
 		try {
@@ -247,7 +247,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 				this.compiledScripts[integration._id] = {
 					script: new sandbox.Script(),
 					store,
-					_updatedAt: integration._updatedAt
+					_updatedAt: integration._updatedAt,
 				};
 
 				return this.compiledScripts[integration._id].script;
@@ -286,31 +286,31 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 		try {
 			script = this.getIntegrationScript(integration);
 		} catch (e) {
-			this.updateHistory({ historyId, step: 'execute-script-getting-script', error: true, errorStack: e });
+			this.updateHistory({historyId, step: 'execute-script-getting-script', error: true, errorStack: e});
 			return;
 		}
 
 		if (!script[method]) {
 			logger.outgoing.error(`Method "${ method }" no found in the Integration "${ integration.name }"`);
-			this.updateHistory({ historyId, step: `execute-script-no-method-${ method }` });
+			this.updateHistory({historyId, step: `execute-script-no-method-${ method }`});
 			return;
 		}
 
 		try {
-			const { sandbox } = this.buildSandbox(this.compiledScripts[integration._id].store);
+			const {sandbox} = this.buildSandbox(this.compiledScripts[integration._id].store);
 			sandbox.script = script;
 			sandbox.method = method;
 			sandbox.params = params;
 
-			this.updateHistory({ historyId, step: `execute-script-before-running-${ method }` });
-			const result = this.vm.runInNewContext('script[method](params)', sandbox, { timeout: 3000 });
+			this.updateHistory({historyId, step: `execute-script-before-running-${ method }`});
+			const result = this.vm.runInNewContext('script[method](params)', sandbox, {timeout: 3000});
 
 			logger.outgoing.debug(`Script method "${ method }" result of the Integration "${ integration.name }" is:`);
 			logger.outgoing.debug(result);
 
 			return result;
 		} catch (e) {
-			this.updateHistory({ historyId, step: `execute-script-error-running-${ method }`, error: true, errorStack: e.stack.replace(/^/gm, '  ') });
+			this.updateHistory({historyId, step: `execute-script-error-running-${ method }`, error: true, errorStack: e.stack.replace(/^/gm, '  ')});
 			logger.outgoing.error(`Error running Script in the Integration ${ integration.name }:`);
 			logger.outgoing.debug(integration.scriptCompiled.replace(/^/gm, '  ')); // Only output the compiled script if debugging is enabled, so the logs don't get spammed.
 			logger.outgoing.error('Stack:');
@@ -321,7 +321,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 
 	eventNameArgumentsToObject() {
 		const argObject = {
-			event: arguments[0]
+			event: arguments[0],
 		};
 
 		switch (argObject.event) {
@@ -374,7 +374,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 		return argObject;
 	}
 
-	mapEventArgsToData(data, { event, message, room, owner, user }) {
+	mapEventArgsToData(data, {event, message, room, owner, user}) {
 		switch (event) {
 			case 'sendMessage':
 				data.channel_id = room._id;
@@ -460,11 +460,11 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 		logger.outgoing.debug('Execute Trigger:', arguments[0]);
 
 		const argObject = this.eventNameArgumentsToObject(...arguments);
-		const { event, message, room } = argObject;
+		const {event, message, room} = argObject;
 
-		//Each type of event should have an event and a room attached, otherwise we
-		//wouldn't know how to handle the trigger nor would we have anywhere to send the
-		//result of the integration
+		// Each type of event should have an event and a room attached, otherwise we
+		// wouldn't know how to handle the trigger nor would we have anywhere to send the
+		// result of the integration
 		if (!event) {
 			return;
 		}
@@ -540,7 +540,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 		}
 
 		if (this.triggers.__any) {
-			//For outgoing integration which don't rely on rooms.
+			// For outgoing integration which don't rely on rooms.
 			for (const trigger of Object.values(this.triggers.__any)) {
 				triggersToExecute.push(trigger);
 			}
@@ -562,7 +562,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 		}
 	}
 
-	executeTriggerUrl(url, trigger, { event, message, room, owner, user }, theHistoryId, tries = 0) {
+	executeTriggerUrl(url, trigger, {event, message, room, owner, user}, theHistoryId, tries = 0) {
 		if (!this.isTriggerEnabled(trigger)) {
 			logger.outgoing.warn(`The trigger "${ trigger.name }" is no longer enabled, stopping execution of it at try: ${ tries }`);
 			return;
@@ -571,7 +571,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 		logger.outgoing.debug(`Starting to execute trigger: ${ trigger.name } (${ trigger._id })`);
 
 		let word;
-		//Not all triggers/events support triggerWords
+		// Not all triggers/events support triggerWords
 		if (RocketChat.integrations.outgoingEvents[event].use.triggerWords) {
 			if (trigger.triggerWords && trigger.triggerWords.length > 0) {
 				for (const triggerWord of trigger.triggerWords) {
@@ -597,19 +597,19 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 			return;
 		}
 
-		const historyId = this.updateHistory({ step: 'start-execute-trigger-url', integration: trigger, event });
+		const historyId = this.updateHistory({step: 'start-execute-trigger-url', integration: trigger, event});
 
 		const data = {
 			token: trigger.token,
-			bot: false
+			bot: false,
 		};
 
 		if (word) {
 			data.trigger_word = word;
 		}
 
-		this.mapEventArgsToData(data, { trigger, event, message, room, owner, user });
-		this.updateHistory({ historyId, step: 'mapped-args-to-data', data, triggerWord: word });
+		this.mapEventArgsToData(data, {trigger, event, message, room, owner, user});
+		this.updateHistory({historyId, step: 'mapped-args-to-data', data, triggerWord: word});
 
 		logger.outgoing.info(`Will be executing the Integration "${ trigger.name }" to the url: ${ url }`);
 		logger.outgoing.debug(data);
@@ -622,35 +622,35 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 			auth: undefined,
 			npmRequestOptions: {
 				rejectUnauthorized: !RocketChat.settings.get('Allow_Invalid_SelfSigned_Certs'),
-				strictSSL: !RocketChat.settings.get('Allow_Invalid_SelfSigned_Certs')
+				strictSSL: !RocketChat.settings.get('Allow_Invalid_SelfSigned_Certs'),
 			},
 			headers: {
-				'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.0 Safari/537.36'
-			}
+				'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.0 Safari/537.36',
+			},
 		};
 
 		if (this.hasScriptAndMethod(trigger, 'prepare_outgoing_request')) {
-			opts = this.executeScript(trigger, 'prepare_outgoing_request', { request: opts }, historyId);
+			opts = this.executeScript(trigger, 'prepare_outgoing_request', {request: opts}, historyId);
 		}
 
-		this.updateHistory({ historyId, step: 'after-maybe-ran-prepare', ranPrepareScript: true });
+		this.updateHistory({historyId, step: 'after-maybe-ran-prepare', ranPrepareScript: true});
 
 		if (!opts) {
-			this.updateHistory({ historyId, step: 'after-prepare-no-opts', finished: true });
+			this.updateHistory({historyId, step: 'after-prepare-no-opts', finished: true});
 			return;
 		}
 
 		if (opts.message) {
-			const prepareMessage = this.sendMessage({ trigger, room, message: opts.message, data });
-			this.updateHistory({ historyId, step: 'after-prepare-send-message', prepareSentMessage: prepareMessage });
+			const prepareMessage = this.sendMessage({trigger, room, message: opts.message, data});
+			this.updateHistory({historyId, step: 'after-prepare-send-message', prepareSentMessage: prepareMessage});
 		}
 
 		if (!opts.url || !opts.method) {
-			this.updateHistory({ historyId, step: 'after-prepare-no-url_or_method', finished: true });
+			this.updateHistory({historyId, step: 'after-prepare-no-url_or_method', finished: true});
 			return;
 		}
 
-		this.updateHistory({ historyId, step: 'pre-http-call', url: opts.url, httpCallData: opts.data });
+		this.updateHistory({historyId, step: 'pre-http-call', url: opts.url, httpCallData: opts.data});
 		HTTP.call(opts.method, opts.url, opts, (error, result) => {
 			if (!result) {
 				logger.outgoing.warn(`Result for the Integration ${ trigger.name } to ${ url } is empty`);
@@ -658,30 +658,30 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 				logger.outgoing.info(`Status code for the Integration ${ trigger.name } to ${ url } is ${ result.statusCode }`);
 			}
 
-			this.updateHistory({ historyId, step: 'after-http-call', httpError: error, httpResult: result });
+			this.updateHistory({historyId, step: 'after-http-call', httpError: error, httpResult: result});
 
 			if (this.hasScriptAndMethod(trigger, 'process_outgoing_response')) {
 				const sandbox = {
 					request: opts,
 					response: {
 						error,
-						status_code: result ? result.statusCode : undefined, //These values will be undefined to close issues #4175, #5762, and #5896
+						status_code: result ? result.statusCode : undefined, // These values will be undefined to close issues #4175, #5762, and #5896
 						content: result ? result.data : undefined,
 						content_raw: result ? result.content : undefined,
-						headers: result ? result.headers : {}
-					}
+						headers: result ? result.headers : {},
+					},
 				};
 
 				const scriptResult = this.executeScript(trigger, 'process_outgoing_response', sandbox, historyId);
 
 				if (scriptResult && scriptResult.content) {
-					const resultMessage = this.sendMessage({ trigger, room, message: scriptResult.content, data });
-					this.updateHistory({ historyId, step: 'after-process-send-message', processSentMessage: resultMessage, finished: true });
+					const resultMessage = this.sendMessage({trigger, room, message: scriptResult.content, data});
+					this.updateHistory({historyId, step: 'after-process-send-message', processSentMessage: resultMessage, finished: true});
 					return;
 				}
 
 				if (scriptResult === false) {
-					this.updateHistory({ historyId, step: 'after-process-false-result', finished: true });
+					this.updateHistory({historyId, step: 'after-process-false-result', finished: true});
 					return;
 				}
 			}
@@ -698,14 +698,14 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 					logger.outgoing.error(result);
 
 					if (result.statusCode === 410) {
-						this.updateHistory({ historyId, step: 'after-process-http-status-410', error: true });
+						this.updateHistory({historyId, step: 'after-process-http-status-410', error: true});
 						logger.outgoing.error(`Disabling the Integration "${ trigger.name }" because the status code was 401 (Gone).`);
-						RocketChat.models.Integrations.update({ _id: trigger._id }, { $set: { enabled: false }});
+						RocketChat.models.Integrations.update({_id: trigger._id}, {$set: {enabled: false}});
 						return;
 					}
 
 					if (result.statusCode === 500) {
-						this.updateHistory({ historyId, step: 'after-process-http-status-500', error: true });
+						this.updateHistory({historyId, step: 'after-process-http-status-500', error: true});
 						logger.outgoing.error(`Error "500" for the Integration "${ trigger.name }" to ${ url }.`);
 						logger.outgoing.error(result.content);
 						return;
@@ -714,7 +714,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 
 				if (trigger.retryFailedCalls) {
 					if (tries < trigger.retryCount && trigger.retryDelay) {
-						this.updateHistory({ historyId, error: true, step: `going-to-retry-${ tries + 1 }` });
+						this.updateHistory({historyId, error: true, step: `going-to-retry-${ tries + 1 }`});
 
 						let waitTime;
 
@@ -733,29 +733,29 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 								break;
 							default:
 								const er = new Error('The integration\'s retryDelay setting is invalid.');
-								this.updateHistory({ historyId, step: 'failed-and-retry-delay-is-invalid', error: true, errorStack: er.stack });
+								this.updateHistory({historyId, step: 'failed-and-retry-delay-is-invalid', error: true, errorStack: er.stack});
 								return;
 						}
 
 						logger.outgoing.info(`Trying the Integration ${ trigger.name } to ${ url } again in ${ waitTime } milliseconds.`);
 						Meteor.setTimeout(() => {
-							this.executeTriggerUrl(url, trigger, { event, message, room, owner, user }, historyId, tries + 1);
+							this.executeTriggerUrl(url, trigger, {event, message, room, owner, user}, historyId, tries + 1);
 						}, waitTime);
 					} else {
-						this.updateHistory({ historyId, step: 'too-many-retries', error: true });
+						this.updateHistory({historyId, step: 'too-many-retries', error: true});
 					}
 				} else {
-					this.updateHistory({ historyId, step: 'failed-and-not-configured-to-retry', error: true });
+					this.updateHistory({historyId, step: 'failed-and-not-configured-to-retry', error: true});
 				}
 
 				return;
 			}
 
-			//process outgoing webhook response as a new message
+			// process outgoing webhook response as a new message
 			if (result && this.successResults.includes(result.statusCode)) {
 				if (result && result.data && (result.data.text || result.data.attachments)) {
-					const resultMsg = this.sendMessage({ trigger, room, message: result.data, data });
-					this.updateHistory({ historyId, step: 'url-response-sent-message', resultMessage: resultMsg, finished: true });
+					const resultMsg = this.sendMessage({trigger, room, message: result.data, data});
+					this.updateHistory({historyId, step: 'url-response-sent-message', resultMessage: resultMsg, finished: true});
 				}
 			}
 		});
@@ -780,6 +780,6 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 			owner = RocketChat.models.Users.findOneById(history.data.owner._id);
 		}
 
-		this.executeTriggerUrl(history.url, integration, { event, message, room, owner, user });
+		this.executeTriggerUrl(history.url, integration, {event, message, room, owner, user});
 	}
 };

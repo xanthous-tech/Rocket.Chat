@@ -14,17 +14,15 @@ Template.sideNav.helpers({
 	},
 
 	roomType() {
-		return RocketChat.roomTypes.getTypes().map((roomType) => {
-			return {
-				template: roomType.customTemplate || 'roomList',
-				data: {
-					header: roomType.header,
-					identifier: roomType.identifier,
-					isCombined: roomType.isCombined,
-					label: roomType.label
-				}
-			};
-		});
+		return RocketChat.roomTypes.getTypes().map(roomType => ({
+			template: roomType.customTemplate || 'roomList',
+			data: {
+				header: roomType.header,
+				identifier: roomType.identifier,
+				isCombined: roomType.isCombined,
+				label: roomType.label,
+			},
+		}));
 	},
 
 	loggedInUser() {
@@ -38,7 +36,7 @@ Template.sideNav.helpers({
 
 	sidebarHideAvatar() {
 		return RocketChat.getUserPreference(Meteor.user(), 'sidebarHideAvatar');
-	}
+	},
 });
 
 Template.sideNav.events({
@@ -56,7 +54,7 @@ Template.sideNav.events({
 
 	'dropped .sidebar'(e) {
 		return e.preventDefault();
-	}
+	},
 });
 
 Template.sideNav.onRendered(function() {
@@ -79,8 +77,8 @@ Template.sideNav.onCreated(function() {
 		const user = RocketChat.models.Users.findOne(Meteor.userId(), {
 			fields: {
 				'settings.preferences.roomsListExhibitionMode': 1,
-				'settings.preferences.mergeChannels': 1
-			}
+				'settings.preferences.mergeChannels': 1,
+			},
 		});
 		const userPref = RocketChat.getUserPreference(user, 'roomsListExhibitionMode') === 'category' && RocketChat.getUserPreference(user, 'mergeChannels');
 		this.mergedChannels.set(userPref ? userPref : RocketChat.settings.get('UI_Merge_Channels_Groups'));

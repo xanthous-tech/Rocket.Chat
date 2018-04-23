@@ -1,4 +1,4 @@
-import { Random } from 'meteor/random';
+import {Random} from 'meteor/random';
 import ModelReadReceipts from '../models/ReadReceipts';
 
 const rawReadReceipts = ModelReadReceipts.model.rawCollection();
@@ -24,7 +24,7 @@ export const ReadReceipt = {
 			return;
 		}
 
-		const room = RocketChat.models.Rooms.findOneById(roomId, { fields: { lm: 1 } });
+		const room = RocketChat.models.Rooms.findOneById(roomId, {fields: {lm: 1}});
 
 		// if users last seen is greadebounceByRoomIdter than room's last message, it means the user already have this room marked as read
 		if (userLastSeen > room.lm) {
@@ -49,21 +49,19 @@ export const ReadReceipt = {
 			RocketChat.models.Messages.setAsReadById(message._id, firstSubscription.ls);
 		}
 
-		this.storeReadReceipts([{ _id: message._id }], roomId, userId);
+		this.storeReadReceipts([{_id: message._id}], roomId, userId);
 	},
 
 	storeReadReceipts(messages, roomId, userId) {
 		if (RocketChat.settings.get('Message_Read_Receipt_Store_Users')) {
 			const ts = new Date();
-			const receipts = messages.map(message => {
-				return {
-					_id: Random.id(),
-					roomId,
-					userId,
-					messageId: message._id,
-					ts
-				};
-			});
+			const receipts = messages.map(message => ({
+				_id: Random.id(),
+				roomId,
+				userId,
+				messageId: message._id,
+				ts,
+			}));
 
 			if (receipts.length === 0) {
 				return;
@@ -80,7 +78,7 @@ export const ReadReceipt = {
 	getReceipts(message) {
 		return ModelReadReceipts.findByMessageId(message._id).map(receipt => ({
 			...receipt,
-			user: RocketChat.models.Users.findOneById(receipt.userId, { fields: { username: 1, name: 1 }})
+			user: RocketChat.models.Users.findOneById(receipt.userId, {fields: {username: 1, name: 1}}),
 		}));
-	}
+	},
 };

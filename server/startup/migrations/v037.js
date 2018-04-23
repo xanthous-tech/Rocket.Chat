@@ -7,9 +7,9 @@ RocketChat.Migrations.add({
 			const addUserPermission = RocketChat.models.Permissions.findOne('add-user');
 
 			if (addUserPermission) {
-				RocketChat.models.Permissions.upsert({ _id: 'create-user' }, { $set: { roles: addUserPermission.roles } });
-				RocketChat.models.Permissions.remove({ _id: 'add-user' });
+				RocketChat.models.Permissions.upsert({_id: 'create-user'}, {$set: {roles: addUserPermission.roles}});
+				RocketChat.models.Permissions.remove({_id: 'add-user'});
 			}
 		}
-	}
+	},
 });

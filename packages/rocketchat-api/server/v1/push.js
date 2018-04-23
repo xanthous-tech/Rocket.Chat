@@ -1,9 +1,9 @@
 /* globals Push */
 
-RocketChat.API.v1.addRoute('push.token', { authRequired: true }, {
+RocketChat.API.v1.addRoute('push.token', {authRequired: true}, {
 	post() {
-		const { type, value, appName } = this.bodyParams;
-		let { id } = this.bodyParams;
+		const {type, value, appName} = this.bodyParams;
+		let {id} = this.bodyParams;
 
 		if (id && typeof id !== 'string') {
 			throw new Meteor.Error('error-id-param-not-valid', 'The required "id" body param is invalid.');
@@ -27,15 +27,15 @@ RocketChat.API.v1.addRoute('push.token', { authRequired: true }, {
 		let result;
 		Meteor.runAsUser(this.userId, () => result = Meteor.call('raix:push-update', {
 			id,
-			token: { [type]: value },
+			token: {[type]: value},
 			appName,
-			userId: this.userId
+			userId: this.userId,
 		}));
 
-		return RocketChat.API.v1.success({ result });
+		return RocketChat.API.v1.success({result});
 	},
 	delete() {
-		const { token } = this.bodyParams;
+		const {token} = this.bodyParams;
 
 		if (!token || typeof token !== 'string') {
 			throw new Meteor.Error('error-token-param-not-valid', 'The required "token" body param is missing or invalid.');
@@ -43,11 +43,11 @@ RocketChat.API.v1.addRoute('push.token', { authRequired: true }, {
 
 		const affectedRecords = Push.appCollection.remove({
 			$or: [{
-				'token.apn': token
+				'token.apn': token,
 			}, {
-				'token.gcm': token
+				'token.gcm': token,
 			}],
-			userId: this.userId
+			userId: this.userId,
 		});
 
 		if (affectedRecords === 0) {
@@ -55,5 +55,5 @@ RocketChat.API.v1.addRoute('push.token', { authRequired: true }, {
 		}
 
 		return RocketChat.API.v1.success();
-	}
+	},
 });

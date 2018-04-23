@@ -15,7 +15,7 @@ function Msg(command, params, item) {
 			_id: Random.id(),
 			rid: item.rid,
 			ts: new Date,
-			msg: TAPi18n.__('Username_and_message_must_not_be_empty', null, user.language)
+			msg: TAPi18n.__('Username_and_message_must_not_be_empty', null, user.language),
 		});
 	}
 	const message = trimmedParams.slice(separator + 1);
@@ -29,8 +29,8 @@ function Msg(command, params, item) {
 			ts: new Date,
 			msg: TAPi18n.__('Username_doesnt_exist', {
 				postProcess: 'sprintf',
-				sprintf: [targetUsernameOrig]
-			}, user.language)
+				sprintf: [targetUsernameOrig],
+			}, user.language),
 		});
 		return;
 	}
@@ -38,12 +38,12 @@ function Msg(command, params, item) {
 	const msgObject = {
 		_id: Random.id(),
 		rid,
-		msg: message
+		msg: message,
 	};
 	Meteor.call('sendMessage', msgObject);
 }
 
 RocketChat.slashCommands.add('msg', Msg, {
 	description: 'Direct_message_someone',
-	params: '@username <message>'
+	params: '@username <message>',
 });

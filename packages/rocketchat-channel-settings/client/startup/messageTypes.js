@@ -6,9 +6,9 @@ Meteor.startup(function() {
 		data(message) {
 			return {
 				user_by: message.u && message.u.username,
-				room_type: t(message.msg)
+				room_type: t(message.msg),
 			};
-		}
+		},
 	});
 
 	RocketChat.MessageTypes.registerType({
@@ -18,9 +18,9 @@ Meteor.startup(function() {
 		data(message) {
 			return {
 				user_by: message.u && message.u.username,
-				room_topic: message.msg
+				room_topic: message.msg,
 			};
-		}
+		},
 	});
 
 	RocketChat.MessageTypes.registerType({
@@ -30,9 +30,9 @@ Meteor.startup(function() {
 		data(message) {
 			return {
 				user_by: message.u && message.u.username,
-				room_announcement: message.msg
+				room_announcement: message.msg,
 			};
-		}
+		},
 	});
 
 	RocketChat.MessageTypes.registerType({
@@ -42,8 +42,8 @@ Meteor.startup(function() {
 		data(message) {
 			return {
 				user_by: message.u && message.u.username,
-				room_description: message.msg
+				room_description: message.msg,
 			};
-		}
+		},
 	});
 });

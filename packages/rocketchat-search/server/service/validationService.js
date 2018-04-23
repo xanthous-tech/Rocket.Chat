@@ -29,7 +29,7 @@ class ValidationService {
 		};
 
 		const uid = Meteor.userId();
-		//get subscription for message
+		// get subscription for message
 		if (result.message) {
 			result.message.docs.forEach((msg) => {
 
@@ -45,9 +45,7 @@ class ValidationService {
 				}
 			});
 
-			result.message.docs.filter((msg) => {
-				return msg.valid;
-			});
+			result.message.docs.filter(msg => msg.valid);
 		}
 
 		if (result.room) {
@@ -61,9 +59,7 @@ class ValidationService {
 				}
 			});
 
-			result.room.docs.filter((room) => {
-				return room.valid;
-			});
+			result.room.docs.filter(room => room.valid);
 		}
 
 		return result;

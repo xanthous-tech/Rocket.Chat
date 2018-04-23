@@ -4,7 +4,7 @@ Meteor.methods({
 	'public-settings/get'(updatedAt) {
 		this.unblock();
 		const records = RocketChat.models.Settings.find().fetch().filter(function(record) {
-			return record.hidden !== true && record['public'] === true;
+			return record.hidden !== true && record.public === true;
 		});
 		if (updatedAt instanceof Date) {
 			return {
@@ -13,15 +13,15 @@ Meteor.methods({
 				}),
 				remove: RocketChat.models.Settings.trashFindDeletedAfter(updatedAt, {
 					hidden: {
-						$ne: true
+						$ne: true,
 					},
-					'public': true
+					public: true,
 				}, {
 					fields: {
 						_id: 1,
-						_deletedAt: 1
-					}
-				}).fetch()
+						_deletedAt: 1,
+					},
+				}).fetch(),
 			};
 		}
 		return records;
@@ -44,22 +44,22 @@ Meteor.methods({
 				}),
 				remove: RocketChat.models.Settings.trashFindDeletedAfter(updatedAt, {
 					hidden: {
-						$ne: true
-					}
+						$ne: true,
+					},
 				}, {
 					fields: {
 						_id: 1,
-						_deletedAt: 1
-					}
-				}).fetch()
+						_deletedAt: 1,
+					},
+				}).fetch(),
 			};
 		}
 		return records;
-	}
+	},
 });
 
 RocketChat.models.Settings.cache.on('changed', function(type, setting) {
-	if (setting['public'] === true) {
+	if (setting.public === true) {
 		RocketChat.Notifications.notifyAllInThisInstance('public-settings-changed', type, _.pick(setting, '_id', 'value', 'editor', 'properties'));
 	}
 	return RocketChat.Notifications.notifyLoggedInThisInstance('private-settings-changed', type, setting);

@@ -100,8 +100,8 @@ class CachedCollection {
 		useCache = true,
 		debug = false,
 		version = 7,
-		maxCacheTime = 60*60*24*30,
-		onSyncData = (/* action, record */) => {}
+		maxCacheTime = 60 * 60 * 24 * 30,
+		onSyncData = (/* action, record */) => {},
 	}) {
 		this.collection = collection || new Mongo.Collection(null);
 
@@ -175,7 +175,7 @@ class CachedCollection {
 			}
 
 			const now = new Date();
-			if (data && now - data.updatedAt >= 1000*this.maxCacheTime) {
+			if (data && now - data.updatedAt >= 1000 * this.maxCacheTime) {
 				this.clearCache();
 				callback(false);
 				return;
@@ -185,7 +185,7 @@ class CachedCollection {
 				this.log(`${ data.records.length } records loaded from cache`);
 				data.records.forEach((record) => {
 					record.__cache__ = true;
-					this.collection.upsert({ _id: record._id }, _.omit(record, '_id'));
+					this.collection.upsert({_id: record._id}, _.omit(record, '_id'));
 
 					if (record._updatedAt) {
 						const _updatedAt = new Date(record._updatedAt);
@@ -207,7 +207,7 @@ class CachedCollection {
 			this.log(`${ data.length } records loaded from server`);
 			data.forEach((record) => {
 				delete record.$loki;
-				this.collection.upsert({ _id: record._id }, _.omit(record, '_id'));
+				this.collection.upsert({_id: record._id}, _.omit(record, '_id'));
 
 				this.onSyncData('changed', record);
 
@@ -271,7 +271,7 @@ class CachedCollection {
 				delete record.$loki;
 
 				if (record._deletedAt) {
-					this.collection.remove({ _id: record._id });
+					this.collection.remove({_id: record._id});
 
 					this.onSyncData('removed', record);
 
@@ -279,7 +279,7 @@ class CachedCollection {
 						this.updatedAt = record._deletedAt;
 					}
 				} else {
-					this.collection.upsert({ _id: record._id }, _.omit(record, '_id'));
+					this.collection.upsert({_id: record._id}, _.omit(record, '_id'));
 
 					this.onSyncData('changed', record);
 
@@ -309,7 +309,7 @@ class CachedCollection {
 			updatedAt: new Date,
 			version: this.version,
 			token: this.getToken(),
-			records: data
+			records: data,
 		});
 		this.log('saving cache (done)');
 	}
@@ -331,10 +331,10 @@ class CachedCollection {
 			this.log('record received', t, record);
 			if (t === 'removed') {
 				this.collection.remove(record._id);
-				RoomManager.close(record.t+record.name);
+				RoomManager.close(record.t + record.name);
 			} else {
 				delete record.$loki;
-				this.collection.upsert({ _id: record._id }, _.omit(record, '_id'));
+				this.collection.upsert({_id: record._id}, _.omit(record, '_id'));
 			}
 
 			this.saveCache();

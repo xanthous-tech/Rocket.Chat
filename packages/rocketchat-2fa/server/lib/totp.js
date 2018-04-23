@@ -8,11 +8,11 @@ RocketChat.TOTP = {
 	generateOtpauthURL(secret, username) {
 		return speakeasy.otpauthURL({
 			secret: secret.ascii,
-			label: `Rocket.Chat:${ username }`
+			label: `Rocket.Chat:${ username }`,
 		});
 	},
 
-	verify({ secret, token, backupTokens, userId }) {
+	verify({secret, token, backupTokens, userId}) {
 		// validates a backup code
 		if (token.length === 8 && backupTokens) {
 			const hashedCode = SHA256(token);
@@ -35,7 +35,7 @@ RocketChat.TOTP = {
 				secret,
 				encoding: 'base32',
 				token,
-				window: maxDelta
+				window: maxDelta,
 			});
 
 			return verifiedDelta !== undefined;
@@ -44,7 +44,7 @@ RocketChat.TOTP = {
 		return speakeasy.totp.verify({
 			secret,
 			encoding: 'base32',
-			token
+			token,
 		});
 	},
 
@@ -58,6 +58,6 @@ RocketChat.TOTP = {
 			hashedCodes.push(SHA256(code));
 		}
 
-		return { codes, hashedCodes };
-	}
+		return {codes, hashedCodes};
+	},
 };

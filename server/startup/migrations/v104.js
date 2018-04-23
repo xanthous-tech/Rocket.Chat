@@ -15,5 +15,5 @@ RocketChat.Migrations.add({
 			RocketChat.models.Settings.update({_id: 'theme-color-rc-color-primary-light-medium'}, {$set: {editor: 'expression', value: 'color-gray-medium'}});
 			RocketChat.models.Settings.update({_id: 'theme-color-rc-color-primary-lightest'}, {$set: {editor: 'expression', value: 'color-gray-lightest'}});
 		}
-	}
+	},
 });

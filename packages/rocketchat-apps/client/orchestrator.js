@@ -1,4 +1,4 @@
-import { AppWebsocketReceiver } from './communication';
+import {AppWebsocketReceiver} from './communication';
 
 class AppClientOrchestrator {
 	constructor() {
@@ -20,13 +20,13 @@ class AppClientOrchestrator {
 			i18nLabel: 'Apps',
 			permissionGranted() {
 				return RocketChat.authz.hasAtLeastOnePermission(['manage-apps']);
-			}
+			},
 		});
 	}
 
 	_loadLanguages() {
 		RocketChat.API.get('apps/languages').then((info) => {
-			info.apps.forEach((rlInfo) => this.parseAndLoadLanguages(rlInfo.languages));
+			info.apps.forEach(rlInfo => this.parseAndLoadLanguages(rlInfo.languages));
 		});
 	}
 
@@ -49,27 +49,27 @@ Meteor.startup(function _rlClientOrch() {
 FlowRouter.route('/admin/apps', {
 	name: 'apps',
 	action() {
-		BlazeLayout.render('main', { center: 'apps' });
-	}
+		BlazeLayout.render('main', {center: 'apps'});
+	},
 });
 
 FlowRouter.route('/admin/app/install', {
 	name: 'app-install',
 	action() {
-		BlazeLayout.render('main', { center: 'appInstall' });
-	}
+		BlazeLayout.render('main', {center: 'appInstall'});
+	},
 });
 
 FlowRouter.route('/admin/apps/:appId', {
 	name: 'app-manage',
 	action() {
-		BlazeLayout.render('main', { center: 'appManage' });
-	}
+		BlazeLayout.render('main', {center: 'appManage'});
+	},
 });
 
 FlowRouter.route('/admin/apps/:appId/logs', {
 	name: 'app-logs',
 	action() {
-		BlazeLayout.render('main', { center: 'appLogs' });
-	}
+		BlazeLayout.render('main', {center: 'appLogs'});
+	},
 });

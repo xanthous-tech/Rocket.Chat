@@ -2,7 +2,7 @@ import _ from 'underscore';
 
 const orig_updateOrCreateUserFromExternalService = Accounts.updateOrCreateUserFromExternalService;
 
-Accounts.updateOrCreateUserFromExternalService = function(serviceName, serviceData = {} /*, options*/) {
+Accounts.updateOrCreateUserFromExternalService = function(serviceName, serviceData = {} /* , options*/) {
 	const services = [
 		'facebook',
 		'github',
@@ -11,7 +11,7 @@ Accounts.updateOrCreateUserFromExternalService = function(serviceName, serviceDa
 		'meteor-developer',
 		'linkedin',
 		'twitter',
-		'sandstorm'
+		'sandstorm',
 	];
 
 	if (services.includes(serviceName) === false && serviceData._OAuthCustom !== true) {
@@ -34,7 +34,7 @@ Accounts.updateOrCreateUserFromExternalService = function(serviceName, serviceDa
 		if (user != null) {
 			const findQuery = {
 				address: serviceData.email,
-				verified: true
+				verified: true,
 			};
 
 			if (!_.findWhere(user.emails, findQuery)) {

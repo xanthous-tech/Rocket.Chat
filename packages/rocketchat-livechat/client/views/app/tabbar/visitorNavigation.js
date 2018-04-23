@@ -6,10 +6,10 @@ Template.visitorNavigation.helpers({
 	},
 
 	pageVisited() {
-		const room = ChatRoom.findOne({ _id: this.rid }, { fields: { 'v.token': 1 } });
+		const room = ChatRoom.findOne({_id: this.rid}, {fields: {'v.token': 1}});
 
 		if (room && room.v && room.v.token) {
-			return LivechatPageVisited.find({ token: room.v.token }, { sort: { ts: -1 } });
+			return LivechatPageVisited.find({token: room.v.token}, {sort: {ts: -1}});
 		}
 	},
 
@@ -19,13 +19,13 @@ Template.visitorNavigation.helpers({
 
 	accessDateTime() {
 		return moment(this.ts).format('L LTS');
-	}
+	},
 });
 
 Template.visitorNavigation.onCreated(function() {
 	const currentData = Template.currentData();
 
 	if (currentData && currentData.rid) {
-		this.pageVisited = this.subscribe('livechat:visitorPageVisited', { rid: currentData.rid });
+		this.pageVisited = this.subscribe('livechat:visitorPageVisited', {rid: currentData.rid});
 	}
 });

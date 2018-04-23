@@ -1,4 +1,4 @@
-import { call, UiTextContext } from 'meteor/rocketchat:lib';
+import {call, UiTextContext} from 'meteor/rocketchat:lib';
 
 export function hide(type, rid, name) {
 	const warnText = RocketChat.roomTypes.roomTypes[type].getUiText(UiTextContext.HIDE_WARNING);
@@ -12,7 +12,7 @@ export function hide(type, rid, name) {
 		confirmButtonText: t('Yes_hide_it'),
 		cancelButtonText: t('Cancel'),
 		closeOnConfirm: true,
-		html: false
+		html: false,
 	}, function() {
 		if (['channel', 'group', 'direct'].includes(FlowRouter.getRouteName()) && (Session.get('openedRoom') === rid)) {
 			FlowRouter.go('home');
@@ -42,7 +42,7 @@ export function leave(type, rid, name) {
 		confirmButtonText: t('Yes_leave_it'),
 		cancelButtonText: t('Cancel'),
 		closeOnConfirm: false,
-		html: false
+		html: false,
 	}, function(isConfirm) {
 		if (isConfirm) {
 			Meteor.call('leaveRoom', rid, function(err) {
@@ -51,7 +51,7 @@ export function leave(type, rid, name) {
 						title: t('Warning'),
 						text: handleError(err, false),
 						type: 'warning',
-						html: false
+						html: false,
 					});
 				} else {
 					modal.close();
@@ -78,7 +78,7 @@ export function erase(rid) {
 		confirmButtonText: t('Yes_delete_it'),
 		cancelButtonText: t('Cancel'),
 		closeOnConfirm: false,
-		html: false
+		html: false,
 	}, () => {
 		call('eraseRoom', rid).then(() => {
 			modal.open({
@@ -86,7 +86,7 @@ export function erase(rid) {
 				text: t('Room_has_been_deleted'),
 				type: 'success',
 				timer: 2000,
-				showConfirmButton: false
+				showConfirmButton: false,
 			});
 		});
 	});

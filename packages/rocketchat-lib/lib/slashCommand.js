@@ -1,5 +1,5 @@
 RocketChat.slashCommands = {
-	commands: {}
+	commands: {},
 };
 
 RocketChat.slashCommands.add = function(command, callback, options = {}, result) {
@@ -10,7 +10,7 @@ RocketChat.slashCommands.add = function(command, callback, options = {}, result)
 		description: options.description,
 		permission: options.permission,
 		clientOnly: options.clientOnly || false,
-		result
+		result,
 	};
 };
 
@@ -24,10 +24,10 @@ Meteor.methods({
 	slashCommand(command) {
 		if (!Meteor.userId()) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
-				method: 'slashCommand'
+				method: 'slashCommand',
 			});
 		}
 
 		return RocketChat.slashCommands.run(command.cmd, command.params, command.msg);
-	}
+	},
 });

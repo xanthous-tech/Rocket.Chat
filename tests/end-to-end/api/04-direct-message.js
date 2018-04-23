@@ -2,7 +2,7 @@
 /* globals expect */
 /* eslint no-unused-vars: 0 */
 
-import {getCredentials, api, login, request, credentials, directMessage, log } from '../../data/api-data.js';
+import {getCredentials, api, login, request, credentials, directMessage, log} from '../../data/api-data.js';
 import {adminEmail, password} from '../../data/user.js';
 import supertest from 'supertest';
 
@@ -16,7 +16,7 @@ describe('[Direct Messages]', function() {
 			.set(credentials)
 			.send({
 				channel: 'rocket.cat',
-				text: 'This message was sent using the API'
+				text: 'This message was sent using the API',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -34,7 +34,7 @@ describe('[Direct Messages]', function() {
 			.set(credentials)
 			.send({
 				roomId: directMessage._id,
-				topic: 'a direct message with rocket.cat'
+				topic: 'a direct message with rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -49,7 +49,7 @@ describe('[Direct Messages]', function() {
 			.set(credentials)
 			.query({
 				roomId: directMessage._id,
-				userId: 'rocket.cat'
+				userId: 'rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -91,7 +91,7 @@ describe('[Direct Messages]', function() {
 			.set(credentials)
 			.send({
 				roomId: directMessage._id,
-				userId: 'rocket.cat'
+				userId: 'rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -106,7 +106,7 @@ describe('[Direct Messages]', function() {
 			.set(credentials)
 			.send({
 				roomId: directMessage._id,
-				userId: 'rocket.cat'
+				userId: 'rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)

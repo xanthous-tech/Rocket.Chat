@@ -3,7 +3,7 @@ import s from 'underscore.string';
 
 const accountsConfig = {
 	forbidClientAccountCreation: true,
-	loginExpirationInDays: RocketChat.settings.get('Accounts_LoginExpiration')
+	loginExpirationInDays: RocketChat.settings.get('Accounts_LoginExpiration'),
 };
 
 Accounts.config(accountsConfig);
@@ -29,11 +29,11 @@ Accounts.emailTemplates.userToActivate = {
 		const html = RocketChat.placeholders.replace(TAPi18n.__(email), {
 			name: options.name,
 			email: options.email,
-			reason: options.reason
+			reason: options.reason,
 		});
 
 		return header + html + footer;
-	}
+	},
 };
 
 Accounts.emailTemplates.userActivated = {
@@ -52,11 +52,11 @@ Accounts.emailTemplates.userActivated = {
 		const action = active ? (username ? 'Activated' : 'Approved') : 'Deactivated';
 
 		const html = RocketChat.placeholders.replace(TAPi18n.__(`Accounts_Email_${ action }`), {
-			name
+			name,
 		});
 
 		return header + html + footer;
-	}
+	},
 };
 
 
@@ -80,19 +80,19 @@ Accounts.emailTemplates.enrollAccount.subject = function(user = {}) {
 		subject = RocketChat.settings.get('Accounts_Enrollment_Email_Subject');
 	} else {
 		subject = TAPi18n.__('Accounts_Enrollment_Email_Subject_Default', {
-			lng: user.language || RocketChat.settings.get('language') || 'en'
+			lng: user.language || RocketChat.settings.get('language') || 'en',
 		});
 	}
 	return RocketChat.placeholders.replace(subject);
 };
 
-Accounts.emailTemplates.enrollAccount.html = function(user = {}/*, url*/) {
+Accounts.emailTemplates.enrollAccount.html = function(user = {}/* , url*/) {
 	let html;
 	if (RocketChat.settings.get('Accounts_Enrollment_Customized')) {
 		html = RocketChat.settings.get('Accounts_Enrollment_Email');
 	} else {
 		html = TAPi18n.__('Accounts_Enrollment_Email_Default', {
-			lng: user.language || RocketChat.settings.get('language') || 'en'
+			lng: user.language || RocketChat.settings.get('language') || 'en',
 		});
 	}
 
@@ -101,7 +101,7 @@ Accounts.emailTemplates.enrollAccount.html = function(user = {}/*, url*/) {
 
 	html = RocketChat.placeholders.replace(html, {
 		name: user.name,
-		email: user.emails && user.emails[0] && user.emails[0].address
+		email: user.emails && user.emails[0] && user.emails[0].address,
 	});
 
 	return header + html + footer;
@@ -136,7 +136,7 @@ Accounts.onCreateUser(function(options, user = {}) {
 			if (!user.emails && service.email) {
 				user.emails = [{
 					address: service.email,
-					verified: true
+					verified: true,
 				}];
 			}
 		}
@@ -145,9 +145,9 @@ Accounts.onCreateUser(function(options, user = {}) {
 	if (!user.active) {
 		const destinations = [];
 
-		RocketChat.models.Roles.findUsersInRole('admin').forEach(adminUser => {
+		RocketChat.models.Roles.findUsersInRole('admin').forEach((adminUser) => {
 			if (Array.isArray(adminUser.emails)) {
-				adminUser.emails.forEach(email => {
+				adminUser.emails.forEach((email) => {
 					destinations.push(`${ adminUser.name }<${ email.address }>`);
 				});
 			}
@@ -157,7 +157,7 @@ Accounts.onCreateUser(function(options, user = {}) {
 			to: destinations,
 			from: RocketChat.settings.get('From_Email'),
 			subject: Accounts.emailTemplates.userToActivate.subject(),
-			html: Accounts.emailTemplates.userToActivate.html(options)
+			html: Accounts.emailTemplates.userToActivate.html(options),
 		};
 
 		Meteor.defer(() => Email.send(email));
@@ -189,7 +189,7 @@ Accounts.insertUserDoc = _.wrap(Accounts.insertUserDoc, function(insertUserDoc, 
 	const _id = insertUserDoc.call(Accounts, options, user);
 
 	user = Meteor.users.findOne({
-		_id
+		_id,
 	});
 
 	if (user.username) {
@@ -209,11 +209,11 @@ Accounts.insertUserDoc = _.wrap(Accounts.insertUserDoc, function(insertUserDoc, 
 	if (roles.length === 0) {
 		const hasAdmin = RocketChat.models.Users.findOne({
 			roles: 'admin',
-			type: 'user'
+			type: 'user',
 		}, {
 			fields: {
-				_id: 1
-			}
+				_id: 1,
+			},
 		});
 
 		if (hasAdmin) {
@@ -241,13 +241,13 @@ Accounts.validateLoginAttempt(function(login) {
 
 	if (!!login.user.active !== true) {
 		throw new Meteor.Error('error-user-is-not-activated', 'User is not activated', {
-			'function': 'Accounts.validateLoginAttempt'
+			function: 'Accounts.validateLoginAttempt',
 		});
 	}
 
 	if (!login.user.roles || !Array.isArray(login.user.roles)) {
 		throw new Meteor.Error('error-user-has-no-roles', 'User has no roles', {
-			'function': 'Accounts.validateLoginAttempt'
+			function: 'Accounts.validateLoginAttempt',
 		});
 	}
 

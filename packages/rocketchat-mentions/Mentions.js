@@ -45,11 +45,11 @@ export default class {
 			}
 			const name = this.useRealName && mentionObj && mentionObj.name;
 
-			return `<a class="mention-link ${ username === me ? 'mention-link-me background-primary-action-color':'' }" data-username="${ username }" title="${ name ? username : '' }">${ name || match }</a>`;
+			return `<a class="mention-link ${ username === me ? 'mention-link-me background-primary-action-color' : '' }" data-username="${ username }" title="${ name ? username : '' }">${ name || match }</a>`;
 		});
 	}
 	replaceChannels(str, message) {
-		//since apostrophe escaped contains # we need to unescape it
+		// since apostrophe escaped contains # we need to unescape it
 		return str.replace(/&#39;/g, '\'').replace(this.channelMentionRegex, (match, n1, n2) => {
 			const name = n1 || n2;
 			if (message.temp == null && _.findWhere(message.channels, {name}) == null) {

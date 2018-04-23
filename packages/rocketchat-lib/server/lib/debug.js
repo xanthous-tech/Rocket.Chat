@@ -4,12 +4,12 @@ import _ from 'underscore';
 const logger = new Logger('Meteor', {
 	methods: {
 		method: {
-			type: 'debug'
+			type: 'debug',
 		},
 		publish: {
-			type: 'debug'
-		}
-	}
+			type: 'debug',
+		},
+	},
 });
 
 const wrapMethods = function(name, originalHandler, methodsMap) {

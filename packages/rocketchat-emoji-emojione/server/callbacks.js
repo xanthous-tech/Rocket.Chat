@@ -1,6 +1,4 @@
 /* globals emojione */
 Meteor.startup(function() {
-	RocketChat.callbacks.add('beforeNotifyUser', (message) => {
-		return emojione.shortnameToUnicode(message);
-	});
+	RocketChat.callbacks.add('beforeNotifyUser', message => emojione.shortnameToUnicode(message));
 });

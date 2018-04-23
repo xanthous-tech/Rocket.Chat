@@ -29,7 +29,7 @@ Template.messageBox.events({
 				input.selectionEnd = caretPos + emojiValue.length;
 			});
 		}
-	}
+	},
 });
 
 Template.messageBox.onCreated(function() {

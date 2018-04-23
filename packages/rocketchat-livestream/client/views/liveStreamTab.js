@@ -57,7 +57,7 @@ Template.liveStreamTab.helpers({
 	},
 	isAudioOnly() {
 		return Template.instance().streamingOptions.get() ? Template.instance().streamingOptions.get().isAudioOnly : false;
-	}
+	},
 });
 
 Template.liveStreamTab.onCreated(function() {
@@ -66,7 +66,7 @@ Template.liveStreamTab.onCreated(function() {
 	this.popoutOpen = new ReactiveVar(popout.context != null);
 
 	this.autorun(() => {
-		const room = RocketChat.models.Rooms.findOne(this.data.rid, { fields: { streamingOptions : 1 } });
+		const room = RocketChat.models.Rooms.findOne(this.data.rid, {fields: {streamingOptions : 1}});
 		this.streamingOptions.set(room.streamingOptions);
 	});
 });
@@ -88,7 +88,7 @@ Template.liveStreamTab.events({
 
 		const streamingOptions = {
 			...optionsFromUrl(i.find('[name=streaming-source]').value),
-			isAudioOnly: i.find('[name=streaming-audio-only]').checked
+			isAudioOnly: i.find('[name=streaming-audio-only]').checked,
 		};
 
 		if (streamingOptions.id != null) {
@@ -126,9 +126,9 @@ Template.liveStreamTab.events({
 					streamingSource: i.streamingOptions.get().url,
 					isAudioOnly: i.streamingOptions.get().isAudioOnly,
 					showVideoControls: true,
-					streamingOptions:  i.streamingOptions.get()
+					streamingOptions:  i.streamingOptions.get(),
 				},
-				onCloseCallback: () => i.popoutOpen.set(false)
+				onCloseCallback: () => i.popoutOpen.set(false),
 			});
 		}
 	},
@@ -138,7 +138,7 @@ Template.liveStreamTab.events({
 
 		const streamingOptions = {
 			...optionsFromUrl(i.find('[name=streaming-source]').value),
-			isAudioOnly: i.find('[name=streaming-audio-only]').checked
+			isAudioOnly: i.find('[name=streaming-audio-only]').checked,
 		};
 
 		if (streamingOptions.id != null) {
@@ -162,10 +162,10 @@ Template.liveStreamTab.events({
 				streamingSource: i.streamingOptions.get().url,
 				isAudioOnly: i.streamingOptions.get().isAudioOnly,
 				showVideoControls: true,
-				streamingOptions:  i.streamingOptions.get()
+				streamingOptions:  i.streamingOptions.get(),
 			},
-			onCloseCallback: () => i.popoutOpen.set(false)
+			onCloseCallback: () => i.popoutOpen.set(false),
 		});
 		i.popoutOpen.set(true);
-	}
+	},
 });

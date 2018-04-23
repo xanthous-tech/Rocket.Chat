@@ -1,4 +1,4 @@
-RocketChat.API.v1.addRoute('commands.get', { authRequired: true }, {
+RocketChat.API.v1.addRoute('commands.get', {authRequired: true}, {
 	get() {
 		const params = this.queryParams;
 
@@ -12,40 +12,40 @@ RocketChat.API.v1.addRoute('commands.get', { authRequired: true }, {
 			return RocketChat.API.v1.failure(`There is no command in the system by the name of: ${ params.command }`);
 		}
 
-		return RocketChat.API.v1.success({ command: cmd });
-	}
+		return RocketChat.API.v1.success({command: cmd});
+	},
 });
 
-RocketChat.API.v1.addRoute('commands.list', { authRequired: true }, {
+RocketChat.API.v1.addRoute('commands.list', {authRequired: true}, {
 	get() {
-		const { offset, count } = this.getPaginationItems();
-		const { sort, fields, query } = this.parseJsonQuery();
+		const {offset, count} = this.getPaginationItems();
+		const {sort, fields, query} = this.parseJsonQuery();
 
 		let commands = Object.values(RocketChat.slashCommands.commands);
 
 		if (query && query.command) {
-			commands = commands.filter((command) => command.command === query.command);
+			commands = commands.filter(command => command.command === query.command);
 		}
 
 		const totalCount = commands.length;
 		commands = RocketChat.models.Rooms.processQueryOptionsOnResult(commands, {
-			sort: sort ? sort : { name: 1 },
+			sort: sort ? sort : {name: 1},
 			skip: offset,
 			limit: count,
-			fields
+			fields,
 		});
 
 		return RocketChat.API.v1.success({
 			commands,
 			offset,
 			count: commands.length,
-			total: totalCount
+			total: totalCount,
 		});
-	}
+	},
 });
 
 // Expects a body of: { command: 'gimme', params: 'any string value', roomId: 'value' }
-RocketChat.API.v1.addRoute('commands.run', { authRequired: true }, {
+RocketChat.API.v1.addRoute('commands.run', {authRequired: true}, {
 	post() {
 		const body = this.bodyParams;
 		const user = this.getLoggedInUser();
@@ -77,10 +77,10 @@ RocketChat.API.v1.addRoute('commands.run', { authRequired: true }, {
 			result = RocketChat.slashCommands.run(cmd, params, {
 				_id: Random.id(),
 				rid: body.roomId,
-				msg: `/${ cmd } ${ params }`
+				msg: `/${ cmd } ${ params }`,
 			});
 		});
 
-		return RocketChat.API.v1.success({ result });
-	}
+		return RocketChat.API.v1.success({result});
+	},
 });

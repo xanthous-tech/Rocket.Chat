@@ -28,7 +28,7 @@ RocketChat.registerAccessTokenService('google', function(options) {
 		idToken: String,
 		expiresIn: Match.Integer,
 		scope: Match.Maybe(String),
-		identity: Match.Maybe(Object)
+		identity: Match.Maybe(Object),
 	}));
 
 	const identity = options.identity || getIdentity(options.accessToken);
@@ -37,7 +37,7 @@ RocketChat.registerAccessTokenService('google', function(options) {
 		accessToken: options.accessToken,
 		idToken: options.idToken,
 		expiresAt: (+new Date) + (1000 * parseInt(options.expiresIn, 10)),
-		scope: options.scopes || getScopes(options.accessToken)
+		scope: options.scopes || getScopes(options.accessToken),
 	};
 
 	const fields = _.pick(identity, Google.whitelistedFields);
@@ -54,8 +54,8 @@ RocketChat.registerAccessTokenService('google', function(options) {
 		serviceData,
 		options: {
 			profile: {
-				name: identity.name
-			}
-		}
+				name: identity.name,
+			},
+		},
 	};
 });

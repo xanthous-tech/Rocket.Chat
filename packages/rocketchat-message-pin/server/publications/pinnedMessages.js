@@ -8,7 +8,7 @@ Meteor.publish('pinnedMessages', function(rid, limit = 50) {
 	if (!user) {
 		return this.ready();
 	}
-	const cursorHandle = RocketChat.models.Messages.findPinnedByRoom(rid, { sort: { ts: -1 }, limit }).observeChanges({
+	const cursorHandle = RocketChat.models.Messages.findPinnedByRoom(rid, {sort: {ts: -1}, limit}).observeChanges({
 		added(_id, record) {
 			return publication.added('rocketchat_pinned_message', _id, record);
 		},
@@ -17,7 +17,7 @@ Meteor.publish('pinnedMessages', function(rid, limit = 50) {
 		},
 		removed(_id) {
 			return publication.removed('rocketchat_pinned_message', _id);
-		}
+		},
 	});
 	this.ready();
 	return this.onStop(function() {

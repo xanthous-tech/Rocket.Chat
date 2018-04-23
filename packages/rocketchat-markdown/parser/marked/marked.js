@@ -1,5 +1,5 @@
-import { RocketChat } from 'meteor/rocketchat:lib';
-import { Random } from 'meteor/random';
+import {RocketChat} from 'meteor/rocketchat:lib';
+import {Random} from 'meteor/random';
 import _ from 'underscore';
 import s from 'underscore.string';
 import hljs from 'highlight.js';
@@ -34,7 +34,7 @@ renderer.code = function(code, lang, escaped) {
 	msg.tokens.push({
 		highlight: true,
 		token,
-		text
+		text,
 	});
 
 	return token;
@@ -49,7 +49,7 @@ renderer.codespan = function(text) {
 	const token = `=!=${ Random.id() }=!=`;
 	msg.tokens.push({
 		token,
-		text
+		text,
 	});
 
 	return token;
@@ -101,7 +101,7 @@ export const marked = (message) => {
 		smartypants,
 		renderer,
 		sanitize: true,
-		highlight
+		highlight,
 	});
 
 	return msg;

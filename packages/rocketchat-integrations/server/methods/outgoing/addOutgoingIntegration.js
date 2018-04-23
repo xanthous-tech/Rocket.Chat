@@ -14,5 +14,5 @@ Meteor.methods({
 		integration._id = RocketChat.models.Integrations.insert(integration);
 
 		return integration;
-	}
+	},
 });

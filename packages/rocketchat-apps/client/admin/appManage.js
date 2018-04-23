@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import s from 'underscore.string';
 
-import { AppEvents } from '../communication';
+import {AppEvents} from '../communication';
 
 
 Template.appManage.onCreated(function() {
@@ -30,7 +30,7 @@ Template.appManage.onCreated(function() {
 
 	Promise.all([
 		RocketChat.API.get(`apps/${ id }`),
-		RocketChat.API.get(`apps/${ id }/settings`)
+		RocketChat.API.get(`apps/${ id }/settings`),
 	]).then((results) => {
 		instance.app.set(results[0].app);
 		console.log(instance.app.get());
@@ -42,7 +42,7 @@ Template.appManage.onCreated(function() {
 		instance.theError.set(e.message);
 	});
 
-	instance.onStatusChanged = function _onStatusChanged({ appId, status }) {
+	instance.onStatusChanged = function _onStatusChanged({appId, status}) {
 		if (appId !== id) {
 			return;
 		}
@@ -52,7 +52,7 @@ Template.appManage.onCreated(function() {
 		instance.app.set(app);
 	};
 
-	instance.onSettingUpdated = function _onSettingUpdated({ appId }) {
+	instance.onSettingUpdated = function _onSettingUpdated({appId}) {
 		if (appId !== id) {
 			return;
 		}
@@ -77,16 +77,16 @@ Template.appManage.helpers({
 	languages() {
 		const languages = TAPi18n.getLanguages();
 
-		let result = Object.keys(languages).map(key => {
+		let result = Object.keys(languages).map((key) => {
 			const language = languages[key];
-			return _.extend(language, { key });
+			return _.extend(language, {key});
 		});
 
 		result = _.sortBy(result, 'key');
 		result.unshift({
-			'name': 'Default',
-			'en': 'Default',
-			'key': ''
+			name: 'Default',
+			en: 'Default',
+			key: '',
 		});
 		return result;
 	},
@@ -104,7 +104,7 @@ Template.appManage.helpers({
 	disabled() {
 		const t = Template.instance();
 		const settings = t.settings.get();
-		return !Object.keys(settings).some((k) => settings[k].hasChanged);
+		return !Object.keys(settings).some(k => settings[k].hasChanged);
 	},
 	isReady() {
 		if (Template.instance().ready) {
@@ -150,15 +150,15 @@ Template.appManage.helpers({
 		return Object.values(Template.instance().settings.get());
 	},
 	parseDescription(i18nDescription) {
-		const item = RocketChat.Markdown.parseMessageNotEscaped({ html: t(i18nDescription) });
+		const item = RocketChat.Markdown.parseMessageNotEscaped({html: t(i18nDescription)});
 
-		item.tokens.forEach((t) => item.html = item.html.replace(t.token, t.text));
+		item.tokens.forEach(t => item.html = item.html.replace(t.token, t.text));
 
 		return item.html;
 	},
 	saving() {
 		return Template.instance().loading.get();
-	}
+	},
 });
 
 Template.appManage.events({
@@ -180,7 +180,7 @@ Template.appManage.events({
 		$('#enabled').prop('disabled', true);
 
 		const status = $('#enabled').prop('checked') ? 'manually_enabled' : 'manually_disabled';
-		RocketChat.API.post(`apps/${ t.id.get() }/status`, { status }).then((result) => {
+		RocketChat.API.post(`apps/${ t.id.get() }/status`, {status}).then((result) => {
 			const info = t.app.get();
 			info.status = result.status;
 			t.app.set(info);
@@ -226,7 +226,7 @@ Template.appManage.events({
 
 		try {
 			const toSave = [];
-			Object.keys(settings).forEach(k => {
+			Object.keys(settings).forEach((k) => {
 				const setting = settings[k];
 				if (setting.hasChanged) {
 					toSave.push(setting);
@@ -237,12 +237,12 @@ Template.appManage.events({
 			if (toSave.length === 0) {
 				throw 'Nothing to save..';
 			}
-			const result = await RocketChat.API.post(`apps/${ t.id.get() }/settings`, undefined, { settings: toSave });
+			const result = await RocketChat.API.post(`apps/${ t.id.get() }/settings`, undefined, {settings: toSave});
 			console.log('Updating results:', result);
-			result.updated.forEach(setting => {
+			result.updated.forEach((setting) => {
 				settings[setting.id].value = settings[setting.id].oldValue = setting.value;
 			});
-			Object.keys(settings).forEach(k => {
+			Object.keys(settings).forEach((k) => {
 				const setting = settings[k];
 				setting.hasChanged = false;
 			});
@@ -301,5 +301,5 @@ Template.appManage.events({
 			t.settings.get()[this.id].hasChanged = true;
 			t.settings.set(t.settings.get());
 		}
-	}, 500)
+	}, 500),
 });

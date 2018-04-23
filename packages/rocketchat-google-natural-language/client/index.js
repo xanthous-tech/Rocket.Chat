@@ -4,7 +4,7 @@ Template.room.helpers({
 			return;
 		}
 
-		const room = ChatRoom.findOne(this._id, { fields: { sentiment: 1 } });
+		const room = ChatRoom.findOne(this._id, {fields: {sentiment: 1}});
 
 		if (room.sentiment >= 0.3) {
 			return ':)';
@@ -13,5 +13,5 @@ Template.room.helpers({
 		} else if (room.sentiment < -0.3) {
 			return ':(';
 		}
-	}
+	},
 });

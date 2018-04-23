@@ -4,7 +4,7 @@ RocketChat.saveRoomDescription = function(rid, roomDescription, user) {
 
 	if (!Match.test(rid, String)) {
 		throw new Meteor.Error('invalid-room', 'Invalid room', {
-			'function': 'RocketChat.saveRoomDescription'
+			function: 'RocketChat.saveRoomDescription',
 		});
 	}
 	const escapedRoomDescription = s.escapeHTML(roomDescription);

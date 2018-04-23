@@ -1,7 +1,7 @@
 RocketChat.authz.cachedCollection = new RocketChat.CachedCollection({
 	name: 'permissions',
 	eventType: 'onLogged',
-	userRelated: false
+	userRelated: false,
 });
 RocketChat.authz.cachedCollection.init();
 

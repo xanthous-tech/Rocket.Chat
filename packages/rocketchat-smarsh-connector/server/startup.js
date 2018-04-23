@@ -11,8 +11,8 @@ const _addSmarshSyncedCronJob = _.debounce(Meteor.bindEnvironment(function __add
 	if (RocketChat.settings.get('Smarsh_Enabled') && RocketChat.settings.get('Smarsh_Email') !== '' && RocketChat.settings.get('From_Email') !== '') {
 		SyncedCron.add({
 			name: smarshJobName,
-			schedule: (parser) => parser.text(RocketChat.settings.get('Smarsh_Interval').replace(/_/g, ' ')),
-			job: RocketChat.smarsh.generateEml
+			schedule: parser => parser.text(RocketChat.settings.get('Smarsh_Interval').replace(/_/g, ' ')),
+			job: RocketChat.smarsh.generateEml,
 		});
 	}
 }), 500);

@@ -1,7 +1,7 @@
 Meteor.methods({
 	'livechat:returnAsInquiry'(rid) {
 		if (!Meteor.userId() || !RocketChat.authz.hasPermission(Meteor.userId(), 'view-l-room')) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'livechat:saveDepartment' });
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'livechat:saveDepartment'});
 		}
 
 		// //delete agent and room subscription
@@ -17,5 +17,5 @@ Meteor.methods({
 
 		// mark inquiry as open
 		return RocketChat.models.LivechatInquiry.openInquiry(inquiry._id);
-	}
+	},
 });

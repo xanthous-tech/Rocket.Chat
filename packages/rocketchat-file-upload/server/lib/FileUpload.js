@@ -5,7 +5,7 @@ import stream from 'stream';
 import mime from 'mime-type/with-db';
 import Future from 'fibers/future';
 import sharp from 'sharp';
-import { Cookies } from 'meteor/ostrio:cookies';
+import {Cookies} from 'meteor/ostrio:cookies';
 
 const cookie = new Cookies();
 
@@ -18,7 +18,7 @@ Object.assign(FileUpload, {
 		delete stores[name];
 
 		return new UploadFS.store[store](Object.assign({
-			name
+			name,
 		}, options, FileUpload[`default${ type }`]()));
 	},
 
@@ -26,7 +26,7 @@ Object.assign(FileUpload, {
 		return {
 			collection: RocketChat.models.Uploads.model,
 			filter: new UploadFS.Filter({
-				onCheck: FileUpload.validateFileUpload
+				onCheck: FileUpload.validateFileUpload,
 			}),
 			getPath(file) {
 				return `${ RocketChat.settings.get('uniqueID') }/uploads/${ file.rid }/${ file.userId }/${ file._id }`;
@@ -40,7 +40,7 @@ Object.assign(FileUpload, {
 
 				res.setHeader('content-disposition', `attachment; filename="${ encodeURIComponent(file.name) }"`);
 				return true;
-			}
+			},
 		};
 	},
 
@@ -54,7 +54,7 @@ Object.assign(FileUpload, {
 				return `${ RocketChat.settings.get('uniqueID') }/avatars/${ file.userId }`;
 			},
 			onValidate: FileUpload.avatarsOnValidate,
-			onFinishUpload: FileUpload.avatarsOnFinishUpload
+			onFinishUpload: FileUpload.avatarsOnFinishUpload,
 		};
 	},
 
@@ -73,7 +73,7 @@ Object.assign(FileUpload, {
 
 				res.setHeader('content-disposition', `attachment; filename="${ encodeURIComponent(file.name) }"`);
 				return true;
-			}
+			},
 		};
 	},
 
@@ -102,8 +102,8 @@ Object.assign(FileUpload, {
 				// Use buffer to get the result in memory then replace the existing file
 				// There is no option to override a file using this library
 				.toBuffer()
-				.then(Meteor.bindEnvironment(outputBuffer => {
-					fs.writeFile(tempFilePath, outputBuffer, Meteor.bindEnvironment(err => {
+				.then(Meteor.bindEnvironment((outputBuffer) => {
+					fs.writeFile(tempFilePath, outputBuffer, Meteor.bindEnvironment((err) => {
 						if (err != null) {
 							console.error(err);
 						}
@@ -127,7 +127,7 @@ Object.assign(FileUpload, {
 			.max()
 			.jpeg()
 			.blur();
-		const result = transformer.toBuffer().then((out) => out.toString('base64'));
+		const result = transformer.toBuffer().then(out => out.toString('base64'));
 		image.pipe(transformer);
 		return result;
 	},
@@ -152,8 +152,8 @@ Object.assign(FileUpload, {
 				format: metadata.format,
 				size: {
 					width: metadata.width,
-					height: metadata.height
-				}
+					height: metadata.height,
+				},
 			};
 
 			if (metadata.orientation == null) {
@@ -169,8 +169,8 @@ Object.assign(FileUpload, {
 							this.getCollection().direct.update({_id: file._id}, {
 								$set: {
 									size,
-									identify
-								}
+									identify,
+								},
 							});
 							fut.return();
 						}));
@@ -195,12 +195,12 @@ Object.assign(FileUpload, {
 		// console.log('upload finished ->', file);
 	},
 
-	requestCanAccessFiles({ headers = {}, query = {} }) {
+	requestCanAccessFiles({headers = {}, query = {}}) {
 		if (!RocketChat.settings.get('FileUpload_ProtectFiles')) {
 			return true;
 		}
 
-		let { rc_uid, rc_token } = query;
+		let {rc_uid, rc_token} = query;
 
 		if (!rc_uid && headers.cookie) {
 			rc_uid = cookie.get('rc_uid', headers.cookie) ;
@@ -262,11 +262,11 @@ Object.assign(FileUpload, {
 		}
 
 		return false;
-	}
+	},
 });
 
 export class FileUploadClass {
-	constructor({ name, model, store, get, insert, getStore, copy }) {
+	constructor({name, model, store, get, insert, getStore, copy}) {
 		this.name = name;
 		this.model = model || this.getModelFromName();
 		this._store = store || UploadFS.getStore(name);

@@ -11,34 +11,34 @@ RocketChat.Migrations.add({
 		RocketChat.models.Settings.update({_id: 'Message_ShowEditedStatus'}, {
 			$set: {
 				type: 'boolean',
-				value: true
-			}
+				value: true,
+			},
 		});
 
 		RocketChat.models.Settings.update({_id: 'Message_ShowDeletedStatus'}, {
 			$set: {
 				type: 'boolean',
-				value: false
-			}
+				value: false,
+			},
 		});
 
 		const metaKeys = [
 			{
 				old: 'Meta:language',
-				new: 'Meta_language'
+				new: 'Meta_language',
 			}, {
 				old: 'Meta:fb:app_id',
-				new: 'Meta_fb_app_id'
+				new: 'Meta_fb_app_id',
 			}, {
 				old: 'Meta:robots',
-				new: 'Meta_robots'
+				new: 'Meta_robots',
 			}, {
 				old: 'Meta:google-site-verification',
-				new: 'Meta_google-site-verification'
+				new: 'Meta_google-site-verification',
 			}, {
 				old: 'Meta:msvalidate.01',
-				new: 'Meta_msvalidate01'
-			}
+				new: 'Meta_msvalidate01',
+			},
 		];
 
 		for (const oldAndNew of metaKeys) {
@@ -50,21 +50,21 @@ RocketChat.Migrations.add({
 
 			if (oldValue && newValue) {
 				RocketChat.models.Settings.update({
-					_id: oldAndNew.new
+					_id: oldAndNew.new,
 				}, {
 					$set: {
-						value: newValue
-					}
+						value: newValue,
+					},
 				});
 			}
 
 			RocketChat.models.Settings.remove({
-				_id: oldAndNew.old
+				_id: oldAndNew.old,
 			});
 		}
 
 		RocketChat.models.Settings.remove({
-			_id: 'SMTP_Security'
+			_id: 'SMTP_Security',
 		});
-	}
+	},
 });

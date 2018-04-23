@@ -6,12 +6,12 @@ Meteor.publish('snippetedMessage', function(_id) {
 	const snippet = RocketChat.models.Messages.findOne({_id, snippeted: true});
 	const user = RocketChat.models.Users.findOneById(this.userId);
 	const roomSnippetQuery = {
-		'_id': snippet.rid,
-		'usernames': {
-			'$in': [
-				user.username
-			]
-		}
+		_id: snippet.rid,
+		usernames: {
+			$in: [
+				user.username,
+			],
+		},
 	};
 
 	if (RocketChat.models.Rooms.findOne(roomSnippetQuery) === undefined) {
@@ -26,7 +26,7 @@ Meteor.publish('snippetedMessage', function(_id) {
 	}
 
 	const cursor = RocketChat.models.Messages.find(
-		{ _id }
+		{_id}
 	).observeChanges({
 		added(_id, record) {
 			publication.added('rocketchat_snippeted_message', _id, record);
@@ -36,7 +36,7 @@ Meteor.publish('snippetedMessage', function(_id) {
 		},
 		removed(_id) {
 			publication.removed('rocketchat_snippeted_message', _id);
-		}
+		},
 	});
 
 	this.ready();

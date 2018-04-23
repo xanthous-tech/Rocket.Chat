@@ -8,9 +8,9 @@ RocketChat.Migrations.add({
 			RocketChat.models.Settings.remove({_id: 'Assets_favicon_256'});
 			RocketChat.models.Settings.update({_id: 'Assets_favicon_192'}, {
 				$set: {
-					i18nLabel: 'android-chrome 192x192 (png)'
-				}
+					i18nLabel: 'android-chrome 192x192 (png)',
+				},
 			});
 		}
-	}
+	},
 });

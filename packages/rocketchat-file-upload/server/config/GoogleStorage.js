@@ -1,7 +1,7 @@
 /* globals FileUpload */
 
 import _ from 'underscore';
-import { FileUploadClass } from '../lib/FileUpload';
+import {FileUploadClass} from '../lib/FileUpload';
 import '../../ufs/GoogleStorage/server.js';
 import http from 'http';
 import https from 'https';
@@ -47,21 +47,21 @@ const copy = function(file, out) {
 const GoogleCloudStorageUploads = new FileUploadClass({
 	name: 'GoogleCloudStorage:Uploads',
 	get,
-	copy
+	copy,
 	// store setted bellow
 });
 
 const GoogleCloudStorageAvatars = new FileUploadClass({
 	name: 'GoogleCloudStorage:Avatars',
 	get,
-	copy
+	copy,
 	// store setted bellow
 });
 
 const GoogleCloudStorageUserDataFiles = new FileUploadClass({
 	name: 'GoogleCloudStorage:UserDataFiles',
 	get,
-	copy
+	copy,
 	// store setted bellow
 });
 
@@ -79,11 +79,11 @@ const configure = _.debounce(function() {
 		connection: {
 			credentials: {
 				client_email: accessId,
-				private_key: secret
-			}
+				private_key: secret,
+			},
 		},
 		bucket,
-		URLExpiryTimeSpan
+		URLExpiryTimeSpan,
 	};
 
 	GoogleCloudStorageUploads.store = FileUpload.configureUploadsStore('GoogleStorage', GoogleCloudStorageUploads.name, config);

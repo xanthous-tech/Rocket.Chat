@@ -31,12 +31,12 @@ Meteor.methods({
 			sidebarSortby: Match.Optional(String),
 			sidebarViewMode: Match.Optional(String),
 			sidebarHideAvatar: Match.Optional(Boolean),
-			muteFocusedConversations: Match.Optional(Boolean)
+			muteFocusedConversations: Match.Optional(Boolean),
 		};
 		check(settings, Match.ObjectIncluding(keys));
 		if (settings.mergeChannels) {
 			check(settings, Match.ObjectIncluding({
-				mergeChannels: Match.OneOf(Number, Boolean) //eslint-disable-line new-cap
+				mergeChannels: Match.OneOf(Number, Boolean), // eslint-disable-line new-cap
 			}));
 		}
 		const user = Meteor.user();
@@ -58,7 +58,6 @@ Meteor.methods({
 		}
 
 
-
 		if (settings.roomsListExhibitionMode != null) {
 			settings.roomsListExhibitionMode = ['category', 'unread', 'activity'].includes(settings.roomsListExhibitionMode) ? settings.roomsListExhibitionMode : 'category';
 		}
@@ -66,5 +65,5 @@ Meteor.methods({
 		RocketChat.models.Users.setPreferences(user._id, settings);
 
 		return true;
-	}
+	},
 });

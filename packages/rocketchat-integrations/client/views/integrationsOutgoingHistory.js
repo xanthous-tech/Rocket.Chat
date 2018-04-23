@@ -17,9 +17,9 @@ Template.integrationsOutgoingHistory.onCreated(function _integrationsOutgoingHis
 				let intRecord;
 
 				if (RocketChat.authz.hasAllPermission('manage-integrations')) {
-					intRecord = ChatIntegrations.findOne({ _id: id });
+					intRecord = ChatIntegrations.findOne({_id: id});
 				} else if (RocketChat.authz.hasAllPermission('manage-own-integrations')) {
-					intRecord = ChatIntegrations.findOne({ _id: id, '_createdBy._id': Meteor.userId() });
+					intRecord = ChatIntegrations.findOne({_id: id, '_createdBy._id': Meteor.userId()});
 				}
 
 				if (!intRecord) {
@@ -106,7 +106,7 @@ Template.integrationsOutgoingHistory.helpers({
 
 	integrationId() {
 		return this.params && this.params() && this.params().id;
-	}
+	},
 });
 
 Template.integrationsOutgoingHistory.events({
@@ -128,7 +128,7 @@ Template.integrationsOutgoingHistory.events({
 
 		const historyId = $(e.currentTarget).attr('data-history-id');
 
-		Meteor.call('replayOutgoingIntegration', { integrationId: t.data.params().id, historyId }, (e) => {
+		Meteor.call('replayOutgoingIntegration', {integrationId: t.data.params().id, historyId}, (e) => {
 			if (e) {
 				handleError(e);
 				return;
@@ -155,5 +155,5 @@ Template.integrationsOutgoingHistory.events({
 		if (e.target.scrollTop >= e.target.scrollHeight - e.target.clientHeight) {
 			instance.limit.set(instance.limit.get() + 25);
 		}
-	}, 200)
+	}, 200),
 });

@@ -20,8 +20,8 @@ export class AmazonS3Store extends UploadFS.Store {
 		options = _.extend({
 			httpOptions: {
 				timeout: 6000,
-				agent: false
-			}
+				agent: false,
+			},
 		}, options);
 
 		super(options);
@@ -48,7 +48,7 @@ export class AmazonS3Store extends UploadFS.Store {
 		this.getRedirectURL = function(file) {
 			const params = {
 				Key: this.getPath(file),
-				Expires: classOptions.URLExpiryTimeSpan
+				Expires: classOptions.URLExpiryTimeSpan,
 			};
 
 			return s3.getSignedUrl('getObject', params);
@@ -68,7 +68,7 @@ export class AmazonS3Store extends UploadFS.Store {
 			}
 
 			file.AmazonS3 = {
-				path: this.options.getPath(file)
+				path: this.options.getPath(file),
 			};
 
 			file.store = this.options.name; // assign store to file
@@ -83,7 +83,7 @@ export class AmazonS3Store extends UploadFS.Store {
 		this.delete = function(fileId, callback) {
 			const file = this.getCollection().findOne({_id: fileId});
 			const params = {
-				Key: this.getPath(file)
+				Key: this.getPath(file),
 			};
 
 			s3.deleteObject(params, (err, data) => {
@@ -104,7 +104,7 @@ export class AmazonS3Store extends UploadFS.Store {
 		 */
 		this.getReadStream = function(fileId, file, options = {}) {
 			const params = {
-				Key: this.getPath(file)
+				Key: this.getPath(file),
 			};
 
 			if (options.start && options.end) {
@@ -121,7 +121,7 @@ export class AmazonS3Store extends UploadFS.Store {
 		 * @param options
 		 * @return {*}
 		 */
-		this.getWriteStream = function(fileId, file/*, options*/) {
+		this.getWriteStream = function(fileId, file/* , options*/) {
 			const writeStream = new stream.PassThrough();
 			writeStream.length = file.size;
 
@@ -138,7 +138,7 @@ export class AmazonS3Store extends UploadFS.Store {
 				Key: this.getPath(file),
 				Body: writeStream,
 				ContentType: file.type,
-				ContentDisposition: `inline; filename="${ encodeURI(file.name) }"`
+				ContentDisposition: `inline; filename="${ encodeURI(file.name) }"`,
 
 			}, (error) => {
 				if (error) {

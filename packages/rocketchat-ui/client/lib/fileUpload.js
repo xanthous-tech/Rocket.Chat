@@ -39,7 +39,7 @@ function formatBytes(bytes, decimals) {
 		'MB',
 		'GB',
 		'TB',
-		'PB'
+		'PB',
 	];
 
 	const i = Math.floor(Math.log(bytes) / Math.log(k));
@@ -63,7 +63,7 @@ fileUpload = function(filesToUpload) {
 				title: t('FileUpload_MediaType_NotAccepted'),
 				text: file.file.type || `*.${ s.strRightBack(file.file.name, '.') }`,
 				type: 'error',
-				timer: 3000
+				timer: 3000,
 			});
 			return;
 		}
@@ -72,7 +72,7 @@ fileUpload = function(filesToUpload) {
 			modal.open({
 				title: t('FileUpload_File_Empty'),
 				type: 'error',
-				timer: 1000
+				timer: 1000,
 			});
 			return;
 		}
@@ -151,7 +151,7 @@ fileUpload = function(filesToUpload) {
 				confirmButtonText: t('Send'),
 				cancelButtonText: t('Cancel'),
 				html: true,
-				onRendered: () => $('#file-name').focus()
+				onRendered: () => $('#file-name').focus(),
 			}, function(isConfirm) {
 
 				const record = {
@@ -159,7 +159,7 @@ fileUpload = function(filesToUpload) {
 					size: file.file.size,
 					type: file.file.type,
 					rid: roomId,
-					description: document.getElementById('file-description').value
+					description: document.getElementById('file-description').value,
 				};
 
 				consume();
@@ -172,7 +172,7 @@ fileUpload = function(filesToUpload) {
 				uploading.push({
 					id: upload.id,
 					name: upload.getFileName(),
-					percentage: 0
+					percentage: 0,
 				});
 
 				Session.set('uploading', uploading);
@@ -194,7 +194,7 @@ fileUpload = function(filesToUpload) {
 							uploading = [];
 						}
 
-						const item = _.findWhere(uploading, { id: upload.id });
+						const item = _.findWhere(uploading, {id: upload.id});
 
 						if (_.isObject(item)) {
 							item.error = error.message;
@@ -202,7 +202,7 @@ fileUpload = function(filesToUpload) {
 						} else {
 							uploading.push({
 								error: error.error,
-								percentage: 0
+								percentage: 0,
 							});
 						}
 
@@ -217,7 +217,7 @@ fileUpload = function(filesToUpload) {
 								const uploading = Session.get('uploading');
 								if (uploading !== null) {
 									const item = _.findWhere(uploading, {
-										id: upload.id
+										id: upload.id,
 									});
 									return Session.set('uploading', _.without(uploading, item));
 								}

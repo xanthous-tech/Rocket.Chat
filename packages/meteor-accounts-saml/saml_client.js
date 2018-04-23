@@ -17,18 +17,18 @@ if (!Accounts.saml) {
 const MeteorLogout = Meteor.logout;
 const logoutBehaviour = {
 	TERMINATE_SAML: 'SAML',
-	ONLY_RC: 'Local'
+	ONLY_RC: 'Local',
 };
 
 Meteor.logout = function() {
-	const samlService = ServiceConfiguration.configurations.findOne({ service: 'saml' });
+	const samlService = ServiceConfiguration.configurations.findOne({service: 'saml'});
 	if (samlService) {
 		const provider = samlService.clientConfig && samlService.clientConfig.provider;
 		if (provider) {
 			if (samlService.logoutBehaviour == null || samlService.logoutBehaviour === logoutBehaviour.TERMINATE_SAML) {
 				if (samlService.idpSLORedirectURL) {
 					console.info('SAML session terminated via SLO');
-					return Meteor.logoutWithSaml({ provider });
+					return Meteor.logoutWithSaml({provider});
 				}
 			}
 
@@ -49,7 +49,7 @@ const openCenteredPopup = function(url, width, height) {
 
 		const intervalId = setInterval(function() {
 			newwindow.executeScript({
-				'code': 'document.getElementsByTagName("script")[0].textContent'
+				code: 'document.getElementsByTagName("script")[0].textContent',
 			}, function(data) {
 				if (data && data.length > 0 && data[0] === 'window.close()') {
 					newwindow.close();
@@ -116,26 +116,26 @@ Meteor.loginWithSaml = function(options, callback) {
 	const credentialToken = `id-${ Random.id() }`;
 	options.credentialToken = credentialToken;
 
-	Accounts.saml.initiateLogin(options, function(/*error, result*/) {
+	Accounts.saml.initiateLogin(options, function(/* error, result*/) {
 		Accounts.callLoginMethod({
 			methodArguments: [{
 				saml: true,
-				credentialToken
+				credentialToken,
 			}],
-			userCallback: callback
+			userCallback: callback,
 		});
 	});
 };
 
-Meteor.logoutWithSaml = function(options/*, callback*/) {
-	//Accounts.saml.idpInitiatedSLO(options, callback);
+Meteor.logoutWithSaml = function(options/* , callback*/) {
+	// Accounts.saml.idpInitiatedSLO(options, callback);
 	Meteor.call('samlLogout', options.provider, function(err, result) {
 		if (err || !result) {
 			MeteorLogout.apply(Meteor);
 			return;
 		}
 		// A nasty bounce: 'result' has the SAML LogoutRequest but we need a proper 302 to redirected from the server.
-		//window.location.replace(Meteor.absoluteUrl('_saml/sloRedirect/' + options.provider + '/?redirect='+result));
+		// window.location.replace(Meteor.absoluteUrl('_saml/sloRedirect/' + options.provider + '/?redirect='+result));
 		window.location.replace(Meteor.absoluteUrl(`_saml/sloRedirect/${ options.provider }/?redirect=${ encodeURIComponent(result) }`));
 	});
 };

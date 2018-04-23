@@ -47,7 +47,7 @@ export class AppMessageBridge {
 			_id: Random.id(),
 			ts: new Date(),
 			u: undefined,
-			editor: undefined
+			editor: undefined,
 		}));
 	}
 
@@ -61,7 +61,7 @@ export class AppMessageBridge {
 				rid: room.id,
 				ts: new Date(),
 				u: undefined,
-				editor: undefined
+				editor: undefined,
 			});
 
 			room.usernames.forEach((u) => {

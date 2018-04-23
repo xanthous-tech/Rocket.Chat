@@ -1,4 +1,4 @@
-RocketChat.API.v1.addRoute('statistics', { authRequired: true }, {
+RocketChat.API.v1.addRoute('statistics', {authRequired: true}, {
 	get() {
 		let refresh = false;
 		if (typeof this.queryParams.refresh !== 'undefined' && this.queryParams.refresh === 'true') {
@@ -11,32 +11,32 @@ RocketChat.API.v1.addRoute('statistics', { authRequired: true }, {
 		});
 
 		return RocketChat.API.v1.success({
-			statistics: stats
+			statistics: stats,
 		});
-	}
+	},
 });
 
-RocketChat.API.v1.addRoute('statistics.list', { authRequired: true }, {
+RocketChat.API.v1.addRoute('statistics.list', {authRequired: true}, {
 	get() {
 		if (!RocketChat.authz.hasPermission(this.userId, 'view-statistics')) {
 			return RocketChat.API.v1.unauthorized();
 		}
 
-		const { offset, count } = this.getPaginationItems();
-		const { sort, fields, query } = this.parseJsonQuery();
+		const {offset, count} = this.getPaginationItems();
+		const {sort, fields, query} = this.parseJsonQuery();
 
 		const statistics = RocketChat.models.Statistics.find(query, {
-			sort: sort ? sort : { name: 1 },
+			sort: sort ? sort : {name: 1},
 			skip: offset,
 			limit: count,
-			fields
+			fields,
 		}).fetch();
 
 		return RocketChat.API.v1.success({
 			statistics,
 			count: statistics.length,
 			offset,
-			total: RocketChat.models.Statistics.find(query).count()
+			total: RocketChat.models.Statistics.find(query).count(),
 		});
-	}
+	},
 });

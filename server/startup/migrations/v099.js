@@ -11,7 +11,7 @@ function logError(...args) {
 	console.error('[AVATAR]', ...args);
 }
 
-function insertAvatar({ details, avatarsFileStore, stream, callback = () => {} }) {
+function insertAvatar({details, avatarsFileStore, stream, callback = () => {}}) {
 	return new Promise((resolve) => {
 		Meteor.defer(() => {
 			Meteor.runAsUser('rocket.cat', () => {
@@ -35,9 +35,7 @@ function batch(arr, limit, fn) {
 	if (!arr.length) {
 		return Promise.resolve();
 	}
-	return Promise.all(arr.splice(0, limit).map((item) => {
-		return fn(item);
-	})).then(() => { return batch(arr, limit, fn); });
+	return Promise.all(arr.splice(0, limit).map(item => fn(item))).then(() => batch(arr, limit, fn));
 }
 
 RocketChat.Migrations.add({
@@ -48,60 +46,60 @@ RocketChat.Migrations.add({
 		const query = {
 			$or: [{
 				's3.path': {
-					$exists: true
-				}
+					$exists: true,
+				},
 			}, {
 				'googleCloudStorage.path': {
-					$exists: true
-				}
-			}]
+					$exists: true,
+				},
+			}],
 		};
 
 		RocketChat.models.Uploads.find(query).forEach((record) => {
 			if (record.s3) {
 				RocketChat.models.Uploads.model.direct.update({_id: record._id}, {
 					$set: {
-						'store': 'AmazonS3:Uploads',
+						store: 'AmazonS3:Uploads',
 						AmazonS3: {
-							path: record.s3.path + record._id
-						}
+							path: record.s3.path + record._id,
+						},
 					},
 					$unset: {
-						s3: 1
-					}
+						s3: 1,
+					},
 				}, {multi: true});
 			} else {
 				RocketChat.models.Uploads.model.direct.update({_id: record._id}, {
 					$set: {
 						store: 'GoogleCloudStorage:Uploads',
 						GoogleStorage: {
-							path: record.googleCloudStorage.path + record._id
-						}
+							path: record.googleCloudStorage.path + record._id,
+						},
 					},
 					$unset: {
-						googleCloudStorage: 1
-					}
+						googleCloudStorage: 1,
+					},
 				}, {multi: true});
 			}
 		});
 
 		RocketChat.models.Uploads.model.direct.update({
-			store: 'fileSystem'
+			store: 'fileSystem',
 		}, {
 			$set: {
-				store: 'FileSystem:Uploads'
-			}
+				store: 'FileSystem:Uploads',
+			},
 		}, {
-			multi: true
+			multi: true,
 		});
 		RocketChat.models.Uploads.model.direct.update({
-			store: 'rocketchat_uploads'
+			store: 'rocketchat_uploads',
 		}, {
 			$set: {
-				store: 'GridFS:Uploads'
-			}
+				store: 'GridFS:Uploads',
+			},
 		}, {
-			multi: true
+			multi: true,
 		});
 
 		const avatarOrigins = [
@@ -113,7 +111,7 @@ RocketChat.Migrations.add({
 			'google',
 			'url',
 			'gitlab',
-			'linkedin'
+			'linkedin',
 		];
 
 		const avatarsPathRecord = RocketChat.models.Settings.findOne({_id: 'Accounts_AvatarStorePath'});
@@ -123,7 +121,7 @@ RocketChat.Migrations.add({
 		let avatarStoreType = avatarStoreTypeRecord && avatarStoreTypeRecord.value;
 
 		const oldAvatarGridFS = new RocketChatFile.GridFS({
-			name: 'avatars'
+			name: 'avatars',
 		});
 
 		if (avatarStoreType == null) {
@@ -161,7 +159,7 @@ RocketChat.Migrations.add({
 						const details = {
 							userId: user._id,
 							type: gridFSAvatar.contentType,
-							size: gridFSAvatar.length
+							size: gridFSAvatar.length,
 						};
 
 						return insertAvatar({
@@ -170,7 +168,7 @@ RocketChat.Migrations.add({
 							stream: gridFSAvatar.readStream,
 							callback() {
 								oldAvatarGridFS.deleteFile(id);
-							}
+							},
 						});
 					}
 					if (avatarStoreType === 'FileSystem' && avatarsPath && avatarsPath.trim()) {
@@ -181,7 +179,7 @@ RocketChat.Migrations.add({
 								const details = {
 									userId: user._id,
 									type: 'image/jpeg',
-									size: stat.size
+									size: stat.size,
 								};
 								return insertAvatar({
 									details,
@@ -189,7 +187,7 @@ RocketChat.Migrations.add({
 									stream: fs.createReadStream(filePath),
 									callback() {
 										fs.unlinkSync(filePath);
-									}
+									},
 								});
 							}
 						} catch (e) {
@@ -207,5 +205,5 @@ RocketChat.Migrations.add({
 				});
 			}, 1000);
 		});
-	}
+	},
 });

@@ -13,8 +13,8 @@ Template.videoCall.helpers({
 		if (overlay !== (webrtc != null ? webrtc.overlayEnabled.get() : null)) {
 			return false;
 		}
-		let { remoteItems } = webrtc;
-		const { localUrl } = webrtc;
+		let {remoteItems} = webrtc;
+		const {localUrl} = webrtc;
 		remoteItems = remoteItems.get() || [];
 		return (localUrl.get() != null) || remoteItems.length > 0;
 	},
@@ -88,7 +88,7 @@ Template.videoCall.helpers({
 	usernameByUserId(userId) {
 		const user = Meteor.users.findOne(userId);
 		return user != null ? user.username : undefined;
-	}
+	},
 });
 
 Template.videoCall.events({
@@ -125,5 +125,5 @@ Template.videoCall.events({
 	'loadstart video[muted]'(e) {
 		e.currentTarget.muted = true;
 		return e.currentTarget.volume = 0;
-	}
+	},
 });

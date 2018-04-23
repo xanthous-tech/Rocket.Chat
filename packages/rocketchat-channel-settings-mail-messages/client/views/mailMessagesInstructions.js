@@ -8,7 +8,7 @@ import resetSelection from '../resetSelection';
 	* @params email
 	* @return boolean
 	*/
-const isEmail = email => {
+const isEmail = (email) => {
 	const sQtext = '[^\\x0d\\x22\\x5c]';
 	const sDtext = '[^\\x0d\\x5b-\\x5d]';
 	const sAtom = '[^\\x00-\\x20\\x22\\x28\\x29\\x2c\\x2e\\x3a-\\x3c\\x3e\\x40\\x5b-\\x5d]+';
@@ -59,16 +59,16 @@ Template.mailMessagesInstructions.helpers({
 					noMatchTemplate: Template.userSearchEmpty,
 					matchAll: true,
 					filter: {
-						exceptions: Template.instance().selectedUsers.get()
+						exceptions: Template.instance().selectedUsers.get(),
 					},
 					selector(match) {
 						return {
-							term: match
+							term: match,
 						};
 					},
-					sort: 'username'
-				}
-			]
+					sort: 'username',
+				},
+			],
 		};
 	},
 	selectedUsers() {
@@ -90,20 +90,20 @@ Template.mailMessagesInstructions.helpers({
 				return `@${ f.length === 0 ? text : text.replace(new RegExp(filter.get()), function(part) {
 					return `<strong>${ part }</strong>`;
 				}) }`;
-			}
+			},
 		};
 	},
 	autocomplete(key) {
 		const instance = Template.instance();
 		const param = instance.ac[key];
-		return typeof param === 'function' ? param.apply(instance.ac): param;
+		return typeof param === 'function' ? param.apply(instance.ac) : param;
 	},
 	items() {
 		return Template.instance().ac.filteredList();
 	},
 	errorMessage() {
 		return Template.instance().errorMessage.get();
-	}
+	},
 });
 
 Template.mailMessagesInstructions.events({
@@ -145,7 +145,7 @@ Template.mailMessagesInstructions.events({
 			to_emails: selectedEmails.get().map(email => email.text).toString(),
 			subject,
 			messages: selectedMessages.get(),
-			language: localStorage.getItem('userLanguage')
+			language: localStorage.getItem('userLanguage'),
 		};
 
 		Meteor.call('mailMessages', data, function(err, result) {
@@ -214,7 +214,7 @@ Template.mailMessagesInstructions.events({
 	},
 	'blur [name="users"]'(e, t) {
 		t.ac.onBlur(e);
-	}
+	},
 });
 
 Template.mailMessagesInstructions.onRendered(function() {
@@ -261,7 +261,7 @@ Template.mailMessagesInstructions.onCreated(function() {
 		{
 			selector:{
 				item: '.rc-popup-list__item',
-				container: '.rc-popup-list__list'
+				container: '.rc-popup-list__list',
 			},
 
 			limit: 10,
@@ -275,11 +275,11 @@ Template.mailMessagesInstructions.onCreated(function() {
 					filter,
 					doNotChangeWidth: false,
 					selector(match) {
-						return { term: match };
+						return {term: match};
 					},
-					sort: 'username'
-				}
-			]
+					sort: 'username',
+				},
+			],
 
 		});
 	this.ac.tmplInst = this;

@@ -1,4 +1,4 @@
-import { Importers, ImporterWebsocketReceiver, ProgressStep } from 'meteor/rocketchat:importer';
+import {Importers, ImporterWebsocketReceiver, ProgressStep} from 'meteor/rocketchat:importer';
 
 import toastr from 'toastr';
 
@@ -11,7 +11,7 @@ Template.adminImportProgress.helpers({
 	},
 	total() {
 		return Template.instance().total.get();
-	}
+	},
 });
 
 Template.adminImportProgress.onCreated(function() {

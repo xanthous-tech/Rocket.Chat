@@ -17,7 +17,7 @@ const commands = {
 		const customOAuthCallback = (response) => {
 			event.source.postMessage({
 				event: 'custom-oauth-callback',
-				response
+				response,
 			}, event.origin);
 		};
 
@@ -32,7 +32,7 @@ const commands = {
 			if (customOauth) {
 				const customLoginWith = Meteor[`loginWith${ s.capitalize(customOauth.service, true) }`];
 				const customRedirectUri = data.redirectUrl || siteUrl;
-				customLoginWith.call(Meteor, {'redirectUrl': customRedirectUri}, customOAuthCallback);
+				customLoginWith.call(Meteor, {redirectUrl: customRedirectUri}, customOAuthCallback);
 			}
 		}
 	},
@@ -54,17 +54,17 @@ const commands = {
 		});
 	},
 
-	'set-toolbar-button'({ id, icon, label }) {
-		const toolbar = Session.get('toolbarButtons') || { buttons: {} };
-		toolbar.buttons[id] = { icon, label };
+	'set-toolbar-button'({id, icon, label}) {
+		const toolbar = Session.get('toolbarButtons') || {buttons: {}};
+		toolbar.buttons[id] = {icon, label};
 		Session.set('toolbarButtons', toolbar);
 	},
 
-	'remove-toolbar-button'({ id }) {
-		const toolbar = Session.get('toolbarButtons') || { buttons: {} };
+	'remove-toolbar-button'({id}) {
+		const toolbar = Session.get('toolbarButtons') || {buttons: {}};
 		delete toolbar.buttons[id];
 		Session.set('toolbarButtons', toolbar);
-	}
+	},
 };
 
 window.addEventListener('message', (e) => {

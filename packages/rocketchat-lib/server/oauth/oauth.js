@@ -5,7 +5,7 @@ const AccessTokenServices = {};
 RocketChat.registerAccessTokenService = function(serviceName, handleAccessTokenRequest) {
 	AccessTokenServices[serviceName] = {
 		serviceName,
-		handleAccessTokenRequest
+		handleAccessTokenRequest,
 	};
 };
 
@@ -17,7 +17,7 @@ Accounts.registerLoginHandler(function(options) {
 	}
 
 	check(options, Match.ObjectIncluding({
-		serviceName: String
+		serviceName: String,
 	}));
 
 	const service = AccessTokenServices[options.serviceName];
@@ -41,7 +41,7 @@ Accounts.registerLoginHandler(function(options) {
 			error: new Meteor.Error(
 				Accounts.LoginCancelledError.numericError,
 				`No registered oauth service found for: ${ service.serviceName }`
-			)
+			),
 		};
 	}
 
@@ -49,6 +49,5 @@ Accounts.registerLoginHandler(function(options) {
 
 	return Accounts.updateOrCreateUserFromExternalService(service.serviceName, oauthResult.serviceData, oauthResult.options);
 });
-
 
 

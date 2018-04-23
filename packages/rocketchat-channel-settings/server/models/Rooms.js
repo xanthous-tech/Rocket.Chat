@@ -1,23 +1,23 @@
 RocketChat.models.Rooms.setDescriptionById = function(_id, description) {
 	const query = {
-		_id
+		_id,
 	};
 	const update = {
 		$set: {
-			description
-		}
+			description,
+		},
 	};
 	return this.update(query, update);
 };
 
 RocketChat.models.Rooms.setReadOnlyById = function(_id, readOnly) {
 	const query = {
-		_id
+		_id,
 	};
 	const update = {
 		$set: {
-			ro: readOnly
-		}
+			ro: readOnly,
+		},
 	};
 	if (readOnly) {
 		RocketChat.models.Subscriptions.findByRoomId(_id).forEach(function(subscription) {
@@ -34,7 +34,7 @@ RocketChat.models.Rooms.setReadOnlyById = function(_id, readOnly) {
 		});
 	} else {
 		update.$unset = {
-			muted: ''
+			muted: '',
 		};
 	}
 	return this.update(query, update);
@@ -42,24 +42,24 @@ RocketChat.models.Rooms.setReadOnlyById = function(_id, readOnly) {
 
 RocketChat.models.Rooms.setAllowReactingWhenReadOnlyById = function(_id, allowReacting) {
 	const query = {
-		_id
+		_id,
 	};
 	const update = {
 		$set: {
-			reactWhenReadOnly: allowReacting
-		}
+			reactWhenReadOnly: allowReacting,
+		},
 	};
 	return this.update(query, update);
 };
 
 RocketChat.models.Rooms.setSystemMessagesById = function(_id, systemMessages) {
 	const query = {
-		_id
+		_id,
 	};
 	const update = {
 		$set: {
-			sysMes: systemMessages
-		}
+			sysMes: systemMessages,
+		},
 	};
 	return this.update(query, update);
 };

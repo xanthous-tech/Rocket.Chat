@@ -33,7 +33,7 @@ const casTicket = function(req, token, callback) {
 	const cas = new CAS({
 		base_url: baseUrl,
 		version: cas_version,
-		service: `${ appUrl }/_cas/${ token }`
+		service: `${ appUrl }/_cas/${ token }`,
 	});
 
 	cas.validate(ticketId, Meteor.bindEnvironment(function(err, status, username, details) {
@@ -41,17 +41,17 @@ const casTicket = function(req, token, callback) {
 			logger.error(`error when trying to validate: ${ err.message }`);
 		} else if (status) {
 			logger.info(`Validated user: ${ username }`);
-			const user_info = { username };
+			const user_info = {username};
 
 			// CAS 2.0 attributes handling
 			if (details && details.attributes) {
-				_.extend(user_info, { attributes: details.attributes });
+				_.extend(user_info, {attributes: details.attributes});
 			}
 			RocketChat.models.CredentialTokens.create(token, user_info);
 		} else {
 			logger.error(`Unable to validate ticket: ${ ticketId }`);
 		}
-		//logger.debug("Receveied response: " + JSON.stringify(details, null , 4));
+		// logger.debug("Receveied response: " + JSON.stringify(details, null , 4));
 
 		callback();
 	}));
@@ -124,7 +124,7 @@ Accounts.registerLoginHandler(function(options) {
 
 	// We have these
 	const ext_attrs = {
-		username: result.username
+		username: result.username,
 	};
 
 	// We need these
@@ -132,7 +132,7 @@ Accounts.registerLoginHandler(function(options) {
 		email: undefined,
 		name: undefined,
 		username: undefined,
-		rooms: undefined
+		rooms: undefined,
 	};
 
 	// Import response attributes
@@ -167,7 +167,7 @@ Accounts.registerLoginHandler(function(options) {
 
 	// Search existing user by its external service id
 	logger.debug(`Looking up user by id: ${ result.username }`);
-	let user = Meteor.users.findOne({ 'services.cas.external_id': result.username });
+	let user = Meteor.users.findOne({'services.cas.external_id': result.username});
 
 	if (user) {
 		logger.debug(`Using existing user for '${ result.username }' with id: ${ user._id }`);
@@ -180,7 +180,7 @@ Accounts.registerLoginHandler(function(options) {
 
 			// Update email
 			if (int_attrs.email) {
-				Meteor.users.update(user, { $set: { emails: [{ address: int_attrs.email, verified: true }] }});
+				Meteor.users.update(user, {$set: {emails: [{address: int_attrs.email, verified: true}]}});
 			}
 		}
 	} else {
@@ -195,22 +195,22 @@ Accounts.registerLoginHandler(function(options) {
 				cas: {
 					external_id: result.username,
 					version: cas_version,
-					attrs: int_attrs
-				}
-			}
+					attrs: int_attrs,
+				},
+			},
 		};
 
 		// Add User.name
 		if (int_attrs.name) {
 			_.extend(newUser, {
-				name: int_attrs.name
+				name: int_attrs.name,
 			});
 		}
 
 		// Add email
 		if (int_attrs.email) {
 			_.extend(newUser, {
-				emails: [{ address: int_attrs.email, verified: true }]
+				emails: [{address: int_attrs.email, verified: true}],
 			});
 		}
 
@@ -221,7 +221,7 @@ Accounts.registerLoginHandler(function(options) {
 		// Fetch and use it
 		user = Meteor.users.findOne(userId);
 		logger.debug(`Created new user for '${ result.username }' with id: ${ user._id }`);
-		//logger.debug(JSON.stringify(user, undefined, 4));
+		// logger.debug(JSON.stringify(user, undefined, 4));
 
 		logger.debug(`Joining user to attribute channels: ${ int_attrs.rooms }`);
 		if (int_attrs.rooms) {
@@ -238,7 +238,7 @@ Accounts.registerLoginHandler(function(options) {
 						alert: true,
 						unread: 1,
 						userMentions: 1,
-						groupMentions: 0
+						groupMentions: 0,
 					});
 				}
 			});
@@ -246,5 +246,5 @@ Accounts.registerLoginHandler(function(options) {
 
 	}
 
-	return { userId: user._id };
+	return {userId: user._id};
 });

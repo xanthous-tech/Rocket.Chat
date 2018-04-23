@@ -4,17 +4,17 @@ Template.visitorForward.helpers({
 		return Template.instance().visitor.get();
 	},
 	hasDepartments() {
-		return LivechatDepartment.find({ enabled: true }).count() > 0;
+		return LivechatDepartment.find({enabled: true}).count() > 0;
 	},
 	departments() {
-		return LivechatDepartment.find({ enabled: true });
+		return LivechatDepartment.find({enabled: true});
 	},
 	agents() {
-		return AgentUsers.find({ _id: { $ne: Meteor.userId() } }, { sort: { name: 1, username: 1 } });
+		return AgentUsers.find({_id: {$ne: Meteor.userId()}}, {sort: {name: 1, username: 1}});
 	},
 	agentName() {
 		return this.name || this.username;
-	}
+	},
 });
 
 Template.visitorForward.onCreated(function() {
@@ -22,11 +22,11 @@ Template.visitorForward.onCreated(function() {
 	this.room = new ReactiveVar();
 
 	this.autorun(() => {
-		this.visitor.set(Meteor.users.findOne({ _id: Template.currentData().visitorId }));
+		this.visitor.set(Meteor.users.findOne({_id: Template.currentData().visitorId}));
 	});
 
 	this.autorun(() => {
-		this.room.set(ChatRoom.findOne({ _id: Template.currentData().roomId }));
+		this.room.set(ChatRoom.findOne({_id: Template.currentData().roomId}));
 	});
 
 	this.subscribe('livechat:departments');
@@ -39,7 +39,7 @@ Template.visitorForward.events({
 		event.preventDefault();
 
 		const transferData = {
-			roomId: instance.room.get()._id
+			roomId: instance.room.get()._id,
 		};
 
 		if (instance.find('#forwardUser').value) {
@@ -77,5 +77,5 @@ Template.visitorForward.events({
 		event.preventDefault();
 
 		this.cancel();
-	}
+	},
 });

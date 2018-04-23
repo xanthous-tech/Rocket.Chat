@@ -56,13 +56,11 @@ export function getLdapUserUniqueID(ldapUser) {
 	Unique_Identifier_Field = Unique_Identifier_Field.concat(User_Search_Field);
 
 	if (Unique_Identifier_Field.length > 0) {
-		Unique_Identifier_Field = Unique_Identifier_Field.find((field) => {
-			return !_.isEmpty(ldapUser._raw[field]);
-		});
+		Unique_Identifier_Field = Unique_Identifier_Field.find(field => !_.isEmpty(ldapUser._raw[field]));
 		if (Unique_Identifier_Field) {
 			Unique_Identifier_Field = {
 				attribute: Unique_Identifier_Field,
-				value: ldapUser._raw[Unique_Identifier_Field].toString('hex')
+				value: ldapUser._raw[Unique_Identifier_Field].toString('hex'),
 			};
 		}
 		return Unique_Identifier_Field;
@@ -89,17 +87,17 @@ export function getDataToSyncUserData(ldapUser, user) {
 
 					if (_.isObject(ldapUser[ldapField])) {
 						_.map(ldapUser[ldapField], function(item) {
-							emailList.push({ address: item, verified: true });
+							emailList.push({address: item, verified: true});
 						});
 					} else {
-						emailList.push({ address: ldapUser[ldapField], verified: true });
+						emailList.push({address: ldapUser[ldapField], verified: true});
 					}
 					break;
 
 				default:
 					const [outerKey, innerKeys] = userField.split(/\.(.+)/);
 
-					if (!_.find(whitelistedUserFields, (el) => el === outerKey)) {
+					if (!_.find(whitelistedUserFields, el => el === outerKey)) {
 						logger.debug(`user attribute not whitelisted: ${ userField }`);
 						return;
 					}
@@ -167,7 +165,7 @@ export function getDataToSyncUserData(ldapUser, user) {
 
 export function syncUserData(user, ldapUser) {
 	logger.info('Syncing user data');
-	logger.debug('user', {'email': user.email, '_id': user._id});
+	logger.debug('user', {email: user.email, _id: user._id});
 	logger.debug('ldapUser', ldapUser.object);
 
 	const userData = getDataToSyncUserData(ldapUser, user);
@@ -177,7 +175,7 @@ export function syncUserData(user, ldapUser) {
 			RocketChat._setRealName(user._id, userData.name);
 			delete userData.name;
 		}
-		Meteor.users.update(user._id, { $set: userData });
+		Meteor.users.update(user._id, {$set: userData});
 		user = Meteor.users.findOne({_id: user._id});
 	}
 
@@ -200,7 +198,7 @@ export function syncUserData(user, ldapUser) {
 
 			const file = {
 				userId: user._id,
-				type: 'image/jpeg'
+				type: 'image/jpeg',
 			};
 
 			Meteor.runAsUser(user._id, () => {
@@ -258,7 +256,7 @@ export function addLdapUser(ldapUser, username, password) {
 	syncUserData(userObject, ldapUser);
 
 	return {
-		userId: userObject._id
+		userId: userObject._id,
 	};
 }
 
@@ -285,7 +283,7 @@ export function importNewUsers(ldap) {
 			const uniqueId = getLdapUserUniqueID(ldapUser);
 			// Look to see if user already exists
 			const userQuery = {
-				'services.ldap.id': uniqueId.value
+				'services.ldap.id': uniqueId.value,
 			};
 
 			logger.debug('userQuery', userQuery);
@@ -300,7 +298,7 @@ export function importNewUsers(ldap) {
 
 			if (!user && username && RocketChat.settings.get('LDAP_Merge_Existing_Users') === true) {
 				const userQuery = {
-					username
+					username,
 				};
 
 				logger.debug('userQuery merge', userQuery);
@@ -386,10 +384,10 @@ const addCronJob = _.debounce(Meteor.bindEnvironment(function addCronJobDebounce
 		logger.info('Enabling LDAP Background Sync');
 		SyncedCron.add({
 			name: jobName,
-			schedule: (parser) => parser.text(RocketChat.settings.get('LDAP_Background_Sync_Interval')),
+			schedule: parser => parser.text(RocketChat.settings.get('LDAP_Background_Sync_Interval')),
 			job() {
 				sync();
-			}
+			},
 		});
 		SyncedCron.start();
 	}

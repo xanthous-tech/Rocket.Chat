@@ -45,9 +45,7 @@ Meteor.startup(function() {
 		// Fix browsers having all-lowercase language settings eg. pt-br, en-us
 		const re = /([a-z]{2}-)([a-z]{2})/;
 		if (re.test(lng)) {
-			lng = lng.replace(re, (match, ...parts) => {
-				return parts[0] + parts[1].toUpperCase();
-			});
+			lng = lng.replace(re, (match, ...parts) => parts[0] + parts[1].toUpperCase());
 		}
 		return lng;
 	};

@@ -5,11 +5,11 @@ RocketChat.Migrations.add({
 	up() {
 		return RocketChat.models.Users.find({
 			avatarOrigin: {
-				$exists: false
+				$exists: false,
 			},
 			username: {
-				$exists: true
-			}
+				$exists: true,
+			},
 		}).forEach((user) => {
 			const avatars = getAvatarSuggestionForUser(user);
 			const services = Object.keys(avatars);
@@ -31,12 +31,10 @@ RocketChat.Migrations.add({
 
 			const file = {
 				userId: user._id,
-				type: contentType
+				type: contentType,
 			};
 
-			fileStore.insert(file, rs, () => {
-				return RocketChat.models.Users.setAvatarOrigin(user._id, service);
-			});
+			fileStore.insert(file, rs, () => RocketChat.models.Users.setAvatarOrigin(user._id, service));
 		});
-	}
+	},
 });

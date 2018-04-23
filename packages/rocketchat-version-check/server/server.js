@@ -15,7 +15,7 @@ SyncedCron.add({
 	schedule: parser => parser.text('at 2:00 am'),
 	job() {
 		checkVersionUpdate();
-	}
+	},
 });
 
 SyncedCron.start();

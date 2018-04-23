@@ -6,7 +6,7 @@ Meteor.methods({
 		check(data, {
 			name: String,
 			email: String,
-			message: String
+			message: String,
 		});
 
 		if (!RocketChat.settings.get('Livechat_display_offline_form')) {
@@ -38,7 +38,7 @@ Meteor.methods({
 			try {
 				Meteor.wrapAsync(dns.resolveMx)(emailDomain);
 			} catch (e) {
-				throw new Meteor.Error('error-invalid-email-address', 'Invalid email address', { method: 'livechat:sendOfflineMessage' });
+				throw new Meteor.Error('error-invalid-email-address', 'Invalid email address', {method: 'livechat:sendOfflineMessage'});
 			}
 		}
 
@@ -48,7 +48,7 @@ Meteor.methods({
 				from: `${ data.name } - ${ data.email } <${ fromEmail }>`,
 				replyTo: `${ data.name } <${ data.email }>`,
 				subject: `Livechat offline message from ${ data.name }: ${ (`${ data.message }`).substring(0, 20) }`,
-				html: header + html + footer
+				html: header + html + footer,
 			});
 		});
 
@@ -57,7 +57,7 @@ Meteor.methods({
 		});
 
 		return true;
-	}
+	},
 });
 
 DDPRateLimiter.addRule({
@@ -65,5 +65,5 @@ DDPRateLimiter.addRule({
 	name: 'livechat:sendOfflineMessage',
 	connectionId() {
 		return true;
-	}
+	},
 }, 1, 5000);

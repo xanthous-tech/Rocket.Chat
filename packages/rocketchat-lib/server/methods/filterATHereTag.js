@@ -3,7 +3,7 @@ import _ from 'underscore';
 RocketChat.callbacks.add('beforeSaveMessage', function(message) {
 	// Test if the message mentions include @here.
 	if (message.mentions != null &&
-		_.pluck(message.mentions, '_id').some((item) => item === 'here')) {
+		_.pluck(message.mentions, '_id').some(item => item === 'here')) {
 
 		// Check if the user has permissions to use @here in both global and room scopes.
 		if (!RocketChat.authz.hasPermission(message.u._id, 'mention-here') && !RocketChat.authz.hasPermission(message.u._id, 'mention-here', message.rid)) {
@@ -18,13 +18,13 @@ RocketChat.callbacks.add('beforeSaveMessage', function(message) {
 				_id: Random.id(),
 				rid: message.rid,
 				ts: new Date,
-				msg: TAPi18n.__('error-action-not-allowed', { action }, language)
+				msg: TAPi18n.__('error-action-not-allowed', {action}, language),
 			});
 
 			// Also throw to stop propagation of 'sendMessage'.
 			throw new Meteor.Error('error-action-not-allowed', 'Notify here in this room not allowed', {
 				method: 'filterATHereTag',
-				action: 'Notify_active_in_this_room'
+				action: 'Notify_active_in_this_room',
 			});
 		}
 	}

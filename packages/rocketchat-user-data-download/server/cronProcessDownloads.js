@@ -61,7 +61,7 @@ const loadUserSubscriptions = function(exportOperation) {
 			exportedCount: 0,
 			status: 'pending',
 			targetFile,
-			type: subscription.t
+			type: subscription.t,
 		});
 	});
 
@@ -90,7 +90,7 @@ const getAttachmentData = function(attachment) {
 		url: null,
 		remote: false,
 		fileId: null,
-		fileName: null
+		fileName: null,
 	};
 
 	const url = attachment.title_link || attachment.image_url || attachment.audio_url || attachment.video_url || attachment.message_link;
@@ -126,7 +126,7 @@ const addToFileList = function(exportOperation, attachment) {
 		remote: attachment.remote,
 		fileId: attachment.fileId,
 		fileName: attachment.fileName,
-		targetFile
+		targetFile,
 	};
 
 	exportOperation.fileList.push(attachmentData);
@@ -147,7 +147,7 @@ const getMessageData = function(msg, exportOperation) {
 	const messageObject = {
 		msg: msg.msg,
 		username: msg.u.username,
-		ts: msg.ts
+		ts: msg.ts,
 	};
 
 	if (attachments && attachments.length > 0) {
@@ -199,7 +199,7 @@ const continueExportingRoom = function(exportOperation, exportOpRoomData) {
 
 	const skip = exportOpRoomData.exportedCount;
 
-	const cursor = RocketChat.models.Messages.findByRoomId(exportOpRoomData.roomId, { limit, skip });
+	const cursor = RocketChat.models.Messages.findByRoomId(exportOpRoomData.roomId, {limit, skip});
 	const count = cursor.count();
 
 	cursor.forEach((msg) => {
@@ -222,16 +222,16 @@ const continueExportingRoom = function(exportOperation, exportOpRoomData) {
 					message = TAPi18n.__('User_left');
 					break;
 				case 'au':
-					message = TAPi18n.__('User_added_by', {user_added : msg.msg, user_by : msg.u.username });
+					message = TAPi18n.__('User_added_by', {user_added : msg.msg, user_by : msg.u.username});
 					break;
 				case 'r':
-					message = TAPi18n.__('Room_name_changed', { room_name: msg.msg, user_by: msg.u.username });
+					message = TAPi18n.__('Room_name_changed', {room_name: msg.msg, user_by: msg.u.username});
 					break;
 				case 'ru':
-					message = TAPi18n.__('User_removed_by', {user_removed : msg.msg, user_by : msg.u.username });
+					message = TAPi18n.__('User_removed_by', {user_removed : msg.msg, user_by : msg.u.username});
 					break;
 				case 'wm':
-					message = TAPi18n.__('Welcome', {user: msg.u.username });
+					message = TAPi18n.__('Welcome', {user: msg.u.username});
 					break;
 				case 'livechat-close':
 					message = TAPi18n.__('Conversation_finished');
@@ -272,17 +272,13 @@ const continueExportingRoom = function(exportOperation, exportOpRoomData) {
 };
 
 const isExportComplete = function(exportOperation) {
-	const incomplete = exportOperation.roomList.some((exportOpRoomData) => {
-		return exportOpRoomData.status !== 'completed';
-	});
+	const incomplete = exportOperation.roomList.some(exportOpRoomData => exportOpRoomData.status !== 'completed');
 
 	return !incomplete;
 };
 
 const isDownloadFinished = function(exportOperation) {
-	const anyDownloadPending = exportOperation.fileList.some((fileData) => {
-		return !fileData.copied && !fileData.remote;
-	});
+	const anyDownloadPending = exportOperation.fileList.some(fileData => !fileData.copied && !fileData.remote);
 
 	return !anyDownloadPending;
 };
@@ -298,7 +294,7 @@ const sendEmail = function(userId) {
 			const subject = TAPi18n.__('UserDataDownload_EmailSubject');
 
 			const download_link = lastFile.url;
-			const body = TAPi18n.__('UserDataDownload_EmailBody', { download_link });
+			const body = TAPi18n.__('UserDataDownload_EmailBody', {download_link});
 
 			const rfcMailPatternWithName = /^(?:.*<)?([a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)(?:>?)$/;
 
@@ -308,7 +304,7 @@ const sendEmail = function(userId) {
 						to: emailAddress,
 						from: fromAddress,
 						subject,
-						html: body
+						html: body,
 					});
 				});
 
@@ -359,12 +355,12 @@ const uploadZipFile = function(exportOperation, callback) {
 		userId,
 		type: contentType,
 		size,
-		name: newFileName
+		name: newFileName,
 	};
 
 	userDataStore.insert(details, stream, (err) => {
 		if (err) {
-			throw new Meteor.Error('invalid-file', 'Invalid Zip File', { method: 'cronProcessDownloads.uploadZipFile' });
+			throw new Meteor.Error('invalid-file', 'Invalid Zip File', {method: 'cronProcessDownloads.uploadZipFile'});
 		} else {
 			callback();
 		}
@@ -380,7 +376,7 @@ const generateChannelsFile = function(exportOperation) {
 			const newRoomData = {
 				roomId: roomData.roomId,
 				roomName: roomData.roomName,
-				type: roomData.type
+				type: roomData.type,
 			};
 
 			const messageString = JSON.stringify(newRoomData);
@@ -406,7 +402,7 @@ const continueExportOperation = function(exportOperation) {
 			generateChannelsFile(exportOperation);
 		}
 
-		//Run every room on every request, to avoid missing new messages on the rooms that finished first.
+		// Run every room on every request, to avoid missing new messages on the rooms that finished first.
 		if (exportOperation.status === 'exporting') {
 			exportOperation.roomList.forEach((exportOpRoomData) => {
 				continueExportingRoom(exportOperation, exportOpRoomData);
@@ -469,8 +465,8 @@ Meteor.startup(function() {
 
 		SyncedCron.add({
 			name: 'Generate download files for user data',
-			schedule: (parser) => parser.cron(`*/${ processingFrequency } * * * *`),
-			job: processDataDownloads
+			schedule: parser => parser.cron(`*/${ processingFrequency } * * * *`),
+			job: processDataDownloads,
 		});
 	});
 });

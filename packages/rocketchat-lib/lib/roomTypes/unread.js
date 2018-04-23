@@ -1,11 +1,11 @@
-import { RoomTypeConfig } from '../RoomTypeConfig';
+import {RoomTypeConfig} from '../RoomTypeConfig';
 
 export class UnreadRoomType extends RoomTypeConfig {
 	constructor() {
 		super({
 			identifier: 'unread',
 			order: 10,
-			label: 'Unread'
+			label: 'Unread',
 		});
 
 		this.unread = true;

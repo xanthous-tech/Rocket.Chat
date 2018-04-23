@@ -4,7 +4,7 @@ export const customFieldText = {
 	type: 'text',
 	required: true,
 	minLength: 2,
-	maxLength: 10
+	maxLength: 10,
 };
 
 export function setCustomFields(customFields, done) {
@@ -17,7 +17,7 @@ export function setCustomFields(customFields, done) {
 
 		request.post(api('settings/Accounts_CustomFields'))
 			.set(credentials)
-			.send({ 'value': stringified })
+			.send({value: stringified})
 			.expect(200)
 			.end(done);
 	});

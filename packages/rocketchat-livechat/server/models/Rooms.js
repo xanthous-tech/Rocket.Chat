@@ -6,13 +6,13 @@ import _ from 'underscore';
  */
 RocketChat.models.Rooms.updateSurveyFeedbackById = function(_id, surveyFeedback) {
 	const query = {
-		_id
+		_id,
 	};
 
 	const update = {
 		$set: {
-			surveyFeedback
-		}
+			surveyFeedback,
+		},
 	};
 
 	return this.update(query, update);
@@ -21,11 +21,11 @@ RocketChat.models.Rooms.updateSurveyFeedbackById = function(_id, surveyFeedback)
 RocketChat.models.Rooms.updateLivechatDataByToken = function(token, key, value, overwrite = true) {
 	const query = {
 		'v.token': token,
-		open: true
+		open: true,
 	};
 
 	if (!overwrite) {
-		const room = this.findOne(query, { fields: { livechatData: 1 } });
+		const room = this.findOne(query, {fields: {livechatData: 1}});
 		if (room.livechatData && typeof room.livechatData[key] !== 'undefined') {
 			return true;
 		}
@@ -33,8 +33,8 @@ RocketChat.models.Rooms.updateLivechatDataByToken = function(token, key, value, 
 
 	const update = {
 		$set: {
-			[`livechatData.${ key }`]: value
-		}
+			[`livechatData.${ key }`]: value,
+		},
 	};
 
 	return this.update(query, update);
@@ -42,10 +42,10 @@ RocketChat.models.Rooms.updateLivechatDataByToken = function(token, key, value, 
 
 RocketChat.models.Rooms.findLivechat = function(filter = {}, offset = 0, limit = 20) {
 	const query = _.extend(filter, {
-		t: 'l'
+		t: 'l',
 	});
 
-	return this.find(query, { sort: { ts: - 1 }, offset, limit });
+	return this.find(query, {sort: {ts: - 1}, offset, limit});
 };
 
 RocketChat.models.Rooms.findLivechatByCode = function(code, fields) {
@@ -63,7 +63,7 @@ RocketChat.models.Rooms.findLivechatByCode = function(code, fields) {
 
 	const query = {
 		t: 'l',
-		code
+		code,
 	};
 
 	return this.findOne(query, options);
@@ -78,13 +78,13 @@ RocketChat.models.Rooms.getNextLivechatRoomCode = function() {
 	const findAndModify = Meteor.wrapAsync(settingsRaw.findAndModify, settingsRaw);
 
 	const query = {
-		_id: 'Livechat_Room_Count'
+		_id: 'Livechat_Room_Count',
 	};
 
 	const update = {
 		$inc: {
-			value: 1
-		}
+			value: 1,
+		},
 	};
 
 	const livechatCount = findAndModify(query, null, update);
@@ -95,7 +95,7 @@ RocketChat.models.Rooms.getNextLivechatRoomCode = function() {
 RocketChat.models.Rooms.findOpenByVisitorToken = function(visitorToken, options) {
 	const query = {
 		open: true,
-		'v.token': visitorToken
+		'v.token': visitorToken,
 	};
 
 	return this.find(query, options);
@@ -103,7 +103,7 @@ RocketChat.models.Rooms.findOpenByVisitorToken = function(visitorToken, options)
 
 RocketChat.models.Rooms.findByVisitorToken = function(visitorToken) {
 	const query = {
-		'v.token': visitorToken
+		'v.token': visitorToken,
 	};
 
 	return this.find(query);
@@ -111,7 +111,7 @@ RocketChat.models.Rooms.findByVisitorToken = function(visitorToken) {
 
 RocketChat.models.Rooms.findByVisitorId = function(visitorId) {
 	const query = {
-		'v._id': visitorId
+		'v._id': visitorId,
 	};
 
 	return this.find(query);
@@ -121,7 +121,7 @@ RocketChat.models.Rooms.findOneOpenByVisitorToken = function(token, roomId) {
 	const query = {
 		_id: roomId,
 		open: true,
-		'v.token': token
+		'v.token': token,
 	};
 
 	return this.findOne(query);
@@ -129,47 +129,47 @@ RocketChat.models.Rooms.findOneOpenByVisitorToken = function(token, roomId) {
 
 RocketChat.models.Rooms.setResponseByRoomId = function(roomId, response) {
 	return this.update({
-		_id: roomId
+		_id: roomId,
 	}, {
 		$set: {
 			responseBy: {
 				_id: response.user._id,
-				username: response.user.username
+				username: response.user.username,
 			},
 			responseDate: response.responseDate,
-			responseTime: response.responseTime
+			responseTime: response.responseTime,
 		},
 		$unset: {
-			waitingResponse: 1
-		}
+			waitingResponse: 1,
+		},
 	});
 };
 
 RocketChat.models.Rooms.closeByRoomId = function(roomId, closeInfo) {
 	return this.update({
-		_id: roomId
+		_id: roomId,
 	}, {
 		$set: {
 			closer: closeInfo.closer,
 			closedBy: closeInfo.closedBy,
 			closedAt: closeInfo.closedAt,
 			chatDuration: closeInfo.chatDuration,
-			'v.status': 'offline'
+			'v.status': 'offline',
 		},
 		$unset: {
-			open: 1
-		}
+			open: 1,
+		},
 	});
 };
 
 RocketChat.models.Rooms.setLabelByRoomId = function(roomId, label) {
-	return this.update({ _id: roomId }, { $set: { label } });
+	return this.update({_id: roomId}, {$set: {label}});
 };
 
 RocketChat.models.Rooms.findOpenByAgent = function(userId) {
 	const query = {
 		open: true,
-		'servedBy._id': userId
+		'servedBy._id': userId,
 	};
 
 	return this.find(query);
@@ -177,15 +177,15 @@ RocketChat.models.Rooms.findOpenByAgent = function(userId) {
 
 RocketChat.models.Rooms.changeAgentByRoomId = function(roomId, newAgent) {
 	const query = {
-		_id: roomId
+		_id: roomId,
 	};
 	const update = {
 		$set: {
 			servedBy: {
 				_id: newAgent.agentId,
-				username: newAgent.username
-			}
-		}
+				username: newAgent.username,
+			},
+		},
 	};
 
 	this.update(query, update);
@@ -193,12 +193,12 @@ RocketChat.models.Rooms.changeAgentByRoomId = function(roomId, newAgent) {
 
 RocketChat.models.Rooms.saveCRMDataByRoomId = function(roomId, crmData) {
 	const query = {
-		_id: roomId
+		_id: roomId,
 	};
 	const update = {
 		$set: {
-			crmData
-		}
+			crmData,
+		},
 	};
 
 	return this.update(query, update);
@@ -207,13 +207,13 @@ RocketChat.models.Rooms.saveCRMDataByRoomId = function(roomId, crmData) {
 RocketChat.models.Rooms.updateVisitorStatus = function(token, status) {
 	const query = {
 		'v.token': token,
-		open: true
+		open: true,
 	};
 
 	const update = {
 		$set: {
-			'v.status': status
-		}
+			'v.status': status,
+		},
 	};
 
 	return this.update(query, update);

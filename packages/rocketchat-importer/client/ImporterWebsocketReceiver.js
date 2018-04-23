@@ -7,7 +7,7 @@ class ImporterWebsocketReceiverDef {
 	}
 
 	progressUpdated(progress) {
-		this.callbacks.forEach((c) => c(progress));
+		this.callbacks.forEach(c => c(progress));
 	}
 
 	registerCallback(callback) {

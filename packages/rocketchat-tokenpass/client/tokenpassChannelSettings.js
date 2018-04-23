@@ -24,11 +24,11 @@ Template.channelSettings__tokenpass.helpers({
 	},
 	editDisabled() {
 		return Template.instance().editing.get() ? 'disabled' : '';
-	}
+	},
 });
 
 Template.channelSettings__tokenpass.onCreated(function() {
-	const room = ChatRoom.findOne(this.data.rid, { fields: { tokenpass : 1 } });
+	const room = ChatRoom.findOne(this.data.rid, {fields: {tokenpass : 1}});
 
 	this.editing = new ReactiveVar(false);
 	this.initial = room.tokenpass;
@@ -73,7 +73,7 @@ Template.channelSettings__tokenpass.events({
 
 		const tokenpass = {
 			require: i.find('[name=requireAllTokens]').checked ? 'all' : 'any',
-			tokens: i.list.get()
+			tokens: i.list.get(),
 		};
 
 		Meteor.call('saveRoomSettings', this.rid, 'tokenpass', tokenpass, function(err) {
@@ -98,5 +98,5 @@ Template.channelSettings__tokenpass.events({
 	},
 	'change [name=requireAllTokens]'(e, instance) {
 		instance.requireAll.set(e.currentTarget.checked);
-	}
+	},
 });

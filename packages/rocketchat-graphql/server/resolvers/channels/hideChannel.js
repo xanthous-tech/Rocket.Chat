@@ -1,15 +1,15 @@
-import { Meteor } from 'meteor/meteor';
-import { RocketChat } from 'meteor/rocketchat:lib';
+import {Meteor} from 'meteor/meteor';
+import {RocketChat} from 'meteor/rocketchat:lib';
 
-import { authenticated } from '../../helpers/authenticated';
+import {authenticated} from '../../helpers/authenticated';
 import schema from '../../schemas/channels/hideChannel.graphqls';
 
 const resolver = {
 	Mutation: {
-		hideChannel: authenticated((root, args, { user }) => {
+		hideChannel: authenticated((root, args, {user}) => {
 			const channel = RocketChat.models.Rooms.findOne({
 				_id: args.channelId,
-				t: 'c'
+				t: 'c',
 			});
 
 			if (!channel) {
@@ -31,11 +31,11 @@ const resolver = {
 			});
 
 			return true;
-		})
-	}
+		}),
+	},
 };
 
 export {
 	schema,
-	resolver
+	resolver,
 };

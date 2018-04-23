@@ -18,7 +18,7 @@ class OTR {
 		}
 
 		const subscription = RocketChat.models.Subscriptions.findOne({
-			rid: roomId
+			rid: roomId,
 		});
 
 		if (!subscription || subscription.t !== 'd') {

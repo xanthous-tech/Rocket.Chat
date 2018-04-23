@@ -20,14 +20,14 @@ export function setDirectMessageCreated(status) {
 
 export function checkIfUserIsValid(username, email, password) {
 	if (!sideNav.sidebarHeader.isVisible()) {
-		//if the user is not logged in.
+		// if the user is not logged in.
 		console.log('	User not logged. logging in...');
 		loginPage.open();
 		loginPage.login({email, password});
 		try {
 			mainContent.mainContent.waitForExist(5000);
 		} catch (e) {
-			//if the user dont exist.
+			// if the user dont exist.
 			console.log('	User dont exist. Creating user...');
 			loginPage.gotToRegister();
 			loginPage.registerNewUser({username, email, password});
@@ -36,7 +36,7 @@ export function checkIfUserIsValid(username, email, password) {
 			mainContent.mainContent.waitForExist(5000);
 		}
 	} else if (browser.execute(() => Meteor.user().username).value !== username) {
-		//if the logged user is not the right one
+		// if the logged user is not the right one
 		console.log('	Wrong logged user. Changing user...');
 		sideNav.sidebarUserMenu.waitForVisible(5000);
 		sideNav.sidebarUserMenu.click();
@@ -53,14 +53,14 @@ export function checkIfUserIsValid(username, email, password) {
 
 export function checkIfUserIsAdmin(username, email, password) {
 	if (!sideNav.sidebarHeader.isVisible()) {
-		//if the user is not logged in.
+		// if the user is not logged in.
 		console.log('	User not logged. logging in...');
 		loginPage.open();
 		loginPage.login({email, password});
 		try {
 			mainContent.mainContent.waitForExist(5000);
 		} catch (e) {
-			//if the user dont exist.
+			// if the user dont exist.
 			console.log('	Admin User dont exist. Creating user...');
 			loginPage.gotToRegister();
 			loginPage.registerNewUser({username, email, password});
@@ -69,7 +69,7 @@ export function checkIfUserIsAdmin(username, email, password) {
 			mainContent.mainContent.waitForExist(5000);
 		}
 	} else if (browser.execute(() => Meteor.user().username).value !== username) {
-		//if the logged user is not the right one
+		// if the logged user is not the right one
 		console.log('	Wrong logged user. Changing user...');
 		sideNav.sidebarUserMenu.waitForVisible(5000);
 		sideNav.sidebarUserMenu.click();

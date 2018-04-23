@@ -18,11 +18,11 @@ Template.listChannelsFlex.helpers({
 		return Template.instance().show.get() === show;
 	},
 	member() {
-		return !!RocketChat.models.Subscriptions.findOne({ name: this.name, open: true });
+		return !!RocketChat.models.Subscriptions.findOne({name: this.name, open: true});
 	},
 	hidden() {
-		return !!RocketChat.models.Subscriptions.findOne({ name: this.name, open: false });
-	}
+		return !!RocketChat.models.Subscriptions.findOne({name: this.name, open: false});
+	},
 });
 
 Template.listChannelsFlex.events({
@@ -70,7 +70,7 @@ Template.listChannelsFlex.events({
 			instance.$('#sort-subscriptions').hide();
 		}
 		return instance.show.set(show);
-	}
+	},
 });
 
 Template.listChannelsFlex.onCreated(function() {
@@ -85,23 +85,23 @@ Template.listChannelsFlex.onCreated(function() {
 	return this.autorun(() => {
 		if (this.show.get() === 'joined') {
 			this.hasMore.set(true);
-			const options = { fields: { name: 1 } };
+			const options = {fields: {name: 1}};
 			if (_.isNumber(this.limit.get())) {
 				options.limit = this.limit.get();
 			}
 			if (s.trim(this.sortSubscriptions.get())) {
 				switch (this.sortSubscriptions.get()) {
 					case 'name':
-						options.sort = { name: 1 };
+						options.sort = {name: 1};
 						break;
 					case 'ls':
-						options.sort = { ls: -1 };
+						options.sort = {ls: -1};
 						break;
 				}
 			}
 			this.channelsList.set(RocketChat.models.Subscriptions.find({
 				name: new RegExp(s.trim(s.escapeRegExp(this.nameFilter.get())), 'i'),
-				t: 'c'
+				t: 'c',
 			}, options).fetch()
 			);
 			if (this.channelsList.get().length < this.limit.get()) {

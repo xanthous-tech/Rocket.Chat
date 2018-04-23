@@ -2,7 +2,7 @@
 import _ from 'underscore';
 import s from 'underscore.string';
 
-//TODO: change this global to import
+// TODO: change this global to import
 LoggerManager = new class extends EventEmitter { // eslint-disable-line no-undef
 	constructor() {
 		super();
@@ -22,11 +22,11 @@ LoggerManager = new class extends EventEmitter { // eslint-disable-line no-undef
 	}
 	addToQueue(logger, args) {
 		this.queue.push({
-			logger, args
+			logger, args,
 		});
 	}
 	dispatchQueue() {
-		_.each(this.queue, (item) => item.logger._log.apply(item.logger, item.args));
+		_.each(this.queue, item => item.logger._log.apply(item.logger, item.args));
 		this.clearQueue();
 	}
 	clearQueue() {
@@ -44,38 +44,37 @@ LoggerManager = new class extends EventEmitter { // eslint-disable-line no-undef
 };
 
 
-
 const defaultTypes = {
 	debug: {
 		name: 'debug',
 		color: 'blue',
-		level: 2
+		level: 2,
 	},
 	log: {
 		name: 'info',
 		color: 'blue',
-		level: 1
+		level: 1,
 	},
 	info: {
 		name: 'info',
 		color: 'blue',
-		level: 1
+		level: 1,
 	},
 	success: {
 		name: 'info',
 		color: 'green',
-		level: 1
+		level: 1,
 	},
 	warn: {
 		name: 'warn',
 		color: 'magenta',
-		level: 1
+		level: 1,
 	},
 	error: {
 		name: 'error',
 		color: 'red',
-		level: 0
-	}
+		level: 0,
+	},
 };
 
 class _Logger {
@@ -95,7 +94,7 @@ class _Logger {
 					type,
 					level: typeConfig.level,
 					method: typeConfig.name,
-					'arguments': args
+					arguments: args,
 				});
 			};
 
@@ -106,7 +105,7 @@ class _Logger {
 					box: true,
 					level: typeConfig.level,
 					method: typeConfig.name,
-					'arguments': args
+					arguments: args,
 				});
 			};
 		});
@@ -124,7 +123,7 @@ class _Logger {
 						type: typeConfig.type,
 						level: typeConfig.level != null ? typeConfig.level : defaultTypes[typeConfig.type] && defaultTypes[typeConfig.type].level,
 						method,
-						'arguments': args
+						arguments: args,
 					});
 				};
 				this[`${ method }_box`] = function(...args) {
@@ -134,7 +133,7 @@ class _Logger {
 						box: true,
 						level: typeConfig.level != null ? typeConfig.level : defaultTypes[typeConfig.type] && defaultTypes[typeConfig.type].level,
 						method,
-						'arguments': args
+						arguments: args,
 					});
 				};
 			});
@@ -162,8 +161,8 @@ class _Logger {
 		}
 		const details = this._getCallerDetails();
 		const detailParts = [];
-		if (details['package'] && (LoggerManager.showPackage === true || options.type === 'error')) {
-			detailParts.push(details['package']);
+		if (details.package && (LoggerManager.showPackage === true || options.type === 'error')) {
+			detailParts.push(details.package);
 		}
 		if (LoggerManager.showFileAndLine === true || options.type === 'error') {
 			if ((details.file != null) && (details.line != null)) {
@@ -227,7 +226,7 @@ class _Logger {
 		details.file = match[1].split('/').slice(-1)[0].split('?')[0];
 		const packageMatch = match[1].match(/packages\/([^\.\/]+)(?:\/|\.)/);
 		if (packageMatch) {
-			details['package'] = packageMatch[1];
+			details.package = packageMatch[1];
 		}
 		return details;
 	}
@@ -285,8 +284,8 @@ class _Logger {
 			}
 
 			console.log(subPrefix, prefix);
-			box.forEach(line => {
-				console.log(subPrefix, color ? line[color]: line);
+			box.forEach((line) => {
+				console.log(subPrefix, color ? line[color] : line);
 			});
 
 		} else {
@@ -306,7 +305,7 @@ const processString = function(string, date) {
 			obj = {
 				message: string,
 				time: date,
-				level: 'info'
+				level: 'info',
 			};
 		}
 		return Log.format(obj, {color: true});
@@ -319,9 +318,9 @@ SystemLogger = new Logger('System', { // eslint-disable-line no-undef
 	methods: {
 		startup: {
 			type: 'success',
-			level: 0
-		}
-	}
+			level: 0,
+		},
+	},
 });
 
 
@@ -337,7 +336,7 @@ const StdOut = new class extends EventEmitter {
 			const item = {
 				id: Random.id(),
 				string,
-				ts: date
+				ts: date,
 			};
 			this.queue.push(item);
 
@@ -358,10 +357,10 @@ Meteor.publish('stdout', function() {
 		return this.ready();
 	}
 
-	StdOut.queue.forEach(item => {
+	StdOut.queue.forEach((item) => {
 		this.added('stdout', item.id, {
 			string: item.string,
-			ts: item.ts
+			ts: item.ts,
 		});
 	});
 
@@ -369,10 +368,10 @@ Meteor.publish('stdout', function() {
 	StdOut.on('write', (string, item) => {
 		this.added('stdout', item.id, {
 			string: item.string,
-			ts: item.ts
+			ts: item.ts,
 		});
 	});
 });
 
 
-export { SystemLogger, StdOut, LoggerManager, processString, Logger };
+export {SystemLogger, StdOut, LoggerManager, processString, Logger};

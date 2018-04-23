@@ -1,12 +1,12 @@
 export class RocketChatAnnouncement {
-	constructor(args={}) {
+	constructor(args = {}) {
 		this.room = new ReactiveVar(args.room);
 		this.message = new ReactiveVar(args.message);
 		this.callback = new ReactiveVar(args.callback);
 		this.style = new ReactiveVar(args.style);
 	}
 	save() {
-		const announcementObject = { message: this.message.get(), callback: this.callback.get(), style: this.style.get() };
+		const announcementObject = {message: this.message.get(), callback: this.callback.get(), style: this.style.get()};
 		Meteor.call('saveRoomSettings', this.room.get(), 'roomAnnouncement', announcementObject);
 	}
 	getMessage() {

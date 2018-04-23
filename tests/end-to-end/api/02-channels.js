@@ -13,17 +13,17 @@ import {
 	targetUser,
 	log,
 	apiPublicChannelName,
-	channel
+	channel,
 } from '../../data/api-data.js';
-import { adminEmail, password } from '../../data/user.js';
+import {adminEmail, password} from '../../data/user.js';
 import supertest from 'supertest';
 
 function getRoomInfo(roomId) {
-	return new Promise((resolve/*, reject*/) => {
+	return new Promise((resolve/* , reject*/) => {
 		request.get(api('channels.info'))
 			.set(credentials)
 			.query({
-				roomId
+				roomId,
 			})
 			.end((err, req) => {
 				resolve(req.body);
@@ -40,7 +40,7 @@ describe('[Channels]', function() {
 		request.post(api('channels.create'))
 			.set(credentials)
 			.send({
-				name: apiPublicChannelName
+				name: apiPublicChannelName,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -59,7 +59,7 @@ describe('[Channels]', function() {
 		request.get(api('channels.info'))
 			.set(credentials)
 			.query({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -80,7 +80,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				userId: 'rocket.cat'
+				userId: 'rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -99,7 +99,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				userId: 'rocket.cat'
+				userId: 'rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -114,7 +114,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				userId: 'rocket.cat'
+				userId: 'rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -129,7 +129,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				userId: 'rocket.cat'
+				userId: 'rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -144,7 +144,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				userId: 'rocket.cat'
+				userId: 'rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -161,7 +161,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				userId: 'rocket.cat'
+				userId: 'rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -182,7 +182,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				userId: 'rocket.cat'
+				userId: 'rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -201,7 +201,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				userId: 'rocket.cat'
+				userId: 'rocket.cat',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -216,7 +216,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				description: 'this is a description for a channel for api tests'
+				description: 'this is a description for a channel for api tests',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -232,7 +232,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				topic: 'this is a topic of a channel for api tests'
+				topic: 'this is a topic of a channel for api tests',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -248,7 +248,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				announcement: 'this is an announcement of a channel for api tests'
+				announcement: 'this is an announcement of a channel for api tests',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -264,7 +264,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				purpose: 'this is a purpose of a channel for api tests'
+				purpose: 'this is a purpose of a channel for api tests',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -279,7 +279,7 @@ describe('[Channels]', function() {
 		request.get(api('channels.history'))
 			.set(credentials)
 			.query({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -290,7 +290,7 @@ describe('[Channels]', function() {
 			.end(done);
 	});
 
-	//DEPRECATED
+	// DEPRECATED
 	// TODO: Remove this after three versions have been released. That means at 0.67 this should be gone.
 	it('/channels.cleanHistory', (done) => {
 		request.post(api('channels.cleanHistory'))
@@ -298,7 +298,7 @@ describe('[Channels]', function() {
 			.send({
 				roomId: channel._id,
 				latest: '2016-12-09T13:42:25.304Z',
-				oldest: '2016-08-30T13:42:25.304Z'
+				oldest: '2016-08-30T13:42:25.304Z',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -312,7 +312,7 @@ describe('[Channels]', function() {
 		request.post(api('channels.archive'))
 			.set(credentials)
 			.send({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -326,7 +326,7 @@ describe('[Channels]', function() {
 		request.post(api('channels.unarchive'))
 			.set(credentials)
 			.send({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -340,7 +340,7 @@ describe('[Channels]', function() {
 		request.post(api('channels.close'))
 			.set(credentials)
 			.send({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -354,7 +354,7 @@ describe('[Channels]', function() {
 		request.post(api('channels.close'))
 			.set(credentials)
 			.send({
-				roomName: apiPublicChannelName
+				roomName: apiPublicChannelName,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(400)
@@ -369,7 +369,7 @@ describe('[Channels]', function() {
 		request.post(api('channels.open'))
 			.set(credentials)
 			.send({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -383,7 +383,7 @@ describe('[Channels]', function() {
 		request.get(api('channels.list'))
 			.set(credentials)
 			.query({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -399,7 +399,7 @@ describe('[Channels]', function() {
 		request.get(api('channels.list.joined'))
 			.set(credentials)
 			.query({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -415,7 +415,7 @@ describe('[Channels]', function() {
 		request.get(api('channels.members'))
 			.set(credentials)
 			.query({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -436,7 +436,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				name: `EDITED${ apiPublicChannelName }`
+				name: `EDITED${ apiPublicChannelName }`,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -454,7 +454,7 @@ describe('[Channels]', function() {
 		request.get(api('channels.getIntegrations'))
 			.set(credentials)
 			.query({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -470,7 +470,7 @@ describe('[Channels]', function() {
 		request.post(api('channels.addAll'))
 			.set(credentials)
 			.send({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -490,7 +490,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				joinCode: '123'
+				joinCode: '123',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -511,7 +511,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				readOnly: true
+				readOnly: true,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -531,7 +531,7 @@ describe('[Channels]', function() {
 		request.post(api('channels.leave'))
 			.set(credentials)
 			.send({
-				roomId: channel._id
+				roomId: channel._id,
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -552,7 +552,7 @@ describe('[Channels]', function() {
 			.set(credentials)
 			.send({
 				roomId: channel._id,
-				type: 'p'
+				type: 'p',
 			})
 			.expect('Content-Type', 'application/json')
 			.expect(200)
@@ -572,7 +572,7 @@ describe('[Channels]', function() {
 			request.post(api('channels.create'))
 				.set(credentials)
 				.send({
-					name: `channel.test.${ Date.now() }`
+					name: `channel.test.${ Date.now() }`,
 				})
 				.end((err, res) => {
 					testChannel = res.body.channel;
@@ -583,7 +583,7 @@ describe('[Channels]', function() {
 			request.post(api('channels.delete'))
 				.set(credentials)
 				.send({
-					roomName: testChannel.name
+					roomName: testChannel.name,
 				})
 				.expect('Content-Type', 'application/json')
 				.expect(200)
@@ -596,7 +596,7 @@ describe('[Channels]', function() {
 			request.get(api('channels.info'))
 				.set(credentials)
 				.query({
-					roomId: testChannel._id
+					roomId: testChannel._id,
 				})
 				.expect('Content-Type', 'application/json')
 				.expect(400)
@@ -613,7 +613,7 @@ describe('[Channels]', function() {
 			request.get(api('channels.getAllUserMentionsByChannel'))
 				.set(credentials)
 				.query({
-					roomId: channel._id
+					roomId: channel._id,
 				})
 				.expect('Content-Type', 'application/json')
 				.expect(200)

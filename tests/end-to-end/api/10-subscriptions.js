@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 /* globals expect */
 
-import { getCredentials, api, request, credentials } from '../../data/api-data.js';
+import {getCredentials, api, request, credentials} from '../../data/api-data.js';
 
 describe('[Subscriptions]', function() {
 	this.retries(0);
@@ -25,7 +25,7 @@ describe('[Subscriptions]', function() {
 		request.get(api('subscriptions.get'))
 			.set(credentials)
 			.query({
-				updatedSince: new Date
+				updatedSince: new Date,
 			})
 			.expect(200)
 			.expect((res) => {
@@ -42,7 +42,7 @@ describe('[Subscriptions]', function() {
 			request.post(api('channels.create'))
 				.set(credentials)
 				.send({
-					name: `channel.test.${ Date.now() }`
+					name: `channel.test.${ Date.now() }`,
 				})
 				.end((err, res) => {
 					testChannel = res.body.channel;
@@ -53,7 +53,7 @@ describe('[Subscriptions]', function() {
 			request.get(api('subscriptions.getOne'))
 				.set(credentials)
 				.query({
-					roomId: testChannel._id
+					roomId: testChannel._id,
 				})
 				.expect('Content-Type', 'application/json')
 				.expect(200)
@@ -70,7 +70,7 @@ describe('[Subscriptions]', function() {
 			request.post(api('subscriptions.read'))
 				.set(credentials)
 				.send({
-					rid: 'foobar123-somechannel'
+					rid: 'foobar123-somechannel',
 				})
 				.expect(200)
 				.expect((res) => {
@@ -83,7 +83,7 @@ describe('[Subscriptions]', function() {
 			request.post(api('subscriptions.read'))
 				.set(credentials)
 				.send({
-					rid: 'foobar123-somegroup'
+					rid: 'foobar123-somegroup',
 				})
 				.expect(200)
 				.expect((res) => {
@@ -96,7 +96,7 @@ describe('[Subscriptions]', function() {
 			request.post(api('subscriptions.read'))
 				.set(credentials)
 				.send({
-					rid: 'foobar123-somedm'
+					rid: 'foobar123-somedm',
 				})
 				.expect(200)
 				.expect((res) => {
@@ -109,7 +109,7 @@ describe('[Subscriptions]', function() {
 			request.post(api('subscriptions.read'))
 				.set(credentials)
 				.send({
-					rid: 12345
+					rid: 12345,
 				})
 				.expect(400)
 				.expect((res) => {

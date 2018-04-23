@@ -9,7 +9,7 @@ Meteor.startup(function() {
 				iconColor: 'red',
 				template: 'videoFlexTab',
 				width: 600,
-				order: 12
+				order: 12,
 			});
 		} else {
 			RocketChat.TabBar.removeButton('video');
@@ -41,9 +41,9 @@ Meteor.startup(function() {
 				const jitsiTimeout = new Date((room && room.jitsiTimeout) || currentTime).getTime();
 
 				if (jitsiTimeout > currentTime) {
-					RocketChat.TabBar.updateButton('video', { class: 'attention' });
+					RocketChat.TabBar.updateButton('video', {class: 'attention'});
 				} else {
-					RocketChat.TabBar.updateButton('video', { class: '' });
+					RocketChat.TabBar.updateButton('video', {class: ''});
 				}
 			}
 		}

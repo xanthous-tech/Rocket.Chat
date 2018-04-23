@@ -14,7 +14,7 @@ if (process.env.SANDSTORM === '1') {
 		const cap = waitPromise(api.restore(new Buffer(token, 'base64'))).cap;
 		return waitPromise(session.offer(cap, undefined, {tags: [{
 			id: '15831515641881813735',
-			value: new Buffer(serializedDescriptor, 'base64')
+			value: new Buffer(serializedDescriptor, 'base64'),
 		}]}));
 	};
 
@@ -37,12 +37,12 @@ if (process.env.SANDSTORM === '1') {
 				appTitle,
 				appIconUrl,
 				grainTitle,
-				descriptor: descriptor.tags[0].value.toString('base64')
+				descriptor: descriptor.tags[0].value.toString('base64'),
 			};
 		},
 		sandstormOffer(token, serializedDescriptor) {
 			RocketChat.Sandstorm.offerUiView(token, serializedDescriptor,
 				this.connection.sandstormSessionId());
-		}
+		},
 	});
 }

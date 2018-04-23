@@ -3,10 +3,10 @@ import moment from 'moment';
 
 Template.snippetPage.helpers({
 	snippet() {
-		return SnippetedMessages.findOne({ _id: FlowRouter.getParam('snippetId') });
+		return SnippetedMessages.findOne({_id: FlowRouter.getParam('snippetId')});
 	},
 	snippetContent() {
-		const message = SnippetedMessages.findOne({ _id: FlowRouter.getParam('snippetId') });
+		const message = SnippetedMessages.findOne({_id: FlowRouter.getParam('snippetId')});
 		if (message === undefined) {
 			return null;
 		}
@@ -15,17 +15,17 @@ Template.snippetPage.helpers({
 		return markdown.tokens[0].text;
 	},
 	date() {
-		const snippet = SnippetedMessages.findOne({ _id: FlowRouter.getParam('snippetId') });
+		const snippet = SnippetedMessages.findOne({_id: FlowRouter.getParam('snippetId')});
 		if (snippet !== undefined) {
 			return moment(snippet.ts).format(RocketChat.settings.get('Message_DateFormat'));
 		}
 	},
 	time() {
-		const snippet = SnippetedMessages.findOne({ _id: FlowRouter.getParam('snippetId') });
+		const snippet = SnippetedMessages.findOne({_id: FlowRouter.getParam('snippetId')});
 		if (snippet !== undefined) {
 			return moment(snippet.ts).format(RocketChat.settings.get('Message_TimeFormat'));
 		}
-	}
+	},
 });
 
 Template.snippetPage.onCreated(function() {

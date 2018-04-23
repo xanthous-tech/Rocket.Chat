@@ -15,10 +15,10 @@ function Leave(command, params, item) {
 			_id: Random.id(),
 			rid: item.rid,
 			ts: new Date,
-			msg: TAPi18n.__(error, null, Meteor.user().language)
+			msg: TAPi18n.__(error, null, Meteor.user().language),
 		});
 	}
 }
 
-RocketChat.slashCommands.add('leave', Leave, { description: 'Leave_the_current_channel' });
-RocketChat.slashCommands.add('part', Leave, { description: 'Leave_the_current_channel' });
+RocketChat.slashCommands.add('leave', Leave, {description: 'Leave_the_current_channel'});
+RocketChat.slashCommands.add('part', Leave, {description: 'Leave_the_current_channel'});

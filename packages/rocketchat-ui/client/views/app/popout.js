@@ -64,7 +64,7 @@ this.popout = {
 			popoutElement.style.left = `${ positionLeft >= 0 ? positionLeft : 0 }px`;
 			popoutElement.style.top = `${ positionTop >= 0 ? positionTop : 0 }px`;
 		}
-	}
+	},
 };
 
 Template.popout.helpers({
@@ -82,7 +82,7 @@ Template.popout.helpers({
 	},
 	showVideoControls() {
 		return Template.instance().showVideoControls.get();
-	}
+	},
 });
 
 Template.popout.onRendered(function() {
@@ -169,7 +169,7 @@ Template.popout.events({
 		} else if (e.detail === window.YT.PlayerState.PAUSED) {
 			i.isPlaying.set(false);
 		}
-	}
+	},
 });
 
 RocketChat.callbacks.add('afterLogoutCleanUp', () => popout.close(), RocketChat.callbacks.priority.MEDIUM, 'popout-close-after-logout-cleanup');

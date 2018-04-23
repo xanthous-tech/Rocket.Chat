@@ -4,12 +4,11 @@
 import loginPage from '../../pageobjects/login.page';
 import mainContent from '../../pageobjects/main-content.page';
 
-//test data imports
+// test data imports
 import {username, email, password} from '../../data/user.js';
 
 
-
-//Basic usage test start
+// Basic usage test start
 describe('[User Creation]', function() {
 	this.retries(2);
 

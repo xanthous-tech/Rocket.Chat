@@ -1,4 +1,4 @@
-import { AppEvents } from '../communication';
+import {AppEvents} from '../communication';
 
 Template.apps.onCreated(function() {
 	const instance = this;
@@ -57,7 +57,7 @@ Template.apps.helpers({
 	},
 	parseStatus(status) {
 		return t(`App_status_${ status }`);
-	}
+	},
 });
 
 Template.apps.events({
@@ -73,5 +73,5 @@ Template.apps.events({
 
 	'click [data-button="install"]'() {
 		FlowRouter.go('/admin/app/install');
-	}
+	},
 });

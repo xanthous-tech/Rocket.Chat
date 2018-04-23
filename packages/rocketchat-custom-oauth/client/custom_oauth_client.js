@@ -1,4 +1,4 @@
-/*globals OAuth*/
+/* globals OAuth*/
 import s from 'underscore.string';
 
 // Request custom OAuth credentials for the user
@@ -97,8 +97,8 @@ export class CustomOAuth {
 			credentialToken,
 			popupOptions: {
 				width: 900,
-				height: 450
-			}
+				height: 450,
+			},
 		});
 	}
 }

@@ -5,7 +5,7 @@ class LivechatRoomRoute extends RoomTypeRouteConfig {
 	constructor() {
 		super({
 			name: 'live',
-			path: '/live/:code(\\d+)'
+			path: '/live/:code(\\d+)',
 		});
 	}
 
@@ -15,7 +15,7 @@ class LivechatRoomRoute extends RoomTypeRouteConfig {
 
 	link(sub) {
 		return {
-			code: sub.code
+			code: sub.code,
 		};
 	}
 }
@@ -27,11 +27,11 @@ class LivechatRoomType extends RoomTypeConfig {
 			order: 5,
 			// icon: 'livechat',
 			label: 'Livechat',
-			route: new LivechatRoomRoute()
+			route: new LivechatRoomRoute(),
 		});
 
 		this.notSubscribedTpl = {
-			template: 'livechatNotSubscribed'
+			template: 'livechatNotSubscribed',
 		};
 	}
 
@@ -62,7 +62,7 @@ class LivechatRoomType extends RoomTypeConfig {
 			return room.v && room.v.status;
 		}
 
-		const inquiry = LivechatInquiry.findOne({ rid: roomId });
+		const inquiry = LivechatInquiry.findOne({rid: roomId});
 		return inquiry && inquiry.v && inquiry.v.status;
 	}
 

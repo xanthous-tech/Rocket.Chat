@@ -7,7 +7,7 @@ function sendToCRM(type, room, includeMessages = true) {
 
 	let messages;
 	if (typeof includeMessages === 'boolean' && includeMessages) {
-		messages = RocketChat.models.Messages.findVisibleByRoomId(room._id, { sort: { ts: 1 } });
+		messages = RocketChat.models.Messages.findVisibleByRoomId(room._id, {sort: {ts: 1}});
 	} else if (includeMessages instanceof Array) {
 		messages = includeMessages;
 	}
@@ -22,7 +22,7 @@ function sendToCRM(type, room, includeMessages = true) {
 				username: message.u.username,
 				msg: message.msg,
 				ts: message.ts,
-				editedAt: message.editedAt
+				editedAt: message.editedAt,
 			};
 
 			if (message.u.username !== postData.visitor.username) {

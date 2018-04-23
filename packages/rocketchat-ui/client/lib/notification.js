@@ -19,14 +19,14 @@ const KonchatNotification = {
 
 	notify(notification) {
 		if (window.Notification && Notification.permission === 'granted') {
-			const message = { rid: (notification.payload != null ? notification.payload.rid : undefined), msg: notification.text, notification: true };
+			const message = {rid: (notification.payload != null ? notification.payload.rid : undefined), msg: notification.text, notification: true};
 			return RocketChat.promises.run('onClientMessageReceived', message).then(function(message) {
 				const n = new Notification(notification.title, {
 					icon: notification.icon || getAvatarUrlFromUsername(notification.payload.sender.username),
 					body: s.stripTags(message.msg),
 					tag: notification.payload._id,
 					silent: true,
-					canReply: true
+					canReply: true,
 				});
 
 				const user = Meteor.user();
@@ -41,7 +41,7 @@ const KonchatNotification = {
 							Meteor.call('sendMessage', {
 								_id: Random.id(),
 								rid: notification.payload.rid,
-								msg: response
+								msg: response,
 							})
 						);
 					}
@@ -51,11 +51,11 @@ const KonchatNotification = {
 						window.focus();
 						switch (notification.payload.type) {
 							case 'd':
-								return FlowRouter.go('direct', { username: notification.payload.sender.username }, FlowRouter.current().queryParams);
+								return FlowRouter.go('direct', {username: notification.payload.sender.username}, FlowRouter.current().queryParams);
 							case 'c':
-								return FlowRouter.go('channel', { name: notification.payload.name }, FlowRouter.current().queryParams);
+								return FlowRouter.go('channel', {name: notification.payload.name}, FlowRouter.current().queryParams);
 							case 'p':
-								return FlowRouter.go('group', { name: notification.payload.name }, FlowRouter.current().queryParams);
+								return FlowRouter.go('group', {name: notification.payload.name}, FlowRouter.current().queryParams);
 						}
 					};
 				}
@@ -84,19 +84,19 @@ const KonchatNotification = {
 			const newMessageNotification = RocketChat.getUserPreference(user, 'newMessageNotification');
 			const audioVolume = RocketChat.getUserPreference(user, 'notificationsSoundVolume');
 
-			const sub = ChatSubscription.findOne({ rid }, { fields: { audioNotificationValue: 1 } });
+			const sub = ChatSubscription.findOne({rid}, {fields: {audioNotificationValue: 1}});
 
 			if (sub && sub.audioNotificationValue !== 'none') {
 				if (sub && sub.audioNotificationValue) {
 					const [audio] = $(`audio#${ sub.audioNotificationValue }`);
 					if (audio && audio.play) {
-						audio.volume = Number((audioVolume/100).toPrecision(2));
+						audio.volume = Number((audioVolume / 100).toPrecision(2));
 						return audio.play();
 					}
 				} else if (newMessageNotification !== 'none') {
 					const [audio] = $(`audio#${ newMessageNotification }`);
 					if (audio && audio.play) {
-						audio.volume = Number((audioVolume/100).toPrecision(2));
+						audio.volume = Number((audioVolume / 100).toPrecision(2));
 						return audio.play();
 					}
 				}
@@ -104,7 +104,7 @@ const KonchatNotification = {
 		}
 	},
 
-	newRoom(rid/*, withSound = true*/) {
+	newRoom(rid/* , withSound = true*/) {
 		Tracker.nonreactive(function() {
 			let newRoomSound = Session.get('newRoomSound');
 			if (newRoomSound != null) {
@@ -123,7 +123,7 @@ const KonchatNotification = {
 		Tracker.nonreactive(() => Session.set('newRoomSound', []));
 
 		return $(`.link-room-${ rid }`).removeClass('new-room-highlight');
-	}
+	},
 };
 
 Meteor.startup(() => {
@@ -131,8 +131,8 @@ Meteor.startup(() => {
 		const user = RocketChat.models.Users.findOne(Meteor.userId(), {
 			fields: {
 				'settings.preferences.newRoomNotification': 1,
-				'settings.preferences.notificationsSoundVolume': 1
-			}
+				'settings.preferences.notificationsSoundVolume': 1,
+			},
 		});
 		const newRoomNotification = RocketChat.getUserPreference(user, 'newRoomNotification');
 		const audioVolume = RocketChat.getUserPreference(user, 'notificationsSoundVolume');
@@ -142,7 +142,7 @@ Meteor.startup(() => {
 				if (newRoomNotification !== 'none') {
 					const [audio] = $(`audio#${ newRoomNotification }`);
 					if (audio && audio.play) {
-						audio.volume = Number((audioVolume/100).toPrecision(2));
+						audio.volume = Number((audioVolume / 100).toPrecision(2));
 						return audio.play();
 					}
 				}
@@ -159,5 +159,5 @@ Meteor.startup(() => {
 		}
 	});
 });
-export { KonchatNotification };
+export {KonchatNotification};
 this.KonchatNotification = KonchatNotification;

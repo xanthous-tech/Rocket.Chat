@@ -5,7 +5,7 @@ Meteor.methods({
 		check(rid, String);
 
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'getChannelHistory' });
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'getChannelHistory'});
 		}
 
 		const fromUserId = Meteor.userId();
@@ -14,30 +14,30 @@ Meteor.methods({
 			return false;
 		}
 
-		//Make sure they can access the room
+		// Make sure they can access the room
 		if (room.t === 'c' && !RocketChat.authz.hasPermission(fromUserId, 'preview-c-room') && room.usernames.indexOf(room.username) === -1) {
 			return false;
 		}
 
-		//Ensure latest is always defined.
+		// Ensure latest is always defined.
 		if (_.isUndefined(latest)) {
 			latest = new Date();
 		}
 
-		//Verify oldest is a date if it exists
+		// Verify oldest is a date if it exists
 		if (!_.isUndefined(oldest) && !_.isDate(oldest)) {
-			throw new Meteor.Error('error-invalid-date', 'Invalid date', { method: 'getChannelHistory' });
+			throw new Meteor.Error('error-invalid-date', 'Invalid date', {method: 'getChannelHistory'});
 		}
 
 		const options = {
 			sort: {
-				ts: -1
+				ts: -1,
 			},
-			limit: count
+			limit: count,
 		};
 
 		if (!RocketChat.settings.get('Message_ShowEditedStatus')) {
-			options.fields = { 'editedAt': 0 };
+			options.fields = {editedAt: 0};
 		}
 
 		let records = [];
@@ -54,7 +54,7 @@ Meteor.methods({
 		const UI_Use_Real_Name = RocketChat.settings.get('UI_Use_Real_Name') === true;
 
 		const messages = _.map(records, (message) => {
-			message.starred = _.findWhere(message.starred, { _id: fromUserId });
+			message.starred = _.findWhere(message.starred, {_id: fromUserId});
 			if (message.u && message.u._id && UI_Use_Real_Name) {
 				const user = RocketChat.models.Users.findOneById(message.u._id);
 				message.u.name = user && user.name;
@@ -75,7 +75,7 @@ Meteor.methods({
 			if (!_.isUndefined(oldest)) {
 				const firstMsg = messages[messages.length - 1];
 				if (!_.isUndefined(firstMsg) && firstMsg.ts > oldest) {
-					const unreadMessages = RocketChat.models.Messages.findVisibleByRoomIdBetweenTimestamps(rid, oldest, firstMsg.ts, { limit: 1, sort: { ts: 1 } });
+					const unreadMessages = RocketChat.models.Messages.findVisibleByRoomIdBetweenTimestamps(rid, oldest, firstMsg.ts, {limit: 1, sort: {ts: 1}});
 					firstUnread = unreadMessages.fetch()[0];
 					unreadNotLoaded = unreadMessages.count();
 				}
@@ -84,12 +84,12 @@ Meteor.methods({
 			return {
 				messages: messages || [],
 				firstUnread,
-				unreadNotLoaded
+				unreadNotLoaded,
 			};
 		}
 
 		return {
-			messages: messages || []
+			messages: messages || [],
 		};
-	}
+	},
 });

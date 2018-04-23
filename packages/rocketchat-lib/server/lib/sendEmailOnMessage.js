@@ -1,7 +1,7 @@
 import moment from 'moment';
 import s from 'underscore.string';
 
-function getEmailContent({ messageContent, message, user, room }) {
+function getEmailContent({messageContent, message, user, room}) {
 	const lng = user && user.language || RocketChat.settings.get('language') || 'en';
 
 	const roomName = `#${ RocketChat.settings.get('UI_Allow_room_names_with_special_chars') ? room.fname || room.name : room.name }`;
@@ -11,7 +11,7 @@ function getEmailContent({ messageContent, message, user, room }) {
 	const header = TAPi18n.__(room.t === 'd' ? 'User_sent_a_message_to_you' : 'User_sent_a_message_on_channel', {
 		username: userName,
 		channel: roomName,
-		lng
+		lng,
 	});
 
 	if (messageContent) {
@@ -22,7 +22,7 @@ function getEmailContent({ messageContent, message, user, room }) {
 		const fileHeader = TAPi18n.__(room.t === 'd' ? 'User_uploaded_a_file_to_you' : 'User_uploaded_a_file_on_channel', {
 			username: userName,
 			channel: roomName,
-			lng
+			lng,
 		});
 
 		let content = `${ TAPi18n.__('Attachment_File_Uploaded') }: ${ message.file.name }`;
@@ -35,7 +35,7 @@ function getEmailContent({ messageContent, message, user, room }) {
 	}
 
 	if (message.attachments.length > 0) {
-		const [ attachment ] = message.attachments;
+		const [attachment] = message.attachments;
 
 		let content = '';
 
@@ -70,7 +70,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room) {
 			'padding: 9px 12px;',
 			'border-radius: 4px;',
 			'background-color: #04436a;',
-			'text-decoration: none;'
+			'text-decoration: none;',
 		].join(' ');
 		const message = TAPi18n.__('Offline_Link_Message');
 		return `<p style="text-align:center;margin-bottom:8px;"><a style="${ style }" href="${ path }">${ message }</a>`;
@@ -118,12 +118,12 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room) {
 			query = RocketChat.models.Subscriptions.findByRoomIdAndUserIdsOrAllMessages(room._id, userIds);
 		}
 
-		query.forEach(sub => {
+		query.forEach((sub) => {
 			if (sub.disableNotifications) {
 				return delete usersToSendEmail[sub.u._id];
 			}
 
-			const { emailNotifications, muteGroupMentions } = sub;
+			const {emailNotifications, muteGroupMentions} = sub;
 
 			if (emailNotifications === 'nothing') {
 				return delete usersToSendEmail[sub.u._id];
@@ -162,7 +162,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room) {
 		});
 	} else {
 		defaultLink = getMessageLink(room, {
-			name: room.name
+			name: room.name,
 		});
 	}
 
@@ -173,7 +173,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room) {
 			usersOfMention.forEach((user) => {
 				const emailNotificationMode = RocketChat.getUserPreference(user, 'emailNotificationMode');
 				if (usersToSendEmail[user._id] === 'default') {
-					if (emailNotificationMode === 'all') { //Mention/DM
+					if (emailNotificationMode === 'all') { // Mention/DM
 						usersToSendEmail[user._id] = 'mention';
 					} else {
 						return;
@@ -210,19 +210,19 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room) {
 					case 'all':
 						emailSubject = RocketChat.placeholders.replace(RocketChat.settings.get('Offline_Mention_All_Email'), {
 							user: username,
-							room: roomName || room.label
+							room: roomName || room.label,
 						});
 						break;
 					case 'direct':
 						emailSubject = RocketChat.placeholders.replace(RocketChat.settings.get('Offline_DM_Email'), {
 							user: username,
-							room: roomName
+							room: roomName,
 						});
 						break;
 					case 'mention':
 						emailSubject = RocketChat.placeholders.replace(RocketChat.settings.get('Offline_Mention_Email'), {
 							user: username,
-							room: roomName
+							room: roomName,
 						});
 						break;
 				}
@@ -232,12 +232,12 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room) {
 							messageContent: messageHTML,
 							message,
 							user,
-							room
+							room,
 						});
 						email = {
 							to: email.address,
 							subject: emailSubject,
-							html: header + content + divisorMessage + (linkByUser[user._id] || defaultLink) + footer
+							html: header + content + divisorMessage + (linkByUser[user._id] || defaultLink) + footer,
 						};
 						// using user full-name/channel name in from address
 						if (room.t === 'd') {
@@ -249,7 +249,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room) {
 						if (RocketChat.settings.get('Direct_Reply_Enable')) {
 							email.headers = {
 								// Reply-To header with format "username+messageId@domain"
-								'Reply-To': `${ RocketChat.settings.get('Direct_Reply_Username').split('@')[0].split(RocketChat.settings.get('Direct_Reply_Separator'))[0] }${ RocketChat.settings.get('Direct_Reply_Separator') }${ message._id }@${ RocketChat.settings.get('Direct_Reply_Username').split('@')[1] }`
+								'Reply-To': `${ RocketChat.settings.get('Direct_Reply_Username').split('@')[0].split(RocketChat.settings.get('Direct_Reply_Separator'))[0] }${ RocketChat.settings.get('Direct_Reply_Separator') }${ message._id }@${ RocketChat.settings.get('Direct_Reply_Username').split('@')[1] }`,
 							};
 						}
 

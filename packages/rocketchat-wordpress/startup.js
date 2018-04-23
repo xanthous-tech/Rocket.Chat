@@ -3,30 +3,30 @@ RocketChat.settings.addGroup('OAuth', function() {
 
 		const enableQuery = {
 			_id: 'Accounts_OAuth_Wordpress',
-			value: true
+			value: true,
 		};
 		this.add('Accounts_OAuth_Wordpress', false, {
 			type: 'boolean',
-			'public': true
+			public: true,
 		});
 		this.add('API_Wordpress_URL', '', {
 			type: 'string',
 			enableQuery,
-			'public': true
+			public: true,
 		});
 		this.add('Accounts_OAuth_Wordpress_id', '', {
 			type: 'string',
-			enableQuery
+			enableQuery,
 		});
 		this.add('Accounts_OAuth_Wordpress_secret', '', {
 			type: 'string',
-			enableQuery
+			enableQuery,
 		});
 		return this.add('Accounts_OAuth_Wordpress_callback_url', '_oauth/wordpress', {
 			type: 'relativeUrl',
 			readonly: true,
 			force: true,
-			enableQuery
+			enableQuery,
 		});
 	});
 });

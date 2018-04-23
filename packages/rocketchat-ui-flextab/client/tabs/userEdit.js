@@ -20,7 +20,7 @@ Template.userEdit.helpers({
 
 	role() {
 		const roles = Template.instance().roles.get();
-		return RocketChat.models.Roles.find({_id: {$nin:roles}, scope: 'Users'}, { sort: { description: 1, _id: 1 } });
+		return RocketChat.models.Roles.find({_id: {$nin:roles}, scope: 'Users'}, {sort: {description: 1, _id: 1}});
 	},
 
 	userRoles() {
@@ -29,7 +29,7 @@ Template.userEdit.helpers({
 
 	name() {
 		return this.description || this._id;
-	}
+	},
 });
 
 Template.userEdit.events({
@@ -71,7 +71,7 @@ Template.userEdit.events({
 		e.stopPropagation();
 		e.preventDefault();
 		t.save(e.currentTarget);
-	}
+	},
 });
 
 
@@ -80,7 +80,7 @@ Template.userEdit.onCreated(function() {
 	this.roles = this.user ? new ReactiveVar(this.user.roles) : new ReactiveVar([]);
 
 
-	const { tabBar } = Template.currentData();
+	const {tabBar} = Template.currentData();
 
 	this.cancel = (form, username) => {
 		form.reset();
@@ -93,7 +93,7 @@ Template.userEdit.onCreated(function() {
 	};
 
 	this.getUserData = () => {
-		const userData = { _id: (this.user != null ? this.user._id : undefined) };
+		const userData = {_id: (this.user != null ? this.user._id : undefined)};
 		userData.name = s.trim(this.$('#name').val());
 		userData.username = s.trim(this.$('#username').val());
 		userData.email = s.trim(this.$('#email').val());
@@ -105,10 +105,8 @@ Template.userEdit.onCreated(function() {
 		const roleSelect = this.$('.remove-role').toArray();
 
 		if (roleSelect.length > 0) {
-			const notSorted = roleSelect.map(role => {
-				return role.title;
-			});
-			//Remove duplicate strings from the array
+			const notSorted = roleSelect.map(role => role.title);
+			// Remove duplicate strings from the array
 			userData.roles = notSorted.filter((el, index) => notSorted.indexOf(el) === index);
 		}
 		return userData;
@@ -133,13 +131,13 @@ Template.userEdit.onCreated(function() {
 		}
 
 		for (const error of Array.from(errors)) {
-			toastr.error(TAPi18n.__('error-the-field-is-required', { field: TAPi18n.__(error) }));
+			toastr.error(TAPi18n.__('error-the-field-is-required', {field: TAPi18n.__(error)}));
 		}
 
 		return errors.length === 0;
 	};
 
-	this.save = form => {
+	this.save = (form) => {
 		if (!this.validate()) {
 			return;
 		}

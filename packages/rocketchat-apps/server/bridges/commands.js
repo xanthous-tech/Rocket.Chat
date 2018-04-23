@@ -1,4 +1,4 @@
-import { SlashCommandContext } from '@rocket.chat/apps-ts-definition/slashcommands';
+import {SlashCommandContext} from '@rocket.chat/apps-ts-definition/slashcommands';
 
 export class AppCommandsBridge {
 	constructor(orch) {
@@ -87,7 +87,7 @@ export class AppCommandsBridge {
 			command: command.command.toLowerCase(),
 			params: command.paramsExample,
 			description: command.i18nDescription,
-			callback: this._appCommandExecutor.bind(this)
+			callback: this._appCommandExecutor.bind(this),
 		};
 
 		RocketChat.slashCommands.commands[command.command.toLowerCase()] = item;

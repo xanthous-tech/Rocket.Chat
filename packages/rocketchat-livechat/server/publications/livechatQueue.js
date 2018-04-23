@@ -1,10 +1,10 @@
 Meteor.publish('livechat:queue', function() {
 	if (!this.userId) {
-		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', { publish: 'livechat:queue' }));
+		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', {publish: 'livechat:queue'}));
 	}
 
 	if (!RocketChat.authz.hasPermission(this.userId, 'view-l-room')) {
-		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', { publish: 'livechat:queue' }));
+		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', {publish: 'livechat:queue'}));
 	}
 
 	// let sort = { count: 1, sort: 1, username: 1 };
@@ -35,7 +35,7 @@ Meteor.publish('livechat:queue', function() {
 		},
 		removed(id) {
 			self.removed('livechatQueueUser', id);
-		}
+		},
 	});
 
 	this.ready();

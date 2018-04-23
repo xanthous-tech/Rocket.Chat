@@ -1,4 +1,4 @@
-import { mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
+import {mergeTypes, mergeResolvers} from 'merge-graphql-schemas';
 
 // queries
 import * as channels from './channels';
@@ -31,7 +31,7 @@ export const schema = mergeTypes([
 	ChannelSort.schema,
 	ChannelFilter.schema,
 	Privacy.schema,
-	ChannelNameAndDirect.schema
+	ChannelNameAndDirect.schema,
 ]);
 
 export const resolvers = mergeResolvers([
@@ -45,5 +45,5 @@ export const resolvers = mergeResolvers([
 	leaveChannel.resolver,
 	hideChannel.resolver,
 	// types
-	ChannelType.resolver
+	ChannelType.resolver,
 ]);

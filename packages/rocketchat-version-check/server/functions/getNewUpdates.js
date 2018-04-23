@@ -1,6 +1,6 @@
 /* global MongoInternals */
 import os from 'os';
-import { HTTP } from 'meteor/http';
+import {HTTP} from 'meteor/http';
 // import checkUpdate from '../checkUpdate';
 
 export default () => {
@@ -20,11 +20,11 @@ export default () => {
 			osRelease: os.release(),
 			nodeVersion: process.version,
 			deployMethod: process.env.DEPLOY_METHOD || 'tar',
-			deployPlatform: process.env.DEPLOY_PLATFORM || 'selfinstall'
+			deployPlatform: process.env.DEPLOY_PLATFORM || 'selfinstall',
 		};
 
 		const result = HTTP.get('https://releases.rocket.chat/updates/check', {
-			params: data
+			params: data,
 		});
 
 		return result.data;
@@ -35,7 +35,7 @@ export default () => {
 
 		return {
 			versions: [],
-			alerts: []
+			alerts: [],
 		};
 	}
 };

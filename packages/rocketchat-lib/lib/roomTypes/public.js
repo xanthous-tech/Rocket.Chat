@@ -1,11 +1,11 @@
 /* globals openRoom */
-import { RoomTypeConfig, RoomTypeRouteConfig, RoomSettingsEnum, UiTextContext } from '../RoomTypeConfig';
+import {RoomTypeConfig, RoomTypeRouteConfig, RoomSettingsEnum, UiTextContext} from '../RoomTypeConfig';
 
 export class PublicRoomRoute extends RoomTypeRouteConfig {
 	constructor() {
 		super({
 			name: 'channel',
-			path: '/channel/:name'
+			path: '/channel/:name',
 		});
 	}
 
@@ -21,14 +21,14 @@ export class PublicRoomType extends RoomTypeConfig {
 			order: 30,
 			icon: 'hashtag',
 			label: 'Channels',
-			route: new PublicRoomRoute()
+			route: new PublicRoomRoute(),
 		});
 	}
 
 	findRoom(identifier) {
 		const query = {
 			t: 'c',
-			name: identifier
+			name: identifier,
 		};
 		return ChatRoom.findOne(query);
 	}

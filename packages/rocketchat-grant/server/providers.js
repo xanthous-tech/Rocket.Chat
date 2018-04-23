@@ -1,7 +1,7 @@
-import { check } from 'meteor/check';
+import {check} from 'meteor/check';
 
-import { Storage } from './storage';
-import { routes } from './routes';
+import {Storage} from './storage';
+import {routes} from './routes';
 
 class Providers extends Storage {
 	register(name, options, getUser) {
@@ -14,7 +14,7 @@ class Providers extends Storage {
 
 		this._add(name.toLowerCase(), {
 			scope: options.scope,
-			getUser
+			getUser,
 		});
 	}
 }
@@ -32,7 +32,7 @@ export function middleware(req, res, next) {
 		providers.forEach((_, name) => list.push(name));
 
 		res.end(JSON.stringify({
-			data: list
+			data: list,
 		}));
 		return;
 	}

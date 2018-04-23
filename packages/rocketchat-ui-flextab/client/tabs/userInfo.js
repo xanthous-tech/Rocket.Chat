@@ -6,7 +6,7 @@ import moment from 'moment';
 import {getActions} from './userActions';
 
 const more = function() {
-	return Template.instance().actions.get().map(action => typeof action === 'function' ? action.call(this): action).filter(action => action && (!action.condition || action.condition.call(this))).slice(2);
+	return Template.instance().actions.get().map(action => typeof action === 'function' ? action.call(this) : action).filter(action => action && (!action.condition || action.condition.call(this))).slice(2);
 };
 
 
@@ -17,7 +17,7 @@ Template.userInfo.helpers({
 	moreActions: more,
 
 	actions() {
-		return Template.instance().actions.get().map(action => typeof action === 'function' ? action.call(this): action).filter(action => action && (!action.condition || action.condition.call(this))).slice(0, 2);
+		return Template.instance().actions.get().map(action => typeof action === 'function' ? action.call(this) : action).filter(action => action && (!action.condition || action.condition.call(this))).slice(0, 2);
 	},
 	customField() {
 		if (!RocketChat.authz.hasAllPermission('view-full-other-user-info')) {
@@ -150,7 +150,7 @@ Template.userInfo.helpers({
 						return instance.loadedUsername.set(username);
 					}
 				}
-			}
+			},
 		};
 	},
 
@@ -160,15 +160,15 @@ Template.userInfo.helpers({
 			return;
 		}
 		const userRoles = UserRoles.findOne(user._id) || {};
-		const roomRoles = RoomRoles.findOne({'u._id': user._id, rid: Session.get('openedRoom') }) || {};
+		const roomRoles = RoomRoles.findOne({'u._id': user._id, rid: Session.get('openedRoom')}) || {};
 		const roles = _.union(userRoles.roles || [], roomRoles.roles || []);
-		return roles.length && RocketChat.models.Roles.find({ _id: { $in: roles }, description: { $exists: 1 } }, { fields: { description: 1 } });
+		return roles.length && RocketChat.models.Roles.find({_id: {$in: roles}, description: {$exists: 1}}, {fields: {description: 1}});
 	},
 
 	shouldDisplayReason() {
 		const user = Template.instance().user.get();
 		return RocketChat.settings.get('Accounts_ManuallyApproveNewUsers') && user.active === false && user.reason;
-	}
+	},
 });
 
 Template.userInfo.events({
@@ -198,10 +198,10 @@ Template.userInfo.events({
 			data: {
 				rid: this._id,
 				username: instance.data.username,
-				instance
+				instance,
 			},
 			currentTarget: e.currentTarget,
-			offsetVertical: e.currentTarget.clientHeight + 10
+			offsetVertical: e.currentTarget.clientHeight + 10,
 		};
 		popover.open(config);
 	},
@@ -213,7 +213,7 @@ Template.userInfo.events({
 	},
 	'click .js-back'(e, instance) {
 		return instance.clear();
-	}
+	},
 });
 
 Template.userInfo.onCreated(function() {
@@ -231,7 +231,7 @@ Template.userInfo.onCreated(function() {
 		const actions = getActions({
 			user,
 			hideAdminControls: this.data.hideAdminControls,
-			directActions: this.data.showAll
+			directActions: this.data.showAll,
 		});
 		this.actions.set(actions);
 	});
@@ -252,9 +252,7 @@ Template.userInfo.onCreated(function() {
 
 		this.loadingUserInfo.set(true);
 
-		return this.subscribe('fullUserData', username, 1, () => {
-			return this.loadingUserInfo.set(false);
-		});
+		return this.subscribe('fullUserData', username, 1, () => this.loadingUserInfo.set(false));
 	});
 
 	this.autorun(() => {
@@ -274,9 +272,9 @@ Template.userInfo.onCreated(function() {
 		let filter;
 		const data = Template.currentData();
 		if (data && data.username != null) {
-			filter = { username: data.username };
+			filter = {username: data.username};
 		} else if (data && data._id != null) {
-			filter = { _id: data._id };
+			filter = {_id: data._id};
 		}
 		const user = Meteor.users.findOne(filter);
 

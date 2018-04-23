@@ -33,7 +33,7 @@ export class GoogleStorageStore extends UploadFS.Store {
 			const params = {
 				action: 'read',
 				responseDisposition: 'inline',
-				expires: Date.now()+this.options.URLExpiryTimeSpan*1000
+				expires: Date.now() + this.options.URLExpiryTimeSpan * 1000,
 			};
 
 			this.bucket.file(this.getPath(file)).getSignedUrl(params, callback);
@@ -53,7 +53,7 @@ export class GoogleStorageStore extends UploadFS.Store {
 			}
 
 			file.GoogleStorage = {
-				path: this.options.getPath(file)
+				path: this.options.getPath(file),
 			};
 
 			file.store = this.options.name; // assign store to file
@@ -104,16 +104,16 @@ export class GoogleStorageStore extends UploadFS.Store {
 		 * @param options
 		 * @return {*}
 		 */
-		this.getWriteStream = function(fileId, file/*, options*/) {
+		this.getWriteStream = function(fileId, file/* , options*/) {
 			return this.bucket.file(this.getPath(file)).createWriteStream({
 				gzip: false,
 				metadata: {
 					contentType: file.type,
-					contentDisposition: `inline; filename=${ file.name }`
+					contentDisposition: `inline; filename=${ file.name }`,
 					// metadata: {
 					// 	custom: 'metadata'
 					// }
-				}
+				},
 			});
 		};
 	}

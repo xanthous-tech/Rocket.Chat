@@ -29,8 +29,8 @@ RocketChat.Notifications = new class {
 			const [roomId] = eventName.split('/');
 			const user = Meteor.users.findOne(this.userId, {
 				fields: {
-					username: 1
-				}
+					username: 1,
+				},
 			});
 			const room = RocketChat.models.Rooms.findOneById(roomId);
 			if (!room) {
@@ -134,8 +134,8 @@ RocketChat.Notifications.streamRoom.allowWrite(function(eventName, username, typ
 
 		const user = Meteor.users.findOne(this.userId, {
 			fields: {
-				username: 1
-			}
+				username: 1,
+			},
 		});
 		if (user != null && user.username === username) {
 			return true;

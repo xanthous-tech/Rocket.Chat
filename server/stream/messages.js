@@ -17,7 +17,7 @@ msgStream.allowRead(function(eventName, args) {
 
 		return true;
 	} catch (error) {
-		/*error*/
+		/* error*/
 		return false;
 	}
 });
@@ -37,7 +37,7 @@ msgStream.allowEmit('__my_messages__', function(eventName, msg, options) {
 
 		return true;
 	} catch (error) {
-		/*error*/
+		/* error*/
 		return false;
 	}
 });
@@ -63,7 +63,7 @@ Meteor.startup(function() {
 		}
 	}
 
-	return RocketChat.models.Messages._db.on('change', function({action, id, data/*, oplog*/}) {
+	return RocketChat.models.Messages._db.on('change', function({action, id, data/* , oplog*/}) {
 		switch (action) {
 			case 'insert':
 				data._id = id;
@@ -74,7 +74,7 @@ Meteor.startup(function() {
 				break;
 			case 'update:diff':
 				publishMessage('updated', RocketChat.models.Messages.findOne({
-					_id: id
+					_id: id,
 				}));
 				break;
 		}

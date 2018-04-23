@@ -34,7 +34,7 @@ class AutoTranslate {
 			const token = `<i class=notranslate>{${ count++ }}</i>`;
 			message.tokens.push({
 				token,
-				text: match
+				text: match,
 			});
 			return token;
 		});
@@ -52,13 +52,13 @@ class AutoTranslate {
 			const pretoken = `<i class=notranslate>{${ count++ }}</i>`;
 			message.tokens.push({
 				token: pretoken,
-				text: pre
+				text: pre,
 			});
 
 			const posttoken = `<i class=notranslate>{${ count++ }}</i>`;
 			message.tokens.push({
 				token: posttoken,
-				text: post
+				text: post,
 			});
 
 			return pretoken + text + posttoken;
@@ -69,13 +69,13 @@ class AutoTranslate {
 			const pretoken = `<i class=notranslate>{${ count++ }}</i>`;
 			message.tokens.push({
 				token: pretoken,
-				text: pre
+				text: pre,
 			});
 
 			const posttoken = `<i class=notranslate>{${ count++ }}</i>`;
 			message.tokens.push({
 				token: posttoken,
-				text: post
+				text: post,
 			});
 
 			return pretoken + text + posttoken;
@@ -109,12 +109,12 @@ class AutoTranslate {
 		let count = message.tokens.length;
 
 		if (message.mentions && message.mentions.length > 0) {
-			message.mentions.forEach(mention => {
-				message.msg = message.msg.replace(new RegExp(`(@${ mention.username })`, 'gm'), match => {
+			message.mentions.forEach((mention) => {
+				message.msg = message.msg.replace(new RegExp(`(@${ mention.username })`, 'gm'), (match) => {
 					const token = `<i class=notranslate>{${ count++ }}</i>`;
 					message.tokens.push({
 						token,
-						text: match
+						text: match,
 					});
 					return token;
 				});
@@ -122,12 +122,12 @@ class AutoTranslate {
 		}
 
 		if (message.channels && message.channels.length > 0) {
-			message.channels.forEach(channel => {
-				message.msg = message.msg.replace(new RegExp(`(#${ channel.name })`, 'gm'), match => {
+			message.channels.forEach((channel) => {
+				message.msg = message.msg.replace(new RegExp(`(#${ channel.name })`, 'gm'), (match) => {
 					const token = `<i class=notranslate>{${ count++ }}</i>`;
 					message.tokens.push({
 						token,
-						text: match
+						text: match,
 					});
 					return token;
 				});
@@ -150,7 +150,7 @@ class AutoTranslate {
 		if (this.enabled && this.apiKey) {
 			let targetLanguages;
 			if (targetLanguage) {
-				targetLanguages = [ targetLanguage ];
+				targetLanguages = [targetLanguage];
 			} else {
 				targetLanguages = RocketChat.models.Subscriptions.getAutoTranslateLanguagesByRoomAndNotUser(room._id, message.u && message.u._id);
 			}
@@ -167,20 +167,20 @@ class AutoTranslate {
 					const query = `q=${ msgs.join('&q=') }`;
 
 					const supportedLanguages = this.getSupportedLanguages('en');
-					targetLanguages.forEach(language => {
-						if (language.indexOf('-') !== -1 && !_.findWhere(supportedLanguages, { language })) {
+					targetLanguages.forEach((language) => {
+						if (language.indexOf('-') !== -1 && !_.findWhere(supportedLanguages, {language})) {
 							language = language.substr(0, 2);
 						}
 						let result;
 						try {
-							result = HTTP.get('https://translation.googleapis.com/language/translate/v2', { params: { key: this.apiKey, target: language }, query });
+							result = HTTP.get('https://translation.googleapis.com/language/translate/v2', {params: {key: this.apiKey, target: language}, query});
 						} catch (e) {
 							console.log('Error translating message', e);
 							return message;
 						}
 						if (result.statusCode === 200 && result.data && result.data.data && result.data.data.translations && Array.isArray(result.data.data.translations) && result.data.data.translations.length > 0) {
 							const txt = result.data.data.translations.map(translation => translation.translatedText).join('\n');
-							translations[language] = this.deTokenize(Object.assign({}, targetMessage, { msg: txt }));
+							translations[language] = this.deTokenize(Object.assign({}, targetMessage, {msg: txt}));
 						}
 					});
 					if (!_.isEmpty(translations)) {
@@ -198,11 +198,11 @@ class AutoTranslate {
 							if (attachment.description || attachment.text) {
 								const query = `q=${ encodeURIComponent(attachment.description || attachment.text) }`;
 								const supportedLanguages = this.getSupportedLanguages('en');
-								targetLanguages.forEach(language => {
-									if (language.indexOf('-') !== -1 && !_.findWhere(supportedLanguages, { language })) {
+								targetLanguages.forEach((language) => {
+									if (language.indexOf('-') !== -1 && !_.findWhere(supportedLanguages, {language})) {
 										language = language.substr(0, 2);
 									}
-									const result = HTTP.get('https://translation.googleapis.com/language/translate/v2', { params: { key: this.apiKey, target: language }, query });
+									const result = HTTP.get('https://translation.googleapis.com/language/translate/v2', {params: {key: this.apiKey, target: language}, query});
 									if (result.statusCode === 200 && result.data && result.data.data && result.data.data.translations && Array.isArray(result.data.data.translations) && result.data.data.translations.length > 0) {
 										const txt = result.data.data.translations.map(translation => translation.translatedText).join('\n');
 										translations[language] = txt;
@@ -227,19 +227,19 @@ class AutoTranslate {
 			}
 
 			let result;
-			const params = { key: this.apiKey };
+			const params = {key: this.apiKey};
 			if (target) {
 				params.target = target;
 			}
 
 			try {
-				result = HTTP.get('https://translation.googleapis.com/language/translate/v2/languages', { params });
+				result = HTTP.get('https://translation.googleapis.com/language/translate/v2/languages', {params});
 			} catch (e) {
 				if (e.response && e.response.statusCode === 400 && e.response.data && e.response.data.error && e.response.data.error.status === 'INVALID_ARGUMENT') {
 					params.target = 'en';
 					target = 'en';
 					if (!this.supportedLanguages[target]) {
-						result = HTTP.get('https://translation.googleapis.com/language/translate/v2/languages', { params });
+						result = HTTP.get('https://translation.googleapis.com/language/translate/v2/languages', {params});
 					}
 				}
 			} finally {

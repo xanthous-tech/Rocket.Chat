@@ -31,12 +31,12 @@ RocketChat.Migrations.add({
 		if (servers !== '') {
 			return RocketChat.models.Settings.upsert({_id: 'WebRTC_Servers'}, {
 				$set: {
-					value: servers
+					value: servers,
 				},
 				$setOnInsert: {
-					createdAt: new Date
-				}
+					createdAt: new Date,
+				},
 			});
 		}
-	}
+	},
 });

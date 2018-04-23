@@ -2,7 +2,7 @@
  * Tries to retrieve the user preference falling back to a default system
  * value or to a default value if it is passed as argument
 */
-RocketChat.getUserPreference = function(user, key, defaultValue=undefined) {
+RocketChat.getUserPreference = function(user, key, defaultValue = undefined) {
 	let preference;
 
 	if (user && user.settings && user.settings.preferences &&

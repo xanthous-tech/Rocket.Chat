@@ -7,7 +7,7 @@ Package.describe({
 	git: '',
 	// By default, Meteor will default to using README.md for documentation.
 	// To avoid submitting documentation, set this field to null.
-	documentation: 'README.md'
+	documentation: 'README.md',
 });
 
 Package.onUse(function(api) {
@@ -23,7 +23,7 @@ Package.onUse(function(api) {
 		'rocketchat:lib',
 		'rocketchat:ui-master',
 		'raix:push',
-		'raix:ui-dropped-event'
+		'raix:ui-dropped-event',
 	]);
 
 	api.use('kadira:flow-router', 'client');

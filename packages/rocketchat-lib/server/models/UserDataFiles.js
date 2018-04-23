@@ -4,7 +4,7 @@ RocketChat.models.UserDataFiles = new class ModelUserDataFiles extends RocketCha
 	constructor() {
 		super('user_data_files');
 
-		this.tryEnsureIndex({ 'userId': 1 });
+		this.tryEnsureIndex({userId: 1});
 	}
 
 	// FIND
@@ -15,17 +15,17 @@ RocketChat.models.UserDataFiles = new class ModelUserDataFiles extends RocketCha
 
 	findLastFileByUser(userId, options = {}) {
 		const query = {
-			userId
+			userId,
 		};
 
-		options.sort = {'_updatedAt' : -1};
+		options.sort = {_updatedAt : -1};
 		return this.findOne(query, options);
 	}
 
 	// INSERT
 	create(data) {
 		const userDataFile = {
-			createdAt: new Date
+			createdAt: new Date,
 		};
 
 		_.extend(userDataFile, data);

@@ -10,7 +10,7 @@ RocketChat.getFullUserData = function({userId, filter, limit}) {
 		utcOffset: 1,
 		type: 1,
 		active: 1,
-		reason: 1
+		reason: 1,
 	};
 
 	if (RocketChat.authz.hasPermission(userId, 'view-full-other-user-info')) {
@@ -24,7 +24,7 @@ RocketChat.getFullUserData = function({userId, filter, limit}) {
 			requirePasswordChange: 1,
 			requirePasswordChangeReason: 1,
 			roles: 1,
-			customFields: 1
+			customFields: 1,
 		});
 	} else if (limit !== 0) {
 		limit = 1;
@@ -39,7 +39,7 @@ RocketChat.getFullUserData = function({userId, filter, limit}) {
 	const options = {
 		fields,
 		limit,
-		sort: { username: 1 }
+		sort: {username: 1},
 	};
 
 	if (filter) {

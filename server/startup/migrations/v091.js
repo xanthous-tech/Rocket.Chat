@@ -3,15 +3,15 @@ RocketChat.Migrations.add({
 	up() {
 		const query = {
 			'services.linkedin': {
-				$exists: 1
+				$exists: 1,
 			},
 			$or: [{
 				name: {
-					$exists: 0
-				}
+					$exists: 0,
+				},
 			}, {
-				name: null
-			}]
+				name: null,
+			}],
 		};
 
 		RocketChat.models.Users.find(query, {'services.linkedin.firstName': 1, username: 1}).forEach((user) => {
@@ -19,5 +19,5 @@ RocketChat.Migrations.add({
 
 			RocketChat.models.Users.setName(user._id, name);
 		});
-	}
+	},
 });

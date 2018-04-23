@@ -12,5 +12,5 @@ RocketChat.Migrations.add({
 
 		RocketChat.models.Settings.remove({_id: 'FileUpload_GoogleStorage_Proxy'});
 		RocketChat.models.Settings.remove({_id: 'FileUpload_S3_Proxy'});
-	}
+	},
 });

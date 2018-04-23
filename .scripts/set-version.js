@@ -26,33 +26,29 @@ const files = [
 	'./.circleci/update-releases.sh',
 	'./.docker/Dockerfile',
 	'./.docker/Dockerfile.rhel',
-	'./packages/rocketchat-lib/rocketchat.info'
+	'./packages/rocketchat-lib/rocketchat.info',
 ];
-const readFile = (file) => {
-	return new Promise((resolve, reject) => {
-		fs.readFile(file, 'utf8', (error, result) => {
-			if (error) {
-				return reject(error);
-			}
-			resolve(result);
-		});
+const readFile = file => new Promise((resolve, reject) => {
+	fs.readFile(file, 'utf8', (error, result) => {
+		if (error) {
+			return reject(error);
+		}
+		resolve(result);
 	});
-};
-const writeFile = (file, data) => {
-	return new Promise((resolve, reject) => {
-		fs.writeFile(file, data, 'utf8', (error, result) => {
-			if (error) {
-				return reject(error);
-			}
-			resolve(result);
-		});
+});
+const writeFile = (file, data) => new Promise((resolve, reject) => {
+	fs.writeFile(file, data, 'utf8', (error, result) => {
+		if (error) {
+			return reject(error);
+		}
+		resolve(result);
 	});
-};
+});
 
 let selectedVersion;
 
 git.status()
-	.then(status => {
+	.then((status) => {
 		if (status.current === 'release-candidate') {
 			return semver.inc(pkgJson.version, 'prerelease', 'rc');
 		}
@@ -70,26 +66,22 @@ git.status()
 		name: 'version',
 		choices: [
 			nextVersion,
-			'custom'
-		]
+			'custom',
+		],
 	}]))
-	.then(answers => {
+	.then((answers) => {
 		if (answers.version === 'custom') {
 			return inquirer.prompt([{
 				name: 'version',
-				message: 'Enter your custom version:'
+				message: 'Enter your custom version:',
 			}]);
 		}
 		return answers;
 	})
-	.then(({ version }) => {
+	.then(({version}) => {
 		selectedVersion = version;
-		return Promise.all(files.map(file => {
-			return readFile(file)
-				.then(data => {
-					return writeFile(file, data.replace(pkgJson.version, version));
-				});
-		}));
+		return Promise.all(files.map(file => readFile(file)
+			.then(data => writeFile(file, data.replace(pkgJson.version, version)))));
 	})
 	.then(() => {
 		execSync('conventional-changelog --config .github/changelog.js -i HISTORY.md -s');
@@ -97,10 +89,10 @@ git.status()
 		return inquirer.prompt([{
 			type: 'confirm',
 			message: 'Commit files?',
-			name: 'commit'
+			name: 'commit',
 		}]);
 	})
-	.then(answers => {
+	.then((answers) => {
 		if (!answers.commit) {
 			return Promise.reject(answers);
 		}
@@ -111,14 +103,14 @@ git.status()
 		type: 'checkbox',
 		message: 'Select files to commit?',
 		name: 'files',
-		choices: status.files.map(file => { return {name: `${ file.working_dir } ${ file.path }`, checked: true}; })
+		choices: status.files.map(file => ({name: `${ file.working_dir } ${ file.path }`, checked: true})),
 	}]))
 	.then(answers => answers.files.length && git.add(answers.files.map(file => file.slice(2))))
 	.then(() => git.commit(`Bump version to ${ selectedVersion }`))
 	.then(() => inquirer.prompt([{
 		type: 'confirm',
 		message: `Add tag ${ selectedVersion }?`,
-		name: 'tag'
+		name: 'tag',
 	}]))
 	.then(answers => answers.tag && git.addTag(selectedVersion))
 	.catch((error) => {

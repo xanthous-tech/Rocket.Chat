@@ -10,7 +10,7 @@ Template.integrationsOutgoing.onCreated(function _integrationsOutgoingOnCreated(
 		retryFailedCalls: true,
 		retryCount: 6,
 		retryDelay: 'powers-of-ten',
-		runOnEdits: true
+		runOnEdits: true,
 	});
 
 	this.updateRecord = () => {
@@ -21,7 +21,7 @@ Template.integrationsOutgoing.onCreated(function _integrationsOutgoingOnCreated(
 			alias: $('[name=alias]').val().trim(),
 			emoji: $('[name=emoji]').val().trim(),
 			avatar: $('[name=avatar]').val().trim(),
-			channel: $('[name=channel]').val()? $('[name=channel]').val().trim() : undefined,
+			channel: $('[name=channel]').val() ? $('[name=channel]').val().trim() : undefined,
 			username: $('[name=username]').val().trim(),
 			triggerWords: $('[name=triggerWords]').val() ? $('[name=triggerWords]').val().trim() : undefined,
 			urls: $('[name=urls]').val().trim(),
@@ -33,7 +33,7 @@ Template.integrationsOutgoing.onCreated(function _integrationsOutgoingOnCreated(
 			retryFailedCalls: $('[name=retryFailedCalls]:checked').val().trim() === '1',
 			retryCount: $('[name=retryCount]').val() ? $('[name=retryCount]').val().trim() : 6,
 			retryDelay: $('[name=retryDelay]').val() ? $('[name=retryDelay]').val().trim() : 'powers-of-ten',
-			runOnEdits: $('[name=runOnEdits]:checked').val().trim() === '1'
+			runOnEdits: $('[name=runOnEdits]:checked').val().trim() === '1',
 		});
 	};
 
@@ -46,9 +46,9 @@ Template.integrationsOutgoing.onCreated(function _integrationsOutgoingOnCreated(
 				let intRecord;
 
 				if (RocketChat.authz.hasAllPermission('manage-integrations')) {
-					intRecord = ChatIntegrations.findOne({ _id: id });
+					intRecord = ChatIntegrations.findOne({_id: id});
 				} else if (RocketChat.authz.hasAllPermission('manage-own-integrations')) {
-					intRecord = ChatIntegrations.findOne({ _id: id, '_createdBy._id': Meteor.userId() });
+					intRecord = ChatIntegrations.findOne({_id: id, '_createdBy._id': Meteor.userId()});
 				}
 
 				if (intRecord) {
@@ -125,7 +125,7 @@ Template.integrationsOutgoing.helpers({
 			avatar: record.avatar,
 			msg: 'Response text',
 			bot: {
-				i: Random.id()
+				i: Random.id(),
 			},
 			groupable: false,
 			attachments: [{
@@ -133,13 +133,13 @@ Template.integrationsOutgoing.helpers({
 				title_link: 'https://rocket.chat',
 				text: 'Rocket.Chat, the best open source chat',
 				image_url: 'https://rocket.chat/images/mockup.png',
-				color: '#764FA5'
+				color: '#764FA5',
 			}],
 			ts: new Date(),
 			u: {
 				_id: Random.id(),
-				username: record.username
-			}
+				username: record.username,
+			},
 		};
 	},
 
@@ -155,8 +155,8 @@ Template.integrationsOutgoing.helpers({
 				title_link: 'https://rocket.chat',
 				text: 'Rocket.Chat, the best open source chat',
 				image_url: 'https://rocket.chat/images/mockup.png',
-				color: '#764FA5'
-			}]
+				color: '#764FA5',
+			}],
 		};
 
 		const invalidData = [null, ''];
@@ -176,7 +176,7 @@ Template.integrationsOutgoing.helpers({
 			gutters: [
 				// "CodeMirror-lint-markers",
 				'CodeMirror-linenumbers',
-				'CodeMirror-foldgutter'
+				'CodeMirror-foldgutter',
 			],
 			// lint: true,
 			foldGutter: true,
@@ -185,9 +185,9 @@ Template.integrationsOutgoing.helpers({
 			autoCloseBrackets: true,
 			matchTags: true,
 			showTrailingSpace: true,
-			highlightSelectionMatches: true
+			highlightSelectionMatches: true,
 		};
-	}
+	},
 });
 
 Template.integrationsOutgoing.events({
@@ -233,7 +233,7 @@ Template.integrationsOutgoing.events({
 			confirmButtonText: t('Yes_delete_it'),
 			cancelButtonText: t('Cancel'),
 			closeOnConfirm: false,
-			html: false
+			html: false,
 		}, () => {
 			Meteor.call('deleteOutgoingIntegration', params.id, (err) => {
 				if (err) {
@@ -244,7 +244,7 @@ Template.integrationsOutgoing.events({
 						text: t('Your_entry_has_been_deleted'),
 						type: 'success',
 						timer: 1000,
-						showConfirmButton: false
+						showConfirmButton: false,
 					});
 
 					FlowRouter.go('admin-integrations');
@@ -282,7 +282,7 @@ Template.integrationsOutgoing.events({
 			return toastr.error(TAPi18n.__('The_username_is_required'));
 		}
 
-		urls = urls.split('\n').filter((url) => url.trim() !== '');
+		urls = urls.split('\n').filter(url => url.trim() !== '');
 		if (urls.length === 0) {
 			return toastr.error(TAPi18n.__('You_should_inform_one_url_at_least'));
 		}
@@ -292,7 +292,7 @@ Template.integrationsOutgoing.events({
 		let runOnEdits;
 		if (RocketChat.integrations.outgoingEvents[event].use.triggerWords) {
 			triggerWords = $('[name=triggerWords]').val().trim();
-			triggerWords = triggerWords.split(',').filter((word) => word.trim() !== '');
+			triggerWords = triggerWords.split(',').filter(word => word.trim() !== '');
 
 			triggerWordAnywhere = $('[name=triggerWordAnywhere]:checked').val().trim();
 			runOnEdits = $('[name=runOnEdits]:checked').val().trim();
@@ -303,7 +303,7 @@ Template.integrationsOutgoing.events({
 			channel = $('[name=channel]').val().trim();
 
 			if (!channel || channel.trim() === '') {
-				return toastr.error(TAPi18n.__('error-the-field-is-required', { field: TAPi18n.__('Channel') }));
+				return toastr.error(TAPi18n.__('error-the-field-is-required', {field: TAPi18n.__('Channel')}));
 			}
 		}
 
@@ -312,7 +312,7 @@ Template.integrationsOutgoing.events({
 			targetRoom = $('[name=targetRoom]').val().trim();
 
 			if (!targetRoom || targetRoom.trim() === '') {
-				return toastr.error(TAPi18n.__('error-the-field-is-required', { field: TAPi18n.__('TargetRoom') }));
+				return toastr.error(TAPi18n.__('error-the-field-is-required', {field: TAPi18n.__('TargetRoom')}));
 			}
 		}
 
@@ -343,10 +343,10 @@ Template.integrationsOutgoing.events({
 			retryCount: retryCount ? retryCount : 6,
 			retryDelay: retryDelay ? retryDelay : 'powers-of-ten',
 			triggerWordAnywhere: triggerWordAnywhere === '1',
-			runOnEdits: runOnEdits === '1'
+			runOnEdits: runOnEdits === '1',
 		};
 
-		const params = Template.instance().data.params? Template.instance().data.params() : undefined;
+		const params = Template.instance().data.params ? Template.instance().data.params() : undefined;
 		if (params && params.id) {
 			Meteor.call('updateOutgoingIntegration', params.id, integration, (err) => {
 				if (err) {
@@ -362,8 +362,8 @@ Template.integrationsOutgoing.events({
 				}
 
 				toastr.success(TAPi18n.__('Integration_added'));
-				FlowRouter.go('admin-integrations-outgoing', { id: data._id });
+				FlowRouter.go('admin-integrations-outgoing', {id: data._id});
 			});
 		}
-	}
+	},
 });

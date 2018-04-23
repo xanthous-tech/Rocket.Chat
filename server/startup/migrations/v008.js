@@ -3,7 +3,7 @@ RocketChat.Migrations.add({
 	up() {
 		console.log('Load old settings record');
 		const settings = RocketChat.models.Settings.findOne({
-			_id: 'settings'
+			_id: 'settings',
 		});
 
 		if (settings) {
@@ -28,8 +28,8 @@ RocketChat.Migrations.add({
 			}
 
 			return RocketChat.models.Settings.remove({
-				_id: 'settings'
+				_id: 'settings',
 			});
 		}
-	}
+	},
 });

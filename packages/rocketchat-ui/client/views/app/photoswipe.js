@@ -2,7 +2,7 @@ import PhotoSwipe from 'photoswipe';
 import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default';
 import 'photoswipe/dist/photoswipe.css';
 
-const escapeHTML = (html) => (html || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const escapeHTML = html => (html || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 Meteor.startup(() => {
 	const initGallery = (selector, items, options) => {
 		const gallery = new PhotoSwipe(selector, PhotoSwipeUI_Default, items, options);
@@ -11,7 +11,7 @@ Meteor.startup(() => {
 	const getItems = (selector, imageSrc) => {
 		const results = {
 			index: 0,
-			items: []
+			items: [],
 		};
 
 		for (let i = 0, len = selector.length; i < len; i++) {
@@ -20,7 +20,7 @@ Meteor.startup(() => {
 				w: selector[i].naturalWidth,
 				h: selector[i].naturalHeight,
 				title: selector[i].dataset.title,
-				description: selector[i].dataset.description
+				description: selector[i].dataset.description,
 			});
 
 			if (imageSrc === selector[i].src) {
@@ -36,7 +36,7 @@ Meteor.startup(() => {
 		bgOpacity: 0.8,
 		showHideOpacity: true,
 		counterEl: false,
-		shareEl: false
+		shareEl: false,
 	};
 
 	$(document).on('click', '.gallery-item', function() {
@@ -61,7 +61,7 @@ Meteor.startup(() => {
 			const item = [{
 				src: this.src,
 				w: this.naturalWidth,
-				h: this.naturalHeight
+				h: this.naturalHeight,
 			}];
 
 			initGallery(document.getElementById('pswp'), item, galleryOptions);

@@ -16,9 +16,9 @@ wait.launchFiber(function() {
 	const db = wait.forMethod(MongoClient, 'connect', `mongodb://${ program.mongoDb }/${ program.dbName }`, {
 		replSet: {
 			socketOptions: {
-				connectTimeoutMS: 300000
-			}
-		}
+				connectTimeoutMS: 300000,
+			},
+		},
 	});
 
 	const User = db.collection('users');
@@ -29,11 +29,11 @@ wait.launchFiber(function() {
 		}
 		return wait.launchFiber(function() {
 			wait.forMethod(User, 'update', {
-				'emails.address': row[0]
+				'emails.address': row[0],
 			}, {
 				$set: {
-					'mailer.unsubscribed': true
-				}
+					'mailer.unsubscribed': true,
+				},
 			});
 
 			if (last) {

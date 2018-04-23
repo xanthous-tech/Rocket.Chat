@@ -6,13 +6,13 @@ Meteor.methods({
 
 		ChatSubscription.remove({
 			rid,
-			'u._id': Meteor.userId()
+			'u._id': Meteor.userId(),
 		});
 
 		ChatRoom.update(rid, {
 			$pull: {
-				usernames: Meteor.user().username
-			}
+				usernames: Meteor.user().username,
+			},
 		});
-	}
+	},
 });

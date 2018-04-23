@@ -49,11 +49,11 @@ class ModelsBase {
 			},
 			forEach(fn) {
 				return data.forEach(fn);
-			}
+			},
 		};
 	}
 
-	setUpdatedAt(/*record, checkQuery, query*/) {
+	setUpdatedAt(/* record, checkQuery, query*/) {
 		return this._db.setUpdatedAt(...arguments);
 	}
 
@@ -91,19 +91,19 @@ class ModelsBase {
 		}
 	}
 
-	insert(/*record*/) {
+	insert(/* record*/) {
 		return this._db.insert(...arguments);
 	}
 
-	update(/*query, update, options*/) {
+	update(/* query, update, options*/) {
 		return this._db.update(...arguments);
 	}
 
-	upsert(/*query, update*/) {
+	upsert(/* query, update*/) {
 		return this._db.upsert(...arguments);
 	}
 
-	remove(/*query*/) {
+	remove(/* query*/) {
 		return this._db.remove(...arguments);
 	}
 
@@ -135,11 +135,11 @@ class ModelsBase {
 		return this._db.tryDropIndex(...arguments);
 	}
 
-	trashFind(/*query, options*/) {
+	trashFind(/* query, options*/) {
 		return this._db.trashFind(...arguments);
 	}
 
-	trashFindDeletedAfter(/*deletedAt, query, options*/) {
+	trashFindDeletedAfter(/* deletedAt, query, options*/) {
 		return this._db.trashFindDeletedAfter(...arguments);
 	}
 

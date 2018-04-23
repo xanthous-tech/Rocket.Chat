@@ -19,35 +19,35 @@ class ChatpalProvider extends SearchProvider {
 		this._settings.add('Backend', 'select', 'cloud', {
 			values:[
 				{key: 'cloud', i18nLabel: 'Cloud Service'},
-				{key: 'onsite', i18nLabel: 'On-Site'}
+				{key: 'onsite', i18nLabel: 'On-Site'},
 			],
 			i18nLabel: 'Chatpal_Backend',
-			i18nDescription: 'Chatpal_Backend_Description'
+			i18nDescription: 'Chatpal_Backend_Description',
 		});
 		this._settings.add('API_Key', 'string', '', {
 			enableQuery:[{
 				_id: 'Search.chatpalProvider.Backend',
-				value: 'cloud'
+				value: 'cloud',
 			}],
 			i18nLabel: 'Chatpal_API_Key',
-			i18nDescription: 'Chatpal_API_Key_Description'
+			i18nDescription: 'Chatpal_API_Key_Description',
 		});
 		this._settings.add('Base_URL', 'string', '', {
 			enableQuery:[{
 				_id: 'Search.chatpalProvider.Backend',
-				value: 'onsite'
+				value: 'onsite',
 			}],
 			i18nLabel: 'Chatpal_Base_URL',
-			i18nDescription: 'Chatpal_Base_URL_Description'
+			i18nDescription: 'Chatpal_Base_URL_Description',
 		});
 		this._settings.add('HTTP_Headers', 'string', '', {
 			enableQuery:[{
 				_id: 'Search.chatpalProvider.Backend',
-				value: 'onsite'
+				value: 'onsite',
 			}],
 			multiline: true,
 			i18nLabel: 'Chatpal_HTTP_Headers',
-			i18nDescription: 'Chatpal_HTTP_Headers_Description'
+			i18nDescription: 'Chatpal_HTTP_Headers_Description',
 		});
 		this._settings.add('Main_Language', 'select', 'en', {
 			values: [
@@ -69,37 +69,37 @@ class ChatpalProvider extends SearchProvider {
 				{key: 'ru', i18nLabel: 'Russian'},
 				{key: 'sv', i18nLabel: 'Swedisch'},
 				{key: 'tr', i18nLabel: 'Turkish'},
-				{key: 'uk', i18nLabel: 'Ukrainian'}
+				{key: 'uk', i18nLabel: 'Ukrainian'},
 			],
 			i18nLabel: 'Chatpal_Main_Language',
-			i18nDescription: 'Chatpal_Main_Language_Description'
+			i18nDescription: 'Chatpal_Main_Language_Description',
 		});
 		this._settings.add('DefaultResultType', 'select', 'All', {
 			values: [
 				{key: 'All', i18nLabel: 'All'},
-				{key: 'Messages', i18nLabel: 'Messages'}
+				{key: 'Messages', i18nLabel: 'Messages'},
 			],
 			i18nLabel: 'Chatpal_Default_Result_Type',
-			i18nDescription: 'Chatpal_Default_Result_Type_Description'
+			i18nDescription: 'Chatpal_Default_Result_Type_Description',
 		});
 		this._settings.add('PageSize', 'int', 15, {
-			i18nLabel: 'Search_Page_Size'
+			i18nLabel: 'Search_Page_Size',
 		});
 		this._settings.add('SuggestionEnabled', 'boolean', true, {
 			i18nLabel: 'Chatpal_Suggestion_Enabled',
-			alert: 'This feature is currently in beta and will be extended in the future'
+			alert: 'This feature is currently in beta and will be extended in the future',
 		});
 		this._settings.add('BatchSize', 'int', 100, {
 			i18nLabel: 'Chatpal_Batch_Size',
-			i18nDescription: 'Chatpal_Batch_Size_Description'
+			i18nDescription: 'Chatpal_Batch_Size_Description',
 		});
 		this._settings.add('TimeoutSize', 'int', 5000, {
 			i18nLabel: 'Chatpal_Timeout_Size',
-			i18nDescription: 'Chatpal_Timeout_Size_Description'
+			i18nDescription: 'Chatpal_Timeout_Size_Description',
 		});
 		this._settings.add('WindowSize', 'int', 48, {
 			i18nLabel: 'Chatpal_Window_Size',
-			i18nDescription: 'Chatpal_Window_Size_Description'
+			i18nDescription: 'Chatpal_Window_Size_Description',
 		});
 	}
 
@@ -203,7 +203,7 @@ class ChatpalProvider extends SearchProvider {
 			ChatpalLogger.warn(`ping failed, retry in ${ timeout } ms`);
 
 			this._pingTimeout = Meteor.setTimeout(() => {
-				this._ping(config, resolve, reject, Math.min(maxTimeout, 2*timeout));
+				this._ping(config, resolve, reject, Math.min(maxTimeout, 2 * timeout));
 			}, timeout);
 		}
 
@@ -218,7 +218,7 @@ class ChatpalProvider extends SearchProvider {
 
 		return new Promise((resolve, reject) => {
 			const config = {
-				backendtype: this._settings.get('Backend')
+				backendtype: this._settings.get('Backend'),
 			};
 
 			if (this._settings.get('Backend') === 'cloud') {
@@ -231,8 +231,8 @@ class ChatpalProvider extends SearchProvider {
 				config.suggestionpath = '/search/suggest';
 				config.httpOptions = {
 					headers: {
-						'X-Api-Key': this._settings.get('API_Key')
-					}
+						'X-Api-Key': this._settings.get('API_Key'),
+					},
 				};
 			} else {
 				config.baseurl = this._settings.get('Base_URL').endsWith('/') ? this._settings.get('Base_URL').slice(0, -1) : this._settings.get('Base_URL');
@@ -243,7 +243,7 @@ class ChatpalProvider extends SearchProvider {
 				config.clearpath = '/chatpal/clear';
 				config.suggestionpath = '/chatpal/suggest';
 				config.httpOptions = {
-					headers: this._parseHeaders()
+					headers: this._parseHeaders(),
 				};
 			}
 

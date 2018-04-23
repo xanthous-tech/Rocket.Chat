@@ -4,7 +4,7 @@ Meteor.methods({
 
 		if (!Meteor.userId()) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
-				method: 'createDirectMessage'
+				method: 'createDirectMessage',
 			});
 		}
 
@@ -12,19 +12,19 @@ Meteor.methods({
 
 		if (!me.username) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
-				method: 'createDirectMessage'
+				method: 'createDirectMessage',
 			});
 		}
 
 		if (RocketChat.settings.get('Message_AllowDirectMessagesToYourself') === false && me.username === username) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
-				method: 'createDirectMessage'
+				method: 'createDirectMessage',
 			});
 		}
 
 		if (!RocketChat.authz.hasPermission(Meteor.userId(), 'create-d')) {
 			throw new Meteor.Error('error-not-allowed', 'Not allowed', {
-				method: 'createDirectMessage'
+				method: 'createDirectMessage',
 			});
 		}
 
@@ -32,7 +32,7 @@ Meteor.methods({
 
 		if (!to) {
 			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
-				method: 'createDirectMessage'
+				method: 'createDirectMessage',
 			});
 		}
 
@@ -42,16 +42,16 @@ Meteor.methods({
 
 		// Make sure we have a room
 		RocketChat.models.Rooms.upsert({
-			_id: rid
+			_id: rid,
 		}, {
 			$set: {
-				usernames: [me.username, to.username]
+				usernames: [me.username, to.username],
 			},
 			$setOnInsert: {
 				t: 'd',
 				msgs: 0,
-				ts: now
-			}
+				ts: now,
+			},
 		});
 
 		// Make user I have a subcription to this room
@@ -59,7 +59,7 @@ Meteor.methods({
 			$set: {
 				ts: now,
 				ls: now,
-				open: true
+				open: true,
 			},
 			$setOnInsert: {
 				name: to.username,
@@ -71,9 +71,9 @@ Meteor.methods({
 				customFields: me.customFields,
 				u: {
 					_id: me._id,
-					username: me.username
-				}
-			}
+					username: me.username,
+				},
+			},
 		};
 
 		if (to.active === false) {
@@ -82,12 +82,12 @@ Meteor.methods({
 
 		RocketChat.models.Subscriptions.upsert({
 			rid,
-			$and: [{'u._id': me._id}] // work around to solve problems with upsert and dot
+			$and: [{'u._id': me._id}], // work around to solve problems with upsert and dot
 		}, upsertSubscription);
 
 		RocketChat.models.Subscriptions.upsert({
 			rid,
-			$and: [{'u._id': to._id}] // work around to solve problems with upsert and dot
+			$and: [{'u._id': to._id}], // work around to solve problems with upsert and dot
 		}, {
 			$setOnInsert: {
 				name: me.username,
@@ -100,19 +100,19 @@ Meteor.methods({
 				customFields: to.customFields,
 				u: {
 					_id: to._id,
-					username: to.username
-				}
-			}
+					username: to.username,
+				},
+			},
 		});
 
 		return {
-			rid
+			rid,
 		};
-	}
+	},
 });
 
 RocketChat.RateLimiter.limitMethod('createDirectMessage', 10, 60000, {
 	userId(userId) {
 		return !RocketChat.authz.hasPermission(userId, 'send-many-messages');
-	}
+	},
 });

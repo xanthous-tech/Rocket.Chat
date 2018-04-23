@@ -49,13 +49,13 @@ export const VRecDialog = new class {
 			if (right < 0) {
 				right = 10;
 			}
-			return dialog.css({ top: `${ top }px`, right: `${ right }px` });
+			return dialog.css({top: `${ top }px`, right: `${ right }px`});
 		} else {
 			let left = (sourcePos.left - this.width) + 100;
 			if (left < 0) {
 				left = 10;
 			}
-			return dialog.css({ top: `${ top }px`, left: `${ left }px` });
+			return dialog.css({top: `${ top }px`, left: `${ left }px`});
 		}
 
 	}

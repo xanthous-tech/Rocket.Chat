@@ -3,12 +3,12 @@ Template.livechat.helpers({
 	isActive() {
 		const query = {
 			t: 'l',
-			f: { $ne: true },
+			f: {$ne: true},
 			open: true,
-			rid: Session.get('openedRoom')
+			rid: Session.get('openedRoom'),
 		};
 
-		const options = { fields: { _id: 1 } };
+		const options = {fields: {_id: 1}};
 
 		if (ChatSubscription.findOne(query, options)) {
 			return 'active';
@@ -18,20 +18,20 @@ Template.livechat.helpers({
 	rooms() {
 		const query = {
 			t: 'l',
-			open: true
+			open: true,
 		};
 
 		const user = RocketChat.models.Users.findOne(Meteor.userId(), {
-			fields: { 'settings.preferences.roomsListExhibitionMode': 1 }
+			fields: {'settings.preferences.roomsListExhibitionMode': 1},
 		});
 
 		if (RocketChat.getUserPreference(user, 'roomsListExhibitionMode') === 'unread') {
-			query.alert = { $ne: true };
+			query.alert = {$ne: true};
 		}
 
-		return ChatSubscription.find(query, { sort: {
-			't': 1,
-			'name': 1
+		return ChatSubscription.find(query, {sort: {
+			t: 1,
+			name: 1,
 		}});
 	},
 
@@ -39,11 +39,11 @@ Template.livechat.helpers({
 		// get all inquiries of the department
 		const inqs = LivechatInquiry.find({
 			agents: Meteor.userId(),
-			status: 'open'
+			status: 'open',
 		}, {
 			sort: {
-				'ts' : 1
-			}
+				ts : 1,
+			},
 		});
 
 		// for notification sound
@@ -64,7 +64,7 @@ Template.livechat.helpers({
 		return {
 			status: statusLivechat === 'available' ? 'status-online' : '',
 			icon: statusLivechat === 'available' ? 'icon-toggle-on' : 'icon-toggle-off',
-			hint: statusLivechat === 'available' ? t('Available') : t('Not_Available')
+			hint: statusLivechat === 'available' ? t('Available') : t('Not_Available'),
 		};
 	},
 
@@ -84,12 +84,12 @@ Template.livechat.helpers({
 		if (FlowRouter.current().route.name === 'livechat-queue') {
 			return 'active';
 		}
-	}
+	},
 });
 
 Template.livechat.events({
 	'click .livechat-status'() {
-		Meteor.call('livechat:changeLivechatStatus', (err /*, results*/) => {
+		Meteor.call('livechat:changeLivechatStatus', (err /* , results*/) => {
 			if (err) {
 				return handleError(err);
 			}
@@ -106,7 +106,7 @@ Template.livechat.events({
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: t('Take_it')
+			confirmButtonText: t('Take_it'),
 		}, (isConfirm) => {
 			if (isConfirm) {
 				Meteor.call('livechat:takeInquiry', this._id, (error, result) => {
@@ -116,7 +116,7 @@ Template.livechat.events({
 				});
 			}
 		});
-	}
+	},
 });
 
 Template.livechat.onCreated(function() {
@@ -124,7 +124,7 @@ Template.livechat.onCreated(function() {
 
 	this.autorun(() => {
 		if (Meteor.userId()) {
-			const user = RocketChat.models.Users.findOne(Meteor.userId(), { fields: { statusLivechat: 1 } });
+			const user = RocketChat.models.Users.findOne(Meteor.userId(), {fields: {statusLivechat: 1}});
 			this.statusLivechat.set(user.statusLivechat);
 		} else {
 			this.statusLivechat.set();

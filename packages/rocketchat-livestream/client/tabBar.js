@@ -7,7 +7,7 @@ Meteor.startup(function() {
 				i18nTitle: 'Livestream',
 				icon: 'podcast',
 				template: 'liveStreamTab',
-				order: 3
+				order: 3,
 			});
 		} else {
 			RocketChat.TabBar.removeButton('livestream');

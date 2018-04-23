@@ -20,8 +20,8 @@ function fallbackDefaultAccountSystem(bind, username, password) {
 		user: username,
 		password: {
 			digest: SHA256(password),
-			algorithm: 'sha-256'
-		}
+			algorithm: 'sha-256',
+		},
 	};
 
 	return Accounts._runLoginHandlers(bind, loginRequest);
@@ -80,7 +80,7 @@ Accounts.registerLoginHandler('ldap', function(loginRequest) {
 
 	if (Unique_Identifier_Field) {
 		userQuery = {
-			'services.ldap.id': Unique_Identifier_Field.value
+			'services.ldap.id': Unique_Identifier_Field.value,
 		};
 
 		logger.info('Querying user');
@@ -99,7 +99,7 @@ Accounts.registerLoginHandler('ldap', function(loginRequest) {
 
 	if (!user) {
 		userQuery = {
-			username
+			username,
 		};
 
 		logger.debug('userQuery', userQuery);
@@ -120,8 +120,8 @@ Accounts.registerLoginHandler('ldap', function(loginRequest) {
 
 		Meteor.users.update(user._id, {
 			$push: {
-				'services.resume.loginTokens': Accounts._hashStampedToken(stampedToken)
-			}
+				'services.resume.loginTokens': Accounts._hashStampedToken(stampedToken),
+			},
 		});
 
 		syncUserData(user, ldapUser);
@@ -132,7 +132,7 @@ Accounts.registerLoginHandler('ldap', function(loginRequest) {
 
 		return {
 			userId: user._id,
-			token: stampedToken.token
+			token: stampedToken.token,
 		};
 	}
 

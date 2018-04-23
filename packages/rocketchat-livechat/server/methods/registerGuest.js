@@ -1,17 +1,17 @@
 Meteor.methods({
-	'livechat:registerGuest'({ token, name, email, department } = {}) {
+	'livechat:registerGuest'({token, name, email, department} = {}) {
 		const userId = RocketChat.Livechat.registerGuest.call(this, {
 			token,
 			name,
 			email,
-			department
+			department,
 		});
 
 		// update visited page history to not expire
 		RocketChat.models.LivechatPageVisited.keepHistoryForToken(token);
 
 		return {
-			userId
+			userId,
 		};
-	}
+	},
 });

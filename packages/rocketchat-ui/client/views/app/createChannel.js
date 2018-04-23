@@ -22,7 +22,7 @@ const acEvents = {
 	},
 	'blur [name="users"]'(e, t) {
 		t.ac.onBlur(e);
-	}
+	},
 };
 
 const validateChannelName = (name) => {
@@ -47,7 +47,7 @@ Template.createChannel.helpers({
 	autocomplete(key) {
 		const instance = Template.instance();
 		const param = instance.ac[key];
-		return typeof param === 'function' ? param.apply(instance.ac): param;
+		return typeof param === 'function' ? param.apply(instance.ac) : param;
 	},
 	items() {
 		return Template.instance().ac.filteredList();
@@ -62,7 +62,7 @@ Template.createChannel.helpers({
 				return `@${ f.length === 0 ? text : text.replace(new RegExp(filter.get()), function(part) {
 					return `<strong>${ part }</strong>`;
 				}) }`;
-			}
+			},
 		};
 	},
 	selectedUsers() {
@@ -121,29 +121,25 @@ Template.createChannel.helpers({
 		return {
 			validations : instance.extensions_validations,
 			submits: instance.extensions_submits,
-			change: instance.change
+			change: instance.change,
 		};
 	},
 	roomTypesBeforeStandard() {
-		const orderLow = RocketChat.roomTypes.roomTypesOrder.filter((roomTypeOrder) => roomTypeOrder.identifier === 'c')[0].order;
+		const orderLow = RocketChat.roomTypes.roomTypesOrder.filter(roomTypeOrder => roomTypeOrder.identifier === 'c')[0].order;
 		return RocketChat.roomTypes.roomTypesOrder.filter(
-			(roomTypeOrder) => roomTypeOrder.order < orderLow
+			roomTypeOrder => roomTypeOrder.order < orderLow
 		).map(
-			(roomTypeOrder) => {
-				return RocketChat.roomTypes.roomTypes[roomTypeOrder.identifier];
-			}
-		).filter((roomType) => roomType.creationTemplate);
+			roomTypeOrder => RocketChat.roomTypes.roomTypes[roomTypeOrder.identifier]
+		).filter(roomType => roomType.creationTemplate);
 	},
 	roomTypesAfterStandard() {
-		const orderHigh = RocketChat.roomTypes.roomTypesOrder.filter((roomTypeOrder) => roomTypeOrder.identifier === 'd')[0].order;
+		const orderHigh = RocketChat.roomTypes.roomTypesOrder.filter(roomTypeOrder => roomTypeOrder.identifier === 'd')[0].order;
 		return RocketChat.roomTypes.roomTypesOrder.filter(
-			(roomTypeOrder) => roomTypeOrder.order > orderHigh
+			roomTypeOrder => roomTypeOrder.order > orderHigh
 		).map(
-			(roomTypeOrder) => {
-				return RocketChat.roomTypes.roomTypes[roomTypeOrder.identifier];
-			}
-		).filter((roomType) => roomType.creationTemplate);
-	}
+			roomTypeOrder => RocketChat.roomTypes.roomTypes[roomTypeOrder.identifier]
+		).filter(roomType => roomType.creationTemplate);
+	},
 });
 
 Template.createChannel.events({
@@ -209,9 +205,7 @@ Template.createChannel.events({
 		}
 
 		const extraData = Object.keys(instance.extensions_submits)
-			.reduce((result, key) => {
-				return { ...result, ...instance.extensions_submits[key](instance) };
-			}, {broadcast});
+			.reduce((result, key) => ({...result, ...instance.extensions_submits[key](instance)}), {broadcast});
 
 		Meteor.call(isPrivate ? 'createPrivateGroup' : 'createChannel', name, instance.selectedUsers.get().map(user => user.username), readOnly, {}, extraData, function(err, result) {
 			if (err) {
@@ -225,13 +219,13 @@ Template.createChannel.events({
 			}
 
 			if (!isPrivate) {
-				RocketChat.callbacks.run('aftercreateCombined', { _id: result.rid, name: result.name });
+				RocketChat.callbacks.run('aftercreateCombined', {_id: result.rid, name: result.name});
 			}
 
-			return FlowRouter.go(isPrivate ? 'group' : 'channel', { name: result.name }, FlowRouter.current().queryParams);
+			return FlowRouter.go(isPrivate ? 'group' : 'channel', {name: result.name}, FlowRouter.current().queryParams);
 		});
 		return false;
-	}
+	},
 });
 
 Template.createChannel.onRendered(function() {
@@ -295,7 +289,7 @@ Template.createChannel.onCreated(function() {
 		{
 			selector:{
 				item: '.rc-popup-list__item',
-				container: '.rc-popup-list__list'
+				container: '.rc-popup-list__list',
 			},
 
 			limit: 10,
@@ -310,11 +304,11 @@ Template.createChannel.onCreated(function() {
 					filter,
 					doNotChangeWidth: false,
 					selector(match) {
-						return { term: match };
+						return {term: match};
 					},
-					sort: 'username'
-				}
-			]
+					sort: 'username',
+				},
+			],
 
 		});
 
@@ -330,14 +324,12 @@ Template.tokenpass.onCreated(function() {
 		this.invalid.set(result);
 		return !result;
 	};
-	this.data.submits.tokenpass = () => {
-		return {
-			tokenpass: {
-				require: this.requireAll.get() ? 'all' : 'any',
-				tokens: this.selectedTokens.get()
-			}
-		};
-	};
+	this.data.submits.tokenpass = () => ({
+		tokenpass: {
+			require: this.requireAll.get() ? 'all' : 'any',
+			tokens: this.selectedTokens.get(),
+		},
+	});
 	this.balance = new ReactiveVar('');
 	this.token = new ReactiveVar('');
 	this.selectedTokens = new ReactiveVar([]);
@@ -361,7 +353,7 @@ Template.tokenpass.helpers({
 	},
 	tokenRequimentDescription() {
 		return Template.instance().requireAll.get() ? t('All_added_tokens_will_be_required_by_the_user') : t('At_least_one_added_token_is_required_by_the_user');
-	}
+	},
 });
 
 Template.tokenpass.events({
@@ -389,5 +381,5 @@ Template.tokenpass.events({
 	},
 	'change [name=tokenRequireAll]'(e, i) {
 		i.requireAll.set(e.currentTarget.checked);
-	}
+	},
 });

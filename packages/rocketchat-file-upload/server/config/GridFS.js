@@ -3,7 +3,7 @@ import stream from 'stream';
 import zlib from 'zlib';
 import util from 'util';
 
-import { FileUploadClass } from '../lib/FileUpload';
+import {FileUploadClass} from '../lib/FileUpload';
 
 const logger = new Logger('FileUpload');
 
@@ -55,7 +55,7 @@ const getByteRange = function(header) {
 		if (matches) {
 			return {
 				start: parseInt(matches[1], 10),
-				stop: parseInt(matches[2], 10)
+				stop: parseInt(matches[2], 10),
 			};
 		}
 	}
@@ -115,7 +115,7 @@ const readFromGridFS = function(storeName, fileId, file, req, res) {
 		res.setHeader('Content-Length', range.stop - range.start + 1);
 		res.writeHead(206);
 		logger.debug('File upload extracting range');
-		ws.pipe(new ExtractRange({ start: range.start, stop: range.stop })).pipe(res);
+		ws.pipe(new ExtractRange({start: range.start, stop: range.stop})).pipe(res);
 	} else {
 		res.writeHead(200);
 		ws.pipe(res);
@@ -135,18 +135,18 @@ const copyFromGridFS = function(storeName, fileId, file, out) {
 };
 
 FileUpload.configureUploadsStore('GridFS', 'GridFS:Uploads', {
-	collectionName: 'rocketchat_uploads'
+	collectionName: 'rocketchat_uploads',
 });
 
 FileUpload.configureUploadsStore('GridFS', 'GridFS:UserDataFiles', {
-	collectionName: 'rocketchat_userDataFiles'
+	collectionName: 'rocketchat_userDataFiles',
 });
 
 // DEPRECATED: backwards compatibility (remove)
-UploadFS.getStores()['rocketchat_uploads'] = UploadFS.getStores()['GridFS:Uploads'];
+UploadFS.getStores().rocketchat_uploads = UploadFS.getStores()['GridFS:Uploads'];
 
 FileUpload.configureUploadsStore('GridFS', 'GridFS:Avatars', {
-	collectionName: 'rocketchat_avatars'
+	collectionName: 'rocketchat_avatars',
 });
 
 
@@ -166,7 +166,7 @@ new FileUploadClass({
 
 	copy(file, out) {
 		copyFromGridFS(file.store, file._id, file, out);
-	}
+	},
 });
 
 new FileUploadClass({
@@ -185,7 +185,7 @@ new FileUploadClass({
 
 	copy(file, out) {
 		copyFromGridFS(file.store, file._id, file, out);
-	}
+	},
 });
 
 new FileUploadClass({
@@ -195,5 +195,5 @@ new FileUploadClass({
 		file = FileUpload.addExtensionTo(file);
 
 		return readFromGridFS(file.store, file._id, file, req, res);
-	}
+	},
 });

@@ -1,32 +1,30 @@
-const objectMaybeIncluding = (types) => {
-	return Match.Where((value) => {
-		Object.keys(types).forEach(field => {
-			if (value[field] != null) {
-				try {
-					check(value[field], types[field]);
-				} catch (error) {
-					error.path = field;
-					throw error;
-				}
+const objectMaybeIncluding = types => Match.Where((value) => {
+	Object.keys(types).forEach((field) => {
+		if (value[field] != null) {
+			try {
+				check(value[field], types[field]);
+			} catch (error) {
+				error.path = field;
+				throw error;
 			}
-		});
-
-		return true;
+		}
 	});
-};
 
-const validateAttachmentsFields = attachmentFields => {
+	return true;
+});
+
+const validateAttachmentsFields = (attachmentFields) => {
 	check(attachmentFields, objectMaybeIncluding({
-		short: Boolean
+		short: Boolean,
 	}));
 
 	check(attachmentFields, Match.ObjectIncluding({
 		title: String,
-		value: String
+		value: String,
 	}));
 };
 
-const validateAttachment = attachment => {
+const validateAttachment = (attachment) => {
 	check(attachment, objectMaybeIncluding({
 		color: String,
 		text: String,
@@ -43,7 +41,7 @@ const validateAttachment = attachment => {
 		image_url: String,
 		audio_url: String,
 		video_url: String,
-		fields: Array
+		fields: Array,
 	}));
 
 	if (attachment.fields && attachment.fields.length) {
@@ -65,7 +63,7 @@ RocketChat.sendMessage = function(user, message, room, upsert = false) {
 		alias: String,
 		emoji: String,
 		avatar: String,
-		attachments: Array
+		attachments: Array,
 	}));
 
 	if (Array.isArray(message.attachments) && message.attachments.length) {
@@ -75,11 +73,11 @@ RocketChat.sendMessage = function(user, message, room, upsert = false) {
 	if (!message.ts) {
 		message.ts = new Date();
 	}
-	const { _id, username, name } = user;
+	const {_id, username, name} = user;
 	message.u = {
 		_id,
 		username,
-		name
+		name,
 	};
 	message.rid = room._id;
 
@@ -141,7 +139,7 @@ RocketChat.sendMessage = function(user, message, room, upsert = false) {
 				// use the Set to remove duplicity, so it doesn't embed the same link twice
 				message.urls = [...new Set(urls)].map(function(url) {
 					return {
-						url
+						url,
 					};
 				});
 			}
@@ -162,7 +160,7 @@ RocketChat.sendMessage = function(user, message, room, upsert = false) {
 			delete message._id;
 			RocketChat.models.Messages.upsert({
 				_id,
-				'u._id': message.u._id
+				'u._id': message.u._id,
 			}, message);
 			message._id = _id;
 		} else {

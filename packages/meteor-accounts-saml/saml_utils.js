@@ -137,7 +137,7 @@ SAML.prototype.generateLogoutRequest = function(options) {
 	}
 	return {
 		request,
-		id
+		id,
 	};
 };
 
@@ -174,7 +174,7 @@ SAML.prototype.requestToUrl = function(request, operation, callback) {
 
 		const samlRequest = {
 			SAMLRequest: base64,
-			RelayState: relayState
+			RelayState: relayState,
 		};
 
 		if (self.options.privateCert) {
@@ -236,12 +236,12 @@ SAML.prototype.validateSignature = function(xml, cert) {
 	const sig = new xmlCrypto.SignedXml();
 
 	sig.keyInfoProvider = {
-		getKeyInfo(/*key*/) {
+		getKeyInfo(/* key*/) {
 			return '<X509Data></X509Data>';
 		},
-		getKey(/*keyInfo*/) {
+		getKey(/* keyInfo*/) {
 			return self.certToPEM(cert);
-		}
+		},
 	};
 
 	sig.loadSignature(signature);
@@ -278,7 +278,7 @@ SAML.prototype.validateLogoutResponse = function(samlResponse, callback) {
 			}
 		} else {
 			const parser = new xml2js.Parser({
-				explicitRoot: true
+				explicitRoot: true,
 			});
 			parser.parseString(decoded, function(err, doc) {
 				const response = self.getElement(doc, 'LogoutResponse');
@@ -319,7 +319,7 @@ SAML.prototype.validateResponse = function(samlResponse, relayState, callback) {
 	}
 	const parser = new xml2js.Parser({
 		explicitRoot: true,
-		xmlns:true
+		xmlns:true,
 	});
 
 	parser.parseString(xml, function(err, doc) {
@@ -447,26 +447,26 @@ SAML.prototype.generateServiceProviderMetadata = function(callbackUrl) {
 	}
 
 	const metadata = {
-		'EntityDescriptor': {
+		EntityDescriptor: {
 			'@xmlns': 'urn:oasis:names:tc:SAML:2.0:metadata',
 			'@xmlns:ds': 'http://www.w3.org/2000/09/xmldsig#',
 			'@entityID': this.options.issuer,
-			'SPSSODescriptor': {
+			SPSSODescriptor: {
 				'@protocolSupportEnumeration': 'urn:oasis:names:tc:SAML:2.0:protocol',
-				'SingleLogoutService': {
+				SingleLogoutService: {
 					'@Binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
 					'@Location': `${ Meteor.absoluteUrl() }_saml/logout/${ this.options.provider }/`,
-					'@ResponseLocation': `${ Meteor.absoluteUrl() }_saml/logout/${ this.options.provider }/`
+					'@ResponseLocation': `${ Meteor.absoluteUrl() }_saml/logout/${ this.options.provider }/`,
 				},
-				'NameIDFormat': this.options.identifierFormat,
-				'AssertionConsumerService': {
+				NameIDFormat: this.options.identifierFormat,
+				AssertionConsumerService: {
 					'@index': '1',
 					'@isDefault': 'true',
 					'@Binding': 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
-					'@Location': callbackUrl
-				}
-			}
-		}
+					'@Location': callbackUrl,
+				},
+			},
+		},
 	};
 
 	if (this.options.privateKey) {
@@ -479,38 +479,38 @@ SAML.prototype.generateServiceProviderMetadata = function(callbackUrl) {
 		decryptionCert = decryptionCert.replace(/-+END CERTIFICATE-+\r?\n?/, '');
 		decryptionCert = decryptionCert.replace(/\r\n/g, '\n');
 
-		metadata['EntityDescriptor']['SPSSODescriptor']['KeyDescriptor'] = {
+		metadata.EntityDescriptor.SPSSODescriptor.KeyDescriptor = {
 			'ds:KeyInfo': {
 				'ds:X509Data': {
 					'ds:X509Certificate': {
-						'#text': decryptionCert
-					}
-				}
+						'#text': decryptionCert,
+					},
+				},
 			},
 			'#list': [
 				// this should be the set that the xmlenc library supports
 				{
-					'EncryptionMethod': {
-						'@Algorithm': 'http://www.w3.org/2001/04/xmlenc#aes256-cbc'
-					}
+					EncryptionMethod: {
+						'@Algorithm': 'http://www.w3.org/2001/04/xmlenc#aes256-cbc',
+					},
 				},
 				{
-					'EncryptionMethod': {
-						'@Algorithm': 'http://www.w3.org/2001/04/xmlenc#aes128-cbc'
-					}
+					EncryptionMethod: {
+						'@Algorithm': 'http://www.w3.org/2001/04/xmlenc#aes128-cbc',
+					},
 				},
 				{
-					'EncryptionMethod': {
-						'@Algorithm': 'http://www.w3.org/2001/04/xmlenc#tripledes-cbc'
-					}
-				}
-			]
+					EncryptionMethod: {
+						'@Algorithm': 'http://www.w3.org/2001/04/xmlenc#tripledes-cbc',
+					},
+				},
+			],
 		};
 	}
 
 	return xmlbuilder.create(metadata).end({
 		pretty: true,
 		indent: '  ',
-		newline: '\n'
+		newline: '\n',
 	});
 };

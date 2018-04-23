@@ -10,71 +10,71 @@ RocketChat.Migrations.add({
 			LDAP_Url = LDAP_Url.replace(/ldaps?:\/\//i, '');
 			RocketChat.models.Settings.upsert({_id: 'LDAP_Host'}, {
 				$set: {
-					value: LDAP_Url
+					value: LDAP_Url,
 				},
 				$setOnInsert: {
-					createdAt: new Date
-				}
+					createdAt: new Date,
+				},
 			});
 		}
 
 		if (LDAP_TLS === true) {
 			RocketChat.models.Settings.upsert({_id: 'LDAP_Encryption'}, {
 				$set: {
-					value: 'tls'
+					value: 'tls',
 				},
 				$setOnInsert: {
-					createdAt: new Date
-				}
+					createdAt: new Date,
+				},
 			});
 		}
 
 		if (LDAP_DN && LDAP_DN.trim() !== '') {
 			RocketChat.models.Settings.upsert({_id: 'LDAP_Domain_Base'}, {
 				$set: {
-					value: LDAP_DN
+					value: LDAP_DN,
 				},
 				$setOnInsert: {
-					createdAt: new Date
-				}
+					createdAt: new Date,
+				},
 			});
 
 			RocketChat.models.Settings.upsert({_id: 'LDAP_Username_Field'}, {
 				$set: {
-					value: ''
+					value: '',
 				},
 				$setOnInsert: {
-					createdAt: new Date
-				}
+					createdAt: new Date,
+				},
 			});
 
 			RocketChat.models.Settings.upsert({_id: 'LDAP_Unique_Identifier_Field'}, {
 				$set: {
-					value: ''
+					value: '',
 				},
 				$setOnInsert: {
-					createdAt: new Date
-				}
+					createdAt: new Date,
+				},
 			});
 		}
 
 		if (LDAP_Bind_Search && LDAP_Bind_Search.trim() !== '') {
 			RocketChat.models.Settings.upsert({_id: 'LDAP_Custom_Domain_Search'}, {
 				$set: {
-					value: LDAP_Bind_Search
+					value: LDAP_Bind_Search,
 				},
 				$setOnInsert: {
-					createdAt: new Date
-				}
+					createdAt: new Date,
+				},
 			});
 
 			RocketChat.models.Settings.upsert({_id: 'LDAP_Use_Custom_Domain_Search'}, {
 				$set: {
-					value: true
+					value: true,
 				},
 				$setOnInsert: {
-					createdAt: new Date
-				}
+					createdAt: new Date,
+				},
 			});
 		}
 
@@ -82,5 +82,5 @@ RocketChat.Migrations.add({
 		RocketChat.models.Settings.remove({_id: 'LDAP_TLS'});
 		RocketChat.models.Settings.remove({_id: 'LDAP_DN'});
 		RocketChat.models.Settings.remove({_id: 'LDAP_Bind_Search'});
-	}
+	},
 });

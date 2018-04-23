@@ -8,20 +8,20 @@ Meteor.methods({
 		}
 
 		if (!s.trim(soundData.name)) {
-			throw new Meteor.Error('error-the-field-is-required', 'The field Name is required', { method: 'insertOrUpdateSound', field: 'Name' });
+			throw new Meteor.Error('error-the-field-is-required', 'The field Name is required', {method: 'insertOrUpdateSound', field: 'Name'});
 		}
 
-		//let nameValidation = new RegExp('^[0-9a-zA-Z-_+;.]+$');
+		// let nameValidation = new RegExp('^[0-9a-zA-Z-_+;.]+$');
 
-		//allow all characters except colon, whitespace, comma, >, <, &, ", ', /, \, (, )
-		//more practical than allowing specific sets of characters; also allows foreign languages
+		// allow all characters except colon, whitespace, comma, >, <, &, ", ', /, \, (, )
+		// more practical than allowing specific sets of characters; also allows foreign languages
 		const nameValidation = /[\s,:><&"'\/\\\(\)]/;
 
-		//silently strip colon; this allows for uploading :soundname: as soundname
+		// silently strip colon; this allows for uploading :soundname: as soundname
 		soundData.name = soundData.name.replace(/:/g, '');
 
 		if (nameValidation.test(soundData.name)) {
-			throw new Meteor.Error('error-input-is-not-a-valid-field', `${ soundData.name } is not a valid name`, { method: 'insertOrUpdateSound', input: soundData.name, field: 'Name' });
+			throw new Meteor.Error('error-input-is-not-a-valid-field', `${ soundData.name } is not a valid name`, {method: 'insertOrUpdateSound', input: soundData.name, field: 'Name'});
 		}
 
 		let matchingResults = [];
@@ -33,14 +33,14 @@ Meteor.methods({
 		}
 
 		if (matchingResults.length > 0) {
-			throw new Meteor.Error('Custom_Sound_Error_Name_Already_In_Use', 'The custom sound name is already in use', { method: 'insertOrUpdateSound' });
+			throw new Meteor.Error('Custom_Sound_Error_Name_Already_In_Use', 'The custom sound name is already in use', {method: 'insertOrUpdateSound'});
 		}
 
 		if (!soundData._id) {
-			//insert sound
+			// insert sound
 			const createSound = {
 				name: soundData.name,
-				extension: soundData.extension
+				extension: soundData.extension,
 			};
 
 			const _id = RocketChat.models.CustomSounds.create(createSound);
@@ -48,7 +48,7 @@ Meteor.methods({
 
 			return _id;
 		} else {
-			//update sound
+			// update sound
 			if (soundData.newFile) {
 				RocketChatFileCustomSoundsInstance.deleteFile(`${ soundData._id }.${ soundData.previousExtension }`);
 			}
@@ -60,5 +60,5 @@ Meteor.methods({
 
 			return soundData._id;
 		}
-	}
+	},
 });

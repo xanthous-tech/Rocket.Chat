@@ -16,7 +16,7 @@ Meteor.publish('roomFiles', function(rid, limit = 50) {
 		},
 		removed(_id, record) {
 			return pub.removed('room_files', _id, record);
-		}
+		},
 	});
 
 	this.ready();

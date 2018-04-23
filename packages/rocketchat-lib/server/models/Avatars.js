@@ -10,7 +10,7 @@ RocketChat.models.Avatars = new class extends RocketChat.models._Base {
 			doc.instanceId = InstanceStatus.id();
 		});
 
-		this.tryEnsureIndex({ name: 1 });
+		this.tryEnsureIndex({name: 1});
 	}
 
 	insertAvatarFileInit(name, userId, store, file, extra) {
@@ -23,7 +23,7 @@ RocketChat.models.Avatars = new class extends RocketChat.models._Base {
 			uploading: true,
 			progress: 0,
 			extension: s.strRightBack(file.name, '.'),
-			uploadedAt: new Date()
+			uploadedAt: new Date(),
 		};
 
 		_.extend(fileData, file, extra);
@@ -38,15 +38,15 @@ RocketChat.models.Avatars = new class extends RocketChat.models._Base {
 
 		const filter = {
 			_id: fileId,
-			userId
+			userId,
 		};
 
 		const update = {
 			$set: {
 				complete: true,
 				uploading: false,
-				progress: 1
-			}
+				progress: 1,
+			},
 		};
 
 		update.$set = _.extend(file, update.$set);
@@ -59,15 +59,15 @@ RocketChat.models.Avatars = new class extends RocketChat.models._Base {
 	}
 
 	findOneByName(name) {
-		return this.findOne({ name });
+		return this.findOne({name});
 	}
 
 	updateFileNameById(fileId, name) {
-		const filter = { _id: fileId };
+		const filter = {_id: fileId};
 		const update = {
 			$set: {
-				name
-			}
+				name,
+			},
 		};
 		if (this.model.direct && this.model.direct.update) {
 			return this.model.direct.update(filter, update);
@@ -84,7 +84,7 @@ RocketChat.models.Avatars = new class extends RocketChat.models._Base {
 
 		const filter = {
 			name,
-			userId
+			userId,
 		};
 
 		const update = {
@@ -92,8 +92,8 @@ RocketChat.models.Avatars = new class extends RocketChat.models._Base {
 				complete: true,
 				uploading: false,
 				progress: 1,
-				url
-			}
+				url,
+			},
 		};
 
 		if (this.model.direct && this.model.direct.update) {
@@ -105,9 +105,9 @@ RocketChat.models.Avatars = new class extends RocketChat.models._Base {
 
 	deleteFile(fileId) {
 		if (this.model.direct && this.model.direct.remove) {
-			return this.model.direct.remove({ _id: fileId });
+			return this.model.direct.remove({_id: fileId});
 		} else {
-			return this.remove({ _id: fileId });
+			return this.remove({_id: fileId});
 		}
 	}
 };

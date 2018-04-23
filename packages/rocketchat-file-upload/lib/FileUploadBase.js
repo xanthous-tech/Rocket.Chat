@@ -25,7 +25,7 @@ UploadFS.config.defaultStorePermissions = new UploadFS.StorePermissions({
 	},
 	remove(userId, doc) {
 		return RocketChat.authz.hasPermission(Meteor.userId(), 'delete-message', doc.rid) || (RocketChat.settings.get('Message_AllowDeleting') && userId === doc.userId);
-	}
+	},
 });
 
 
@@ -50,15 +50,13 @@ FileUploadBase = class FileUploadBase {
 			store: this.store,
 			data: this.file,
 			file: this.meta,
-			onError: (err) => {
-				return callback(err);
-			},
+			onError: err => callback(err),
 			onComplete: (fileData) => {
 				const file = _.pick(fileData, '_id', 'type', 'size', 'name', 'identify', 'description');
 
 				file.url = fileData.url.replace(Meteor.absoluteUrl(), '/');
 				return callback(null, file, this.store.options.name);
-			}
+			},
 		});
 
 		this.handler.onProgress = (file, progress) => {

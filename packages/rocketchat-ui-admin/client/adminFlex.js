@@ -6,7 +6,7 @@ Template.adminFlex.onCreated(function() {
 	if (RocketChat.settings.cachedCollectionPrivate == null) {
 		RocketChat.settings.cachedCollectionPrivate = new RocketChat.CachedCollection({
 			name: 'private-settings',
-			eventType: 'onLogged'
+			eventType: 'onLogged',
 		});
 		RocketChat.settings.collectionPrivate = RocketChat.settings.cachedCollectionPrivate.collection;
 		RocketChat.settings.cachedCollectionPrivate.init();
@@ -25,7 +25,7 @@ Template.adminFlex.helpers({
 	groups() {
 		const filter = Template.instance().settingsFilter.get();
 		const query = {
-			type: 'group'
+			type: 'group',
 		};
 		if (filter) {
 			const filterRegex = new RegExp(s.escapeRegExp(filter), 'i');
@@ -39,7 +39,7 @@ Template.adminFlex.helpers({
 			groups = _.unique(groups);
 			if (groups.length > 0) {
 				query._id = {
-					$in: groups
+					$in: groups,
 				};
 			}
 		}
@@ -65,12 +65,12 @@ Template.adminFlex.helpers({
 			pathSection: section,
 			pathGroup: group,
 			darken: true,
-			isLightSidebar: true
+			isLightSidebar: true,
 		};
 	},
 	embeddedVersion() {
 		return RocketChat.Layout.isEmbedded();
-	}
+	},
 });
 
 Template.adminFlex.events({
@@ -79,5 +79,5 @@ Template.adminFlex.events({
 	},
 	'keyup [name=settings-search]'(e, t) {
 		t.settingsFilter.set(e.target.value);
-	}
+	},
 });

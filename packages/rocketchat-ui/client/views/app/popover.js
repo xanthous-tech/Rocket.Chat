@@ -1,7 +1,7 @@
 /* globals popover isRtl */
 import _ from 'underscore';
 
-import { hide, leave } from 'meteor/rocketchat:lib';
+import {hide, leave} from 'meteor/rocketchat:lib';
 
 this.popover = {
 	renderedPopover: null,
@@ -19,13 +19,13 @@ this.popover = {
 		if (activeElement) {
 			$(activeElement).removeClass('active');
 		}
-	}
+	},
 };
 
 Template.popover.helpers({
 	hasAction() {
 		return !!this.action;
-	}
+	},
 });
 
 Template.popover.onRendered(function() {
@@ -38,7 +38,7 @@ Template.popover.onRendered(function() {
 			popover.close();
 		}
 	});
-	const { offsetVertical = 0, offsetHorizontal = 0 } = this.data;
+	const {offsetVertical = 0, offsetHorizontal = 0} = this.data;
 	const activeElement = this.data.activeElement;
 	const popoverContent = this.firstNode.children[0];
 	const position = _.throttle(() => {
@@ -52,8 +52,8 @@ Template.popover.onRendered(function() {
 		const customCSSProperties = typeof this.data.customCSSProperties === 'function' ? this.data.customCSSProperties() : this.data.customCSSProperties;
 
 		const mousePosition = typeof this.data.mousePosition === 'function' ? this.data.mousePosition() : this.data.mousePosition || {
-			x: this.data.currentTarget.getBoundingClientRect()[horizontalDirection === 'left'? 'right' : 'left'],
-			y: this.data.currentTarget.getBoundingClientRect()[verticalDirection]
+			x: this.data.currentTarget.getBoundingClientRect()[horizontalDirection === 'left' ? 'right' : 'left'],
+			y: this.data.currentTarget.getBoundingClientRect()[verticalDirection],
 		};
 		const offsetWidth = offsetHorizontal * (horizontalDirection === 'left' ? 1 : -1);
 		const offsetHeight = offsetVertical * (verticalDirection === 'bottom' ? 1 : -1);
@@ -143,7 +143,7 @@ Template.popover.events({
 		const id = event.currentTarget.dataset.id;
 		const action = RocketChat.messageBox.actions.getById(id);
 		if ((action[0] != null ? action[0].action : undefined) != null) {
-			action[0].action({ rid: t.data.data.rid, messageBox: document.querySelector('.rc-message-box'), element: event.currentTarget, event });
+			action[0].action({rid: t.data.data.rid, messageBox: document.querySelector('.rc-message-box'), element: event.currentTarget, event});
 			if (id !== 'audio-message') {
 				popover.close();
 			}
@@ -169,7 +169,7 @@ Template.popover.events({
 				confirmButtonText: TAPi18n.__('Report_exclamation_mark'),
 				cancelButtonText: TAPi18n.__('Cancel'),
 				closeOnConfirm: false,
-				html: false
+				html: false,
 			}, (inputValue) => {
 				if (inputValue === false) {
 					return false;
@@ -187,7 +187,7 @@ Template.popover.events({
 					text: TAPi18n.__('Thank_you_exclamation_mark '),
 					type: 'success',
 					timer: 1000,
-					showConfirmButton: false
+					showConfirmButton: false,
 				});
 			});
 			popover.close();
@@ -195,7 +195,7 @@ Template.popover.events({
 	},
 	'click [data-type="sidebar-item"]'(e, instance) {
 		popover.close();
-		const { rid, name, template } = instance.data.data;
+		const {rid, name, template} = instance.data.data;
 		const action = e.currentTarget.dataset.id;
 
 		if (action === 'hide') {
@@ -217,7 +217,7 @@ Template.popover.events({
 					return handleError(error);
 				}
 
-				const subscription = ChatSubscription.findOne({ rid });
+				const subscription = ChatSubscription.findOne({rid});
 				if (subscription == null) {
 					return;
 				}
@@ -239,9 +239,9 @@ Template.popover.events({
 
 			return false;
 		}
-	}
+	},
 });
 
 Template.popover.helpers({
-	isSafariIos: /iP(ad|hone|od).+Version\/[\d\.]+.*Safari/i.test(navigator.userAgent)
+	isSafariIos: /iP(ad|hone|od).+Version\/[\d\.]+.*Safari/i.test(navigator.userAgent),
 });

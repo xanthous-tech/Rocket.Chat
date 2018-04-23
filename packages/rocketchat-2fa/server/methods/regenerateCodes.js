@@ -14,14 +14,14 @@ Meteor.methods({
 			secret: user.services.totp.secret,
 			token: userToken,
 			userId: Meteor.userId(),
-			backupTokens: user.services.totp.hashedBackup
+			backupTokens: user.services.totp.hashedBackup,
 		});
 
 		if (verified) {
-			const { codes, hashedCodes } = RocketChat.TOTP.generateCodes();
+			const {codes, hashedCodes} = RocketChat.TOTP.generateCodes();
 
 			RocketChat.models.Users.update2FABackupCodesByUserId(Meteor.userId(), hashedCodes);
-			return { codes };
+			return {codes};
 		}
-	}
+	},
 });

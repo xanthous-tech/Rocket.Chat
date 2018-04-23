@@ -2,7 +2,7 @@ import moment from 'moment';
 const colors = {
 	good: '#35AC19',
 	warning: '#FCB316',
-	danger: '#D30230'
+	danger: '#D30230',
 };
 const fixCordova = function(url) {
 	if (url && url.indexOf('data:image') === 0) {
@@ -17,7 +17,7 @@ const fixCordova = function(url) {
 			url = `${ url }&${ query }`;
 		}
 	}
-	if (Meteor.settings['public'].sandstorm || url.match(/^(https?:)?\/\//i)) {
+	if (Meteor.settings.public.sandstorm || url.match(/^(https?:)?\/\//i)) {
 		return url;
 	} else if (navigator.userAgent.indexOf('Electron') > -1) {
 		return __meteor_runtime_config__.ROOT_URL_PATH_PREFIX + url;
@@ -25,12 +25,12 @@ const fixCordova = function(url) {
 		return Meteor.absoluteUrl().replace(/\/$/, '') + url;
 	}
 };
-/*globals renderMessageBody*/
+/* globals renderMessageBody*/
 Template.messageAttachment.helpers({
 	fixCordova,
 	parsedText() {
 		return renderMessageBody({
-			msg: this.text
+			msg: this.text,
 		});
 	},
 	loadImage() {
@@ -74,5 +74,5 @@ Template.messageAttachment.helpers({
 
 	isFile() {
 		return this.type === 'file';
-	}
+	},
 });

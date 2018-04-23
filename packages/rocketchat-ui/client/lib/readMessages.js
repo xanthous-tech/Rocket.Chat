@@ -17,7 +17,7 @@ const readMessage = new class {
 	constructor() {
 		this.debug = false;
 		this.callbacks = [];
-		this.read = _.debounce((force) => this.readNow(force), 1000);
+		this.read = _.debounce(force => this.readNow(force), 1000);
 		this.canReadMessage = false;
 	}
 
@@ -106,7 +106,7 @@ const readMessage = new class {
 	}
 
 	fireRead(rid) {
-		return Array.from(this.callbacks).map((cb) =>	cb(rid));
+		return Array.from(this.callbacks).map(cb =>	cb(rid));
 	}
 
 	refreshUnreadMark(rid, force) {
@@ -138,15 +138,15 @@ const readMessage = new class {
 		let lastReadRecord = ChatMessage.findOne({
 			rid: subscription.rid,
 			ts: {
-				$lt: subscription.ls
-			}
+				$lt: subscription.ls,
+			},
 		}
 			// 'u._id':
 			// 	$ne: Meteor.userId()
 			, {
 			sort: {
-				ts: -1
-			}
+				ts: -1,
+			},
 		}
 		);
 
@@ -165,16 +165,16 @@ const readMessage = new class {
 			const firstUnreadRecord = ChatMessage.findOne({
 				rid: subscription.rid,
 				ts: {
-					$gt: lastReadRecord.ts
+					$gt: lastReadRecord.ts,
 				},
 				'u._id': {
-					$ne: Meteor.userId()
-				}
+					$ne: Meteor.userId(),
+				},
 			}
 				, {
 				sort: {
-					ts: 1
-				}
+					ts: 1,
+				},
 			}
 			);
 
@@ -215,5 +215,5 @@ Meteor.startup(function() {
 		}
 	});
 });
-export { readMessage };
+export {readMessage};
 this.readMessage = readMessage;

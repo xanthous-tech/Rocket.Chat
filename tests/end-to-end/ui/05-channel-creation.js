@@ -5,12 +5,12 @@ import sideNav from '../../pageobjects/side-nav.page';
 import {publicChannelName, privateChannelName} from '../../data/channel.js';
 import {targetUser} from '../../data/interactions.js';
 
-//test data imports
+// test data imports
 import {checkIfUserIsValid, setPublicChannelCreated, setPrivateChannelCreated, setDirectMessageCreated} from '../../data/checks';
 import {username, email, password} from '../../data/user.js';
-//Basic usage test start
+// Basic usage test start
 describe('[Channel creation]', function() {
-	before(()=>{
+	before(() => {
 		checkIfUserIsValid(username, email, password);
 	});
 

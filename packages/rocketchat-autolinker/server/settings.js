@@ -1,7 +1,7 @@
 Meteor.startup(function() {
 	const enableQuery = {
 		_id: 'AutoLinker',
-		value: true
+		value: true,
 	};
 
 	RocketChat.settings.add('AutoLinker', true, {type: 'boolean', group: 'Message', section: 'AutoLinker', public: true, i18nLabel: 'Enabled'});

@@ -15,7 +15,7 @@ RocketChat.promises = {};
 RocketChat.promises.priority = {
 	HIGH: -1000,
 	MEDIUM: 0,
-	LOW: 1000
+	LOW: 1000,
 };
 
 
@@ -44,7 +44,7 @@ RocketChat.promises.add = function(hook, callback, p = RocketChat.promises.prior
 */
 
 RocketChat.promises.remove = function(hookName, id) {
-	RocketChat.promises[hookName] = _.reject(RocketChat.promises[hookName], (callback) => callback.id === id);
+	RocketChat.promises[hookName] = _.reject(RocketChat.promises[hookName], callback => callback.id === id);
 };
 
 
@@ -61,10 +61,10 @@ RocketChat.promises.run = function(hook, item, constant) {
 	if (callbacks == null || callbacks.length === 0) {
 		return Promise.resolve(item);
 	}
-	callbacks = _.sortBy(callbacks, (callback) => callback.priority || RocketChat.promises.priority.MEDIUM);
+	callbacks = _.sortBy(callbacks, callback => callback.priority || RocketChat.promises.priority.MEDIUM);
 	return callbacks.reduce(function(previousPromise, callback) {
 		return new Promise(function(resolve, reject) {
-			return previousPromise.then((result) => callback(result, constant).then(resolve, reject));
+			return previousPromise.then(result => callback(result, constant).then(resolve, reject));
 		});
 	}, Promise.resolve(item));
 };
@@ -83,7 +83,7 @@ RocketChat.promises.runAsync = function(hook, item, constant) {
 		return item;
 	}
 	Meteor.defer(() => {
-		_.sortBy(callbacks, (callback) => callback.priority || RocketChat.promises.priority.MEDIUM).forEach(function(callback) {
+		_.sortBy(callbacks, callback => callback.priority || RocketChat.promises.priority.MEDIUM).forEach(function(callback) {
 			callback(item, constant);
 		});
 	});

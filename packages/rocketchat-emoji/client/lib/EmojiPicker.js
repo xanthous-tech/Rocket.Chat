@@ -125,7 +125,7 @@ RocketChat.EmojiPicker = {
 	refreshDynamicEmojiLists() {
 		const dynamicEmojiLists = [
 			RocketChat.emoji.packages.base.emojisByCategory.recent,
-			RocketChat.emoji.packages.emojiCustom.emojisByCategory.rocket
+			RocketChat.emoji.packages.emojiCustom.emojisByCategory.rocket,
 		];
 
 		dynamicEmojiLists.forEach((category) => {
@@ -138,5 +138,5 @@ RocketChat.EmojiPicker = {
 				}
 			}
 		});
-	}
+	},
 };

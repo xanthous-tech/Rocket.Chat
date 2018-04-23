@@ -9,7 +9,7 @@ const commonHelpers = {
 		if (this.template === Template.instance().tabBar.getTemplate() && Template.instance().tabBar.getState() === 'opened') {
 			return 'active';
 		}
-	}
+	},
 };
 
 Template.flexTabBar.helpers({
@@ -18,7 +18,7 @@ Template.flexTabBar.helpers({
 	},
 	...commonHelpers,
 	buttons() {
-		return RocketChat.TabBar.getButtons().filter(button => {
+		return RocketChat.TabBar.getButtons().filter((button) => {
 			if (!Meteor.userId() && !this.anonymous) {
 				return false;
 			}
@@ -38,13 +38,13 @@ Template.flexTabBar.helpers({
 
 	flexData() {
 		return Object.assign(Template.currentData().data || {}, {
-			tabBar: Template.instance().tabBar
+			tabBar: Template.instance().tabBar,
 		});
 	},
 
 	embeddedVersion() {
 		return RocketChat.Layout.isEmbedded();
-	}
+	},
 });
 
 const commonEvents = {
@@ -61,12 +61,12 @@ const commonEvents = {
 		$flexTab.attr('template', this.template);
 		instance.tabBar.setData({
 			label: this.i18nTitle,
-			icon: this.icon
+			icon: this.icon,
 		});
 		instance.tabBar.open(this);
 
 		popover.close();
-	}
+	},
 };
 const action = function(e, instance) {
 	$('button', e.currentTarget).blur();
@@ -81,7 +81,7 @@ const action = function(e, instance) {
 	$flexTab.attr('template', this.template);
 	instance.tabBar.setData({
 		label: this.i18nTitle,
-		icon: this.icon
+		icon: this.icon,
 	});
 	instance.tabBar.open(this);
 
@@ -105,7 +105,7 @@ Template.flexTabBar.events({
 
 	'click .close-flex-tab'(event, instance) {
 		instance.tabBar.close();
-	}
+	},
 });
 
 Template.flexTabBar.onCreated(function() {
@@ -114,12 +114,12 @@ Template.flexTabBar.onCreated(function() {
 
 
 Template.RoomsActionMore.events({
-	...commonEvents
+	...commonEvents,
 });
 
 
 Template.RoomsActionMore.helpers({
-	...commonHelpers
+	...commonHelpers,
 });
 
 Template.RoomsActionMore.onCreated(function() {
@@ -131,7 +131,7 @@ Template.RoomsActionTab.events({
 	'click .js-more'(e, instance) {
 		$(e.currentTarget).blur();
 		e.preventDefault();
-		const buttons = RocketChat.TabBar.getButtons().filter(button => {
+		const buttons = RocketChat.TabBar.getButtons().filter((button) => {
 			if (!Meteor.userId() && !this.anonymous) {
 				return false;
 			}
@@ -140,7 +140,7 @@ Template.RoomsActionTab.events({
 			}
 			return true;
 		});
-		const groups = [{items:(instance.small.get() ? buttons : buttons.slice(4)).map(item => {
+		const groups = [{items:(instance.small.get() ? buttons : buttons.slice(4)).map((item) => {
 			item.name = TAPi18n.__(item.i18nTitle);
 			item.action = action;
 			return item;
@@ -153,15 +153,15 @@ Template.RoomsActionTab.events({
 			data: {
 				rid: this._id,
 				buttons: instance.small.get() ? buttons : buttons.slice(4),
-				tabBar: instance.tabBar
+				tabBar: instance.tabBar,
 			},
 			currentTarget: e.currentTarget,
 			offsetHorizontal: -e.currentTarget.clientWidth,
-			offsetVertical: e.currentTarget.clientHeight + 10
+			offsetVertical: e.currentTarget.clientHeight + 10,
 		};
 
 		popover.open(config);
-	}
+	},
 });
 
 Template.RoomsActionTab.onDestroyed(function() {
@@ -188,7 +188,7 @@ Template.RoomsActionTab.helpers({
 		if (Template.instance().small.get()) {
 			return [];
 		}
-		const buttons = RocketChat.TabBar.getButtons().filter(button => {
+		const buttons = RocketChat.TabBar.getButtons().filter((button) => {
 			if (!Meteor.userId() && !this.anonymous) {
 				return false;
 			}
@@ -204,7 +204,7 @@ Template.RoomsActionTab.helpers({
 		if (Template.instance().small.get()) {
 			return true;
 		}
-		const buttons = RocketChat.TabBar.getButtons().filter(button => {
+		const buttons = RocketChat.TabBar.getButtons().filter((button) => {
 			if (!Meteor.userId() && !this.anonymous) {
 				return false;
 			}
@@ -214,5 +214,5 @@ Template.RoomsActionTab.helpers({
 			return true;
 		});
 		return buttons.length > 5;
-	}
+	},
 });

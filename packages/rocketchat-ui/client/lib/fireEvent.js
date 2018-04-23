@@ -10,7 +10,7 @@ window.fireGlobalEvent = function _fireGlobalEvent(eventName, params) {
 		if (enabled) {
 			parent.postMessage({
 				eventName,
-				data: params
+				data: params,
 			}, RocketChat.settings.get('Iframe_Integration_send_target_origin'));
 		}
 	});

@@ -1,10 +1,10 @@
 Meteor.publish('livechat:rooms', function(filter = {}, offset = 0, limit = 20) {
 	if (!this.userId) {
-		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', { publish: 'livechat:rooms' }));
+		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', {publish: 'livechat:rooms'}));
 	}
 
 	if (!RocketChat.authz.hasPermission(this.userId, 'view-livechat-rooms')) {
-		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', { publish: 'livechat:rooms' }));
+		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', {publish: 'livechat:rooms'}));
 	}
 
 	check(filter, {
@@ -12,7 +12,7 @@ Meteor.publish('livechat:rooms', function(filter = {}, offset = 0, limit = 20) {
 		agent: Match.Maybe(String), // agent _id who is serving
 		status: Match.Maybe(String), // either 'opened' or 'closed'
 		from: Match.Maybe(Date),
-		to: Match.Maybe(Date)
+		to: Match.Maybe(Date),
 	});
 
 	const query = {};
@@ -26,12 +26,12 @@ Meteor.publish('livechat:rooms', function(filter = {}, offset = 0, limit = 20) {
 		if (filter.status === 'opened') {
 			query.open = true;
 		} else {
-			query.open = { $exists: false };
+			query.open = {$exists: false};
 		}
 	}
 	if (filter.from) {
 		query.ts = {
-			$gte: filter.from
+			$gte: filter.from,
 		};
 	}
 	if (filter.to) {
@@ -55,7 +55,7 @@ Meteor.publish('livechat:rooms', function(filter = {}, offset = 0, limit = 20) {
 		},
 		removed(id) {
 			self.removed('livechatRoom', id);
-		}
+		},
 	});
 
 	this.ready();

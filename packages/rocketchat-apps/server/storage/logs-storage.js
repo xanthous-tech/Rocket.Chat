@@ -1,5 +1,5 @@
-import { AppConsole } from '@rocket.chat/apps-engine/server/logging';
-import { AppLogStorage } from '@rocket.chat/apps-engine/server/storage';
+import {AppConsole} from '@rocket.chat/apps-engine/server/logging';
+import {AppLogStorage} from '@rocket.chat/apps-engine/server/storage';
 
 export class AppRealLogsStorage extends AppLogStorage {
 	constructor(model) {
@@ -40,7 +40,7 @@ export class AppRealLogsStorage extends AppLogStorage {
 			let docs;
 
 			try {
-				docs = this.db.find({ appId }).fetch();
+				docs = this.db.find({appId}).fetch();
 			} catch (e) {
 				return reject(e);
 			}

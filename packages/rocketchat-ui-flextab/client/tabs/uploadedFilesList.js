@@ -66,11 +66,11 @@ Template.uploadedFilesList.helpers({
 		return moment(timestamp).format(RocketChat.settings.get('Message_TimeAndDateFormat') || 'LLL');
 	},
 	files() {
-		return roomFiles.find({ rid: this.rid }, { sort: { uploadedAt: -1 } });
+		return roomFiles.find({rid: this.rid}, {sort: {uploadedAt: -1}});
 	},
 
 	hasFiles() {
-		return roomFiles.find({ rid: this.rid }).count() > 0;
+		return roomFiles.find({rid: this.rid}).count() > 0;
 	},
 
 	hasMore() {
@@ -102,7 +102,7 @@ Template.uploadedFilesList.helpers({
 	url() {
 		return `/file-upload/${ this._id }/${ this.name }`;
 	},
-	fixCordova
+	fixCordova,
 });
 
 Template.uploadedFilesList.events({
@@ -123,18 +123,18 @@ Template.uploadedFilesList.events({
 			confirmButtonText: TAPi18n.__('Yes_delete_it'),
 			cancelButtonText: TAPi18n.__('Cancel'),
 			closeOnConfirm: false,
-			html: false
+			html: false,
 		}, function() {
 			modal.open({
 				title: TAPi18n.__('Deleted'),
 				text: TAPi18n.__('Your_file_has_been_deleted'),
 				type: 'success',
 				timer: 1000,
-				showConfirmButton: false
+				showConfirmButton: false,
 			});
 
 			// Check if the upload message for this file is currently loaded
-			const msg = ChatMessage.findOne({ file: { _id: self._id } });
+			const msg = ChatMessage.findOne({file: {_id: self._id}});
 			return RocketChat.models.Uploads.remove(self._id, function() {
 				if (msg) {
 					return chatMessages[Session.get('openedRoom')].deleteMsg(msg);
@@ -153,20 +153,18 @@ Template.uploadedFilesList.events({
 		if (e.target.scrollTop >= (e.target.scrollHeight - e.target.clientHeight)) {
 			return t.limit.set(t.limit.get() + 50);
 		}
-	}, 200)
+	}, 200),
 });
 
 Template.uploadedFilesList.onCreated(function() {
-	const { rid } = Template.currentData();
+	const {rid} = Template.currentData();
 	this.hasMore = new ReactiveVar(true);
 	this.limit = new ReactiveVar(50);
-	return this.autorun(() => {
-		return this.subscribe('roomFiles', rid, this.limit.get(), () => {
-			if (roomFiles.find({ rid }).fetch().length < this.limit.get()) {
-				return this.hasMore.set(false);
-			}
+	return this.autorun(() => this.subscribe('roomFiles', rid, this.limit.get(), () => {
+		if (roomFiles.find({rid}).fetch().length < this.limit.get()) {
+			return this.hasMore.set(false);
 		}
-		);
 	}
+	)
 	);
 });

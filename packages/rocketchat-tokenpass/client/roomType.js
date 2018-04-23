@@ -1,10 +1,10 @@
-import { RoomTypeConfig } from 'meteor/rocketchat:lib';
+import {RoomTypeConfig} from 'meteor/rocketchat:lib';
 
 class TokenPassRoomType extends RoomTypeConfig {
 	constructor() {
 		super({
 			identifier: 'tokenpass',
-			order: 1
+			order: 1,
 		});
 
 		this.customTemplate = 'tokenChannelsList';
