@@ -8,14 +8,14 @@ const resolver = {
 	Message: {
 		id: property('_id'),
 		content: property('msg'),
-		creationTime: root => dateToFloat(root.ts),
+		creationTime: (root) => dateToFloat(root.ts),
 		author: (root) => {
 			const user = RocketChat.models.Users.findOne(root.u._id);
 
 			return user || root.u;
 		},
-		channel: root => RocketChat.models.Rooms.findOne(root.rid),
-		fromServer: root => typeof root.t !== 'undefined', // on a message sent by user `true` otherwise `false`
+		channel: (root) => RocketChat.models.Rooms.findOne(root.rid),
+		fromServer: (root) => typeof root.t !== 'undefined', // on a message sent by user `true` otherwise `false`
 		type: property('t'),
 		channelRef: (root) => {
 			if (!root.channels) {
@@ -24,7 +24,7 @@ const resolver = {
 
 			return RocketChat.models.Rooms.find({
 				_id: {
-					$in: root.channels.map(c => c._id),
+					$in: root.channels.map((c) => c._id),
 				},
 			}, {
 				sort: {
@@ -39,7 +39,7 @@ const resolver = {
 
 			return RocketChat.models.Users.find({
 				_id: {
-					$in: root.mentions.map(c => c._id),
+					$in: root.mentions.map((c) => c._id),
 				},
 			}, {
 				sort: {

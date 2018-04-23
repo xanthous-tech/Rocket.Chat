@@ -159,8 +159,8 @@ export class HipChatImporter extends Base {
 		});
 		this.collection.update({_id: this.users._id}, {$set: {users: this.users.users}});
 
-		importSelection.channels.forEach(channel =>
-			this.channels.channels.forEach(c => c.room_id === channel.channel_id && (c.do_import = channel.do_import))
+		importSelection.channels.forEach((channel) =>
+			this.channels.channels.forEach((c) => c.room_id === channel.channel_id && (c.do_import = channel.do_import))
 		);
 		this.collection.update({_id: this.channels._id}, {$set: {channels: this.channels.channels}});
 
@@ -322,11 +322,11 @@ export class HipChatImporter extends Base {
 	}
 
 	getHipChatChannelFromName(channelName) {
-		return this.channels.channels.find(channel => channel.name === channelName);
+		return this.channels.channels.find((channel) => channel.name === channelName);
 	}
 
 	getRocketUser(hipchatId) {
-		const user = this.users.users.find(user => user.user_id === hipchatId);
+		const user = this.users.users.find((user) => user.user_id === hipchatId);
 		return user ? RocketChat.models.Users.findOneById(user.rocketId, {
 			fields: {
 				username: 1,

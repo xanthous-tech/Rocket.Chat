@@ -12,7 +12,7 @@ Meteor.methods({
 
 		const user = RocketChat.models.Users.findOneById(userId);
 
-		const verifiedEmail = _.find(user.emails, email => email.verified);
+		const verifiedEmail = _.find(user.emails, (email) => email.verified);
 
 		if (verifiedEmail) {
 			RocketChat.models.Roles.addUserRoles(user._id, 'user');

@@ -272,7 +272,7 @@ export class Base {
 
 		return requestModule.get(fileUrl, Meteor.bindEnvironment(function(res) {
 			const rawData = [];
-			res.on('data', chunk => rawData.push(chunk));
+			res.on('data', (chunk) => rawData.push(chunk));
 			res.on('end', Meteor.bindEnvironment(() => {
 				fileStore.insert(details, Buffer.concat(rawData), function(err, file) {
 					if (err) {

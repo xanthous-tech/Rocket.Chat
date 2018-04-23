@@ -91,9 +91,9 @@ RocketChat.theme = new class {
 	compile() {
 		let content = [this.getVariablesAsLess()];
 
-		content.push(...this.files.map(name => Assets.getText(name)));
+		content.push(...this.files.map((name) => Assets.getText(name)));
 
-		content.push(...this.packageCallbacks.map(name => name()));
+		content.push(...this.packageCallbacks.map((name) => name()));
 
 		content.push(this.customCSS);
 		content = content.join('\n');

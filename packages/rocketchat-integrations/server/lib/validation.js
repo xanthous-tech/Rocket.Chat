@@ -100,7 +100,7 @@ RocketChat.integrations.validateOutgoing = function _validateOutgoing(integratio
 		if (!Match.test(integration.channel, String)) {
 			throw new Meteor.Error('error-invalid-channel', 'Invalid Channel', {function: 'validateOutgoing'});
 		} else {
-			channels = _.map(integration.channel.split(','), channel => s.trim(channel));
+			channels = _.map(integration.channel.split(','), (channel) => s.trim(channel));
 
 			for (const channel of channels) {
 				if (!validChannelChars.includes(channel[0]) && !scopedChannels.includes(channel.toLowerCase())) {

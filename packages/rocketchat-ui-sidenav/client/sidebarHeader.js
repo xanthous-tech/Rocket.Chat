@@ -31,7 +31,7 @@ const extendedViewOption = (user) => {
 };
 
 
-const toolbarButtons = user => [{
+const toolbarButtons = (user) => [{
 	name: t('Search'),
 	icon: 'magnifier',
 	action: () => {
@@ -221,7 +221,7 @@ Template.sidebarHeader.helpers({
 		};
 	},
 	toolbarButtons() {
-		return toolbarButtons(Meteor.user()).filter(button => !button.condition || button.condition());
+		return toolbarButtons(Meteor.user()).filter((button) => !button.condition || button.condition());
 	},
 });
 

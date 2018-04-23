@@ -21,11 +21,11 @@ import {customFieldText, clearCustomFields, setCustomFields} from '../../data/cu
 describe('[Users]', function() {
 	this.retries(0);
 
-	before(done => getCredentials(done));
+	before((done) => getCredentials(done));
 
 	describe('[/users.create]', () => {
-		before(done => clearCustomFields(done));
-		after(done => clearCustomFields(done));
+		before((done) => clearCustomFields(done));
+		after((done) => clearCustomFields(done));
 
 		it('should create a new user', (done) => {
 			request.post(api('users.create'))
@@ -523,7 +523,7 @@ describe('[Users]', function() {
 		});
 
 		describe('Testing if the returned token is valid:', (done) => {
-			it('should return 200', done => request.post(api('users.createToken'))
+			it('should return 200', (done) => request.post(api('users.createToken'))
 				.set(credentials)
 				.send({username: user.username})
 				.expect('Content-Type', 'application/json')

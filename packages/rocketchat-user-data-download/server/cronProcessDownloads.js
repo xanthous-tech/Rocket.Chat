@@ -272,13 +272,13 @@ const continueExportingRoom = function(exportOperation, exportOpRoomData) {
 };
 
 const isExportComplete = function(exportOperation) {
-	const incomplete = exportOperation.roomList.some(exportOpRoomData => exportOpRoomData.status !== 'completed');
+	const incomplete = exportOperation.roomList.some((exportOpRoomData) => exportOpRoomData.status !== 'completed');
 
 	return !incomplete;
 };
 
 const isDownloadFinished = function(exportOperation) {
-	const anyDownloadPending = exportOperation.fileList.some(fileData => !fileData.copied && !fileData.remote);
+	const anyDownloadPending = exportOperation.fileList.some((fileData) => !fileData.copied && !fileData.remote);
 
 	return !anyDownloadPending;
 };
@@ -465,7 +465,7 @@ Meteor.startup(function() {
 
 		SyncedCron.add({
 			name: 'Generate download files for user data',
-			schedule: parser => parser.cron(`*/${ processingFrequency } * * * *`),
+			schedule: (parser) => parser.cron(`*/${ processingFrequency } * * * *`),
 			job: processDataDownloads,
 		});
 	});

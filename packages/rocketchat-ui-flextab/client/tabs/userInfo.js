@@ -6,7 +6,7 @@ import moment from 'moment';
 import {getActions} from './userActions';
 
 const more = function() {
-	return Template.instance().actions.get().map(action => typeof action === 'function' ? action.call(this) : action).filter(action => action && (!action.condition || action.condition.call(this))).slice(2);
+	return Template.instance().actions.get().map((action) => typeof action === 'function' ? action.call(this) : action).filter((action) => action && (!action.condition || action.condition.call(this))).slice(2);
 };
 
 
@@ -17,7 +17,7 @@ Template.userInfo.helpers({
 	moreActions: more,
 
 	actions() {
-		return Template.instance().actions.get().map(action => typeof action === 'function' ? action.call(this) : action).filter(action => action && (!action.condition || action.condition.call(this))).slice(0, 2);
+		return Template.instance().actions.get().map((action) => typeof action === 'function' ? action.call(this) : action).filter((action) => action && (!action.condition || action.condition.call(this))).slice(0, 2);
 	},
 	customField() {
 		if (!RocketChat.authz.hasAllPermission('view-full-other-user-info')) {
@@ -176,9 +176,9 @@ Template.userInfo.events({
 		const actions = more.call(this);
 		const groups = [];
 		const columns = [];
-		const admin = actions.filter(actions => actions.group === 'admin');
-		const others = actions.filter(action => !action.group);
-		const channel = actions.filter(actions => actions.group === 'channel');
+		const admin = actions.filter((actions) => actions.group === 'admin');
+		const others = actions.filter((action) => !action.group);
+		const channel = actions.filter((actions) => actions.group === 'channel');
 		if (others.length) {
 			groups.push({items:others});
 		}

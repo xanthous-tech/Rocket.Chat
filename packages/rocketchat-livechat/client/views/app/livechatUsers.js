@@ -31,7 +31,7 @@ Template.livechatUsers.helpers({
 				noMatchTemplate: Template.userSearchEmpty,
 				matchAll: true,
 				filter: {
-					exceptions: _.map(AgentUsers.find({}, {fields: {username: 1}}).fetch(), user => user.username),
+					exceptions: _.map(AgentUsers.find({}, {fields: {username: 1}}).fetch(), (user) => user.username),
 				},
 				selector(match) {
 					return {term: match};
@@ -53,7 +53,7 @@ Template.livechatUsers.helpers({
 				noMatchTemplate: Template.userSearchEmpty,
 				matchAll: true,
 				filter: {
-					exceptions: _.map(ManagerUsers.find({}, {fields: {username: 1}}).fetch(), user => user.username),
+					exceptions: _.map(ManagerUsers.find({}, {fields: {username: 1}}).fetch(), (user) => user.username),
 				},
 				selector(match) {
 					return {term: match};

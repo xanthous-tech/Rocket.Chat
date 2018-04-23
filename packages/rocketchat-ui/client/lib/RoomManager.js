@@ -29,7 +29,7 @@ const RoomManager = new function() {
 
 						if (openedRooms[typeName].streamActive !== true) {
 							openedRooms[typeName].streamActive = true;
-							msgStream.on(openedRooms[typeName].rid, msg =>
+							msgStream.on(openedRooms[typeName].rid, (msg) =>
 
 								RocketChat.promises.run('onClientMessageReceived', msg).then(function(msg) {
 
@@ -67,7 +67,7 @@ const RoomManager = new function() {
 		}
 
 		getOpenedRoomByRid(rid) {
-			return Object.keys(openedRooms).map(typeName => openedRooms[typeName]).find(openedRoom => openedRoom.rid === rid);
+			return Object.keys(openedRooms).map((typeName) => openedRooms[typeName]).find((openedRoom) => openedRoom.rid === rid);
 		}
 
 		getDomOfRoom(typeName, rid) {
@@ -79,7 +79,7 @@ const RoomManager = new function() {
 			if ((room.dom == null) && (rid != null)) {
 				room.dom = document.createElement('div');
 				room.dom.classList.add('room-container');
-				const contentAsFunc = content => () => content;
+				const contentAsFunc = (content) => () => content;
 
 				room.template = Blaze._TemplateWith({_id: rid}, contentAsFunc(Template.room));
 				Blaze.render(room.template, room.dom); // , nextNode, parentView
@@ -120,7 +120,7 @@ const RoomManager = new function() {
 			}
 
 			const roomsToClose = _.sortBy(_.values(openedRooms), 'lastSeen').reverse().slice(maxRoomsOpen);
-			return Array.from(roomsToClose).map(roomToClose =>
+			return Array.from(roomsToClose).map((roomToClose) =>
 				this.close(roomToClose.typeName));
 		}
 
@@ -222,7 +222,7 @@ const loadMissedMessages = function(rid) {
 	}
 	const subscription = ChatSubscription.findOne({rid});
 	return Meteor.call('loadMissedMessages', rid, lastMessage.ts, (err, result) =>
-		Array.from(result).map(item => RocketChat.promises.run('onClientMessageReceived', item).then(msg => upsertMessage({msg, subscription})))
+		Array.from(result).map((item) => RocketChat.promises.run('onClientMessageReceived', item).then((msg) => upsertMessage({msg, subscription})))
 	);
 };
 
@@ -252,7 +252,7 @@ Meteor.startup(() => {
 			RoomManager.closeAllRooms();
 			const roomTypes = RocketChat.roomTypes.roomTypes;
 			// Reload only if the current route is a channel route
-			const roomType = Object.keys(roomTypes).find(key => roomTypes[key].route && roomTypes[key].route.name === FlowRouter.current().route.name);
+			const roomType = Object.keys(roomTypes).find((key) => roomTypes[key].route && roomTypes[key].route.name === FlowRouter.current().route.name);
 			if (roomType) {
 				FlowRouter.reload();
 			}
@@ -277,7 +277,7 @@ Meteor.startup(() => {
 });
 
 
-const onDeleteMessageStream = msg => ChatMessage.remove({_id: msg._id});
+const onDeleteMessageStream = (msg) => ChatMessage.remove({_id: msg._id});
 
 
 Tracker.autorun(function() {

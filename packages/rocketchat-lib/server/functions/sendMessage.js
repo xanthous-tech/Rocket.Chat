@@ -1,4 +1,4 @@
-const objectMaybeIncluding = types => Match.Where((value) => {
+const objectMaybeIncluding = (types) => Match.Where((value) => {
 	Object.keys(types).forEach((field) => {
 		if (value[field] != null) {
 			try {
@@ -49,7 +49,7 @@ const validateAttachment = (attachment) => {
 	}
 };
 
-const validateBodyAttachments = attachments => attachments.map(validateAttachment);
+const validateBodyAttachments = (attachments) => attachments.map(validateAttachment);
 
 RocketChat.sendMessage = function(user, message, room, upsert = false) {
 	if (!user || !message || !room._id) {

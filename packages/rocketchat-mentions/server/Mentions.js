@@ -62,7 +62,7 @@ export default class MentionsServer extends Mentions {
 	}
 	getChannelbyMentions({msg}) {
 		const channels = this.getChannelMentions(msg);
-		return this.getChannels(channels.map(c => c.trim().substr(1)));
+		return this.getChannels(channels.map((c) => c.trim().substr(1)));
 	}
 	execute(message) {
 		const mentionsAll = this.getUsersByMentions(message);

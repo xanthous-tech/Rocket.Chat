@@ -17,7 +17,7 @@ const readMessage = new class {
 	constructor() {
 		this.debug = false;
 		this.callbacks = [];
-		this.read = _.debounce(force => this.readNow(force), 1000);
+		this.read = _.debounce((force) => this.readNow(force), 1000);
 		this.canReadMessage = false;
 	}
 
@@ -106,7 +106,7 @@ const readMessage = new class {
 	}
 
 	fireRead(rid) {
-		return Array.from(this.callbacks).map(cb =>	cb(rid));
+		return Array.from(this.callbacks).map((cb) =>	cb(rid));
 	}
 
 	refreshUnreadMark(rid, force) {

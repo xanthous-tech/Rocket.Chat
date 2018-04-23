@@ -84,13 +84,13 @@ class SearchProviderService {
 
 			self.add('Search.Provider', 'defaultProvider', {
 				type: 'select',
-				values: Object.keys(providers).map(key => ({key, i18nLabel: providers[key].i18nLabel})),
+				values: Object.keys(providers).map((key) => ({key, i18nLabel: providers[key].i18nLabel})),
 				public: true,
 				i18nLabel: 'Search_Provider',
 			});
 
 			Object.keys(providers)
-				.filter(key => providers[key].settings && providers[key].settings.length > 0)
+				.filter((key) => providers[key].settings && providers[key].settings.length > 0)
 				.forEach(function(key) {
 					self.section(providers[key].i18nLabel, function() {
 						providers[key].settings.forEach((setting) => {
@@ -206,7 +206,7 @@ Meteor.methods({
 			resultTemplate: searchProviderService.activeProvider.resultTemplate,
 			supportsSuggestions: searchProviderService.activeProvider.supportsSuggestions,
 			suggestionItemTemplate: searchProviderService.activeProvider.suggestionItemTemplate,
-			settings: _.mapObject(searchProviderService.activeProvider.settingsAsMap, setting => setting.value),
+			settings: _.mapObject(searchProviderService.activeProvider.settingsAsMap, (setting) => setting.value),
 		};
 	},
 });

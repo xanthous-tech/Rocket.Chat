@@ -30,7 +30,7 @@ function getEmails(accessToken) {
 export function getUser(accessToken) {
 	const identity = getIdentity(accessToken);
 	const emails = getEmails(accessToken);
-	const primaryEmail = (emails || []).find(email => email.primary === true);
+	const primaryEmail = (emails || []).find((email) => email.primary === true);
 
 	return {
 		id: identity.id,

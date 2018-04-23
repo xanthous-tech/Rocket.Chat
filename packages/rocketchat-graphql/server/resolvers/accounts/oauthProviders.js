@@ -22,7 +22,7 @@ const resolver = {
 				if (isJSON(result)) {
 					const providers = JSON.parse(result).data;
 
-					return providers.map(name => ({name}));
+					return providers.map((name) => ({name}));
 				} else {
 					throw new Error('Could not parse the result');
 				}

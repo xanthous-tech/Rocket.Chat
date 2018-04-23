@@ -35,7 +35,7 @@ Template.channelSettingsEditing.events({
 	},
 	'click .js-reset'(e, t) {
 		const {settings} = t;
-		Object.keys(settings).forEach(key => settings[key].value.set(settings[key].default.get()));
+		Object.keys(settings).forEach((key) => settings[key].value.set(settings[key].default.get()));
 	},
 	async 'click .js-save'(e, t) {
 		const {settings} = t;
@@ -373,7 +373,7 @@ Template.channelSettingsEditing.helpers({
 	},
 	modified(text = '') {
 		const {settings} = Template.instance();
-		return !Object.keys(settings).some(key => settings[key].default.get() !== settings[key].value.get()) ? text : '';
+		return !Object.keys(settings).some((key) => settings[key].default.get() !== settings[key].value.get()) ? text : '';
 	},
 	equal(text = '', text2 = '', ret = '*') {
 		return text === text2 ? '' : ret;

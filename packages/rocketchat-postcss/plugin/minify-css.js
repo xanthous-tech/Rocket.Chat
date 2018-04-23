@@ -38,13 +38,13 @@ const getExcludedPackages = () => {
 const isNotInExcludedPackages = (excludedPackages, pathInBundle) => {
 	let exclArr = [];
 	if (excludedPackages && excludedPackages instanceof Array) {
-		exclArr = excludedPackages.map(packageName => pathInBundle && pathInBundle.indexOf(`packages/${ packageName.replace(':', '_') }`) > -1);
+		exclArr = excludedPackages.map((packageName) => pathInBundle && pathInBundle.indexOf(`packages/${ packageName.replace(':', '_') }`) > -1);
 	}
 
 	return exclArr.indexOf(true) === -1;
 };
 
-const isNotImport = inputFileUrl => !(/\.import\.css$/.test(inputFileUrl) || /(?:^|\/)imports\//.test(inputFileUrl));
+const isNotImport = (inputFileUrl) => !(/\.import\.css$/.test(inputFileUrl) || /(?:^|\/)imports\//.test(inputFileUrl));
 
 const mergeCss = (css) => {
 	const originals = {};
@@ -134,7 +134,7 @@ const mergeCss = (css) => {
 	}
 
 	stringifiedCss.map.sourcesContent =
-		stringifiedCss.map.sources.map(filename => originals[filename].getContentsAsString());
+		stringifiedCss.map.sources.map((filename) => originals[filename].getContentsAsString());
 
 	const newMap = sourcemap.SourceMapGenerator.fromSourceMap(new sourcemap.SourceMapConsumer(stringifiedCss.map));
 

@@ -85,7 +85,7 @@ export class AppsRestApi {
 
 		this.api.addRoute('languages', {authRequired: false}, {
 			get() {
-				const apps = manager.get().map(prl => ({
+				const apps = manager.get().map((prl) => ({
 					id: prl.getID(),
 					languages: prl.getStorageItem().languageContent,
 				}));

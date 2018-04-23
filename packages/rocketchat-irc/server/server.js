@@ -90,7 +90,7 @@ class IrcClient {
 		// message order could not make sure here
 		this.isConnected = true;
 		const messageBuf = this.msgBuf;
-		messageBuf.forEach(msg => this.socket.write(msg));
+		messageBuf.forEach((msg) => this.socket.write(msg));
 	}
 
 	onClose() {
@@ -221,7 +221,7 @@ class IrcClient {
 		const oldMembers = room.usernames;
 		const appendMembers = _.difference(newMembers, oldMembers);
 		const removeMembers = _.difference(oldMembers, newMembers);
-		appendMembers.forEach(member => this.createUserWhenNotExist(member));
+		appendMembers.forEach((member) => this.createUserWhenNotExist(member));
 		RocketChat.models.Rooms.removeUsernamesById(room._id, removeMembers);
 		RocketChat.models.Rooms.addUsernamesById(room._id, appendMembers);
 
@@ -268,7 +268,7 @@ class IrcClient {
 	initRoomList() {
 		const roomsCursor = RocketChat.models.Rooms.findByTypeContainingUsername('c', this.user.username, {fields: {name: 1, t: 1}});
 		const rooms = roomsCursor.fetch();
-		rooms.forEach(room => this.joinRoom(room));
+		rooms.forEach((room) => this.joinRoom(room));
 	}
 
 	joinRoom(room) {

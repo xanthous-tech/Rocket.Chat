@@ -48,7 +48,7 @@ class Settings {
 	}
 
 	list() {
-		return Object.keys(this.settings).map(key => this.settings[key]);
+		return Object.keys(this.settings).map((key) => this.settings[key]);
 	}
 
 	map() {

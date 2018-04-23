@@ -7,7 +7,7 @@ import {password} from '../../data/user';
 describe('[Rooms]', function() {
 	this.retries(0);
 
-	before(done => getCredentials(done));
+	before((done) => getCredentials(done));
 
 	it('/rooms.get', (done) => {
 		request.get(api('rooms.get'))

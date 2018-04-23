@@ -169,7 +169,7 @@ const updateServices = debounce(() => {
 				service: serviceName.toLowerCase(),
 			});
 		}
-	}).filter(e => e);
+	}).filter((e) => e);
 }, 2000);
 
 

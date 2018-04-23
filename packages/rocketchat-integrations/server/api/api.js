@@ -86,7 +86,7 @@ function buildSandbox(store = {}) {
 		},
 	};
 
-	Object.keys(RocketChat.models).filter(k => !k.startsWith('_')).forEach(k => sandbox[k] = RocketChat.models[k]);
+	Object.keys(RocketChat.models).filter((k) => !k.startsWith('_')).forEach((k) => sandbox[k] = RocketChat.models[k]);
 	return {store, sandbox};
 }
 

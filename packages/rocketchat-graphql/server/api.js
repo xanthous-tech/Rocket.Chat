@@ -30,10 +30,10 @@ graphQLServer.use('/api/graphql', (req, res, next) => {
 graphQLServer.use(
 	'/api/graphql',
 	bodyParser.json(),
-	graphqlExpress(request => ({
+	graphqlExpress((request) => ({
 		schema: executableSchema,
 		context: jsAccountsContext(request),
-		formatError: e => ({
+		formatError: (e) => ({
 			message: e.message,
 			locations: e.locations,
 			path: e.path,
@@ -56,7 +56,7 @@ const startSubscriptionServer = () => {
 			schema: executableSchema,
 			execute,
 			subscribe,
-			onConnect: connectionParams => ({authToken: connectionParams.Authorization}),
+			onConnect: (connectionParams) => ({authToken: connectionParams.Authorization}),
 		},
 		{
 			port: subscriptionPort,

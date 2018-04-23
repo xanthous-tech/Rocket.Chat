@@ -7,7 +7,7 @@ describe('Incoming Integrations', function() {
 
 	let integration;
 
-	before(done => getCredentials(done));
+	before((done) => getCredentials(done));
 
 	before((done) => {
 		request.post(api('integrations.create'))

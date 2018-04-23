@@ -169,7 +169,7 @@ function renderPRs(prs) {
 		prs.forEach((pr) => {
 			let contributors = _.compact(_.difference(pr.contributors, nonContributors))
 				.sort()
-				.map(contributor => `[@${ contributor }](https://github.com/${ contributor })`)
+				.map((contributor) => `[@${ contributor }](https://github.com/${ contributor })`)
 				.join(' & ');
 
 			if (contributors) {

@@ -95,7 +95,7 @@ Template.pushNotificationsFlexTab.helpers({
 	},
 	disabled() {
 		const {original, form} = Template.instance();
-		return Object.keys(original).every(key => original[key].get() === form[key].get());
+		return Object.keys(original).every((key) => original[key].get() === form[key].get());
 	},
 });
 
@@ -222,7 +222,7 @@ Template.pushNotificationsFlexTab.events({
 		switch (key) {
 			case 'audioNotificationValue':
 				const audioAssets = RocketChat.CustomSounds && RocketChat.CustomSounds.getList && RocketChat.CustomSounds.getList() || [];
-				const audioAssetsArray = audioAssets.map(audio => ({
+				const audioAssetsArray = audioAssets.map((audio) => ({
 					id: `audioNotificationValue${ audio.name }`,
 					name: 'audioNotificationValue',
 					label: audio.name,
@@ -313,7 +313,7 @@ Template.pushNotificationsFlexTab.events({
 			popoverClass: 'notifications-preferences',
 			template: 'pushNotificationsPopover',
 			data: {
-				change : value => instance.form[key].set(key === 'desktopNotificationDuration' ? parseInt(value) : value),
+				change : (value) => instance.form[key].set(key === 'desktopNotificationDuration' ? parseInt(value) : value),
 				value: instance.form[key].get(),
 				options,
 			},

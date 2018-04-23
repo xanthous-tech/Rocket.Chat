@@ -35,7 +35,7 @@ function batch(arr, limit, fn) {
 	if (!arr.length) {
 		return Promise.resolve();
 	}
-	return Promise.all(arr.splice(0, limit).map(item => fn(item))).then(() => batch(arr, limit, fn));
+	return Promise.all(arr.splice(0, limit).map((item) => fn(item))).then(() => batch(arr, limit, fn));
 }
 
 RocketChat.Migrations.add({

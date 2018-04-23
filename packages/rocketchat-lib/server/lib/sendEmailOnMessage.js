@@ -99,7 +99,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room) {
 	if (room.t === 'd') {
 		usersToSendEmail[message.rid.replace(message.u._id, '')] = 'direct';
 	} else {
-		let isMentionAll = message.mentions.find(mention => mention._id === 'all');
+		let isMentionAll = message.mentions.find((mention) => mention._id === 'all');
 
 		if (isMentionAll) {
 			const maxMembersForNotification = RocketChat.settings.get('Notifications_Max_Room_Members');
@@ -114,7 +114,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room) {
 			query = RocketChat.models.Subscriptions.findByRoomId(room._id);
 		} else {
 			// Query only mentioned users, will be always a few users
-			const userIds = message.mentions.map(mention => mention._id);
+			const userIds = message.mentions.map((mention) => mention._id);
 			query = RocketChat.models.Subscriptions.findByRoomIdAndUserIdsOrAllMessages(room._id, userIds);
 		}
 
@@ -133,7 +133,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room) {
 				return delete usersToSendEmail[sub.u._id];
 			}
 
-			const mentionedUser = isMentionAll || message.mentions.find(mention => mention._id === sub.u._id);
+			const mentionedUser = isMentionAll || message.mentions.find((mention) => mention._id === sub.u._id);
 
 			if (emailNotifications === 'default' || emailNotifications == null) {
 				if (mentionedUser) {

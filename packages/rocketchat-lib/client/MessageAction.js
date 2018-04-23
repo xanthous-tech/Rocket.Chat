@@ -74,7 +74,7 @@ RocketChat.MessageAction = new class {
 		let allButtons = _.toArray(this.buttons.get());
 
 		if (group) {
-			allButtons = allButtons.filter(button => button.group === group);
+			allButtons = allButtons.filter((button) => button.group === group);
 		}
 
 		if (message) {

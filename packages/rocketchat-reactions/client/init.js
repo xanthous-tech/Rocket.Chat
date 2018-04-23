@@ -46,7 +46,7 @@ Meteor.startup(function() {
 		],
 		action(event) {
 			event.stopPropagation();
-			RocketChat.EmojiPicker.open(event.currentTarget, emoji => Meteor.call('setReaction', `:${ emoji }:`, this._arguments[1]._id));
+			RocketChat.EmojiPicker.open(event.currentTarget, (emoji) => Meteor.call('setReaction', `:${ emoji }:`, this._arguments[1]._id));
 		},
 		condition(message) {
 			const room = RocketChat.models.Rooms.findOne({_id: message.rid});

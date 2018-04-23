@@ -63,7 +63,7 @@ Template.createCombinedFlex.events({
 		const self = this;
 
 		let users = Template.instance().selectedUsers.get();
-		users = _.reject(Template.instance().selectedUsers.get(), _id => _id === self.valueOf());
+		users = _.reject(Template.instance().selectedUsers.get(), (_id) => _id === self.valueOf());
 
 		Template.instance().selectedUsers.set(users);
 

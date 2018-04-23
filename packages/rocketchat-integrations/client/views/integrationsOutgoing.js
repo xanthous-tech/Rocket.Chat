@@ -282,7 +282,7 @@ Template.integrationsOutgoing.events({
 			return toastr.error(TAPi18n.__('The_username_is_required'));
 		}
 
-		urls = urls.split('\n').filter(url => url.trim() !== '');
+		urls = urls.split('\n').filter((url) => url.trim() !== '');
 		if (urls.length === 0) {
 			return toastr.error(TAPi18n.__('You_should_inform_one_url_at_least'));
 		}
@@ -292,7 +292,7 @@ Template.integrationsOutgoing.events({
 		let runOnEdits;
 		if (RocketChat.integrations.outgoingEvents[event].use.triggerWords) {
 			triggerWords = $('[name=triggerWords]').val().trim();
-			triggerWords = triggerWords.split(',').filter(word => word.trim() !== '');
+			triggerWords = triggerWords.split(',').filter((word) => word.trim() !== '');
 
 			triggerWordAnywhere = $('[name=triggerWordAnywhere]:checked').val().trim();
 			runOnEdits = $('[name=runOnEdits]:checked').val().trim();

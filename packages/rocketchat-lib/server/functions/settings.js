@@ -3,12 +3,12 @@ import _ from 'underscore';
 const blockedSettings = {};
 
 if (process.env.SETTINGS_BLOCKED) {
-	process.env.SETTINGS_BLOCKED.split(',').forEach(settingId => blockedSettings[settingId] = 1);
+	process.env.SETTINGS_BLOCKED.split(',').forEach((settingId) => blockedSettings[settingId] = 1);
 }
 
 const hiddenSettings = {};
 if (process.env.SETTINGS_HIDDEN) {
-	process.env.SETTINGS_HIDDEN.split(',').forEach(settingId => hiddenSettings[settingId] = 1);
+	process.env.SETTINGS_HIDDEN.split(',').forEach((settingId) => hiddenSettings[settingId] = 1);
 }
 
 RocketChat.settings._sorter = {};
@@ -279,7 +279,7 @@ RocketChat.settings.init = function() {
 		},
 	});
 	RocketChat.settings.initialLoad = false;
-	RocketChat.settings.afterInitialLoad.forEach(fn => fn(Meteor.settings));
+	RocketChat.settings.afterInitialLoad.forEach((fn) => fn(Meteor.settings));
 };
 
 RocketChat.settings.afterInitialLoad = [];

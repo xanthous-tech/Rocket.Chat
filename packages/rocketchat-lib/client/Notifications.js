@@ -4,7 +4,7 @@ RocketChat.Notifications = new class {
 		this.loginCb = [];
 		Tracker.autorun(() => {
 			if (Meteor.userId() !== null && this.logged === false) {
-				this.loginCb.forEach(cb => cb());
+				this.loginCb.forEach((cb) => cb());
 			}
 			return this.logged = Meteor.userId() !== null;
 		});

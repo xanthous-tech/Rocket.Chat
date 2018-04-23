@@ -46,7 +46,7 @@ function getAccessToken(req) {
 
 	const barePath = req.url.substring(i + 1);
 	const splitPath = barePath.split('&');
-	const token = splitPath.find(p => p.match(/access_token=[a-zA-Z0-9]+/));
+	const token = splitPath.find((p) => p.match(/access_token=[a-zA-Z0-9]+/));
 
 	if (token) {
 		return token.replace('access_token=', '');

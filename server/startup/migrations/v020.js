@@ -30,7 +30,7 @@ RocketChat.Migrations.add({
 			return;
 		}
 
-		cursorFileMessages.fetch().forEach(msg => RocketChat.models.Uploads.update({
+		cursorFileMessages.fetch().forEach((msg) => RocketChat.models.Uploads.update({
 			_id: msg.file && msg.file._id,
 		}, {
 			$set: {

@@ -58,7 +58,7 @@ function generateSuggestion(user) {
 	}
 
 	if (Array.isArray(user.services)) {
-		let services = user.services.map(service => _.values(_.pick(service, 'name', 'username', 'firstName', 'lastName')));
+		let services = user.services.map((service) => _.values(_.pick(service, 'name', 'username', 'firstName', 'lastName')));
 
 		services = _.uniq(_.flatten(services));
 

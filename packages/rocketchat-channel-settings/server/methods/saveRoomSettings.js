@@ -18,7 +18,7 @@ Meteor.methods({
 			};
 		}
 
-		if (!Object.keys(settings).every(key => fields.includes(key))) {
+		if (!Object.keys(settings).every((key) => fields.includes(key))) {
 			throw new Meteor.Error('error-invalid-settings', 'Invalid settings provided', {
 				method: 'saveRoomSettings',
 			});

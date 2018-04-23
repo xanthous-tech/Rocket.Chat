@@ -34,7 +34,7 @@ function getRoomInfo(roomId) {
 describe('[Channels]', function() {
 	this.retries(0);
 
-	before(done => getCredentials(done));
+	before((done) => getCredentials(done));
 
 	it('/channels.create', (done) => {
 		request.post(api('channels.create'))

@@ -128,12 +128,12 @@ class ModelRooms extends RocketChat.models._Base {
 				}
 				console.log('Empty Room for Subscription', item);
 			});
-			data = data.filter(item => item);
+			data = data.filter((item) => item);
 			return this.arrayToCursor(this.processQueryOptionsOnResult(data, options));
 		}
 
 		data = RocketChat.models.Subscriptions.findByUserId(userId, {fields: {rid: 1}}).fetch();
-		data = data.map(item => item.rid);
+		data = data.map((item) => item.rid);
 
 		const query = {
 			_id: {
@@ -153,12 +153,12 @@ class ModelRooms extends RocketChat.models._Base {
 				}
 				console.log('Empty Room for Subscription', item);
 			});
-			data = data.filter(item => item && item._updatedAt > _updatedAt);
+			data = data.filter((item) => item && item._updatedAt > _updatedAt);
 			return this.arrayToCursor(this.processQueryOptionsOnResult(data, options));
 		}
 
 		let ids = RocketChat.models.Subscriptions.findByUserId(userId, {fields: {rid: 1}}).fetch();
-		ids = ids.map(item => item.rid);
+		ids = ids.map((item) => item.rid);
 
 		const query = {
 			_id: {
@@ -742,7 +742,7 @@ class ModelRooms extends RocketChat.models._Base {
 
 		if (tags != null) {
 			if (!_.isEmpty(s.trim(tags))) {
-				setData.tags = s.trim(tags).split(',').map(tag => s.trim(tag));
+				setData.tags = s.trim(tags).split(',').map((tag) => s.trim(tag));
 			} else {
 				unsetData.tags = 1;
 			}

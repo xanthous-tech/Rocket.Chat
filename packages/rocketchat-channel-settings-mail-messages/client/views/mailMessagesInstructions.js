@@ -28,7 +28,7 @@ const isEmail = (email) => {
 
 const filterNames = (old) => {
 	const reg = new RegExp(`^${ RocketChat.settings.get('UTF8_Names_Validation') }$`);
-	return [...old.replace(' ', '').toLocaleLowerCase()].filter(f => reg.test(f)).join('');
+	return [...old.replace(' ', '').toLocaleLowerCase()].filter((f) => reg.test(f)).join('');
 };
 
 Template.mailMessagesInstructions.helpers({
@@ -141,8 +141,8 @@ Template.mailMessagesInstructions.events({
 
 		const data = {
 			rid: Session.get('openedRoom'),
-			to_users: selectedUsers.get().map(user => user.username),
-			to_emails: selectedEmails.get().map(email => email.text).toString(),
+			to_users: selectedUsers.get().map((user) => user.username),
+			to_emails: selectedEmails.get().map((email) => email.text).toString(),
 			subject,
 			messages: selectedMessages.get(),
 			language: localStorage.getItem('userLanguage'),
@@ -159,11 +159,11 @@ Template.mailMessagesInstructions.events({
 	},
 	'click .rc-input--usernames .rc-tags__tag'({target}, t) {
 		const {username} = Blaze.getData(target);
-		t.selectedUsers.set(t.selectedUsers.get().filter(user => user.username !== username));
+		t.selectedUsers.set(t.selectedUsers.get().filter((user) => user.username !== username));
 	},
 	'click .rc-input--emails .rc-tags__tag'({target}, t) {
 		const {text} = Blaze.getData(target);
-		t.selectedEmails.set(t.selectedEmails.get().filter(email => email.text !== text));
+		t.selectedEmails.set(t.selectedEmails.get().filter((email) => email.text !== text));
 	},
 	'click .rc-popup-list__item'(e, t) {
 		t.ac.onItemClick(this, e);
@@ -236,7 +236,7 @@ Template.mailMessagesInstructions.onRendered(function() {
 		const messages = selectedMessages.get();
 
 		if ($(this).hasClass('selected')) {
-			selectedMessages.set(messages.filter(message => message !== id));
+			selectedMessages.set(messages.filter((message) => message !== id));
 		} else {
 			selectedMessages.set(messages.concat(id));
 		}
@@ -252,9 +252,9 @@ Template.mailMessagesInstructions.onCreated(function() {
 	this.selectedUsers = new ReactiveVar([]);
 	this.userFilter = new ReactiveVar('');
 
-	const filter = {exceptions :[Meteor.user().username].concat(this.selectedUsers.get().map(u => u.username))};
+	const filter = {exceptions :[Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username))};
 	Deps.autorun(() => {
-		filter.exceptions = [Meteor.user().username].concat(this.selectedUsers.get().map(u => u.username));
+		filter.exceptions = [Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username));
 	});
 
 	this.ac = new AutoComplete(

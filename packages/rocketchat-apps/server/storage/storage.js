@@ -64,7 +64,7 @@ export class AppRealStorage extends AppStorage {
 
 			const items = new Map();
 
-			docs.forEach(i => items.set(i.id, i));
+			docs.forEach((i) => items.set(i.id, i));
 
 			resolve(items);
 		});
@@ -78,7 +78,7 @@ export class AppRealStorage extends AppStorage {
 				return reject(e);
 			}
 
-			this.retrieveOne(item.id).then(updated => resolve(updated)).catch(err => reject(err));
+			this.retrieveOne(item.id).then((updated) => resolve(updated)).catch((err) => reject(err));
 		});
 	}
 

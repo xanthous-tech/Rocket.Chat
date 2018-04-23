@@ -26,7 +26,7 @@ loki.LokiOps.$ne = function(a, b) {
 const lokiIn = loki.LokiOps.$in;
 loki.LokiOps.$in = function(a, b) {
 	if (Array.isArray(a)) {
-		return a.some(subA => lokiIn(subA, b));
+		return a.some((subA) => lokiIn(subA, b));
 	}
 	return lokiIn(a, b);
 };
@@ -36,7 +36,7 @@ loki.LokiOps.$nin = function(a, b) {
 };
 
 loki.LokiOps.$all = function(a, b) {
-	return b.every(subB => a.includes(subB));
+	return b.every((subB) => a.includes(subB));
 };
 
 loki.LokiOps.$exists = function(a, b) {
@@ -634,7 +634,7 @@ class ModelsBaseCache extends EventEmitter {
 				}
 
 				if (field === '$and' || field === '$or') {
-					query[field] = value.map(subValue => this.processQuery(subValue, field));
+					query[field] = value.map((subValue) => this.processQuery(subValue, field));
 				}
 
 				if (Match.test(value, Object) && Object.keys(value).length > 0) {
@@ -675,7 +675,7 @@ class ModelsBaseCache extends EventEmitter {
 				}
 			},
 
-			forEach: fn => this.find(query, options).fetch().forEach(fn),
+			forEach: (fn) => this.find(query, options).fetch().forEach(fn),
 
 			observe: (obj) => {
 				logger.debug(this.collectionName, 'Falling back observe to model with query:', query);
@@ -790,7 +790,7 @@ class ModelsBaseCache extends EventEmitter {
 
 		this.removeFromAllIndexes(record);
 
-		const topLevelFields = Object.keys(update).map(field => field.split('.')[0]);
+		const topLevelFields = Object.keys(update).map((field) => field.split('.')[0]);
 		const updatedFields = _.without(topLevelFields, ...this.ignoreUpdatedFields);
 
 		if (updatedFields.length > 0) {

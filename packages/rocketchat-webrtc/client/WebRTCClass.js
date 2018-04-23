@@ -10,7 +10,7 @@ class WebRTCTransportClass {
 			switch (type) {
 				case 'status':
 					if (onRemoteStatus && onRemoteStatus.length) {
-						onRemoteStatus.forEach(fn => fn(data));
+						onRemoteStatus.forEach((fn) => fn(data));
 					}
 			}
 		});
@@ -35,22 +35,22 @@ class WebRTCTransportClass {
 		switch (type) {
 			case 'call':
 				if (onRemoteCall && onRemoteCall.length) {
-					onRemoteCall.forEach(fn => fn(data));
+					onRemoteCall.forEach((fn) => fn(data));
 				}
 				break;
 			case 'join':
 				if (onRemoteJoin && onRemoteJoin.length) {
-					onRemoteJoin.forEach(fn => fn(data));
+					onRemoteJoin.forEach((fn) => fn(data));
 				}
 				break;
 			case 'candidate':
 				if (onRemoteCandidate && onRemoteCandidate.length) {
-					onRemoteCandidate.forEach(fn => fn(data));
+					onRemoteCandidate.forEach((fn) => fn(data));
 				}
 				break;
 			case 'description':
 				if (onRemoteDescription && onRemoteDescription.length) {
-					onRemoteDescription.forEach(fn => fn(data));
+					onRemoteDescription.forEach((fn) => fn(data));
 				}
 		}
 	}
@@ -649,7 +649,7 @@ class WebRTCClass {
 		this.monitor = false;
 		this.remoteMonitoring = false;
 		if (this.localStream != null && typeof this.localStream !== 'undefined') {
-			this.localStream.getTracks().forEach(track => track.stop());
+			this.localStream.getTracks().forEach((track) => track.stop());
 		}
 		this.localUrl.set(undefined);
 		delete this.localStream;

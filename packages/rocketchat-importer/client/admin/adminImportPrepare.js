@@ -111,12 +111,12 @@ Template.adminImportPrepare.events({
 	},
 
 	'click .button.uncheck-deleted-users'(event, template) {
-		Array.from(template.users.get()).filter(user => user.is_deleted).map(user =>
+		Array.from(template.users.get()).filter((user) => user.is_deleted).map((user) =>
 			$(`[name=${ user.user_id }]`).attr('checked', false));
 	},
 
 	'click .button.uncheck-archived-channels'(event, template) {
-		Array.from(template.channels.get()).filter(channel => channel.is_archived).map(channel =>
+		Array.from(template.channels.get()).filter((channel) => channel.is_archived).map((channel) =>
 			$(`[name=${ channel.channel_id }]`).attr('checked', false));
 	},
 });

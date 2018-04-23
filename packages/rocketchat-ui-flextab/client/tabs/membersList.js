@@ -46,7 +46,7 @@ Template.membersList.helpers({
 			console.log(e);
 		}
 		if (filter && reg) {
-			users = users.filter(user => reg.test(user.username) || reg.test(user.name));
+			users = users.filter((user) => reg.test(user.username) || reg.test(user.name));
 		}
 
 		users = users.map(function(user) {
@@ -75,13 +75,13 @@ Template.membersList.helpers({
 		});
 
 		if (RocketChat.settings.get('UI_Use_Real_Name')) {
-			users = _.sortBy(users, u => u.user.name);
+			users = _.sortBy(users, (u) => u.user.name);
 		} else {
-			users = _.sortBy(users, u => u.user.username);
+			users = _.sortBy(users, (u) => u.user.username);
 		}
 		// show online users first.
 		// sortBy is stable, so we can do this
-		users = _.sortBy(users, u => u.status === 'offline');
+		users = _.sortBy(users, (u) => u.status === 'offline');
 
 		let hasMore = undefined;
 		const usersLimit = Template.instance().usersLimit.get();
@@ -197,12 +197,12 @@ Template.membersList.events({
 			user: this.user.user,
 			hideAdminControls: RocketChat.roomTypes.roomTypes[room.t].userDetailShowAdmin(room) || false,
 			directActions: RocketChat.roomTypes.roomTypes[room.t].userDetailShowAll(room) || false,
-		}).map(action => typeof action === 'function' ? action.call(this) : action).filter(action => action && (!action.condition || action.condition.call(this)));
+		}).map((action) => typeof action === 'function' ? action.call(this) : action).filter((action) => action && (!action.condition || action.condition.call(this)));
 		const groups = [];
 		const columns = [];
-		const admin = _actions.filter(action => action.group === 'admin');
-		const others = _actions.filter(action => !action.group);
-		const channel = _actions.filter(actions => actions.group === 'channel');
+		const admin = _actions.filter((action) => action.group === 'admin');
+		const others = _actions.filter((action) => !action.group);
+		const channel = _actions.filter((actions) => actions.group === 'channel');
 		if (others.length) {
 			groups.push({items:others});
 		}

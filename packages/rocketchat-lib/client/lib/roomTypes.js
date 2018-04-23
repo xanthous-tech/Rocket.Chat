@@ -7,7 +7,7 @@ RocketChat.roomTypes = new class RocketChatRoomTypes extends RoomTypesCommon {
 		return roomType.condition == null || roomType.condition();
 	}
 	getTypes() {
-		return _.sortBy(this.roomTypesOrder, 'order').map(type => this.roomTypes[type.identifier]).filter(type => !type.condition || type.condition());
+		return _.sortBy(this.roomTypesOrder, 'order').map((type) => this.roomTypes[type.identifier]).filter((type) => !type.condition || type.condition());
 	}
 	getIcon(roomType) {
 		return this.roomTypes[roomType] && this.roomTypes[roomType].icon;
@@ -20,8 +20,8 @@ RocketChat.roomTypes = new class RocketChatRoomTypes extends RoomTypesCommon {
 	}
 	getIdentifiers(e) {
 		const except = [].concat(e);
-		const list = _.reject(this.roomTypesOrder, t => except.indexOf(t.identifier) !== -1);
-		return _.map(list, t => t.identifier);
+		const list = _.reject(this.roomTypesOrder, (t) => except.indexOf(t.identifier) !== -1);
+		return _.map(list, (t) => t.identifier);
 	}
 	getUserStatus(roomType, roomId) {
 		return this.roomTypes[roomType] && typeof this.roomTypes[roomType].getUserStatus === 'function' && this.roomTypes[roomType].getUserStatus(roomId);

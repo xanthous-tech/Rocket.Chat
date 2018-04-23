@@ -4,7 +4,7 @@ import moment from 'moment';
 Template.sidebarItem.helpers({
 	or(...args) {
 		args.pop();
-		return args.some(arg => arg);
+		return args.some((arg) => arg);
 	},
 	isRoom() {
 		return this.rid || this._id;

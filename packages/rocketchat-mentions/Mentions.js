@@ -68,7 +68,7 @@ export default class {
 		return str.match(this.userMentionRegex) || [];
 	}
 	getChannelMentions(str) {
-		return (str.match(this.channelMentionRegex) || []).map(match => match.trim());
+		return (str.match(this.channelMentionRegex) || []).map((match) => match.trim());
 	}
 	parse(message) {
 		let msg = (message && message.html) || '';

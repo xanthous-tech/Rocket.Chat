@@ -10,7 +10,7 @@ export const upsertMessage = ({msg, subscription}) => {
 	const roles = [
 		(userId && UserRoles.findOne(userId, {fields: {roles: 1}})) || {},
 		(userId && RoomRoles.findOne({rid: msg.rid, 'u._id': userId})) || {},
-	].map(e => e.roles);
+	].map((e) => e.roles);
 	msg.roles = _.union.apply(_.union, roles);
 	return ChatMessage.upsert({_id: msg._id}, msg);
 };
@@ -81,7 +81,7 @@ export const RoomHistoryManager = new class {
 				previousHeight = wrapper.scrollHeight;
 			}
 
-			messages.forEach(msg => msg.t !== 'command' && upsertMessage({msg, subscription}));
+			messages.forEach((msg) => msg.t !== 'command' && upsertMessage({msg, subscription}));
 
 			if (wrapper) {
 				const heightDiff = wrapper.scrollHeight - previousHeight;

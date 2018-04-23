@@ -178,7 +178,7 @@ Accounts.insertUserDoc = _.wrap(Accounts.insertUserDoc, function(insertUserDoc, 
 	if (user.services && !user.services.password) {
 		const defaultAuthServiceRoles = String(RocketChat.settings.get('Accounts_Registration_AuthenticationServices_Default_Roles')).split(',');
 		if (defaultAuthServiceRoles.length > 0) {
-			roles = roles.concat(defaultAuthServiceRoles.map(s => s.trim()));
+			roles = roles.concat(defaultAuthServiceRoles.map((s) => s.trim()));
 		}
 	}
 
@@ -252,7 +252,7 @@ Accounts.validateLoginAttempt(function(login) {
 	}
 
 	if (login.user.roles.includes('admin') === false && login.type === 'password' && RocketChat.settings.get('Accounts_EmailVerification') === true) {
-		const validEmail = login.user.emails.filter(email => email.verified === true);
+		const validEmail = login.user.emails.filter((email) => email.verified === true);
 		if (validEmail.length === 0) {
 			throw new Meteor.Error('error-invalid-email', 'Invalid email __email__');
 		}
@@ -290,11 +290,11 @@ Accounts.validateNewUser(function(user) {
 		return true;
 	}
 
-	domainWhiteList = domainWhiteList.split(',').map(domain => domain.trim());
+	domainWhiteList = domainWhiteList.split(',').map((domain) => domain.trim());
 
 	if (user.emails && user.emails.length > 0) {
 		const email = user.emails[0].address;
-		const inWhiteList = domainWhiteList.some(domain => email.match(`@${ RegExp.escape(domain) }$`));
+		const inWhiteList = domainWhiteList.some((domain) => email.match(`@${ RegExp.escape(domain) }$`));
 
 		if (inWhiteList === false) {
 			throw new Meteor.Error('error-invalid-domain');

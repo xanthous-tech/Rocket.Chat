@@ -20,7 +20,7 @@ this.VideoRecorder = new class {
 			return cb(false);
 		}
 
-		return navigator.getUserMedia({audio: true, video: true}, ok, e => console.log(`No live video input: ${ e }`));
+		return navigator.getUserMedia({audio: true, video: true}, ok, (e) => console.log(`No live video input: ${ e }`));
 	}
 
 	record() {

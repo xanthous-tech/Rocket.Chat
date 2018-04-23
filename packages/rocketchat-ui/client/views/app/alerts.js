@@ -37,7 +37,7 @@ Template.alerts.helpers({
 		return Template.instance().data.action ? 'rc-alerts--has-action' : '';
 	},
 	modifiers() {
-		return (Template.instance().data.modifiers || []).map(mod => `rc-alerts--${ mod }`).join(' ');
+		return (Template.instance().data.modifiers || []).map((mod) => `rc-alerts--${ mod }`).join(' ');
 	},
 });
 

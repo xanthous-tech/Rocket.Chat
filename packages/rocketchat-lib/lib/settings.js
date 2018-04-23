@@ -60,13 +60,13 @@ RocketChat.settings = {
 				return Meteor.call('saveSetting', setting._id, setting.value, setting.editor, callback);
 			};
 		};
-		const actions = _.map(settings, setting => save(setting));
+		const actions = _.map(settings, (setting) => save(setting));
 		return _(actions).reduceRight(_.wrap, (err, success) => callback(err, success))();
 	},
 	load(key, value, initialLoad) {
 		['*', key].forEach((item) => {
 			if (RocketChat.settings.callbacks[item]) {
-				RocketChat.settings.callbacks[item].forEach(callback => callback(key, value, initialLoad));
+				RocketChat.settings.callbacks[item].forEach((callback) => callback(key, value, initialLoad));
 			}
 		});
 		Object.keys(RocketChat.settings.regexCallbacks).forEach((cbKey) => {
@@ -74,7 +74,7 @@ RocketChat.settings = {
 			if (!cbValue.regex.test(key)) {
 				return;
 			}
-			cbValue.callbacks.forEach(callback => callback(key, value, initialLoad));
+			cbValue.callbacks.forEach((callback) => callback(key, value, initialLoad));
 		});
 	},
 	onload(key, callback) {

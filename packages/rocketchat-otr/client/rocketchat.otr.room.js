@@ -93,11 +93,11 @@ RocketChat.OTR.Room = class {
 		return RocketChat.OTR.crypto.importKey('jwk', EJSON.parse(publicKey), {
 			name: 'ECDH',
 			namedCurve: 'P-256',
-		}, false, []).then(peerPublicKey => RocketChat.OTR.crypto.deriveBits({
+		}, false, []).then((peerPublicKey) => RocketChat.OTR.crypto.deriveBits({
 			name: 'ECDH',
 			namedCurve: 'P-256',
 			public: peerPublicKey,
-		}, this.keyPair.privateKey, 256)).then(bits => RocketChat.OTR.crypto.digest({
+		}, this.keyPair.privateKey, 256)).then((bits) => RocketChat.OTR.crypto.digest({
 			name: 'SHA-256',
 		}, bits)).then((hashedBits) => {
 			// We truncate the hash to 128 bits.

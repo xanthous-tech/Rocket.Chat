@@ -13,7 +13,7 @@ Template.chatRoomItem.helpers({
 		}
 
 		let active = false;
-		if ([this.rid, this._id].find(id => id === Session.get('openedRoom'))) {
+		if ([this.rid, this._id].find((id) => id === Session.get('openedRoom'))) {
 			active = true;
 		}
 

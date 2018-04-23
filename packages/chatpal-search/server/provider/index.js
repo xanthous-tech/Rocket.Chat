@@ -220,7 +220,7 @@ export default class Index {
 
 		this._options = options;
 
-		this._batchIndexer = new BatchIndexer(this._options.batchSize || 100, values => this._backend.index(values));
+		this._batchIndexer = new BatchIndexer(this._options.batchSize || 100, (values) => this._backend.index(values));
 
 		this._bootstrap(clear, date);
 	}
@@ -264,7 +264,7 @@ export default class Index {
 					type,
 					user_username: doc.username,
 					user_name: doc.name,
-					user_email: doc.emails && doc.emails.map(e => e.address),
+					user_email: doc.emails && doc.emails.map((e) => e.address),
 				};
 			default: throw new Error(`Cannot index type '${ type }'`);
 		}

@@ -38,7 +38,7 @@ Meteor.startup(function() {
 
 		SyncedCron.add({
 			name: 'Remove users from Token Channels',
-			schedule: parser => parser.cron('0 * * * *'),
+			schedule: (parser) => parser.cron('0 * * * *'),
 			job: removeUsersFromTokenChannels,
 		});
 	});

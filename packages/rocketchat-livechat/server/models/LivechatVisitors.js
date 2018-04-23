@@ -165,16 +165,16 @@ class LivechatVisitors extends RocketChat.models._Base {
 		};
 
 		const saveEmail = [].concat(emails)
-			.filter(email => email && email.trim())
-			.map(email => ({address: email}));
+			.filter((email) => email && email.trim())
+			.map((email) => ({address: email}));
 
 		if (saveEmail.length > 0) {
 			update.$addToSet.visitorEmails = {$each: saveEmail};
 		}
 
 		const savePhone = [].concat(phones)
-			.filter(phone => phone && phone.trim().replace(/[^\d]/g, ''))
-			.map(phone => ({phoneNumber: phone}));
+			.filter((phone) => phone && phone.trim().replace(/[^\d]/g, ''))
+			.map((phone) => ({phoneNumber: phone}));
 
 		if (savePhone.length > 0) {
 			update.$addToSet.phone = {$each: savePhone};

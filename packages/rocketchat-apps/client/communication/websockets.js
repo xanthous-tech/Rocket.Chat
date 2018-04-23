@@ -45,23 +45,23 @@ export class AppWebsocketReceiver {
 			this.orch.parseAndLoadLanguages(result.languages);
 		});
 
-		this.listeners[AppEvents.APP_ADDED].forEach(listener => listener(appId));
+		this.listeners[AppEvents.APP_ADDED].forEach((listener) => listener(appId));
 	}
 
 	onAppRemoved(appId) {
-		this.listeners[AppEvents.APP_REMOVED].forEach(listener => listener(appId));
+		this.listeners[AppEvents.APP_REMOVED].forEach((listener) => listener(appId));
 	}
 
 	onAppUpdated(appId) {
-		this.listeners[AppEvents.APP_UPDATED].forEach(listener => listener(appId));
+		this.listeners[AppEvents.APP_UPDATED].forEach((listener) => listener(appId));
 	}
 
 	onAppStatusUpdated({appId, status}) {
-		this.listeners[AppEvents.APP_STATUS_CHANGE].forEach(listener => listener({appId, status}));
+		this.listeners[AppEvents.APP_STATUS_CHANGE].forEach((listener) => listener({appId, status}));
 	}
 
 	onAppSettingUpdated({appId}) {
-		this.listeners[AppEvents.APP_SETTING_UPDATED].forEach(listener => listener({appId}));
+		this.listeners[AppEvents.APP_SETTING_UPDATED].forEach((listener) => listener({appId}));
 	}
 
 	onCommandAdded(command) {

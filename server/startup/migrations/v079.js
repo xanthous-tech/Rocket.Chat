@@ -7,7 +7,7 @@ RocketChat.Migrations.add({
 			if (typeof integration.channel === 'string') {
 				RocketChat.models.Integrations.update({_id: integration._id}, {
 					$set: {
-						channel: integration.channel.split(',').map(channel => channel.trim()),
+						channel: integration.channel.split(',').map((channel) => channel.trim()),
 					},
 				});
 			}

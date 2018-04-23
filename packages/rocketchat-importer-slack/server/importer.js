@@ -33,7 +33,7 @@ export class SlackImporter extends Base {
 
 			if (entry.entryName === 'channels.json') {
 				super.updateProgress(ProgressStep.PREPARING_CHANNELS);
-				tempChannels = JSON.parse(entry.getData().toString()).filter(channel => channel.creator != null);
+				tempChannels = JSON.parse(entry.getData().toString()).filter((channel) => channel.creator != null);
 				return;
 			}
 
@@ -106,15 +106,15 @@ export class SlackImporter extends Base {
 		this.updateRecord({'count.messages': messagesCount, messagesstatus: null});
 		this.addCountToTotal(messagesCount);
 
-		if ([tempUsers.length, tempChannels.length, messagesCount].some(e => e === 0)) {
+		if ([tempUsers.length, tempChannels.length, messagesCount].some((e) => e === 0)) {
 			this.logger.warn(`The loaded users count ${ tempUsers.length }, the loaded channels ${ tempChannels.length }, and the loaded messages ${ messagesCount }`);
 			console.log(`The loaded users count ${ tempUsers.length }, the loaded channels ${ tempChannels.length }, and the loaded messages ${ messagesCount }`);
 			super.updateProgress(ProgressStep.ERROR);
 			return this.getProgress();
 		}
 
-		const selectionUsers = tempUsers.map(user => new SelectionUser(user.id, user.name, user.profile.email, user.deleted, user.is_bot, !user.is_bot));
-		const selectionChannels = tempChannels.map(channel => new SelectionChannel(channel.id, channel.name, channel.is_archived, true, false));
+		const selectionUsers = tempUsers.map((user) => new SelectionUser(user.id, user.name, user.profile.email, user.deleted, user.is_bot, !user.is_bot));
+		const selectionChannels = tempChannels.map((channel) => new SelectionChannel(channel.id, channel.name, channel.is_archived, true, false));
 		const selectionMessages = this.importRecord.count.messages;
 		super.updateProgress(ProgressStep.USER_SELECTION);
 
@@ -453,11 +453,11 @@ export class SlackImporter extends Base {
 	}
 
 	getSlackChannelFromName(channelName) {
-		return this.channels.channels.find(channel => channel.name === channelName);
+		return this.channels.channels.find((channel) => channel.name === channelName);
 	}
 
 	getRocketUser(slackId) {
-		const user = this.users.users.find(user => user.id === slackId);
+		const user = this.users.users.find((user) => user.id === slackId);
 
 		if (user) {
 			return RocketChat.models.Users.findOneById(user.rocketId, {fields: {username: 1, name: 1}});
@@ -490,8 +490,8 @@ export class SlackImporter extends Base {
 	}
 
 	getSelection() {
-		const selectionUsers = this.users.users.map(user => new SelectionUser(user.id, user.name, user.profile.email, user.deleted, user.is_bot, !user.is_bot));
-		const selectionChannels = this.channels.channels.map(channel => new SelectionChannel(channel.id, channel.name, channel.is_archived, true, false));
+		const selectionUsers = this.users.users.map((user) => new SelectionUser(user.id, user.name, user.profile.email, user.deleted, user.is_bot, !user.is_bot));
+		const selectionChannels = this.channels.channels.map((channel) => new SelectionChannel(channel.id, channel.name, channel.is_archived, true, false));
 		return new Selection(this.name, selectionUsers, selectionChannels, this.importRecord.count.messages);
 	}
 }

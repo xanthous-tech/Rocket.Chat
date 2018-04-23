@@ -6,7 +6,7 @@ import {Random} from 'meteor/random';
 import s from 'underscore.string';
 import hljs from 'highlight.js';
 
-const inlinecode = message =>
+const inlinecode = (message) =>
 	// Support `text`
 	 message.html = message.html.replace(/(^|&gt;|[ >_*~])\`([^`\r\n]+)\`([<_*~]|\B|\b|$)/gm, (match, p1, p2, p3) => {
 		const token = ` =!=${ Random.id() }=!=`;

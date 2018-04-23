@@ -188,7 +188,7 @@ export default class LDAP {
 			}
 		}
 
-		const usernameFilter = this.options.User_Search_Field.split(',').map(item => `(${ item }=${ username })`);
+		const usernameFilter = this.options.User_Search_Field.split(',').map((item) => `(${ item }=${ username })`);
 
 		if (usernameFilter.length === 0) {
 			logger.error('LDAP_LDAP_User_Search_Field not defined');

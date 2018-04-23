@@ -26,7 +26,7 @@ class AppClientOrchestrator {
 
 	_loadLanguages() {
 		RocketChat.API.get('apps/languages').then((info) => {
-			info.apps.forEach(rlInfo => this.parseAndLoadLanguages(rlInfo.languages));
+			info.apps.forEach((rlInfo) => this.parseAndLoadLanguages(rlInfo.languages));
 		});
 	}
 

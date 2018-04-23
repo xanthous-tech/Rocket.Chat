@@ -43,12 +43,12 @@ export class CsvImporter extends Base {
 			if (entry.entryName.toLowerCase() === 'channels.csv') {
 				super.updateProgress(ProgressStep.PREPARING_CHANNELS);
 				const parsedChannels = this.csvParser(entry.getData().toString());
-				tempChannels = parsedChannels.map(c => ({
+				tempChannels = parsedChannels.map((c) => ({
 					id: c[0].trim().replace('.', '_'),
 					name: c[0].trim(),
 					creator: c[1].trim(),
 					isPrivate: c[2].trim().toLowerCase() === 'private',
-					members: c[3].trim().split(';').map(m => m.trim()),
+					members: c[3].trim().split(';').map((m) => m.trim()),
 				}));
 				continue;
 			}
@@ -57,7 +57,7 @@ export class CsvImporter extends Base {
 			if (entry.entryName.toLowerCase() === 'users.csv') {
 				super.updateProgress(ProgressStep.PREPARING_USERS);
 				const parsedUsers = this.csvParser(entry.getData().toString());
-				tempUsers = parsedUsers.map(u => ({id: u[0].trim().replace('.', '_'), username: u[0].trim(), email: u[1].trim(), name: u[2].trim()}));
+				tempUsers = parsedUsers.map((u) => ({id: u[0].trim().replace('.', '_'), username: u[0].trim(), email: u[1].trim(), name: u[2].trim()}));
 				continue;
 			}
 
@@ -80,7 +80,7 @@ export class CsvImporter extends Base {
 					continue;
 				}
 
-				tempMessages.get(channelName).set(msgGroupData, msgs.map(m => ({username: m[0], ts: m[1], text: m[2]})));
+				tempMessages.get(channelName).set(msgGroupData, msgs.map((m) => ({username: m[0], ts: m[1], text: m[2]})));
 				continue;
 			}
 		}
@@ -132,8 +132,8 @@ export class CsvImporter extends Base {
 			return super.getProgress();
 		}
 
-		const selectionUsers = tempUsers.map(u => new SelectionUser(u.id, u.username, u.email, false, false, true));
-		const selectionChannels = tempChannels.map(c => new SelectionChannel(c.id, c.name, false, true, c.isPrivate));
+		const selectionUsers = tempUsers.map((u) => new SelectionUser(u.id, u.username, u.email, false, false, true));
+		const selectionChannels = tempChannels.map((c) => new SelectionChannel(c.id, c.name, false, true, c.isPrivate));
 		const selectionMessages = this.importRecord.count.messages;
 
 		super.updateProgress(ProgressStep.USER_SELECTION);
@@ -344,8 +344,8 @@ export class CsvImporter extends Base {
 	}
 
 	getSelection() {
-		const selectionUsers = this.users.users.map(u => new SelectionUser(u.id, u.username, u.email, false, false, true));
-		const selectionChannels = this.channels.channels.map(c => new SelectionChannel(c.id, c.name, false, true, c.isPrivate));
+		const selectionUsers = this.users.users.map((u) => new SelectionUser(u.id, u.username, u.email, false, false, true));
+		const selectionChannels = this.channels.channels.map((c) => new SelectionChannel(c.id, c.name, false, true, c.isPrivate));
 		const selectionMessages = this.importRecord.count.messages;
 
 		return new Selection(this.name, selectionUsers, selectionChannels, selectionMessages);

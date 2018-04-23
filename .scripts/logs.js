@@ -31,7 +31,7 @@ function promiseRetryRateLimit(promiseFn, retryWait = 60000) {
 	return new Promise((resolve, reject) => {
 		function exec() {
 			promiseFn()
-				.then(data => resolve(data))
+				.then((data) => resolve(data))
 				.catch((error) => {
 					if (error.headers['x-ratelimit-remaining'] === '0') {
 						let reset = error.headers['x-ratelimit-reset'];
@@ -113,12 +113,12 @@ function getPullRequests(from, to) {
 
 	return git.log(logParams).then((log) => {
 		const items = log.all
-			.filter(item => /^(\*\s)[0-9a-z]+$/.test(item.hash))
+			.filter((item) => /^(\*\s)[0-9a-z]+$/.test(item.hash))
 			.map((item) => {
 				item.hash = item.hash.replace(/^(\*\s)/, '');
 				return item;
 			})
-			.filter(item => commitRegex.test(item.message));
+			.filter((item) => commitRegex.test(item.message));
 
 		const data = [];
 
@@ -137,7 +137,7 @@ function getPullRequests(from, to) {
 				const partItems = items.splice(0, 10);
 				bar.tick(partItems.length);
 
-				const promises = partItems.map(item => getPRInfo(getPRNumeberFromMessage(item.message, item), item));
+				const promises = partItems.map((item) => getPRInfo(getPRNumeberFromMessage(item.message, item), item));
 
 				return Promise.all(promises).then((result) => {
 					data.push(..._.compact(result));
@@ -146,7 +146,7 @@ function getPullRequests(from, to) {
 					} else {
 						resolve(data);
 					}
-				}).catch(error => reject(error));
+				}).catch((error) => reject(error));
 			}
 
 			process();
@@ -156,7 +156,7 @@ function getPullRequests(from, to) {
 
 function getTags() {
 	return git.tags().then((tags) => {
-		tags = tags.all.filter(tag => /^\d+\.\d+\.\d+(-rc\.\d+)?$/.test(tag));
+		tags = tags.all.filter((tag) => /^\d+\.\d+\.\d+(-rc\.\d+)?$/.test(tag));
 
 		tags = tags.sort((a, b) => {
 			if (semver.gt(a, b)) {
@@ -175,7 +175,7 @@ function getTags() {
 				tag: item,
 				before: index ? tags[--index] : null,
 			}))
-			.filter(item => item.tag === 'HEAD' || semver.gte(item.tag, minTag))
+			.filter((item) => item.tag === 'HEAD' || semver.gte(item.tag, minTag))
 			.reduce((value, item) => {
 				value[item.tag] = item;
 				return value;

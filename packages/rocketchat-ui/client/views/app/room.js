@@ -7,11 +7,11 @@ import mime from 'mime-type/with-db';
 import Clipboard from 'clipboard';
 
 window.chatMessages = window.chatMessages || {};
-const isSubscribed = _id => ChatSubscription.find({rid: _id}).count() > 0;
+const isSubscribed = (_id) => ChatSubscription.find({rid: _id}).count() > 0;
 
 const favoritesEnabled = () => RocketChat.settings.get('Favorite_Rooms');
 
-const userCanDrop = _id => !RocketChat.roomTypes.readOnly(_id, Meteor.user());
+const userCanDrop = (_id) => !RocketChat.roomTypes.readOnly(_id, Meteor.user());
 
 const openProfileTab = (e, instance, username) => {
 	const roomData = Session.get(`roomData${ Session.get('openedRoom') }`);
@@ -59,7 +59,7 @@ const mountPopover = (e, i, outerContext) => {
 
 	const [, message] = outerContext._arguments;
 
-	let menuItems = RocketChat.MessageAction.getButtons(message, context, 'menu').map(item => ({
+	let menuItems = RocketChat.MessageAction.getButtons(message, context, 'menu').map((item) => ({
 		icon: item.icon,
 		name: t(item.label),
 		type: 'message-action',
@@ -68,7 +68,7 @@ const mountPopover = (e, i, outerContext) => {
 	}));
 
 	if (window.matchMedia('(max-width: 500px)').matches) {
-		const messageItems = RocketChat.MessageAction.getButtons(message, context, 'message').map(item => ({
+		const messageItems = RocketChat.MessageAction.getButtons(message, context, 'message').map((item) => ({
 			icon: item.icon,
 			name: t(item.label),
 			type: 'message-action',
@@ -198,7 +198,7 @@ Template.room.helpers({
 				...roles.u,
 				name: RocketChat.settings.get('UI_Use_Real_Name') ? (roles.u.name || roles.u.username) : roles.u.username,
 				status: leader.status || 'offline',
-				statusDisplay: (status => status.charAt(0).toUpperCase() + status.slice(1))(leader.status || 'offline'),
+				statusDisplay: ((status) => status.charAt(0).toUpperCase() + status.slice(1))(leader.status || 'offline'),
 			};
 		}
 	},
@@ -334,7 +334,7 @@ Template.room.helpers({
 
 	toolbarButtons() {
 		const toolbar = Session.get('toolbarButtons') || {buttons: {}};
-		const buttons = Object.keys(toolbar.buttons).map(key => ({
+		const buttons = Object.keys(toolbar.buttons).map((key) => ({
 			id: key,
 			...toolbar.buttons[key],
 		}));
@@ -560,7 +560,7 @@ Template.room.events({
 		}
 
 		const [, message] = this._arguments;
-		const allItems = RocketChat.MessageAction.getButtons(message, context, 'menu').map(item => ({
+		const allItems = RocketChat.MessageAction.getButtons(message, context, 'menu').map((item) => ({
 			icon: item.icon,
 			name: t(item.label),
 			type: 'message-action',
@@ -634,7 +634,7 @@ Template.room.events({
 
 	'dragenter .dropzone'(e) {
 		const types = e.originalEvent && e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.types;
-		if (types != null && types.length > 0 && _.every(types, type => type.indexOf('text/') === -1 || type.indexOf('text/uri-list') !== -1) && userCanDrop(this._id)) {
+		if (types != null && types.length > 0 && _.every(types, (type) => type.indexOf('text/') === -1 || type.indexOf('text/uri-list') !== -1) && userCanDrop(this._id)) {
 			e.currentTarget.classList.add('over');
 		}
 	},
@@ -702,8 +702,8 @@ Template.room.events({
 			const selectedMessages = $('.messages-box .message.selected').map((i, message) => message.id);
 			const removeClass = _.difference(selectedMessages, template.getSelectedMessages());
 			const addClass = _.difference(template.getSelectedMessages(), selectedMessages);
-			removeClass.forEach(message => $(`.messages-box #${ message }`).removeClass('selected'));
-			addClass.forEach(message => $(`.messages-box #${ message }`).addClass('selected'));
+			removeClass.forEach((message) => $(`.messages-box #${ message }`).removeClass('selected'));
+			addClass.forEach((message) => $(`.messages-box #${ message }`).addClass('selected'));
 		}
 	},
 	'click .announcement'(e) {
@@ -899,7 +899,7 @@ Template.room.onRendered(function() {
 	if ((window.MutationObserver == null)) {
 		wrapperUl.addEventListener('DOMSubtreeModified', () => template.sendToBottomIfNecessaryDebounced());
 	} else {
-		const observer = new MutationObserver(mutations => mutations.forEach(() => template.sendToBottomIfNecessaryDebounced()));
+		const observer = new MutationObserver((mutations) => mutations.forEach(() => template.sendToBottomIfNecessaryDebounced()));
 
 		observer.observe(wrapperUl, {childList: true});
 	}

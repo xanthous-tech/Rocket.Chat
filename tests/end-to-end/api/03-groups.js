@@ -22,7 +22,7 @@ function getRoomInfo(roomId) {
 describe('groups', function() {
 	this.retries(0);
 
-	before(done => getCredentials(done));
+	before((done) => getCredentials(done));
 
 	it('/groups.create', (done) => {
 		request.post(api('groups.create'))

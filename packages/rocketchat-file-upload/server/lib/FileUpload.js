@@ -127,7 +127,7 @@ Object.assign(FileUpload, {
 			.max()
 			.jpeg()
 			.blur();
-		const result = transformer.toBuffer().then(out => out.toString('base64'));
+		const result = transformer.toBuffer().then((out) => out.toString('base64'));
 		image.pipe(transformer);
 		return result;
 	},

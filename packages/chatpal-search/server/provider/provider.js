@@ -300,7 +300,7 @@ class ChatpalProvider extends SearchProvider {
 	 * @private
 	 */
 	_getAcl(context) {
-		return RocketChat.models.Subscriptions.find({'u._id': context.uid}).fetch().map(room => room.rid);
+		return RocketChat.models.Subscriptions.find({'u._id': context.uid}).fetch().map((room) => room.rid);
 	}
 
 	/**

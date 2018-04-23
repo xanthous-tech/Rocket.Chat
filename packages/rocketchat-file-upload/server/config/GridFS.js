@@ -68,7 +68,7 @@ const readFromGridFS = function(storeName, fileId, file, req, res) {
 	const rs = store.getReadStream(fileId, file);
 	const ws = new stream.PassThrough();
 
-	[rs, ws].forEach(stream => stream.on('error', function(err) {
+	[rs, ws].forEach((stream) => stream.on('error', function(err) {
 		store.onReadError.call(store, err, fileId, file);
 		res.end();
 	}));
@@ -126,7 +126,7 @@ const copyFromGridFS = function(storeName, fileId, file, out) {
 	const store = UploadFS.getStore(storeName);
 	const rs = store.getReadStream(fileId, file);
 
-	[rs, out].forEach(stream => stream.on('error', function(err) {
+	[rs, out].forEach((stream) => stream.on('error', function(err) {
 		store.onReadError.call(store, err, fileId, file);
 		out.end();
 	}));

@@ -9,7 +9,7 @@ Meteor.methods({
 			throw new Meteor.Error('error-invalid-channel', 'Invalid channel', {method: 'updateIncomingIntegration'});
 		}
 
-		const channels = _.map(integration.channel.split(','), channel => s.trim(channel));
+		const channels = _.map(integration.channel.split(','), (channel) => s.trim(channel));
 
 		for (const channel of channels) {
 			if (!validChannelChars.includes(channel[0])) {

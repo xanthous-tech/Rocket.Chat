@@ -88,7 +88,7 @@ class ModelUsers extends RocketChat.models._Base {
 		if (this.useCache) {
 			const result = {
 				fetch() {
-					return RocketChat.models.Users.getDynamicView('highlights').data().filter(record => usernames.indexOf(record.username) > -1);
+					return RocketChat.models.Users.getDynamicView('highlights').data().filter((record) => usernames.indexOf(record.username) > -1);
 				},
 				count() {
 					return result.fetch().length;
@@ -453,7 +453,7 @@ class ModelUsers extends RocketChat.models._Base {
 	setPreferences(_id, preferences) {
 		const settings = Object.assign(
 			{},
-			...Object.keys(preferences).map(key => ({[`settings.preferences.${ key }`]: preferences[key]}))
+			...Object.keys(preferences).map((key) => ({[`settings.preferences.${ key }`]: preferences[key]}))
 		);
 
 		const update = {

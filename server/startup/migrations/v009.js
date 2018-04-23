@@ -30,7 +30,7 @@ RocketChat.Migrations.add({
 			// rawCollection available as of Meteor 1.0.4
 			console.log(`Migrating data from: ${ source.rawCollection().collectionName } to: ${ target.rawCollection().collectionName }`);
 
-			source.find().forEach(doc =>
+			source.find().forEach((doc) =>
 				// use upsert to account for GENERAL room created by initialData
 				 target.upsert({
 					_id: doc._id,

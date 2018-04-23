@@ -34,7 +34,7 @@ RocketChat.API.v1.addRoute('me', {authRequired: true}, {
 			'settings',
 		]);
 
-		const verifiedEmail = me.emails.find(email => email.verified);
+		const verifiedEmail = me.emails.find((email) => email.verified);
 		const userHasNotSetPreferencesYet = !me.settings || !me.settings.preferences;
 
 		me.email = verifiedEmail ? verifiedEmail.address : undefined;
@@ -57,7 +57,7 @@ RocketChat.API.v1.addRoute('shield.svg', {authRequired: false}, {
 		}
 
 		const types = RocketChat.settings.get('API_Shield_Types');
-		if (type && (types !== '*' && !types.split(',').map(t => t.trim()).includes(type))) {
+		if (type && (types !== '*' && !types.split(',').map((t) => t.trim()).includes(type))) {
 			throw new Meteor.Error('error-shield-disabled', 'This shield type is disabled', {route: '/api/v1/shield.svg'});
 		}
 

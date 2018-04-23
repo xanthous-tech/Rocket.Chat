@@ -102,7 +102,7 @@ const addEmojiToRecents = (emoji) => {
 	}
 };
 
-const emojiSort = recents => (a, b) => {
+const emojiSort = (recents) => (a, b) => {
 	let idA = a._id;
 	let idB = a._id;
 
@@ -324,7 +324,7 @@ Template.messagePopupConfig.helpers({
 					}
 
 					const regExp = new RegExp(`^${ RegExp.escape(key) }`, 'i');
-					const recents = RocketChat.EmojiPicker.getRecent().map(item => `:${ item }:`);
+					const recents = RocketChat.EmojiPicker.getRecent().map((item) => `:${ item }:`);
 					return Object.keys(collection).map((key) => {
 						const value = collection[key];
 						return {
@@ -332,7 +332,7 @@ Template.messagePopupConfig.helpers({
 							data: value,
 						};
 					})
-						.filter(obj => regExp.test(obj._id))
+						.filter((obj) => regExp.test(obj._id))
 						.sort(emojiSort(recents))
 						.slice(0, 10);
 				},
@@ -362,7 +362,7 @@ Template.messagePopupConfig.helpers({
 					}
 
 					const regExp = new RegExp(`^${ RegExp.escape(key) }`, 'i');
-					const recents = RocketChat.EmojiPicker.getRecent().map(item => `:${ item }:`);
+					const recents = RocketChat.EmojiPicker.getRecent().map((item) => `:${ item }:`);
 					return Object.keys(collection).map((key) => {
 						const value = collection[key];
 						return {
@@ -370,7 +370,7 @@ Template.messagePopupConfig.helpers({
 							data: value,
 						};
 					})
-						.filter(obj => regExp.test(obj._id))
+						.filter((obj) => regExp.test(obj._id))
 						.sort(emojiSort(recents))
 						.slice(0, 10);
 				},

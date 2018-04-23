@@ -205,7 +205,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 			_, s, console, moment,
 			Store: {
 				set: (key, val) => store[key] = val,
-				get: key => store[key],
+				get: (key) => store[key],
 			},
 			HTTP: (method, url, options) => {
 				try {
@@ -218,7 +218,7 @@ RocketChat.integrations.triggerHandler = new class RocketChatIntegrationHandler 
 			},
 		};
 
-		Object.keys(RocketChat.models).filter(k => !k.startsWith('_')).forEach((k) => {
+		Object.keys(RocketChat.models).filter((k) => !k.startsWith('_')).forEach((k) => {
 			sandbox[k] = RocketChat.models[k];
 		});
 

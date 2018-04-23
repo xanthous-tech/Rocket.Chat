@@ -100,7 +100,7 @@ this.Modal = (function() {
 			self.$footer = self.$modal.find('footer');
 			self.$close.unbind('click').click(close);
 			win.unbind('resize.modal').bind('resize.modal', check);
-			return win.unbind('keydown.modal').bind('keydown.modal', e => keydown(e));
+			return win.unbind('keydown.modal').bind('keydown.modal', (e) => keydown(e));
 		}
 	}
 

@@ -6,7 +6,7 @@ Meteor.methods({
 
 		if (updatedAt instanceof Date) {
 			return {
-				update: records.filter(record => record._updatedAt > updatedAt),
+				update: records.filter((record) => record._updatedAt > updatedAt),
 				remove: RocketChat.models.Permissions.trashFindDeletedAfter(updatedAt, {}, {fields: {_id: 1, _deletedAt: 1}}).fetch(),
 			};
 		}

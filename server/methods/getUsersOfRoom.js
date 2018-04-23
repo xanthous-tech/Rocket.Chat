@@ -22,7 +22,7 @@ Meteor.methods({
 			return record._user.status !== 'offline';
 		};
 
-		const map = record => ({
+		const map = (record) => ({
 			_id: record._user._id,
 			username: record._user.username,
 			name: record._user.name,

@@ -79,7 +79,7 @@ Template.livechatDepartmentForm.events({
 		e.preventDefault();
 
 		let selectedAgents = instance.selectedAgents.get();
-		selectedAgents = _.reject(selectedAgents, agent => agent._id === this._id);
+		selectedAgents = _.reject(selectedAgents, (agent) => agent._id === this._id);
 		instance.selectedAgents.set(selectedAgents);
 	},
 

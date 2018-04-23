@@ -9,7 +9,7 @@ import supertest from 'supertest';
 describe('miscellaneous', function() {
 	this.retries(0);
 
-	before(done => getCredentials(done));
+	before((done) => getCredentials(done));
 
 	describe('API default', () => {
 		// Required by mobile apps

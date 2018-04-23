@@ -18,7 +18,7 @@ import supertest from 'supertest';
 describe('[Chat]', function() {
 	this.retries(0);
 
-	before(done => getCredentials(done));
+	before((done) => getCredentials(done));
 
 	describe('/chat.postMessage', () => {
 

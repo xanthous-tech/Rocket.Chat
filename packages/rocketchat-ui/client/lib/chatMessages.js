@@ -3,7 +3,7 @@ import s from 'underscore.string';
 import moment from 'moment';
 import toastr from 'toastr';
 
-const reply = id => id && `[ ](${ RocketChat.MessageAction.getPermaLink(id) }) `;
+const reply = (id) => id && `[ ](${ RocketChat.MessageAction.getPermaLink(id) }) `;
 
 this.ChatMessages = class ChatMessages {
 	init(node) {

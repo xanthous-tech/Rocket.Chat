@@ -47,7 +47,7 @@ RocketChat.callbacks.add = function(hook, callback, priority, id) {
 		const err = new Error;
 		callback.stack = err.stack;
 	}
-	if (RocketChat.callbacks[hook].find(cb => cb.id === callback.id)) {
+	if (RocketChat.callbacks[hook].find((cb) => cb.id === callback.id)) {
 		return;
 	}
 	RocketChat.callbacks[hook].push(callback);
@@ -61,7 +61,7 @@ RocketChat.callbacks.add = function(hook, callback, priority, id) {
 */
 
 RocketChat.callbacks.remove = function(hookName, id) {
-	RocketChat.callbacks[hookName] = _.reject(RocketChat.callbacks[hookName], callback => callback.id === id);
+	RocketChat.callbacks[hookName] = _.reject(RocketChat.callbacks[hookName], (callback) => callback.id === id);
 };
 
 
@@ -125,7 +125,7 @@ RocketChat.callbacks.runAsync = function(hook, item, constant) {
 	const callbacks = RocketChat.callbacks[hook];
 	if (Meteor.isServer && callbacks && callbacks.length) {
 		Meteor.defer(function() {
-			_.sortBy(callbacks, callback => callback.priority || RocketChat.callbacks.priority.MEDIUM).forEach(callback => callback(item, constant));
+			_.sortBy(callbacks, (callback) => callback.priority || RocketChat.callbacks.priority.MEDIUM).forEach((callback) => callback(item, constant));
 		});
 	} else {
 		return item;

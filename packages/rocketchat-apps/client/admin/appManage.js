@@ -104,7 +104,7 @@ Template.appManage.helpers({
 	disabled() {
 		const t = Template.instance();
 		const settings = t.settings.get();
-		return !Object.keys(settings).some(k => settings[k].hasChanged);
+		return !Object.keys(settings).some((k) => settings[k].hasChanged);
 	},
 	isReady() {
 		if (Template.instance().ready) {
@@ -152,7 +152,7 @@ Template.appManage.helpers({
 	parseDescription(i18nDescription) {
 		const item = RocketChat.Markdown.parseMessageNotEscaped({html: t(i18nDescription)});
 
-		item.tokens.forEach(t => item.html = item.html.replace(t.token, t.text));
+		item.tokens.forEach((t) => item.html = item.html.replace(t.token, t.text));
 
 		return item.html;
 	},

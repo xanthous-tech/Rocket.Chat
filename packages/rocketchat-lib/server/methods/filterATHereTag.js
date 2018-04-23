@@ -3,7 +3,7 @@ import _ from 'underscore';
 RocketChat.callbacks.add('beforeSaveMessage', function(message) {
 	// Test if the message mentions include @here.
 	if (message.mentions != null &&
-		_.pluck(message.mentions, '_id').some(item => item === 'here')) {
+		_.pluck(message.mentions, '_id').some((item) => item === 'here')) {
 
 		// Check if the user has permissions to use @here in both global and room scopes.
 		if (!RocketChat.authz.hasPermission(message.u._id, 'mention-here') && !RocketChat.authz.hasPermission(message.u._id, 'mention-here', message.rid)) {

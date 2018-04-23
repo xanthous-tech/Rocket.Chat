@@ -1,1 +1,1 @@
-Template.registerHelper('not', value => !value);
+Template.registerHelper('not', (value) => !value);

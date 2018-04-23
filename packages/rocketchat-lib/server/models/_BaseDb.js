@@ -145,13 +145,13 @@ class ModelsBaseDb extends EventEmitter {
 			'$addToSet',
 		];
 
-		const notAllowedModifiers = Object.keys(modifier).filter(i => i.startsWith('$') && cacheAllowedModifiers.includes(i) === false);
+		const notAllowedModifiers = Object.keys(modifier).filter((i) => i.startsWith('$') && cacheAllowedModifiers.includes(i) === false);
 
 		if (notAllowedModifiers.length > 0) {
 			return 'db';
 		}
 
-		const placeholderFields = Object.keys(query).filter(item => item.indexOf('$') > -1);
+		const placeholderFields = Object.keys(query).filter((item) => item.indexOf('$') > -1);
 		if (placeholderFields.length > 0) {
 			return 'db';
 		}
@@ -160,7 +160,7 @@ class ModelsBaseDb extends EventEmitter {
 	}
 
 	updateHasPositionalOperator(update) {
-		return Object.keys(update).some(key => key.includes('.$') || (!Match.test(update[key], Object) && this.updateHasPositionalOperator(update[key])));
+		return Object.keys(update).some((key) => key.includes('.$') || (!Match.test(update[key], Object) && this.updateHasPositionalOperator(update[key])));
 	}
 
 	processOplogRecord(action) {
@@ -255,7 +255,7 @@ class ModelsBaseDb extends EventEmitter {
 				records = [records];
 			}
 
-			ids = records.map(item => item._id);
+			ids = records.map((item) => item._id);
 			if (options.upsert !== true && this.updateHasPositionalOperator(update) === false) {
 				query = {
 					_id: {

@@ -56,7 +56,7 @@ export function getLdapUserUniqueID(ldapUser) {
 	Unique_Identifier_Field = Unique_Identifier_Field.concat(User_Search_Field);
 
 	if (Unique_Identifier_Field.length > 0) {
-		Unique_Identifier_Field = Unique_Identifier_Field.find(field => !_.isEmpty(ldapUser._raw[field]));
+		Unique_Identifier_Field = Unique_Identifier_Field.find((field) => !_.isEmpty(ldapUser._raw[field]));
 		if (Unique_Identifier_Field) {
 			Unique_Identifier_Field = {
 				attribute: Unique_Identifier_Field,
@@ -97,7 +97,7 @@ export function getDataToSyncUserData(ldapUser, user) {
 				default:
 					const [outerKey, innerKeys] = userField.split(/\.(.+)/);
 
-					if (!_.find(whitelistedUserFields, el => el === outerKey)) {
+					if (!_.find(whitelistedUserFields, (el) => el === outerKey)) {
 						logger.debug(`user attribute not whitelisted: ${ userField }`);
 						return;
 					}
@@ -384,7 +384,7 @@ const addCronJob = _.debounce(Meteor.bindEnvironment(function addCronJobDebounce
 		logger.info('Enabling LDAP Background Sync');
 		SyncedCron.add({
 			name: jobName,
-			schedule: parser => parser.text(RocketChat.settings.get('LDAP_Background_Sync_Interval')),
+			schedule: (parser) => parser.text(RocketChat.settings.get('LDAP_Background_Sync_Interval')),
 			job() {
 				sync();
 			},

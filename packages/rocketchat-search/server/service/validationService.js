@@ -45,7 +45,7 @@ class ValidationService {
 				}
 			});
 
-			result.message.docs.filter(msg => msg.valid);
+			result.message.docs.filter((msg) => msg.valid);
 		}
 
 		if (result.room) {
@@ -59,7 +59,7 @@ class ValidationService {
 				}
 			});
 
-			result.room.docs.filter(room => room.valid);
+			result.room.docs.filter((room) => room.valid);
 		}
 
 		return result;

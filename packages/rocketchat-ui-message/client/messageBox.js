@@ -140,7 +140,7 @@ Template.messageBox__actions.helpers(methods);
 Template.messageBox__actionsSmall.helpers(methods);
 Template.messageBox.helpers({
 	mdButtons() {
-		return markdownButtons.filter(button => !button.condition || button.condition());
+		return markdownButtons.filter((button) => !button.condition || button.condition());
 	},
 	roomName() {
 		const roomData = Session.get(`roomData${ this._id }`);
@@ -409,7 +409,7 @@ Template.messageBox.events({
 					name: `Clipboard - ${ moment().format(RocketChat.settings.get('Message_TimeAndDateFormat')) }`,
 				};
 			}
-		}).filter(e => e);
+		}).filter((e) => e);
 		if (files.length) {
 			return fileUpload(files);
 		} else {
@@ -418,7 +418,7 @@ Template.messageBox.events({
 	},
 	'keydown .js-input-message': firefoxPasteUpload(function(event, t) {
 		if ((navigator.platform.indexOf('Mac') !== -1 && event.metaKey) || (navigator.platform.indexOf('Mac') === -1 && event.ctrlKey)) {
-			const action = markdownButtons.find(action => action.command === event.key.toLowerCase() && (!action.condition || action.condition()));
+			const action = markdownButtons.find((action) => action.command === event.key.toLowerCase() && (!action.condition || action.condition()));
 			if (action) {
 				applyMd.apply(action, [event, t]);
 			}
@@ -658,7 +658,7 @@ Meteor.startup(function() {
 	Tracker.autorun(function() {
 		const MapView_GMapsAPIKey = RocketChat.settings.get('MapView_GMapsAPIKey');
 		if (RocketChat.settings.get('MapView_Enabled') === true && MapView_GMapsAPIKey && MapView_GMapsAPIKey.length && navigator.geolocation && navigator.geolocation.getCurrentPosition) {
-			const success = position => RocketChat.Geolocation.set(position);
+			const success = (position) => RocketChat.Geolocation.set(position);
 			const error = (error) => {
 				console.log('Error getting your geolocation', error);
 				return RocketChat.Geolocation.set(false);

@@ -26,7 +26,7 @@ LoggerManager = new class extends EventEmitter { // eslint-disable-line no-undef
 		});
 	}
 	dispatchQueue() {
-		_.each(this.queue, item => item.logger._log.apply(item.logger, item.args));
+		_.each(this.queue, (item) => item.logger._log.apply(item.logger, item.args));
 		this.clearQueue();
 	}
 	clearQueue() {
@@ -236,7 +236,7 @@ class _Logger {
 		}
 		let len = 0;
 
-		len = Math.max.apply(null, message.map(line => line.length));
+		len = Math.max.apply(null, message.map((line) => line.length));
 
 		const topLine = `+--${ s.pad('', len, '-') }--+`;
 		const separator = `|  ${ s.pad('', len, '') }  |`;
@@ -249,7 +249,7 @@ class _Logger {
 		}
 		lines.push(separator);
 
-		lines = [...lines, ...message.map(line => `|  ${ s.rpad(line, len) }  |`)];
+		lines = [...lines, ...message.map((line) => `|  ${ s.rpad(line, len) }  |`)];
 
 		lines.push(separator);
 		lines.push(topLine);

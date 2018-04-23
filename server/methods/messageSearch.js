@@ -216,7 +216,7 @@ Meteor.methods({
 				query.rid = {
 					$in: RocketChat.models.Subscriptions.findByUserId(user._id)
 						.fetch()
-						.map(subscription => subscription.rid),
+						.map((subscription) => subscription.rid),
 				};
 			}
 

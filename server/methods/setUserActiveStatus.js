@@ -30,7 +30,7 @@ Meteor.methods({
 				RocketChat.models.Users.unsetReason(userId);
 			}
 
-			const destinations = Array.isArray(user.emails) && user.emails.map(email => `${ user.name || user.username }<${ email.address }>`);
+			const destinations = Array.isArray(user.emails) && user.emails.map((email) => `${ user.name || user.username }<${ email.address }>`);
 
 			if (destinations) {
 				const email = {

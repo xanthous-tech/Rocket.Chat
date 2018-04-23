@@ -11,14 +11,14 @@ beforeEach(function() {
 	mention = new MentionsServer({
 		pattern: '[0-9a-zA-Z-_.]+',
 		messageMaxAll: () => 4, // || RocketChat.settings.get('Message_MaxAll')
-		getUsers: usernames =>
+		getUsers: (usernames) =>
 			 [{
 				_id: 1,
 				username: 'rocket.cat',
 			}, {
 				_id: 2,
 				username: 'jon',
-			}].filter(user => usernames.includes(user.username)), // Meteor.users.find({ username: {$in: _.unique(usernames)}}, { fields: {_id: true, username: true }}).fetch();
+			}].filter((user) => usernames.includes(user.username)), // Meteor.users.find({ username: {$in: _.unique(usernames)}}, { fields: {_id: true, username: true }}).fetch();
 		getChannel: () =>
 			 ({
 				usernames: [{
@@ -34,7 +34,7 @@ beforeEach(function() {
 			return [{
 				_id: 1,
 				name: 'general',
-			}].filter(channel => channels.includes(channel.name));
+			}].filter((channel) => channels.includes(channel.name));
 			// return RocketChat.models.Rooms.find({ name: {$in: _.unique(channels)}, t: 'c'	}, { fields: {_id: 1, name: 1 }}).fetch();
 		},
 	});

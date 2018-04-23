@@ -195,8 +195,8 @@ export class HipChatEnterpriseImporter extends Base {
 					return;
 				}
 
-				const selectionUsers = tempUsers.map(u => new SelectionUser(u.id, u.username, u.email, u.isDeleted, false, true));
-				const selectionChannels = tempRooms.map(r => new SelectionChannel(r.id, r.name, r.isArchived, true, r.isPrivate));
+				const selectionUsers = tempUsers.map((u) => new SelectionUser(u.id, u.username, u.email, u.isDeleted, false, true));
+				const selectionChannels = tempRooms.map((r) => new SelectionChannel(r.id, r.name, r.isArchived, true, r.isPrivate));
 				const selectionMessages = this.importRecord.count.messages;
 
 				super.updateProgress(ProgressStep.USER_SELECTION);
@@ -444,8 +444,8 @@ export class HipChatEnterpriseImporter extends Base {
 	}
 
 	getSelection() {
-		const selectionUsers = this.users.users.map(u => new SelectionUser(u.id, u.username, u.email, false, false, true));
-		const selectionChannels = this.channels.channels.map(c => new SelectionChannel(c.id, c.name, false, true, c.isPrivate));
+		const selectionUsers = this.users.users.map((u) => new SelectionUser(u.id, u.username, u.email, false, false, true));
+		const selectionChannels = this.channels.channels.map((c) => new SelectionChannel(c.id, c.name, false, true, c.isPrivate));
 		const selectionMessages = this.importRecord.count.messages;
 
 		return new Selection(this.name, selectionUsers, selectionChannels, selectionMessages);

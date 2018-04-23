@@ -44,7 +44,7 @@ Template.userEdit.events({
 		e.stopPropagation();
 		e.preventDefault();
 		let roles = t.roles.get();
-		roles = roles.filter(el => el !== this.valueOf());
+		roles = roles.filter((el) => el !== this.valueOf());
 		t.roles.set(roles);
 		$(`[title=${ this }]`).remove();
 	},
@@ -105,7 +105,7 @@ Template.userEdit.onCreated(function() {
 		const roleSelect = this.$('.remove-role').toArray();
 
 		if (roleSelect.length > 0) {
-			const notSorted = roleSelect.map(role => role.title);
+			const notSorted = roleSelect.map((role) => role.title);
 			// Remove duplicate strings from the array
 			userData.roles = notSorted.filter((el, index) => notSorted.indexOf(el) === index);
 		}

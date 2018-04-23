@@ -10,7 +10,7 @@ Meteor.methods({
 
 		if (user) {
 			const regex = new RegExp(`^${ s.escapeRegExp(email) }$`, 'i');
-			email = (user.emails || []).map(item => item.address).find(userEmail => regex.test(userEmail));
+			email = (user.emails || []).map((item) => item.address).find((userEmail) => regex.test(userEmail));
 
 			if (RocketChat.settings.get('Forgot_Password_Customized')) {
 				const data = {name: user.name, email};

@@ -55,7 +55,7 @@ export const ReadReceipt = {
 	storeReadReceipts(messages, roomId, userId) {
 		if (RocketChat.settings.get('Message_Read_Receipt_Store_Users')) {
 			const ts = new Date();
-			const receipts = messages.map(message => ({
+			const receipts = messages.map((message) => ({
 				_id: Random.id(),
 				roomId,
 				userId,
@@ -76,7 +76,7 @@ export const ReadReceipt = {
 	},
 
 	getReceipts(message) {
-		return ModelReadReceipts.findByMessageId(message._id).map(receipt => ({
+		return ModelReadReceipts.findByMessageId(message._id).map((receipt) => ({
 			...receipt,
 			user: RocketChat.models.Users.findOneById(receipt.userId, {fields: {username: 1, name: 1}}),
 		}));

@@ -18,7 +18,7 @@ Meteor.methods({
 			'Livechat_conversation_finished_message',
 		];
 
-		const valid = settings.every(setting => validSettings.indexOf(setting._id) !== -1);
+		const valid = settings.every((setting) => validSettings.indexOf(setting._id) !== -1);
 
 		if (!valid) {
 			throw new Meteor.Error('invalid-setting');

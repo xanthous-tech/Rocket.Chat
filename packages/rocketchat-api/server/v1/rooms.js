@@ -69,7 +69,7 @@ RocketChat.API.v1.addRoute('rooms.upload/:rid', {authRequired: true}, {
 				}
 
 				const fileDate = [];
-				file.on('data', data => fileDate.push(data));
+				file.on('data', (data) => fileDate.push(data));
 
 				file.on('end', () => {
 					files.push({fieldname, file, filename, encoding, mimetype, fileBuffer: Buffer.concat(fileDate)});

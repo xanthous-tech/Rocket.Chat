@@ -98,7 +98,7 @@ class BotHelpers {
 			this.requestError();
 			return false;
 		} else {
-			return this._allUsers.fetch().map(user => user.username);
+			return this._allUsers.fetch().map((user) => user.username);
 		}
 	}
 	get onlineUsernames() {
@@ -106,7 +106,7 @@ class BotHelpers {
 			this.requestError();
 			return false;
 		} else {
-			return this._onlineUsers.fetch().map(user => user.username);
+			return this._onlineUsers.fetch().map((user) => user.username);
 		}
 	}
 	get allNames() {
@@ -114,7 +114,7 @@ class BotHelpers {
 			this.requestError();
 			return false;
 		} else {
-			return this._allUsers.fetch().map(user => user.name);
+			return this._allUsers.fetch().map((user) => user.name);
 		}
 	}
 	get onlineNames() {
@@ -122,7 +122,7 @@ class BotHelpers {
 			this.requestError();
 			return false;
 		} else {
-			return this._onlineUsers.fetch().map(user => user.name);
+			return this._onlineUsers.fetch().map((user) => user.name);
 		}
 	}
 	get allIDs() {
@@ -130,7 +130,7 @@ class BotHelpers {
 			this.requestError();
 			return false;
 		} else {
-			return this._allUsers.fetch().map(user => ({id: user._id, name: user.username}));
+			return this._allUsers.fetch().map((user) => ({id: user._id, name: user.username}));
 		}
 	}
 	get onlineIDs() {
@@ -138,7 +138,7 @@ class BotHelpers {
 			this.requestError();
 			return false;
 		} else {
-			return this._onlineUsers.fetch().map(user => ({id: user._id, name: user.username}));
+			return this._onlineUsers.fetch().map((user) => ({id: user._id, name: user.username}));
 		}
 	}
 }

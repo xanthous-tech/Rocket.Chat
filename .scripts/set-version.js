@@ -28,7 +28,7 @@ const files = [
 	'./.docker/Dockerfile.rhel',
 	'./packages/rocketchat-lib/rocketchat.info',
 ];
-const readFile = file => new Promise((resolve, reject) => {
+const readFile = (file) => new Promise((resolve, reject) => {
 	fs.readFile(file, 'utf8', (error, result) => {
 		if (error) {
 			return reject(error);
@@ -60,7 +60,7 @@ git.status()
 		}
 		return Promise.reject(`No release action for branch ${ status.current }`);
 	})
-	.then(nextVersion => inquirer.prompt([{
+	.then((nextVersion) => inquirer.prompt([{
 		type: 'list',
 		message: `The current version is ${ pkgJson.version }. Update to version:`,
 		name: 'version',
@@ -80,8 +80,8 @@ git.status()
 	})
 	.then(({version}) => {
 		selectedVersion = version;
-		return Promise.all(files.map(file => readFile(file)
-			.then(data => writeFile(file, data.replace(pkgJson.version, version)))));
+		return Promise.all(files.map((file) => readFile(file)
+			.then((data) => writeFile(file, data.replace(pkgJson.version, version)))));
 	})
 	.then(() => {
 		execSync('conventional-changelog --config .github/changelog.js -i HISTORY.md -s');
@@ -99,20 +99,20 @@ git.status()
 
 		return git.status();
 	})
-	.then(status => inquirer.prompt([{
+	.then((status) => inquirer.prompt([{
 		type: 'checkbox',
 		message: 'Select files to commit?',
 		name: 'files',
-		choices: status.files.map(file => ({name: `${ file.working_dir } ${ file.path }`, checked: true})),
+		choices: status.files.map((file) => ({name: `${ file.working_dir } ${ file.path }`, checked: true})),
 	}]))
-	.then(answers => answers.files.length && git.add(answers.files.map(file => file.slice(2))))
+	.then((answers) => answers.files.length && git.add(answers.files.map((file) => file.slice(2))))
 	.then(() => git.commit(`Bump version to ${ selectedVersion }`))
 	.then(() => inquirer.prompt([{
 		type: 'confirm',
 		message: `Add tag ${ selectedVersion }?`,
 		name: 'tag',
 	}]))
-	.then(answers => answers.tag && git.addTag(selectedVersion))
+	.then((answers) => answers.tag && git.addTag(selectedVersion))
 	.catch((error) => {
 		console.error(error);
 	});

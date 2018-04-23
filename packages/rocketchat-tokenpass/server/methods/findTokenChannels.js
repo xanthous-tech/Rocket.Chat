@@ -13,7 +13,7 @@ Meteor.methods({
 			});
 
 			return RocketChat.models.Rooms.findByTokenpass(Object.keys(tokens))
-				.filter(room => RocketChat.Tokenpass.validateAccess(room.tokenpass, user.services.tokenpass.tcaBalances));
+				.filter((room) => RocketChat.Tokenpass.validateAccess(room.tokenpass, user.services.tokenpass.tcaBalances));
 		}
 
 		return [];

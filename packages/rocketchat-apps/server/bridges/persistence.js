@@ -45,7 +45,7 @@ export class AppPersistenceBridge {
 			associations: {$all: associations},
 		}).fetch();
 
-		return Array.isArray(records) ? records.map(r => r.data) : [];
+		return Array.isArray(records) ? records.map((r) => r.data) : [];
 	}
 
 	async remove(id, appId) {
@@ -80,7 +80,7 @@ export class AppPersistenceBridge {
 
 		this.orch.getPersistenceModel().remove(query);
 
-		return Array.isArray(records) ? records.map(r => r.data) : [];
+		return Array.isArray(records) ? records.map((r) => r.data) : [];
 	}
 
 	async update(id, data, upsert, appId) {

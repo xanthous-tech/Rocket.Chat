@@ -98,7 +98,7 @@ export class AppMessagesConverter {
 			return undefined;
 		}
 
-		return attachments.map(attachment => ({
+		return attachments.map((attachment) => ({
 			collapsed: attachment.collapsed,
 			color: attachment.color,
 			text: attachment.text,

@@ -50,7 +50,7 @@ FileUploadBase = class FileUploadBase {
 			store: this.store,
 			data: this.file,
 			file: this.meta,
-			onError: err => callback(err),
+			onError: (err) => callback(err),
 			onComplete: (fileData) => {
 				const file = _.pick(fileData, '_id', 'type', 'size', 'name', 'identify', 'description');
 

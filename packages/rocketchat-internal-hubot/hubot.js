@@ -127,7 +127,7 @@ class RocketChatAdapter extends Hubot.Adapter {
 		if (envelope.message.private) {
 			return this.priv(envelope, ...strings);
 		} else {
-			return this.send(envelope, ...strings.map(str => `${ envelope.user.name }: ${ str }`));
+			return this.send(envelope, ...strings.map((str) => `${ envelope.user.name }: ${ str }`));
 		}
 	}
 

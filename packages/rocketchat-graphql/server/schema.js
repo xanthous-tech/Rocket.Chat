@@ -24,6 +24,6 @@ export const executableSchema = makeExecutableSchema({
 	typeDefs: [schema],
 	resolvers,
 	logger: {
-		log: e => console.log(e),
+		log: (e) => console.log(e),
 	},
 });

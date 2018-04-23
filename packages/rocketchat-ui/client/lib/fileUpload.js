@@ -5,7 +5,7 @@ import s from 'underscore.string';
 
 function readAsDataURL(file, callback) {
 	const reader = new FileReader();
-	reader.onload = ev => callback(ev.target.result, file);
+	reader.onload = (ev) => callback(ev.target.result, file);
 
 	return reader.readAsDataURL(file);
 }
@@ -19,7 +19,7 @@ function getUploadPreview(file, callback) {
 	} else if ((file.file.type.indexOf('audio') > -1) || (file.file.type.indexOf('video') > -1) || (file.file.type.indexOf('image') > -1)) {
 		file.type = file.file.type.split('/')[0];
 
-		return readAsDataURL(file.file, content => callback(file, content));
+		return readAsDataURL(file.file, (content) => callback(file, content));
 	} else {
 		return callback(file, null);
 	}

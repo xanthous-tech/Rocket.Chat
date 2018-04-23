@@ -212,8 +212,8 @@ window.addEventListener('message', (e) => {
 					return fbLoginSuccess(response);
 				}
 
-				facebookConnectPlugin.login(e.data.permissions, fbLoginSuccess, error => fbLoginError('login-error', error));
-			}, error => fbLoginError('get-status-error', error));
+				facebookConnectPlugin.login(e.data.permissions, fbLoginSuccess, (error) => fbLoginError('login-error', error));
+			}, (error) => fbLoginError('get-status-error', error));
 			break;
 
 		case 'call-twitter-login':

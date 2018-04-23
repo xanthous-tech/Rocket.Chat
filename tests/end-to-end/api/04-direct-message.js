@@ -9,7 +9,7 @@ import supertest from 'supertest';
 describe('[Direct Messages]', function() {
 	this.retries(0);
 
-	before(done => getCredentials(done));
+	before((done) => getCredentials(done));
 
 	it('/chat.postMessage', (done) => {
 		request.post(api('chat.postMessage'))

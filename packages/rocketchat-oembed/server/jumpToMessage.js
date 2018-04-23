@@ -6,7 +6,7 @@ import QueryString from 'querystring';
 const recursiveRemove = (message, deep = 1) => {
 	if (message) {
 		if ('attachments' in message && message.attachments !== null && deep < RocketChat.settings.get('Message_QuoteChainLimit')) {
-			message.attachments.map(msg => recursiveRemove(msg, deep + 1));
+			message.attachments.map((msg) => recursiveRemove(msg, deep + 1));
 		} else {
 			delete(message.attachments);
 		}

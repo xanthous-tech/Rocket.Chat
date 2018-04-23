@@ -74,7 +74,7 @@ function makeABox(message, color = 'red') {
 	const len = _(message).reduce(function(memo, msg) {
 		return Math.max(memo, msg.length);
 	}, 0) + 4;
-	const text = message.map(msg => '|' [color] + s.lrpad(msg, len)[color] + '|' [color]).join('\n');
+	const text = message.map((msg) => '|' [color] + s.lrpad(msg, len)[color] + '|' [color]).join('\n');
 	const topLine = '+' [color] + s.pad('', len, '-')[color] + '+' [color];
 	const separator = '|' [color] + s.pad('', len, '') + '|' [color];
 	const bottomLine = '+' [color] + s.pad('', len, '-')[color] + '+' [color];

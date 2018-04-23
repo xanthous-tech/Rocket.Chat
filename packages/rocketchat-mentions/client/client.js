@@ -12,5 +12,5 @@ const MentionsClient = new Mentions({
 	},
 });
 
-RocketChat.callbacks.add('renderMessage', message => MentionsClient.parse(message), RocketChat.callbacks.priority.MEDIUM, 'mentions-message');
-RocketChat.callbacks.add('renderMentions', message => MentionsClient.parse(message), RocketChat.callbacks.priority.MEDIUM, 'mentions-mentions');
+RocketChat.callbacks.add('renderMessage', (message) => MentionsClient.parse(message), RocketChat.callbacks.priority.MEDIUM, 'mentions-message');
+RocketChat.callbacks.add('renderMentions', (message) => MentionsClient.parse(message), RocketChat.callbacks.priority.MEDIUM, 'mentions-mentions');

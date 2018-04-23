@@ -71,7 +71,7 @@ const getFromServer = (cb, type) => {
 
 		if (roomsLength) {
 			for (let i = 0; i < roomsLength; i++) {
-				const alreadyOnClient = resultsFromClient.find(item => item._id === results.rooms[i]._id);
+				const alreadyOnClient = resultsFromClient.find((item) => item._id === results.rooms[i]._id);
 				if (alreadyOnClient) {
 					continue;
 				}
