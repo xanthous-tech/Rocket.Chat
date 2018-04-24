@@ -6,9 +6,9 @@ Meteor.startup(function() {
 					const type = FlowRouter.current().route.name === 'channel' ? 'c' : 'p';
 					RoomManager.close(type + FlowRouter.getParam('name'));
 
-					const subscription = ChatSubscription.findOne({rid: msg.rid});
+					const subscription = ChatSubscription.findOne({ rid: msg.rid });
 					const route = subscription.t === 'c' ? 'channel' : 'group';
-					FlowRouter.go(route, {name: subscription.name}, FlowRouter.current().queryParams);
+					FlowRouter.go(route, { name: subscription.name }, FlowRouter.current().queryParams);
 				}
 			}
 		});

@@ -1,14 +1,14 @@
-import {graphqlExpress, graphiqlExpress} from 'apollo-server-express';
-import {JSAccountsContext as jsAccountsContext} from '@accounts/graphql-api';
-import {SubscriptionServer} from 'subscriptions-transport-ws';
-import {execute, subscribe} from 'graphql';
-import {Meteor} from 'meteor/meteor';
-import {WebApp} from 'meteor/webapp';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import { JSAccountsContext as jsAccountsContext } from '@accounts/graphql-api';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { execute, subscribe } from 'graphql';
+import { Meteor } from 'meteor/meteor';
+import { WebApp } from 'meteor/webapp';
 import bodyParser from 'body-parser';
 import express from 'express';
 import cors from 'cors';
 
-import {executableSchema} from './schema';
+import { executableSchema } from './schema';
 
 const subscriptionPort = RocketChat.settings.get('Graphql_Subscription_Port') || 3100;
 
@@ -56,7 +56,7 @@ const startSubscriptionServer = () => {
 			schema: executableSchema,
 			execute,
 			subscribe,
-			onConnect: (connectionParams) => ({authToken: connectionParams.Authorization}),
+			onConnect: (connectionParams) => ({ authToken: connectionParams.Authorization }),
 		},
 		{
 			port: subscriptionPort,

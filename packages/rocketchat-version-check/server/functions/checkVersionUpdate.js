@@ -5,7 +5,7 @@ import logger from '../logger';
 export default () => {
 	logger.info('Checking for version updates');
 
-	const {versions} = getNewUpdates();
+	const { versions } = getNewUpdates();
 
 	const update = {
 		exists: false,

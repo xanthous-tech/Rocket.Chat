@@ -30,11 +30,11 @@ if (Meteor.isCordova) {
 			if (notification.payload.host === Meteor.absoluteUrl()) {
 				switch (notification.payload.type) {
 					case 'c':
-						return FlowRouter.go('channel', {name: notification.payload.name}, FlowRouter.current().queryParams);
+						return FlowRouter.go('channel', { name: notification.payload.name }, FlowRouter.current().queryParams);
 					case 'p':
-						return FlowRouter.go('group', {name: notification.payload.name}, FlowRouter.current().queryParams);
+						return FlowRouter.go('group', { name: notification.payload.name }, FlowRouter.current().queryParams);
 					case 'd':
-						return FlowRouter.go('direct', {username: notification.payload.sender.username}, FlowRouter.current().queryParams);
+						return FlowRouter.go('direct', { username: notification.payload.sender.username }, FlowRouter.current().queryParams);
 				}
 			} else {
 				let path = '';

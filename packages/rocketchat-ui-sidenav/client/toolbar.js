@@ -165,11 +165,11 @@ Template.toolbar.helpers({
 
 				const searchQuery = new RegExp((RegExp.escape(filterText)), 'i');
 				query.$or = [
-					{name: searchQuery},
-					{fname: searchQuery},
+					{ name: searchQuery },
+					{ fname: searchQuery },
 				];
 
-				resultsFromClient = collection.find(query, {limit: 20, sort: {unread: -1, ls: -1}}).fetch();
+				resultsFromClient = collection.find(query, { limit: 20, sort: { unread: -1, ls: -1 } }).fetch();
 
 				const resultsFromClientLength = resultsFromClient.length;
 				const user = Meteor.user();
@@ -192,7 +192,7 @@ Template.toolbar.helpers({
 			},
 
 			getValue(_id, collection, records) {
-				const doc = _.findWhere(records, {_id});
+				const doc = _.findWhere(records, { _id });
 
 				RocketChat.roomTypes.openRouteLink(doc.t, doc, FlowRouter.current().queryParams);
 				menu.close();

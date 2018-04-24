@@ -7,10 +7,10 @@ import sideNav from '../../pageobjects/side-nav.page';
 import preferencesMainContent from '../../pageobjects/preferences-main-content.page';
 import admin from '../../pageobjects/administration.page';
 
-import {username, password, email, adminUsername, adminEmail, adminPassword} from '../../data/user.js';
+import { username, password, email, adminUsername, adminEmail, adminPassword } from '../../data/user.js';
 // import {imgURL} from '../../data/interactions.js';
 
-import {checkIfUserIsValid, checkIfUserIsAdmin} from '../../data/checks';
+import { checkIfUserIsValid, checkIfUserIsAdmin } from '../../data/checks';
 
 
 describe('[User Preferences]', () => {

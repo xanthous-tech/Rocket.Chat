@@ -6,7 +6,7 @@ RocketChat.Migrations.add({
 				$set: {
 					showOnRegistration: true,
 				},
-			}, {multi: true});
+			}, { multi: true });
 		}
 	},
 });

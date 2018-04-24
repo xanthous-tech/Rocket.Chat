@@ -36,7 +36,7 @@ Template.livechatDepartments.events({
 
 	'click .department-info'(e/* , instance*/) {
 		e.preventDefault();
-		FlowRouter.go('livechat-department-edit', {_id: this._id});
+		FlowRouter.go('livechat-department-edit', { _id: this._id });
 	},
 });
 

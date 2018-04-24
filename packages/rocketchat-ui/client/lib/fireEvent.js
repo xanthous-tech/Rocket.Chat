@@ -1,5 +1,5 @@
 window.fireGlobalEvent = function _fireGlobalEvent(eventName, params) {
-	window.dispatchEvent(new CustomEvent(eventName, {detail: params}));
+	window.dispatchEvent(new CustomEvent(eventName, { detail: params }));
 
 	Tracker.autorun((computation) => {
 		const enabled = RocketChat.settings.get('Iframe_Integration_send_enable');

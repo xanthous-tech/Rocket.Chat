@@ -48,7 +48,7 @@ class LivechatVisitors extends RocketChat.models._Base {
 		};
 
 		if (!overwrite) {
-			const user = this.findOne(query, {fields: {livechatData: 1}});
+			const user = this.findOne(query, { fields: { livechatData: 1 } });
 			if (user.livechatData && typeof user.livechatData[key] !== 'undefined') {
 				return true;
 			}
@@ -99,7 +99,7 @@ class LivechatVisitors extends RocketChat.models._Base {
 	}
 
 	updateById(_id, update) {
-		return this.update({_id}, update);
+		return this.update({ _id }, update);
 	}
 
 	saveGuestById(_id, data) {
@@ -117,7 +117,7 @@ class LivechatVisitors extends RocketChat.models._Base {
 		if (data.email) {
 			if (!_.isEmpty(s.trim(data.email))) {
 				setData.visitorEmails = [
-					{address: s.trim(data.email)},
+					{ address: s.trim(data.email) },
 				];
 			} else {
 				unsetData.visitorEmails = 1;
@@ -127,7 +127,7 @@ class LivechatVisitors extends RocketChat.models._Base {
 		if (data.phone) {
 			if (!_.isEmpty(s.trim(data.phone))) {
 				setData.phone = [
-					{phoneNumber: s.trim(data.phone)},
+					{ phoneNumber: s.trim(data.phone) },
 				];
 			} else {
 				unsetData.phone = 1;
@@ -148,7 +148,7 @@ class LivechatVisitors extends RocketChat.models._Base {
 			return true;
 		}
 
-		return this.update({_id}, update);
+		return this.update({ _id }, update);
 	}
 
 	findOneGuestByEmailAddress(emailAddress) {
@@ -166,25 +166,25 @@ class LivechatVisitors extends RocketChat.models._Base {
 
 		const saveEmail = [].concat(emails)
 			.filter((email) => email && email.trim())
-			.map((email) => ({address: email}));
+			.map((email) => ({ address: email }));
 
 		if (saveEmail.length > 0) {
-			update.$addToSet.visitorEmails = {$each: saveEmail};
+			update.$addToSet.visitorEmails = { $each: saveEmail };
 		}
 
 		const savePhone = [].concat(phones)
 			.filter((phone) => phone && phone.trim().replace(/[^\d]/g, ''))
-			.map((phone) => ({phoneNumber: phone}));
+			.map((phone) => ({ phoneNumber: phone }));
 
 		if (savePhone.length > 0) {
-			update.$addToSet.phone = {$each: savePhone};
+			update.$addToSet.phone = { $each: savePhone };
 		}
 
 		if (!update.$addToSet.visitorEmails && !update.$addToSet.phone) {
 			return;
 		}
 
-		return this.update({_id}, update);
+		return this.update({ _id }, update);
 	}
 }
 

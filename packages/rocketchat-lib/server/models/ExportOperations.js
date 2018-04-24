@@ -4,13 +4,13 @@ RocketChat.models.ExportOperations = new class ModelExportOperations extends Roc
 	constructor() {
 		super('export_operations');
 
-		this.tryEnsureIndex({userId: 1});
-		this.tryEnsureIndex({status: 1});
+		this.tryEnsureIndex({ userId: 1 });
+		this.tryEnsureIndex({ status: 1 });
 	}
 
 	// FIND
 	findById(id) {
-		const query = {_id: id};
+		const query = { _id: id };
 
 		return this.find(query);
 	}
@@ -21,7 +21,7 @@ RocketChat.models.ExportOperations = new class ModelExportOperations extends Roc
 			fullExport,
 		};
 
-		options.sort = {createdAt : -1};
+		options.sort = { createdAt : -1 };
 		return this.findOne(query, options);
 	}
 
@@ -38,7 +38,7 @@ RocketChat.models.ExportOperations = new class ModelExportOperations extends Roc
 
 	findAllPending(options) {
 		const query = {
-			status: {$nin: ['completed']},
+			status: { $nin: ['completed'] },
 		};
 
 		return this.find(query, options);

@@ -3,10 +3,10 @@ Meteor.methods({
 		if ((typeof Meteor.userId() === 'undefined') || (Meteor.userId() === null)) {
 			// noinspection JSUnresolvedFunction
 			throw new Meteor.Error('error-invalid-user', 'Invalid user',
-				{method: 'snippetMessage'});
+				{ method: 'snippetMessage' });
 		}
 
-		const room = RocketChat.models.Rooms.findOne({_id: message.rid});
+		const room = RocketChat.models.Rooms.findOne({ _id: message.rid });
 
 		if ((typeof room === 'undefined') || (room === null)) {
 			return false;
@@ -37,6 +37,6 @@ Meteor.methods({
 			message.snippeted, Date.now, filename);
 
 		RocketChat.models.Messages.createWithTypeRoomIdMessageAndUser(
-			'message_snippeted', message.rid, '', me, {snippetId: message._id, snippetName: filename});
+			'message_snippeted', message.rid, '', me, { snippetId: message._id, snippetName: filename });
 	},
 });

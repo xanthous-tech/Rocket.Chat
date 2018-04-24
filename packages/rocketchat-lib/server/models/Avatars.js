@@ -10,7 +10,7 @@ RocketChat.models.Avatars = new class extends RocketChat.models._Base {
 			doc.instanceId = InstanceStatus.id();
 		});
 
-		this.tryEnsureIndex({name: 1});
+		this.tryEnsureIndex({ name: 1 });
 	}
 
 	insertAvatarFileInit(name, userId, store, file, extra) {
@@ -59,11 +59,11 @@ RocketChat.models.Avatars = new class extends RocketChat.models._Base {
 	}
 
 	findOneByName(name) {
-		return this.findOne({name});
+		return this.findOne({ name });
 	}
 
 	updateFileNameById(fileId, name) {
-		const filter = {_id: fileId};
+		const filter = { _id: fileId };
 		const update = {
 			$set: {
 				name,
@@ -105,9 +105,9 @@ RocketChat.models.Avatars = new class extends RocketChat.models._Base {
 
 	deleteFile(fileId) {
 		if (this.model.direct && this.model.direct.remove) {
-			return this.model.direct.remove({_id: fileId});
+			return this.model.direct.remove({ _id: fileId });
 		} else {
-			return this.remove({_id: fileId});
+			return this.remove({ _id: fileId });
 		}
 	}
 };

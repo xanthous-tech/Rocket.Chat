@@ -77,7 +77,7 @@ export class CustomOAuth {
 	}
 
 	getAccessToken(query) {
-		const config = ServiceConfiguration.configurations.findOne({service: this.name});
+		const config = ServiceConfiguration.configurations.findOne({ service: this.name });
 		if (!config) {
 			throw new ServiceConfiguration.ConfigError();
 		}
@@ -109,7 +109,7 @@ export class CustomOAuth {
 			response = HTTP.post(this.tokenPath, allOptions);
 		} catch (err) {
 			const error = new Error(`Failed to complete OAuth handshake with ${ this.name } at ${ this.tokenPath }. ${ err.message }`);
-			throw _.extend(error, {response: err.response});
+			throw _.extend(error, { response: err.response });
 		}
 
 		let data;
@@ -157,7 +157,7 @@ export class CustomOAuth {
 			return data;
 		} catch (err) {
 			const error = new Error(`Failed to fetch identity from ${ this.name } at ${ this.identityPath }. ${ err.message }`);
-			throw _.extend(error, {response: err.response});
+			throw _.extend(error, { response: err.response });
 		}
 	}
 
@@ -306,7 +306,7 @@ export class CustomOAuth {
 					},
 				};
 
-				RocketChat.models.Users.update({_id: user._id}, update);
+				RocketChat.models.Users.update({ _id: user._id }, update);
 			}
 		});
 

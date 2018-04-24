@@ -4,8 +4,8 @@
 import mainContent from '../../pageobjects/main-content.page';
 import sideNav from '../../pageobjects/side-nav.page';
 
-import {username, email, password} from '../../data/user.js';
-import {checkIfUserIsValid} from '../../data/checks';
+import { username, email, password } from '../../data/user.js';
+import { checkIfUserIsValid } from '../../data/checks';
 
 describe('[Emoji]', () => {
 	before(() => {

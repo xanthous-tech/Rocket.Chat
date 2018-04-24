@@ -21,7 +21,7 @@ Template.pinnedMessages.helpers({
 		});
 	},
 	message() {
-		return _.extend(this, {customClass: 'pinned', actionContext: 'pinned'});
+		return _.extend(this, { customClass: 'pinned', actionContext: 'pinned' });
 	},
 	hasMore() {
 		return Template.instance().hasMore.get();

@@ -3,7 +3,7 @@ Meteor.publish('snippetedMessage', function(_id) {
 		return this.ready();
 	}
 
-	const snippet = RocketChat.models.Messages.findOne({_id, snippeted: true});
+	const snippet = RocketChat.models.Messages.findOne({ _id, snippeted: true });
 	const user = RocketChat.models.Users.findOneById(this.userId);
 	const roomSnippetQuery = {
 		_id: snippet.rid,
@@ -26,7 +26,7 @@ Meteor.publish('snippetedMessage', function(_id) {
 	}
 
 	const cursor = RocketChat.models.Messages.find(
-		{_id}
+		{ _id }
 	).observeChanges({
 		added(_id, record) {
 			publication.added('rocketchat_snippeted_message', _id, record);

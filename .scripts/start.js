@@ -38,7 +38,7 @@ function startProcess(opts, callback) {
 	}
 
 	if (opts.logFile) {
-		const logStream = fs.createWriteStream(opts.logFile, {flags: 'a'});
+		const logStream = fs.createWriteStream(opts.logFile, { flags: 'a' });
 		proc.stdout.pipe(logStream);
 		proc.stderr.pipe(logStream);
 	}

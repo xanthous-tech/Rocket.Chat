@@ -65,7 +65,7 @@ Meteor.publish('messages', function(rid/* , start*/) {
 });
 
 Meteor.methods({
-	'messages/get'(rid, {lastUpdate, latestDate = new Date(), oldestDate, inclusive = false, count = 20, unreads = false}) {
+	'messages/get'(rid, { lastUpdate, latestDate = new Date(), oldestDate, inclusive = false, count = 20, unreads = false }) {
 		check(rid, String);
 
 		const fromId = Meteor.userId();
@@ -91,11 +91,11 @@ Meteor.methods({
 		if (lastUpdate instanceof Date) {
 			return {
 				updated: RocketChat.models.Messages.findForUpdates(rid, lastUpdate, options).fetch(),
-				deleted: RocketChat.models.Messages.trashFindDeletedAfter(lastUpdate, {rid}, {...options, fields: {_id: 1, _deletedAt: 1}}).fetch(),
+				deleted: RocketChat.models.Messages.trashFindDeletedAfter(lastUpdate, { rid }, { ...options, fields: { _id: 1, _deletedAt: 1 } }).fetch(),
 			};
 		}
 
-		return Meteor.call('getChannelHistory', {rid, latest: latestDate, oldest: oldestDate, inclusive, count, unreads});
+		return Meteor.call('getChannelHistory', { rid, latest: latestDate, oldest: oldestDate, inclusive, count, unreads });
 
 	},
 });

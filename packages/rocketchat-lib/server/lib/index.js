@@ -6,7 +6,7 @@
 	library files.
 */
 
-import {RoomSettingsEnum, RoomTypeConfig, RoomTypeRouteConfig} from '../../lib/RoomTypeConfig';
+import { RoomSettingsEnum, RoomTypeConfig, RoomTypeRouteConfig } from '../../lib/RoomTypeConfig';
 
 export {
 	RoomSettingsEnum,

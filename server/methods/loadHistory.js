@@ -41,6 +41,6 @@ Meteor.methods({
 			return false;
 		}
 
-		return RocketChat.loadMessageHistory({userId: fromId, rid, end, limit, ls});
+		return RocketChat.loadMessageHistory({ userId: fromId, rid, end, limit, ls });
 	},
 });

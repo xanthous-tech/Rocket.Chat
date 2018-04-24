@@ -21,7 +21,7 @@ Template.mentionsFlexTab.helpers({
 		});
 	},
 	message() {
-		return _.extend(this, {customClass: 'mentions', actionContext: 'mentions'});
+		return _.extend(this, { customClass: 'mentions', actionContext: 'mentions' });
 	},
 	hasMore() {
 		return Template.instance().hasMore.get();
@@ -32,7 +32,7 @@ Template.mentionsFlexTab.onCreated(function() {
 	this.hasMore = new ReactiveVar(true);
 	this.limit = new ReactiveVar(50);
 	return this.autorun(() => {
-		const mentionedMessageFind = MentionedMessage.find({rid: this.data.rid});
+		const mentionedMessageFind = MentionedMessage.find({ rid: this.data.rid });
 		return this.subscribe('mentionedMessages', this.data.rid, this.limit.get(), () => {
 			if (mentionedMessageFind.count() < this.limit.get()) {
 				return this.hasMore.set(false);

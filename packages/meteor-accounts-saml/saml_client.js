@@ -21,14 +21,14 @@ const logoutBehaviour = {
 };
 
 Meteor.logout = function() {
-	const samlService = ServiceConfiguration.configurations.findOne({service: 'saml'});
+	const samlService = ServiceConfiguration.configurations.findOne({ service: 'saml' });
 	if (samlService) {
 		const provider = samlService.clientConfig && samlService.clientConfig.provider;
 		if (provider) {
 			if (samlService.logoutBehaviour == null || samlService.logoutBehaviour === logoutBehaviour.TERMINATE_SAML) {
 				if (samlService.idpSLORedirectURL) {
 					console.info('SAML session terminated via SLO');
-					return Meteor.logoutWithSaml({provider});
+					return Meteor.logoutWithSaml({ provider });
 				}
 			}
 

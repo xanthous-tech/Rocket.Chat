@@ -1,7 +1,7 @@
 Meteor.methods({
 	'livechat:saveAppearance'(settings) {
 		if (!Meteor.userId() || !RocketChat.authz.hasPermission(Meteor.userId(), 'view-livechat-manager')) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'livechat:saveAppearance'});
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'livechat:saveAppearance' });
 		}
 
 		const validSettings = [

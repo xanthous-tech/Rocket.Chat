@@ -70,12 +70,12 @@ Template.inviteUsers.helpers({
 Template.inviteUsers.events({
 
 	...acEvents,
-	'click .rc-tags__tag'({target}, t) {
-		const {username} = Blaze.getData(target);
+	'click .rc-tags__tag'({ target }, t) {
+		const { username } = Blaze.getData(target);
 		t.selectedUsers.set(t.selectedUsers.get().filter((user) => user.username !== username));
 	},
 	'click .rc-tags__tag-icon'(e, t) {
-		const {username} = Blaze.getData(t.find('.rc-tags__tag-text'));
+		const { username } = Blaze.getData(t.find('.rc-tags__tag-text'));
 		t.selectedUsers.set(t.selectedUsers.get().filter((user) => user.username !== username));
 	},
 	'input [name="users"]'(e, t) {
@@ -89,7 +89,7 @@ Template.inviteUsers.events({
 		t.userFilter.set(modified);
 	},
 	'click .js-add'(e, instance) {
-		const users = instance.selectedUsers.get().map(({username}) => username);
+		const users = instance.selectedUsers.get().map(({ username }) => username);
 
 		Meteor.call('addUsersToRoom', {
 			rid: Session.get('openedRoom'),
@@ -110,7 +110,7 @@ Template.inviteUsers.onRendered(function() {
 	this.firstNode.querySelector('[name="users"]').focus();
 	this.ac.element = this.firstNode.querySelector('[name="users"]');
 	this.ac.$element = $(this.ac.element);
-	this.ac.$element.on('autocompleteselect', function(e, {item}) {
+	this.ac.$element.on('autocompleteselect', function(e, { item }) {
 		const usersArr = users.get();
 		usersArr.push(item);
 		users.set(usersArr);
@@ -119,7 +119,7 @@ Template.inviteUsers.onRendered(function() {
 /* global AutoComplete Deps */
 Template.inviteUsers.onCreated(function() {
 	this.selectedUsers = new ReactiveVar([]);
-	const filter = {exceptions :[Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username))};
+	const filter = { exceptions :[Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username)) };
 	Deps.autorun(() => {
 		filter.exceptions = [Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username));
 	});
@@ -142,7 +142,7 @@ Template.inviteUsers.onCreated(function() {
 			filter,
 			doNotChangeWidth: false,
 			selector(match) {
-				return {term: match};
+				return { term: match };
 			},
 			sort: 'username',
 		}],

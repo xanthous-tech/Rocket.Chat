@@ -3,12 +3,12 @@ Template.livechat.helpers({
 	isActive() {
 		const query = {
 			t: 'l',
-			f: {$ne: true},
+			f: { $ne: true },
 			open: true,
 			rid: Session.get('openedRoom'),
 		};
 
-		const options = {fields: {_id: 1}};
+		const options = { fields: { _id: 1 } };
 
 		if (ChatSubscription.findOne(query, options)) {
 			return 'active';
@@ -22,17 +22,17 @@ Template.livechat.helpers({
 		};
 
 		const user = RocketChat.models.Users.findOne(Meteor.userId(), {
-			fields: {'settings.preferences.roomsListExhibitionMode': 1},
+			fields: { 'settings.preferences.roomsListExhibitionMode': 1 },
 		});
 
 		if (RocketChat.getUserPreference(user, 'roomsListExhibitionMode') === 'unread') {
-			query.alert = {$ne: true};
+			query.alert = { $ne: true };
 		}
 
-		return ChatSubscription.find(query, {sort: {
+		return ChatSubscription.find(query, { sort: {
 			t: 1,
 			name: 1,
-		}});
+		} });
 	},
 
 	inquiries() {
@@ -124,7 +124,7 @@ Template.livechat.onCreated(function() {
 
 	this.autorun(() => {
 		if (Meteor.userId()) {
-			const user = RocketChat.models.Users.findOne(Meteor.userId(), {fields: {statusLivechat: 1}});
+			const user = RocketChat.models.Users.findOne(Meteor.userId(), { fields: { statusLivechat: 1 } });
 			this.statusLivechat.set(user.statusLivechat);
 		} else {
 			this.statusLivechat.set();

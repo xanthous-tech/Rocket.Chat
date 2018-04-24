@@ -183,8 +183,8 @@ describe('Mention', function() {
 
 });
 const message = {
-	mentions:[{username:'rocket.cat', name: 'Rocket.Cat'}, {username:'admin', name: 'Admin'}, {username: 'me', name: 'Me'}],
-	channels: [{name: 'general'}, {name: 'rocket.cat'}],
+	mentions:[{ username:'rocket.cat', name: 'Rocket.Cat' }, { username:'admin', name: 'Admin' }, { username: 'me', name: 'Me' }],
+	channels: [{ name: 'general' }, { name: 'rocket.cat' }],
 };
 describe('replace methods', function() {
 	describe('replaceUsers', () => {

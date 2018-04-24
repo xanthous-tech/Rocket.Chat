@@ -41,7 +41,7 @@ function parseMessageText(message, userId) {
 	const lng = user && user.language || RocketChat.settings.get('language') || 'en';
 
 	if (!message.msg && message.attachments && message.attachments[0]) {
-		message.msg = message.attachments[0].image_type ? TAPi18n.__('User_uploaded_image', {lng}) : TAPi18n.__('User_uploaded_file', {lng});
+		message.msg = message.attachments[0].image_type ? TAPi18n.__('User_uploaded_image', { lng }) : TAPi18n.__('User_uploaded_file', { lng });
 	}
 	message.msg = RocketChat.callbacks.run('beforeNotifyUser', message.msg);
 
@@ -209,7 +209,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room, userId) {
 	subscriptions.forEach((s) => userIds.push(s.u._id));
 	const users = {};
 
-	RocketChat.models.Users.findUsersByIds(userIds, {fields: {'settings.preferences': 1}}).forEach((user) => {
+	RocketChat.models.Users.findUsersByIds(userIds, { fields: { 'settings.preferences': 1 } }).forEach((user) => {
 		users[user._id] = user;
 	});
 
@@ -258,7 +258,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room, userId) {
 	const mentions = [];
 	const alwaysNotifyMobileBoolean = RocketChat.settings.get('Notifications_Always_Notify_Mobile');
 
-	const usersWithHighlights = RocketChat.models.Users.findUsersByUsernamesWithHighlights(room.usernames, {fields: {_id: 1, 'settings.preferences.highlights': 1}}).fetch()
+	const usersWithHighlights = RocketChat.models.Users.findUsersByUsernamesWithHighlights(room.usernames, { fields: { _id: 1, 'settings.preferences.highlights': 1 } }).fetch()
 		.filter((user) => messageContainsHighlight(message, user.settings.preferences.highlights));
 
 	let push_message = ' ';
@@ -320,7 +320,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room, userId) {
 		}
 
 	} else {
-		const mentionIds = (message.mentions || []).map(({_id}) => _id);
+		const mentionIds = (message.mentions || []).map(({ _id }) => _id);
 		const toAll = mentionIds.includes('all');
 		const toHere = mentionIds.includes('here');
 
@@ -358,7 +358,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room, userId) {
 			};
 
 			if (alwaysNotifyMobileBoolean !== true) {
-				usersOfMobileMentionsQuery.statusConnection = {$ne: 'online'};
+				usersOfMobileMentionsQuery.statusConnection = { $ne: 'online' };
 			}
 
 			let usersOfMobileMentions = RocketChat.models.Users.find(usersOfMobileMentionsQuery, {
@@ -385,9 +385,9 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room, userId) {
 			let audioMentionIds = _.union(mentionIds, settings.alwaysNotifyAudioUsers);
 			audioMentionIds = _.difference(audioMentionIds, userIdsToNotify);
 
-			let usersOfAudioMentions = RocketChat.models.Users.find({_id: {$in: audioMentionIds}, statusConnection: {
+			let usersOfAudioMentions = RocketChat.models.Users.find({ _id: { $in: audioMentionIds }, statusConnection: {
 				$ne:'offline',
-			}}, {
+			} }, {
 				fields: {
 					_id: 1,
 					username: 1,
@@ -409,8 +409,8 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room, userId) {
 
 		if ([toAll, toHere].some((e) => e) && room.usernames && room.usernames.length > 0) {
 			RocketChat.models.Users.find({
-				username: {$in: room.usernames},
-				_id: {$ne: user._id},
+				username: { $in: room.usernames },
+				_id: { $ne: user._id },
 			}, {
 				fields: {
 					_id: 1,
@@ -418,7 +418,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room, userId) {
 					status: 1,
 					statusConnection: 1,
 				},
-			}).forEach(function({status, _id, username, statusConnection}) { // user
+			}).forEach(function({ status, _id, username, statusConnection }) { // user
 				if (Array.isArray(settings.dontNotifyUsersOnGroupMentions) && settings.dontNotifyUsersOnGroupMentions.includes(_id)) {
 					return;
 				}

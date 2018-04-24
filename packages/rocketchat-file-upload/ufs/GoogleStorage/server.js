@@ -1,4 +1,4 @@
-import {UploadFS} from 'meteor/jalik:ufs';
+import { UploadFS } from 'meteor/jalik:ufs';
 import gcStorage from '@google-cloud/storage';
 
 /**
@@ -66,7 +66,7 @@ export class GoogleStorageStore extends UploadFS.Store {
 		 * @param callback
 		 */
 		this.delete = function(fileId, callback) {
-			const file = this.getCollection().findOne({_id: fileId});
+			const file = this.getCollection().findOne({ _id: fileId });
 			this.bucket.file(this.getPath(file)).delete(function(err, data) {
 				if (err) {
 					console.error(err);

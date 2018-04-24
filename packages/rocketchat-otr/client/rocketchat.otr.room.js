@@ -21,22 +21,22 @@ RocketChat.OTR.Room = class {
 		this.establishing.set(true);
 		this.firstPeer = true;
 		this.generateKeyPair().then(() => {
-			RocketChat.Notifications.notifyUser(this.peerId, 'otr', 'handshake', {roomId: this.roomId, userId: this.userId, publicKey: EJSON.stringify(this.exportedPublicKey), refresh});
+			RocketChat.Notifications.notifyUser(this.peerId, 'otr', 'handshake', { roomId: this.roomId, userId: this.userId, publicKey: EJSON.stringify(this.exportedPublicKey), refresh });
 		});
 	}
 
 	acknowledge() {
-		RocketChat.Notifications.notifyUser(this.peerId, 'otr', 'acknowledge', {roomId: this.roomId, userId: this.userId, publicKey: EJSON.stringify(this.exportedPublicKey)});
+		RocketChat.Notifications.notifyUser(this.peerId, 'otr', 'acknowledge', { roomId: this.roomId, userId: this.userId, publicKey: EJSON.stringify(this.exportedPublicKey) });
 	}
 
 	deny() {
 		this.reset();
-		RocketChat.Notifications.notifyUser(this.peerId, 'otr', 'deny', {roomId: this.roomId, userId: this.userId});
+		RocketChat.Notifications.notifyUser(this.peerId, 'otr', 'deny', { roomId: this.roomId, userId: this.userId });
 	}
 
 	end() {
 		this.reset();
-		RocketChat.Notifications.notifyUser(this.peerId, 'otr', 'end', {roomId: this.roomId, userId: this.userId});
+		RocketChat.Notifications.notifyUser(this.peerId, 'otr', 'end', { roomId: this.roomId, userId: this.userId });
 	}
 
 	reset() {
@@ -113,7 +113,7 @@ RocketChat.OTR.Room = class {
 
 	encryptText(data) {
 		if (!_.isObject(data)) {
-			data = new TextEncoder('UTF-8').encode(EJSON.stringify({text: data, ack: Random.id((Random.fraction() + 1) * 20)}));
+			data = new TextEncoder('UTF-8').encode(EJSON.stringify({ text: data, ack: Random.id((Random.fraction() + 1) * 20) }));
 		}
 		const iv = crypto.getRandomValues(new Uint8Array(12));
 
@@ -200,7 +200,7 @@ RocketChat.OTR.Room = class {
 
 					modal.open({
 						title: TAPi18n.__('OTR'),
-						text: TAPi18n.__('Username_wants_to_start_otr_Do_you_want_to_accept', {username: user.username}),
+						text: TAPi18n.__('Username_wants_to_start_otr_Do_you_want_to_accept', { username: user.username }),
 						html: true,
 						showCancelButton: true,
 						allowOutsideClick: false,
@@ -235,7 +235,7 @@ RocketChat.OTR.Room = class {
 					const user = Meteor.users.findOne(this.peerId);
 					modal.open({
 						title: TAPi18n.__('OTR'),
-						text: TAPi18n.__('Username_denied_the_OTR_session', {username: user.username}),
+						text: TAPi18n.__('Username_denied_the_OTR_session', { username: user.username }),
 						html: true,
 					});
 				}
@@ -247,7 +247,7 @@ RocketChat.OTR.Room = class {
 					const user = Meteor.users.findOne(this.peerId);
 					modal.open({
 						title: TAPi18n.__('OTR'),
-						text: TAPi18n.__('Username_ended_the_OTR_session', {username: user.username}),
+						text: TAPi18n.__('Username_ended_the_OTR_session', { username: user.username }),
 						html: true,
 					});
 				}

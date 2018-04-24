@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import {OAuth} from 'meteor/oauth';
+import { OAuth } from 'meteor/oauth';
 const crypto = Npm.require('crypto');
 const whitelisted = [
 	'id',
@@ -29,7 +29,7 @@ const getIdentity = function(accessToken, fields, secret) {
 		}).data;
 	} catch (err) {
 		throw _.extend(new Error(`Failed to fetch identity from Facebook. ${ err.message }`),
-			{response: err.response});
+			{ response: err.response });
 	}
 };
 

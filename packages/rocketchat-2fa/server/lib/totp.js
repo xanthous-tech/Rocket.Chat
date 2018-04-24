@@ -12,7 +12,7 @@ RocketChat.TOTP = {
 		});
 	},
 
-	verify({secret, token, backupTokens, userId}) {
+	verify({ secret, token, backupTokens, userId }) {
 		// validates a backup code
 		if (token.length === 8 && backupTokens) {
 			const hashedCode = SHA256(token);
@@ -58,6 +58,6 @@ RocketChat.TOTP = {
 			hashedCodes.push(SHA256(code));
 		}
 
-		return {codes, hashedCodes};
+		return { codes, hashedCodes };
 	},
 };

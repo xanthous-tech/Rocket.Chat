@@ -1,4 +1,4 @@
-import {searchProviderService} from '../service/providerService';
+import { searchProviderService } from '../service/providerService';
 import SearchLogger from '../logger/logger';
 
 class EventService {

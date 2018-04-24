@@ -13,7 +13,7 @@ Template.livechatDepartmentForm.helpers({
 	},
 	availableAgents() {
 		const selected = _.pluck(Template.instance().selectedAgents.get(), 'username');
-		return AgentUsers.find({username: {$nin: selected}}, {sort: {username: 1}});
+		return AgentUsers.find({ username: { $nin: selected } }, { sort: { username: 1 } });
 	},
 	showOnRegistration(value) {
 		const department = Template.instance().department.get();
@@ -94,7 +94,7 @@ Template.livechatDepartmentForm.events({
 });
 
 Template.livechatDepartmentForm.onCreated(function() {
-	this.department = new ReactiveVar({enabled: true});
+	this.department = new ReactiveVar({ enabled: true });
 	this.selectedAgents = new ReactiveVar([]);
 
 	this.subscribe('livechat:agents');
@@ -102,13 +102,13 @@ Template.livechatDepartmentForm.onCreated(function() {
 	this.autorun(() => {
 		const sub = this.subscribe('livechat:departments', FlowRouter.getParam('_id'));
 		if (sub.ready()) {
-			const department = LivechatDepartment.findOne({_id: FlowRouter.getParam('_id')});
+			const department = LivechatDepartment.findOne({ _id: FlowRouter.getParam('_id') });
 			if (department) {
 				this.department.set(department);
 
 				this.subscribe('livechat:departmentAgents', department._id, () => {
 					const newSelectedAgents = [];
-					LivechatDepartmentAgents.find({departmentId: department._id}).forEach((agent) => {
+					LivechatDepartmentAgents.find({ departmentId: department._id }).forEach((agent) => {
 						newSelectedAgents.push(agent);
 					});
 					this.selectedAgents.set(newSelectedAgents);

@@ -4,7 +4,7 @@ Template.videoButtons.helpers({
 		return WebRTC.getInstanceByRoomId(Session.get('openedRoom')) != null;
 	},
 	videoActive() {
-		const {localUrl, remoteItems} = WebRTC.getInstanceByRoomId(Session.get('openedRoom'));
+		const { localUrl, remoteItems } = WebRTC.getInstanceByRoomId(Session.get('openedRoom'));
 		const r = remoteItems.get() || [];
 		return localUrl.get() != null || r.length > 0;
 	},

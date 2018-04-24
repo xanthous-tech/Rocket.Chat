@@ -2,12 +2,12 @@
 import _ from 'underscore';
 
 const baseName = 'rocketchat_';
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 
 const trash = new Mongo.Collection(`${ baseName }_trash`);
 try {
-	trash._ensureIndex({collection: 1});
-	trash._ensureIndex({_deletedAt: 1}, {expireAfterSeconds: 60 * 60 * 24 * 30});
+	trash._ensureIndex({ collection: 1 });
+	trash._ensureIndex({ _deletedAt: 1 }, { expireAfterSeconds: 60 * 60 * 24 * 30 });
 } catch (e) {
 	console.log(e);
 }
@@ -50,7 +50,7 @@ class ModelsBaseDb extends EventEmitter {
 			}
 		});
 
-		this.tryEnsureIndex({_updatedAt: 1});
+		this.tryEnsureIndex({ _updatedAt: 1 });
 	}
 
 	get baseName() {
@@ -107,11 +107,11 @@ class ModelsBaseDb extends EventEmitter {
 	}
 
 	findOneById(_id, options) {
-		return this.model.findOne({_id}, options);
+		return this.model.findOne({ _id }, options);
 	}
 
 	findOneByIds(ids, options) {
-		return this.model.findOne({_id: {$in: ids}}, options);
+		return this.model.findOne({ _id: { $in: ids } }, options);
 	}
 
 	defineSyncStrategy(query, modifier, options) {
@@ -249,7 +249,7 @@ class ModelsBaseDb extends EventEmitter {
 		const strategy = this.defineSyncStrategy(query, update, options);
 		let ids = [];
 		if (!isOplogEnabled && this.listenerCount('change') > 0 && strategy === 'db') {
-			const findOptions = {fields: {_id: 1}};
+			const findOptions = { fields: { _id: 1 } };
 			let records = options.multi ? this.find(query, findOptions).fetch() : this.findOne(query, findOptions) || [];
 			if (!Array.isArray(records)) {
 				records = [records];
@@ -274,7 +274,7 @@ class ModelsBaseDb extends EventEmitter {
 						this.emit('change', {
 							action: 'insert',
 							id: result.insertedId,
-							data: this.findOne({_id: result.insertedId}),
+							data: this.findOne({ _id: result.insertedId }),
 							oplog: false,
 						});
 						return;
@@ -331,10 +331,10 @@ class ModelsBaseDb extends EventEmitter {
 			record._deletedAt = new Date;
 			record.__collection__ = this.name;
 
-			trash.upsert({_id: record._id}, _.omit(record, '_id'));
+			trash.upsert({ _id: record._id }, _.omit(record, '_id'));
 		}
 
-		query = {_id: {$in: ids}};
+		query = { _id: { $in: ids } };
 
 		const result = this.originals.remove(query);
 

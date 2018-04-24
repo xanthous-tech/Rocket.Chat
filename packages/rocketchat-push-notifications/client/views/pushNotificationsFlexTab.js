@@ -56,7 +56,7 @@ Template.pushNotificationsFlexTab.helpers({
 		return Template.instance().form.desktopNotificationDuration.get();
 	},
 	subValue(field) {
-		const {form} = Template.instance();
+		const { form } = Template.instance();
 		if (form[field]) {
 			switch (form[field].get()) {
 				case 'all':
@@ -94,14 +94,14 @@ Template.pushNotificationsFlexTab.helpers({
 		return notificationLabels[preference];
 	},
 	disabled() {
-		const {original, form} = Template.instance();
+		const { original, form } = Template.instance();
 		return Object.keys(original).every((key) => original[key].get() === form[key].get());
 	},
 });
 
 Template.pushNotificationsFlexTab.onCreated(function() {
 	const rid = Session.get('openedRoom');
-	const sub = ChatSubscription.findOne({rid}, {
+	const sub = ChatSubscription.findOne({ rid }, {
 		fields: {
 			disableNotifications: 1,
 			hideUnreadStatus: 1,

@@ -10,8 +10,8 @@ RocketChat.models.Uploads = new class extends RocketChat.models._Base {
 			doc.instanceId = InstanceStatus.id();
 		});
 
-		this.tryEnsureIndex({rid: 1});
-		this.tryEnsureIndex({uploadedAt: 1});
+		this.tryEnsureIndex({ rid: 1 });
+		this.tryEnsureIndex({ uploadedAt: 1 });
 	}
 
 	findNotHiddenFilesOfRoom(roomId, limit) {
@@ -98,9 +98,9 @@ RocketChat.models.Uploads = new class extends RocketChat.models._Base {
 
 	deleteFile(fileId) {
 		if (this.model.direct && this.model.direct.remove != null) {
-			return this.model.direct.remove({_id: fileId});
+			return this.model.direct.remove({ _id: fileId });
 		} else {
-			return this.remove({_id: fileId});
+			return this.remove({ _id: fileId });
 		}
 	}
 };

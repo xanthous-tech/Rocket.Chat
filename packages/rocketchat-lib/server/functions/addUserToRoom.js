@@ -33,7 +33,7 @@ RocketChat.addUserToRoom = function(rid, user, inviter, silenced) {
 				},
 			});
 		} else {
-			RocketChat.models.Messages.createUserJoinWithRoomIdAndUser(rid, user, {ts: now});
+			RocketChat.models.Messages.createUserJoinWithRoomIdAndUser(rid, user, { ts: now });
 		}
 	}
 

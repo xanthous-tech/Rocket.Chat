@@ -50,7 +50,7 @@ const readMessage = new class {
 			});
 		}
 
-		const subscription = ChatSubscription.findOne({rid});
+		const subscription = ChatSubscription.findOne({ rid });
 		if (subscription == null) {
 			if (this.debug) { console.log('readMessage -> readNow canceled, no subscription found for rid:', rid); }
 			return;
@@ -115,7 +115,7 @@ const readMessage = new class {
 			return;
 		}
 
-		const subscription = ChatSubscription.findOne({rid}, {reactive: false});
+		const subscription = ChatSubscription.findOne({ rid }, { reactive: false });
 		if (subscription == null) {
 			return;
 		}
@@ -152,7 +152,7 @@ const readMessage = new class {
 
 		if ((lastReadRecord == null) && (RoomHistoryManager.getRoom(room.rid).unreadNotLoaded.get() === 0)) {
 			lastReadRecord =
-				{ts: new Date(0)};
+				{ ts: new Date(0) };
 		}
 
 		if ((lastReadRecord != null) || (RoomHistoryManager.getRoom(room.rid).unreadNotLoaded.get() > 0)) {
@@ -215,5 +215,5 @@ Meteor.startup(function() {
 		}
 	});
 });
-export {readMessage};
+export { readMessage };
 this.readMessage = readMessage;

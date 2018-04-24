@@ -36,7 +36,7 @@ Template.livechatTriggers.events({
 
 	'click .trigger-info'(e/* , instance*/) {
 		e.preventDefault();
-		FlowRouter.go('livechat-trigger-edit', {_id: this._id});
+		FlowRouter.go('livechat-trigger-edit', { _id: this._id });
 	},
 
 	'click .delete-trigger'(e/* , instance*/) {

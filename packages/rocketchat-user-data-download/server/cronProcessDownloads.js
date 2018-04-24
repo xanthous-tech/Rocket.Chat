@@ -199,7 +199,7 @@ const continueExportingRoom = function(exportOperation, exportOpRoomData) {
 
 	const skip = exportOpRoomData.exportedCount;
 
-	const cursor = RocketChat.models.Messages.findByRoomId(exportOpRoomData.roomId, {limit, skip});
+	const cursor = RocketChat.models.Messages.findByRoomId(exportOpRoomData.roomId, { limit, skip });
 	const count = cursor.count();
 
 	cursor.forEach((msg) => {
@@ -222,16 +222,16 @@ const continueExportingRoom = function(exportOperation, exportOpRoomData) {
 					message = TAPi18n.__('User_left');
 					break;
 				case 'au':
-					message = TAPi18n.__('User_added_by', {user_added : msg.msg, user_by : msg.u.username});
+					message = TAPi18n.__('User_added_by', { user_added : msg.msg, user_by : msg.u.username });
 					break;
 				case 'r':
-					message = TAPi18n.__('Room_name_changed', {room_name: msg.msg, user_by: msg.u.username});
+					message = TAPi18n.__('Room_name_changed', { room_name: msg.msg, user_by: msg.u.username });
 					break;
 				case 'ru':
-					message = TAPi18n.__('User_removed_by', {user_removed : msg.msg, user_by : msg.u.username});
+					message = TAPi18n.__('User_removed_by', { user_removed : msg.msg, user_by : msg.u.username });
 					break;
 				case 'wm':
-					message = TAPi18n.__('Welcome', {user: msg.u.username});
+					message = TAPi18n.__('Welcome', { user: msg.u.username });
 					break;
 				case 'livechat-close':
 					message = TAPi18n.__('Conversation_finished');
@@ -294,7 +294,7 @@ const sendEmail = function(userId) {
 			const subject = TAPi18n.__('UserDataDownload_EmailSubject');
 
 			const download_link = lastFile.url;
-			const body = TAPi18n.__('UserDataDownload_EmailBody', {download_link});
+			const body = TAPi18n.__('UserDataDownload_EmailBody', { download_link });
 
 			const rfcMailPatternWithName = /^(?:.*<)?([a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)(?:>?)$/;
 
@@ -360,7 +360,7 @@ const uploadZipFile = function(exportOperation, callback) {
 
 	userDataStore.insert(details, stream, (err) => {
 		if (err) {
-			throw new Meteor.Error('invalid-file', 'Invalid Zip File', {method: 'cronProcessDownloads.uploadZipFile'});
+			throw new Meteor.Error('invalid-file', 'Invalid Zip File', { method: 'cronProcessDownloads.uploadZipFile' });
 		} else {
 			callback();
 		}
@@ -444,7 +444,7 @@ const continueExportOperation = function(exportOperation) {
 };
 
 function processDataDownloads() {
-	const cursor = RocketChat.models.ExportOperations.findAllPending({limit: 1});
+	const cursor = RocketChat.models.ExportOperations.findAllPending({ limit: 1 });
 	cursor.forEach((exportOperation) => {
 		if (exportOperation.status === 'completed') {
 			return;

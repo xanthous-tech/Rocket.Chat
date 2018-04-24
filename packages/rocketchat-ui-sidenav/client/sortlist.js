@@ -28,7 +28,7 @@ Template.sortlist.helpers({
 });
 
 Template.sortlist.events({
-	'change input'({currentTarget}) {
+	'change input'({ currentTarget }) {
 		const name = currentTarget.getAttribute('name');
 		let value = currentTarget.getAttribute('type') === 'checkbox' ? currentTarget.checked : currentTarget.value;
 

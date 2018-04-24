@@ -18,7 +18,7 @@ export class SlackImporter extends Base {
 	prepare(dataURI, sentContentType, fileName) {
 		super.prepare(dataURI, sentContentType, fileName);
 
-		const {image} = RocketChatFile.dataURIParse(dataURI);
+		const { image } = RocketChatFile.dataURIParse(dataURI);
 		const zip = new this.AdmZip(new Buffer(image, 'base64'));
 		const zipEntries = zip.getEntries();
 
@@ -66,15 +66,15 @@ export class SlackImporter extends Base {
 
 		// Insert the users record, eventually this might have to be split into several ones as well
 		// if someone tries to import a several thousands users instance
-		const usersId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'users', users: tempUsers});
+		const usersId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'users', users: tempUsers });
 		this.users = this.collection.findOne(usersId);
-		this.updateRecord({'count.users': tempUsers.length});
+		this.updateRecord({ 'count.users': tempUsers.length });
 		this.addCountToTotal(tempUsers.length);
 
 		// Insert the channels records.
-		const channelsId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'channels', channels: tempChannels});
+		const channelsId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'channels', channels: tempChannels });
 		this.channels = this.collection.findOne(channelsId);
-		this.updateRecord({'count.channels': tempChannels.length});
+		this.updateRecord({ 'count.channels': tempChannels.length });
 		this.addCountToTotal(tempChannels.length);
 
 		// Insert the messages records
@@ -88,22 +88,22 @@ export class SlackImporter extends Base {
 			Object.keys(messagesObj).forEach((date) => {
 				const msgs = messagesObj[date];
 				messagesCount += msgs.length;
-				this.updateRecord({messagesstatus: `${ channel }/${ date }`});
+				this.updateRecord({ messagesstatus: `${ channel }/${ date }` });
 				if (Base.getBSONSize(msgs) > Base.getMaxBSONSize()) {
 					const tmp = Base.getBSONSafeArraysFromAnArray(msgs);
 					Object.keys(tmp).forEach((i) => {
 						const splitMsg = tmp[i];
-						const messagesId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }/${ date }.${ i }`, messages: splitMsg});
+						const messagesId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }/${ date }.${ i }`, messages: splitMsg });
 						this.messages[channel][`${ date }.${ i }`] = this.collection.findOne(messagesId);
 					});
 				} else {
-					const messagesId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }/${ date }`, messages: msgs});
+					const messagesId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }/${ date }`, messages: msgs });
 					this.messages[channel][date] = this.collection.findOne(messagesId);
 				}
 			});
 		});
 
-		this.updateRecord({'count.messages': messagesCount, messagesstatus: null});
+		this.updateRecord({ 'count.messages': messagesCount, messagesstatus: null });
 		this.addCountToTotal(messagesCount);
 
 		if ([tempUsers.length, tempChannels.length, messagesCount].some((e) => e === 0)) {
@@ -134,7 +134,7 @@ export class SlackImporter extends Base {
 				}
 			});
 		});
-		this.collection.update({_id: this.users._id}, {$set: {users: this.users.users}});
+		this.collection.update({ _id: this.users._id }, { $set: { users: this.users.users } });
 
 		Object.keys(importSelection.channels).forEach((key) => {
 			const channel = importSelection.channels[key];
@@ -145,7 +145,7 @@ export class SlackImporter extends Base {
 				}
 			});
 		});
-		this.collection.update({_id: this.channels._id}, {$set: {channels: this.channels.channels}});
+		this.collection.update({ _id: this.channels._id }, { $set: { channels: this.channels.channels } });
 
 		const startedByUserId = Meteor.userId();
 		Meteor.defer(() => {
@@ -160,16 +160,16 @@ export class SlackImporter extends Base {
 						const existantUser = RocketChat.models.Users.findOneByEmailAddress(user.profile.email) || RocketChat.models.Users.findOneByUsername(user.name);
 						if (existantUser) {
 							user.rocketId = existantUser._id;
-							RocketChat.models.Users.update({_id: user.rocketId}, {$addToSet: {importIds: user.id}});
+							RocketChat.models.Users.update({ _id: user.rocketId }, { $addToSet: { importIds: user.id } });
 							this.userTags.push({
 								slack: `<@${ user.id }>`,
 								slackLong: `<@${ user.id }|${ user.name }>`,
 								rocket: `@${ existantUser.username }`,
 							});
 						} else {
-							const userId = user.profile.email ? Accounts.createUser({email: user.profile.email, password: Date.now() + user.name + user.profile.email.toUpperCase()}) : Accounts.createUser({username: user.name, password: Date.now() + user.name, joinDefaultChannelsSilenced: true});
+							const userId = user.profile.email ? Accounts.createUser({ email: user.profile.email, password: Date.now() + user.name + user.profile.email.toUpperCase() }) : Accounts.createUser({ username: user.name, password: Date.now() + user.name, joinDefaultChannelsSilenced: true });
 							Meteor.runAsUser(userId, () => {
-								Meteor.call('setUsername', user.name, {joinDefaultChannelsSilenced: true});
+								Meteor.call('setUsername', user.name, { joinDefaultChannelsSilenced: true });
 
 								const url = user.profile.image_original || user.profile.image_512;
 								try {
@@ -185,7 +185,7 @@ export class SlackImporter extends Base {
 								}
 							});
 
-							RocketChat.models.Users.update({_id: userId}, {$addToSet: {importIds: user.id}});
+							RocketChat.models.Users.update({ _id: userId }, { $addToSet: { importIds: user.id } });
 
 							if (user.profile.real_name) {
 								RocketChat.models.Users.setName(userId, user.profile.real_name);
@@ -207,7 +207,7 @@ export class SlackImporter extends Base {
 						this.addCountCompleted(1);
 					});
 				});
-				this.collection.update({_id: this.users._id}, {$set: {users: this.users.users}});
+				this.collection.update({ _id: this.users._id }, { $set: { users: this.users.users } });
 
 				super.updateProgress(ProgressStep.IMPORTING_CHANNELS);
 				this.channels.channels.forEach((channel) => {
@@ -223,7 +223,7 @@ export class SlackImporter extends Base {
 							}
 
 							channel.rocketId = channel.is_general ? 'GENERAL' : existantRoom._id;
-							RocketChat.models.Rooms.update({_id: channel.rocketId}, {$addToSet: {importIds: channel.id}});
+							RocketChat.models.Rooms.update({ _id: channel.rocketId }, { $addToSet: { importIds: channel.id } });
 						} else {
 							const users = channel.members
 								.reduce((ret, member) => {
@@ -256,15 +256,15 @@ export class SlackImporter extends Base {
 							if (!_.isEmpty(channel.purpose && channel.purpose.value)) {
 								roomUpdate.description = channel.purpose.value;
 							}
-							RocketChat.models.Rooms.update({_id: channel.rocketId}, {$set: roomUpdate, $addToSet: {importIds: channel.id}});
+							RocketChat.models.Rooms.update({ _id: channel.rocketId }, { $set: roomUpdate, $addToSet: { importIds: channel.id } });
 						}
 						this.addCountCompleted(1);
 					});
 				});
-				this.collection.update({_id: this.channels._id}, {$set: {channels: this.channels.channels}});
+				this.collection.update({ _id: this.channels._id }, { $set: { channels: this.channels.channels } });
 
 				const missedTypes = {};
-				const ignoreTypes = {bot_add: true, file_comment: true, file_mention: true};
+				const ignoreTypes = { bot_add: true, file_comment: true, file_mention: true };
 				super.updateProgress(ProgressStep.IMPORTING_MESSAGES);
 				Object.keys(this.messages).forEach((channel) => {
 					const messagesObj = this.messages[channel];
@@ -272,11 +272,11 @@ export class SlackImporter extends Base {
 					Meteor.runAsUser(startedByUserId, () => {
 						const slackChannel = this.getSlackChannelFromName(channel);
 						if (!slackChannel || !slackChannel.do_import) { return; }
-						const room = RocketChat.models.Rooms.findOneById(slackChannel.rocketId, {fields: {usernames: 1, t: 1, name: 1}});
+						const room = RocketChat.models.Rooms.findOneById(slackChannel.rocketId, { fields: { usernames: 1, t: 1, name: 1 } });
 						Object.keys(messagesObj).forEach((date) => {
 							const msgs = messagesObj[date];
 							msgs.messages.forEach((message) => {
-								this.updateRecord({messagesstatus: `${ channel }/${ date }.${ msgs.messages.length }`});
+								this.updateRecord({ messagesstatus: `${ channel }/${ date }.${ msgs.messages.length }` });
 								const msgDataDefaults = {
 									_id: `slack-${ slackChannel.id }-${ message.ts.replace(/\./g, '-') }`,
 									ts: new Date(parseInt(message.ts.split('.')[0]) * 1000),
@@ -288,7 +288,7 @@ export class SlackImporter extends Base {
 
 									message.reactions.forEach((reaction) => {
 										reaction.name = `:${ reaction.name }:`;
-										msgDataDefaults.reactions[reaction.name] = {usernames: []};
+										msgDataDefaults.reactions[reaction.name] = { usernames: [] };
 
 										reaction.users.forEach((u) => {
 											const rcUser = this.getRocketUser(u);
@@ -320,7 +320,7 @@ export class SlackImporter extends Base {
 											};
 											RocketChat.sendMessage(this.getRocketUser(message.user), msgObj, room, true);
 										} else if (message.subtype === 'bot_message' || message.subtype === 'slackbot_response') {
-											const botUser = RocketChat.models.Users.findOneById('rocket.cat', {fields: {username: 1}});
+											const botUser = RocketChat.models.Users.findOneById('rocket.cat', { fields: { username: 1 } });
 											const botUsername = this.bots[message.bot_id] ? this.bots[message.bot_id].name : message.username;
 											const msgObj = {
 												...msgDataDefaults,
@@ -460,7 +460,7 @@ export class SlackImporter extends Base {
 		const user = this.users.users.find((user) => user.id === slackId);
 
 		if (user) {
-			return RocketChat.models.Users.findOneById(user.rocketId, {fields: {username: 1, name: 1}});
+			return RocketChat.models.Users.findOneById(user.rocketId, { fields: { username: 1, name: 1 } });
 		}
 	}
 

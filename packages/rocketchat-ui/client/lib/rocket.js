@@ -27,7 +27,7 @@ RocketChat.Login = (function() {
 			});
 		}
 	}
-	return {check, onClick, onBlur};
+	return { check, onClick, onBlur };
 }());
 
 RocketChat.Button = (function() {
@@ -48,7 +48,7 @@ RocketChat.Button = (function() {
 		if (html) { $el.find('span').html(html); }
 		return $el.removeClass('-progress going done');
 	};
-	return {done, loading, reset};
+	return { done, loading, reset };
 }());
 
 RocketChat.animationSupport = function() {
@@ -93,7 +93,7 @@ RocketChat.animeBack = function(e, callback, type) {
 };
 
 RocketChat.preLoadImgs = function(urls, callback) {
-	const preLoader = $('<div/>').attr({id: 'perverter-preloader'});
+	const preLoader = $('<div/>').attr({ id: 'perverter-preloader' });
 	let ended = undefined;
 	const l_ = function(x) {
 		if (x.width > 0) {

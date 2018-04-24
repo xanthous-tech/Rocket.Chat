@@ -113,7 +113,7 @@ Meteor.startup(function() {
 		context: ['message', 'message-mobile'],
 		action() {
 			const message = this._arguments[1];
-			const {input} = chatMessages[message.rid];
+			const { input } = chatMessages[message.rid];
 			input.value = `@${ message.u.username } `;
 			$(input)
 				.focus()
@@ -121,7 +121,7 @@ Meteor.startup(function() {
 				.trigger('dataChange');
 		},
 		condition(message) {
-			if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null) {
+			if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null) {
 				return false;
 			}
 
@@ -182,7 +182,7 @@ Meteor.startup(function() {
 			chatMessages[Session.get('openedRoom')].confirmDeleteMsg(message);
 		},
 		condition(message) {
-			if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null) {
+			if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null) {
 				return false;
 			}
 			const forceDelete = RocketChat.authz.hasAtLeastOnePermission('force-delete-message', message.rid);
@@ -231,7 +231,7 @@ Meteor.startup(function() {
 			toastr.success(TAPi18n.__('Copied'));
 		},
 		condition(message) {
-			if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null) {
+			if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null) {
 				return false;
 			}
 
@@ -257,7 +257,7 @@ Meteor.startup(function() {
 			toastr.success(TAPi18n.__('Copied'));
 		},
 		condition(message) {
-			if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null) {
+			if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null) {
 				return false;
 			}
 
@@ -274,14 +274,14 @@ Meteor.startup(function() {
 		context: ['message', 'message-mobile'],
 		action() {
 			const message = this._arguments[1];
-			const {input} = chatMessages[message.rid];
+			const { input } = chatMessages[message.rid];
 			$(input)
 				.focus()
 				.data('reply', message)
 				.trigger('dataChange');
 		},
 		condition(message) {
-			if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null) {
+			if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null) {
 				return false;
 			}
 
@@ -298,11 +298,11 @@ Meteor.startup(function() {
 		label: t('Ignore'),
 		context: ['message', 'message-mobile'],
 		action() {
-			const [, {rid, u: {_id}}] = this._arguments;
-			Meteor.call('ignoreUser', {rid, userId:_id, ignore: true}, success(() => toastr.success(t('User_has_been_ignored'))));
+			const [, { rid, u: { _id } }] = this._arguments;
+			Meteor.call('ignoreUser', { rid, userId:_id, ignore: true }, success(() => toastr.success(t('User_has_been_ignored'))));
 		},
 		condition(message) {
-			const subscription = RocketChat.models.Subscriptions.findOne({rid: message.rid});
+			const subscription = RocketChat.models.Subscriptions.findOne({ rid: message.rid });
 
 			return Meteor.userId() !== message.u._id && !(subscription.ignored && subscription.ignored.indexOf(message.u._id) > -1);
 		},
@@ -316,12 +316,12 @@ Meteor.startup(function() {
 		label: t('Unignore'),
 		context: ['message', 'message-mobile'],
 		action() {
-			const [, {rid, u: {_id}}] = this._arguments;
-			Meteor.call('ignoreUser', {rid, userId:_id, ignore: false}, success(() => toastr.success(t('User_has_been_unignored'))));
+			const [, { rid, u: { _id } }] = this._arguments;
+			Meteor.call('ignoreUser', { rid, userId:_id, ignore: false }, success(() => toastr.success(t('User_has_been_unignored'))));
 
 		},
 		condition(message) {
-			const subscription = RocketChat.models.Subscriptions.findOne({rid: message.rid});
+			const subscription = RocketChat.models.Subscriptions.findOne({ rid: message.rid });
 			return Meteor.userId() !== message.u._id && subscription.ignored && subscription.ignored.indexOf(message.u._id) > -1;
 		},
 		order: 20,

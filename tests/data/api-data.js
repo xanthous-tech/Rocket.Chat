@@ -1,5 +1,5 @@
-import {publicChannelName, privateChannelName} from '../data/channel.js';
-import {username, email, adminUsername, adminPassword} from '../data/user.js';
+import { publicChannelName, privateChannelName } from '../data/channel.js';
+import { username, email, adminUsername, adminPassword } from '../data/user.js';
 import supertest from 'supertest';
 export const request = supertest('http://localhost:3000');
 const prefix = '/api/v1/';

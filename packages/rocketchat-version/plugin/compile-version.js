@@ -1,4 +1,4 @@
-import {exec} from 'child_process';
+import { exec } from 'child_process';
 import os from 'os';
 import Future from 'fibers/future';
 import async from 'async';

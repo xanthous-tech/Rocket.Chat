@@ -5,7 +5,7 @@ import {
 	SelectionChannel,
 	SelectionUser,
 } from 'meteor/rocketchat:importer';
-import {Readable} from 'stream';
+import { Readable } from 'stream';
 import path from 'path';
 
 export class HipChatEnterpriseImporter extends Base {
@@ -131,15 +131,15 @@ export class HipChatEnterpriseImporter extends Base {
 			this.extract.on('finish', Meteor.bindEnvironment(() => {
 				// Insert the users record, eventually this might have to be split into several ones as well
 				// if someone tries to import a several thousands users instance
-				const usersId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'users', users: tempUsers});
+				const usersId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'users', users: tempUsers });
 				this.users = this.collection.findOne(usersId);
-				super.updateRecord({'count.users': tempUsers.length});
+				super.updateRecord({ 'count.users': tempUsers.length });
 				super.addCountToTotal(tempUsers.length);
 
 				// Insert the channels records.
-				const channelsId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'channels', channels: tempRooms});
+				const channelsId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'channels', channels: tempRooms });
 				this.channels = this.collection.findOne(channelsId);
-				super.updateRecord({'count.channels': tempRooms.length});
+				super.updateRecord({ 'count.channels': tempRooms.length });
 				super.addCountToTotal(tempRooms.length);
 
 				// Save the messages records to the import record for `startImport` usage
@@ -151,15 +151,15 @@ export class HipChatEnterpriseImporter extends Base {
 					}
 
 					messagesCount += msgs.length;
-					super.updateRecord({messagesstatus: channel});
+					super.updateRecord({ messagesstatus: channel });
 
 					if (Base.getBSONSize(msgs) > Base.getMaxBSONSize()) {
 						Base.getBSONSafeArraysFromAnArray(msgs).forEach((splitMsg, i) => {
-							const messagesId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }/${ i }`, messages: splitMsg});
+							const messagesId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }/${ i }`, messages: splitMsg });
 							this.messages.get(channel).set(`${ channel }.${ i }`, this.collection.findOne(messagesId));
 						});
 					} else {
-						const messagesId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }`, messages: msgs});
+						const messagesId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }`, messages: msgs });
 						this.messages.get(channel).set(channel, this.collection.findOne(messagesId));
 					}
 				}
@@ -171,20 +171,20 @@ export class HipChatEnterpriseImporter extends Base {
 					}
 
 					messagesCount += msgs.length;
-					super.updateRecord({messagesstatus: directMsgUser});
+					super.updateRecord({ messagesstatus: directMsgUser });
 
 					if (Base.getBSONSize(msgs) > Base.getMaxBSONSize()) {
 						Base.getBSONSafeArraysFromAnArray(msgs).forEach((splitMsg, i) => {
-							const messagesId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'directMessages', name: `${ directMsgUser }/${ i }`, messages: splitMsg});
+							const messagesId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'directMessages', name: `${ directMsgUser }/${ i }`, messages: splitMsg });
 							this.directMessages.get(directMsgUser).set(`${ directMsgUser }.${ i }`, this.collection.findOne(messagesId));
 						});
 					} else {
-						const messagesId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'directMessages', name: `${ directMsgUser }`, messages: msgs});
+						const messagesId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'directMessages', name: `${ directMsgUser }`, messages: msgs });
 						this.directMessages.get(directMsgUser).set(directMsgUser, this.collection.findOne(messagesId));
 					}
 				}
 
-				super.updateRecord({'count.messages': messagesCount, messagesstatus: null});
+				super.updateRecord({ 'count.messages': messagesCount, messagesstatus: null });
 				super.addCountToTotal(messagesCount);
 
 				// Ensure we have some users, channels, and messages
@@ -227,7 +227,7 @@ export class HipChatEnterpriseImporter extends Base {
 				}
 			}
 		}
-		this.collection.update({_id: this.users._id}, {$set: {users: this.users.users}});
+		this.collection.update({ _id: this.users._id }, { $set: { users: this.users.users } });
 
 		// Ensure we're only importing the channels the user has selected.
 		for (const channel of importSelection.channels) {
@@ -237,7 +237,7 @@ export class HipChatEnterpriseImporter extends Base {
 				}
 			}
 		}
-		this.collection.update({_id: this.channels._id}, {$set: {channels: this.channels.channels}});
+		this.collection.update({ _id: this.channels._id }, { $set: { channels: this.channels.channels } });
 
 		const startedByUserId = Meteor.userId();
 		Meteor.defer(() => {
@@ -262,11 +262,11 @@ export class HipChatEnterpriseImporter extends Base {
 						if (existantUser) {
 							// since we have an existing user, let's try a few things
 							u.rocketId = existantUser._id;
-							RocketChat.models.Users.update({_id: u.rocketId}, {$addToSet: {importIds: u.id}});
+							RocketChat.models.Users.update({ _id: u.rocketId }, { $addToSet: { importIds: u.id } });
 						} else {
-							const userId = Accounts.createUser({email: u.email, password: Date.now() + u.name + u.email.toUpperCase()});
+							const userId = Accounts.createUser({ email: u.email, password: Date.now() + u.name + u.email.toUpperCase() });
 							Meteor.runAsUser(userId, () => {
-								Meteor.call('setUsername', u.username, {joinDefaultChannelsSilenced: true});
+								Meteor.call('setUsername', u.username, { joinDefaultChannelsSilenced: true });
 								// TODO: Use moment timezone to calc the time offset - Meteor.call 'userSetUtcOffset', user.tz_offset / 3600
 								RocketChat.models.Users.setName(userId, u.name);
 								// TODO: Think about using a custom field for the users "title" field
@@ -280,7 +280,7 @@ export class HipChatEnterpriseImporter extends Base {
 									Meteor.call('setUserActiveStatus', userId, false);
 								}
 
-								RocketChat.models.Users.update({_id: userId}, {$addToSet: {importIds: u.id}});
+								RocketChat.models.Users.update({ _id: userId }, { $addToSet: { importIds: u.id } });
 								u.rocketId = userId;
 							});
 						}
@@ -288,7 +288,7 @@ export class HipChatEnterpriseImporter extends Base {
 						super.addCountCompleted(1);
 					});
 				}
-				this.collection.update({_id: this.users._id}, {$set: {users: this.users.users}});
+				this.collection.update({ _id: this.users._id }, { $set: { users: this.users.users } });
 
 				// Import the channels
 				super.updateProgress(ProgressStep.IMPORTING_CHANNELS);
@@ -302,7 +302,7 @@ export class HipChatEnterpriseImporter extends Base {
 						// If the room exists or the name of it is 'general', then we don't need to create it again
 						if (existantRoom || c.name.toUpperCase() === 'GENERAL') {
 							c.rocketId = c.name.toUpperCase() === 'GENERAL' ? 'GENERAL' : existantRoom._id;
-							RocketChat.models.Rooms.update({_id: c.rocketId}, {$addToSet: {importIds: c.id}});
+							RocketChat.models.Rooms.update({ _id: c.rocketId }, { $addToSet: { importIds: c.id } });
 						} else {
 							// Find the rocketchatId of the user who created this channel
 							let creatorId = startedByUserId;
@@ -318,13 +318,13 @@ export class HipChatEnterpriseImporter extends Base {
 								c.rocketId = roomInfo.rid;
 							});
 
-							RocketChat.models.Rooms.update({_id: c.rocketId}, {$set: {ts: c.created, topic: c.topic}, $addToSet: {importIds: c.id}});
+							RocketChat.models.Rooms.update({ _id: c.rocketId }, { $set: { ts: c.created, topic: c.topic }, $addToSet: { importIds: c.id } });
 						}
 
 						super.addCountCompleted(1);
 					});
 				}
-				this.collection.update({_id: this.channels._id}, {$set: {channels: this.channels.channels}});
+				this.collection.update({ _id: this.channels._id }, { $set: { channels: this.channels.channels } });
 
 				// Import the Messages
 				super.updateProgress(ProgressStep.IMPORTING_MESSAGES);
@@ -334,10 +334,10 @@ export class HipChatEnterpriseImporter extends Base {
 						continue;
 					}
 
-					const room = RocketChat.models.Rooms.findOneById(hipChannel.rocketId, {fields: {usernames: 1, t: 1, name: 1}});
+					const room = RocketChat.models.Rooms.findOneById(hipChannel.rocketId, { fields: { usernames: 1, t: 1, name: 1 } });
 					Meteor.runAsUser(startedByUserId, () => {
 						for (const [msgGroupData, msgs] of messagesMap.entries()) {
-							super.updateRecord({messagesstatus: `${ ch }/${ msgGroupData }.${ msgs.messages.length }`});
+							super.updateRecord({ messagesstatus: `${ ch }/${ msgGroupData }.${ msgs.messages.length }` });
 							for (const msg of msgs.messages) {
 								if (isNaN(msg.ts)) {
 									this.logger.warn(`Timestamp on a message in ${ ch }/${ msgGroupData } is invalid`);
@@ -361,7 +361,7 @@ export class HipChatEnterpriseImporter extends Base {
 											}, room, true);
 											break;
 										case 'topic':
-											RocketChat.models.Messages.createRoomSettingsChangedWithTypeRoomIdMessageAndUser('room_changed_topic', room._id, msg.text, creator, {_id: msg.id, ts: msg.ts});
+											RocketChat.models.Messages.createRoomSettingsChangedWithTypeRoomIdMessageAndUser('room_changed_topic', room._id, msg.text, creator, { _id: msg.id, ts: msg.ts });
 											break;
 									}
 								}
@@ -385,7 +385,7 @@ export class HipChatEnterpriseImporter extends Base {
 					}
 
 					for (const [msgGroupData, msgs] of directMessagesMap.entries()) {
-						super.updateRecord({messagesstatus: `${ directMsgRoom }/${ msgGroupData }.${ msgs.messages.length }`});
+						super.updateRecord({ messagesstatus: `${ directMsgRoom }/${ msgGroupData }.${ msgs.messages.length }` });
 						for (const msg of msgs.messages) {
 							if (isNaN(msg.ts)) {
 								this.logger.warn(`Timestamp on a message in ${ directMsgRoom }/${ msgGroupData } is invalid`);
@@ -470,7 +470,7 @@ export class HipChatEnterpriseImporter extends Base {
 	getRocketUserFromUserId(userId) {
 		for (const u of this.users.users) {
 			if (u.id === userId) {
-				return RocketChat.models.Users.findOneById(u.rocketId, {fields: {username: 1}});
+				return RocketChat.models.Users.findOneById(u.rocketId, { fields: { username: 1 } });
 			}
 		}
 	}

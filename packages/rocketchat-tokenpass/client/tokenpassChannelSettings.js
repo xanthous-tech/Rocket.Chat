@@ -1,13 +1,13 @@
 Template.channelSettings__tokenpass.helpers({
 	addDisabled() {
-		const {balance, token} = Template.instance();
+		const { balance, token } = Template.instance();
 		return balance.get() && token.get() ? '' : 'disabled';
 	},
 	list() {
 		return Template.instance().list.get();
 	},
 	save() {
-		const {list, initial} = Template.instance();
+		const { list, initial } = Template.instance();
 		return JSON.stringify(list.get()) !== JSON.stringify(initial);
 	},
 	editing() {
@@ -28,7 +28,7 @@ Template.channelSettings__tokenpass.helpers({
 });
 
 Template.channelSettings__tokenpass.onCreated(function() {
-	const room = ChatRoom.findOne(this.data.rid, {fields: {tokenpass : 1}});
+	const room = ChatRoom.findOne(this.data.rid, { fields: { tokenpass : 1 } });
 
 	this.editing = new ReactiveVar(false);
 	this.initial = room.tokenpass;
@@ -51,8 +51,8 @@ Template.channelSettings__tokenpass.events({
 	'click .js-add'(e, i) {
 		e.preventDefault();
 		const instance = Template.instance();
-		const {balance, token, list} = instance;
-		list.set([...list.get().filter((t) => t.token !== token), {token:token.get(), balance: balance.get()}]);
+		const { balance, token, list } = instance;
+		list.set([...list.get().filter((t) => t.token !== token), { token:token.get(), balance: balance.get() }]);
 
 
 		[...i.findAll('input')].forEach((el) => el.value = '');
@@ -60,7 +60,7 @@ Template.channelSettings__tokenpass.events({
 	},
 	'click .js-remove'(e, instance) {
 		e.preventDefault();
-		const {list, editing} = instance;
+		const { list, editing } = instance;
 
 		if (!editing.get()) {
 			return;

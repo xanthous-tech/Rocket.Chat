@@ -14,7 +14,7 @@ const filterNames = (old) => {
 };
 const filterEmail = (old) => old.replace(' ', '');
 const setAvatar = function(event, template) {
-	const {blob, contentType, service} = this.suggestion;
+	const { blob, contentType, service } = this.suggestion;
 
 	template.avatar.set({
 		service,
@@ -61,7 +61,7 @@ Template.accountProfile.helpers({
 				service: !suggestions.avatars[service.toLowerCase()] ? RocketChat.settings.get(`Accounts_OAuth_${ s.capitalize(service.toLowerCase()) }`) : false,
 				suggestion: suggestions.avatars[service.toLowerCase()],
 			}))
-			.filter(({service, suggestion}) => service || suggestion);
+			.filter(({ service, suggestion }) => service || suggestion);
 	},
 	initialsUsername() {
 		const user = Meteor.user();
@@ -86,7 +86,7 @@ Template.accountProfile.helpers({
 		const usernameAvaliable = instance.usernameAvaliable.get();
 		const avatar = instance.avatar.get();
 		const user = Meteor.user();
-		const {customFields = {}} = user;
+		const { customFields = {} } = user;
 		if (instance.view.isRendered) {
 			if (instance.findAll('[data-customfield="true"]').some((el) => {
 				const key = el.getAttribute('name');
@@ -159,7 +159,7 @@ Template.accountProfile.onCreated(function() {
 	self.getSuggestions = function() {
 		self.suggestions.set(undefined);
 		Meteor.call('getAvatarSuggestion', function(error, avatars) {
-			self.suggestions.set({ready: true, avatars});
+			self.suggestions.set({ ready: true, avatars });
 		});
 	};
 	self.getSuggestions();
@@ -276,7 +276,7 @@ Template.accountProfile.onRendered(function() {
 	});
 });
 
-const checkAvailability = _.debounce((username, {usernameAvaliable}) => {
+const checkAvailability = _.debounce((username, { usernameAvaliable }) => {
 	Meteor.call('checkUsernameAvailability', username, function(error, data) {
 		usernameAvaliable.set(data);
 	});

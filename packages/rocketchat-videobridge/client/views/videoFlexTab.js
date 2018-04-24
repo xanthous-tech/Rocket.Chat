@@ -37,7 +37,7 @@ Template.videoFlexTab.onRendered(function() {
 
 		this.tabBar.close();
 
-		RocketChat.TabBar.updateButton('video', {class: ''});
+		RocketChat.TabBar.updateButton('video', { class: '' });
 	};
 
 	modal.open({
@@ -75,7 +75,7 @@ Template.videoFlexTab.onRendered(function() {
 					} else {
 						jitsiRoomActive = jitsiRoom;
 
-						RocketChat.TabBar.updateButton('video', {class: 'red'});
+						RocketChat.TabBar.updateButton('video', { class: 'red' });
 
 						if (RocketChat.settings.get('Jitsi_Open_New_Window') || Meteor.isCordova) {
 							Meteor.call('jitsi:updateTimeout', roomId);
@@ -127,7 +127,7 @@ Template.videoFlexTab.onRendered(function() {
 						}
 					}
 				} else {
-					RocketChat.TabBar.updateButton('video', {class: ''});
+					RocketChat.TabBar.updateButton('video', { class: '' });
 
 					// Clean up and stop updating timeout.
 					if (timeOut) {

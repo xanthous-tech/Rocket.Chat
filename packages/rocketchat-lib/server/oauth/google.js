@@ -5,9 +5,9 @@ function getIdentity(accessToken) {
 	try {
 		return HTTP.get(
 			'https://www.googleapis.com/oauth2/v1/userinfo',
-			{params: {access_token: accessToken}}).data;
+			{ params: { access_token: accessToken } }).data;
 	} catch (err) {
-		throw _.extend(new Error(`Failed to fetch identity from Google. ${ err.message }`), {response: err.response});
+		throw _.extend(new Error(`Failed to fetch identity from Google. ${ err.message }`), { response: err.response });
 	}
 }
 
@@ -15,9 +15,9 @@ function getScopes(accessToken) {
 	try {
 		return HTTP.get(
 			'https://www.googleapis.com/oauth2/v1/tokeninfo',
-			{params: {access_token: accessToken}}).data.scope.split(' ');
+			{ params: { access_token: accessToken } }).data.scope.split(' ');
 	} catch (err) {
-		throw _.extend(new Error(`Failed to fetch tokeninfo from Google. ${ err.message }`), {response: err.response});
+		throw _.extend(new Error(`Failed to fetch tokeninfo from Google. ${ err.message }`), { response: err.response });
 	}
 }
 

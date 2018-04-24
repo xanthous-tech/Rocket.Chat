@@ -56,16 +56,16 @@ export class AppWebsocketReceiver {
 		this.listeners[AppEvents.APP_UPDATED].forEach((listener) => listener(appId));
 	}
 
-	onAppStatusUpdated({appId, status}) {
-		this.listeners[AppEvents.APP_STATUS_CHANGE].forEach((listener) => listener({appId, status}));
+	onAppStatusUpdated({ appId, status }) {
+		this.listeners[AppEvents.APP_STATUS_CHANGE].forEach((listener) => listener({ appId, status }));
 	}
 
-	onAppSettingUpdated({appId}) {
-		this.listeners[AppEvents.APP_SETTING_UPDATED].forEach((listener) => listener({appId}));
+	onAppSettingUpdated({ appId }) {
+		this.listeners[AppEvents.APP_SETTING_UPDATED].forEach((listener) => listener({ appId }));
 	}
 
 	onCommandAdded(command) {
-		RocketChat.API.v1.get('commands.get', {command}).then((result) => {
+		RocketChat.API.v1.get('commands.get', { command }).then((result) => {
 			RocketChat.slashCommands.commands[command] = result.command;
 		});
 	}
@@ -75,7 +75,7 @@ export class AppWebsocketReceiver {
 	}
 
 	onCommandUpdated(command) {
-		RocketChat.API.v1.get('commands.get', {command}).then((result) => {
+		RocketChat.API.v1.get('commands.get', { command }).then((result) => {
 			RocketChat.slashCommands.commands[command] = result.command;
 		});
 	}

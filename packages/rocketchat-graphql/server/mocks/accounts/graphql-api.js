@@ -17,5 +17,5 @@ export const authenticated = (Accounts, func) => (async(root, args, context, inf
 		throw new Error('Invalid or expired token!');
 	}
 
-	return await func(root, args, Object.assign(context, {user: userObject}), info);
+	return await func(root, args, Object.assign(context, { user: userObject }), info);
 });

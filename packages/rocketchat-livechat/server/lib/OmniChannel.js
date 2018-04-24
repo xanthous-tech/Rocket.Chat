@@ -51,7 +51,7 @@ export default {
 		return result.data;
 	},
 
-	reply({page, token, text}) {
+	reply({ page, token, text }) {
 		return HTTP.call('POST', `${ gatewayURL }/facebook/reply`, {
 			headers: {
 				authorization: `Bearer ${ RocketChat.settings.get('Livechat_Facebook_API_Key') }`,

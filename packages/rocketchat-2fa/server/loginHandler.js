@@ -8,7 +8,7 @@ Accounts.registerLoginHandler('totp', function(options) {
 
 RocketChat.callbacks.add('onValidateLogin', (login) => {
 	if (login.type === 'password' && login.user.services && login.user.services.totp && login.user.services.totp.enabled === true) {
-		const {totp} = login.methodArguments[0];
+		const { totp } = login.methodArguments[0];
 
 		if (!totp || !totp.code) {
 			throw new Meteor.Error('totp-required', 'TOTP Required');

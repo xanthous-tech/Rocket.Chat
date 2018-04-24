@@ -1,6 +1,6 @@
 import IMAP from 'imap';
 import POP3 from 'poplib';
-import {simpleParser} from 'mailparser';
+import { simpleParser } from 'mailparser';
 
 export class IMAPIntercepter {
 	constructor() {

@@ -1,7 +1,7 @@
 /* global InstanceStatus, DDP, LoggerManager */
 
 import _ from 'underscore';
-import {DDPCommon} from 'meteor/ddp-common';
+import { DDPCommon } from 'meteor/ddp-common';
 
 process.env.PORT = String(process.env.PORT).trim();
 process.env.INSTANCE_IP = String(process.env.INSTANCE_IP).trim();
@@ -176,7 +176,7 @@ function startStreamCastBroadcast(value) {
 			return;
 		}
 
-		const {streamName, eventName, args} = msg.fields;
+		const { streamName, eventName, args } = msg.fields;
 
 		if (!streamName || !eventName || !args) {
 			return;
@@ -278,7 +278,7 @@ Meteor.methods({
 
 		return Object.keys(connections).map((address) => {
 			const conn = connections[address];
-			return Object.assign({address, currentStatus: conn._stream.currentStatus}, _.pick(conn, 'instanceRecord', 'broadcastAuth'));
+			return Object.assign({ address, currentStatus: conn._stream.currentStatus }, _.pick(conn, 'instanceRecord', 'broadcastAuth'));
 		});
 	},
 });

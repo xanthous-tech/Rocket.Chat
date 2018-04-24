@@ -1,6 +1,6 @@
 Template.externalSearch.helpers({
 	messages() {
-		return RocketChat.models.LivechatExternalMessage.findByRoomId(this.rid, {ts: 1});
+		return RocketChat.models.LivechatExternalMessage.findByRoomId(this.rid, { ts: 1 });
 	},
 });
 

@@ -1,5 +1,5 @@
 import ChatpalLogger from '../utils/logger';
-import {Random} from 'meteor/random';
+import { Random } from 'meteor/random';
 
 /**
  * Enables HTTP functions on Chatpal Backend
@@ -18,7 +18,7 @@ class Backend {
 	index(docs) {
 		const options = {
 			data:docs,
-			params:{language:this._options.language},
+			params:{ language:this._options.language },
 			...this._options.httpOptions,
 		};
 
@@ -69,7 +69,7 @@ class Backend {
 	}
 
 	count(type) {
-		return this.query({type, rows:0, text:'*'})[type].numFound;
+		return this.query({ type, rows:0, text:'*' })[type].numFound;
 	}
 
 	/**
@@ -277,22 +277,22 @@ export default class Index {
 	 * @private
 	 */
 	_existsDataOlderThan(date) {
-		return RocketChat.models.Messages.model.find({ts:{$lt: new Date(date)}, t:{$exists:false}}, {limit:1}).fetch().length > 0;
+		return RocketChat.models.Messages.model.find({ ts:{ $lt: new Date(date) }, t:{ $exists:false } }, { limit:1 }).fetch().length > 0;
 	}
 
 	_doesRoomCountDiffer() {
-		return RocketChat.models.Rooms.find({t:{$ne:'d'}}).count() !== this._backend.count('room');
+		return RocketChat.models.Rooms.find({ t:{ $ne:'d' } }).count() !== this._backend.count('room');
 	}
 
 	_doesUserCountDiffer() {
-		return Meteor.users.find({active:true}).count() !== this._backend.count('user');
+		return Meteor.users.find({ active:true }).count() !== this._backend.count('user');
 	}
 
 	/**
 	 * Index users by using a database cursor
 	 */
 	_indexUsers() {
-		const cursor = Meteor.users.find({active:true});
+		const cursor = Meteor.users.find({ active:true });
 
 		ChatpalLogger.debug(`Start indexing ${ cursor.count() } users`);
 
@@ -308,7 +308,7 @@ export default class Index {
 	 * @private
 	 */
 	_indexRooms() {
-		const cursor = RocketChat.models.Rooms.find({t:{$ne:'d'}});
+		const cursor = RocketChat.models.Rooms.find({ t:{ $ne:'d' } });
 
 		ChatpalLogger.debug(`Start indexing ${ cursor.count() } rooms`);
 
@@ -324,7 +324,7 @@ export default class Index {
 		const start = new Date(date - gap);
 		const end = new Date(date);
 
-		const cursor = RocketChat.models.Messages.model.find({ts:{$gt: start, $lt: end}, t:{$exists:false}});
+		const cursor = RocketChat.models.Messages.model.find({ ts:{ $gt: start, $lt: end }, t:{ $exists:false } });
 
 		ChatpalLogger.debug(`Start indexing ${ cursor.count() } messages between ${ start.toString() } and ${ end.toString() }`);
 

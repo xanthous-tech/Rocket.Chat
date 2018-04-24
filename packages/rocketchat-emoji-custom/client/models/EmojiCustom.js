@@ -8,8 +8,8 @@ class EmojiCustom extends RocketChat.models._Base {
 	findByNameOrAlias(name, options) {
 		const query = {
 			$or: [
-				{name},
-				{aliases: name},
+				{ name },
+				{ aliases: name },
 			],
 		};
 

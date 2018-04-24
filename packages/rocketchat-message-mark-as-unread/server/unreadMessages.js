@@ -9,7 +9,7 @@ Meteor.methods({
 		}
 
 		if (room) {
-			const lastMessage = RocketChat.models.Messages.findVisibleByRoomId(room, {limit: 1, sort: {ts: -1}}).fetch()[0];
+			const lastMessage = RocketChat.models.Messages.findVisibleByRoomId(room, { limit: 1, sort: { ts: -1 } }).fetch()[0];
 
 			if (lastMessage == null) {
 				throw new Meteor.Error('error-action-not-allowed', 'Not allowed', {

@@ -1,12 +1,12 @@
-import {RocketChat} from 'meteor/rocketchat:lib';
+import { RocketChat } from 'meteor/rocketchat:lib';
 
-import {authenticated} from '../../helpers/authenticated';
-import {roomPublicFields} from './settings';
+import { authenticated } from '../../helpers/authenticated';
+import { roomPublicFields } from './settings';
 import schema from '../../schemas/channels/channelsByUser.graphqls';
 
 const resolver = {
 	Query: {
-		channelsByUser: authenticated((root, {userId}) => {
+		channelsByUser: authenticated((root, { userId }) => {
 			const user = RocketChat.models.Users.findOneById(userId);
 
 			if (!user) {

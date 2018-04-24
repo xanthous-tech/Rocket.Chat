@@ -1,5 +1,5 @@
-import {Meteor} from 'meteor/meteor';
-import {RocketChat} from 'meteor/rocketchat:lib';
+import { Meteor } from 'meteor/meteor';
+import { RocketChat } from 'meteor/rocketchat:lib';
 
 Meteor.startup(() => {
 	RocketChat.settings.add('Markdown_Parser', 'original', {
@@ -19,7 +19,7 @@ Meteor.startup(() => {
 		public: true,
 	});
 
-	const enableQueryOriginal = {_id: 'Markdown_Parser', value: 'original'};
+	const enableQueryOriginal = { _id: 'Markdown_Parser', value: 'original' };
 	RocketChat.settings.add('Markdown_Headers', false, {
 		type: 'boolean',
 		group: 'Message',
@@ -36,7 +36,7 @@ Meteor.startup(() => {
 		enableQuery: enableQueryOriginal,
 	});
 
-	const enableQueryMarked = {_id: 'Markdown_Parser', value: 'marked'};
+	const enableQueryMarked = { _id: 'Markdown_Parser', value: 'marked' };
 	RocketChat.settings.add('Markdown_Marked_GFM', true, {
 		type: 'boolean',
 		group: 'Message',

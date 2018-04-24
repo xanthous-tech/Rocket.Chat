@@ -12,7 +12,7 @@ RocketChat.deleteMessage = function(message, user) {
 		}
 
 		if (message.file && message.file._id) {
-			RocketChat.models.Uploads.update(message.file._id, {$set: {_hidden: true}});
+			RocketChat.models.Uploads.update(message.file._id, { $set: { _hidden: true } });
 		}
 	} else {
 		if (!showDeletedStatus) {
@@ -31,7 +31,7 @@ RocketChat.deleteMessage = function(message, user) {
 
 	// update last message
 	if (RocketChat.settings.get('Store_Last_Message')) {
-		const room = RocketChat.models.Rooms.findOneById(message.rid, {fields: {lastMessage: 1}});
+		const room = RocketChat.models.Rooms.findOneById(message.rid, { fields: { lastMessage: 1 } });
 		if (!room.lastMessage || room.lastMessage._id === message._id) {
 			const lastMessage = RocketChat.models.Messages.getLastVisibleMessageSentWithNoTypeByRoomId(message.rid, message._id);
 			RocketChat.models.Rooms.setLastMessageById(message.rid, lastMessage);
@@ -41,6 +41,6 @@ RocketChat.deleteMessage = function(message, user) {
 	if (showDeletedStatus) {
 		RocketChat.models.Messages.setAsDeletedByIdAndUser(message._id, user);
 	} else {
-		RocketChat.Notifications.notifyRoom(message.rid, 'deleteMessage', {_id: message._id});
+		RocketChat.Notifications.notifyRoom(message.rid, 'deleteMessage', { _id: message._id });
 	}
 };

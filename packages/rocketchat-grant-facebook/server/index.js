@@ -1,5 +1,5 @@
-import {Providers, GrantError} from 'meteor/rocketchat:grant';
-import {HTTP} from 'meteor/http';
+import { Providers, GrantError } from 'meteor/rocketchat:grant';
+import { HTTP } from 'meteor/http';
 
 const userAgent = 'Meteor';
 const version = 'v2.10';
@@ -8,7 +8,7 @@ function getIdentity(accessToken, fields) {
 	try {
 		return HTTP.get(
 			`https://graph.facebook.com/${ version }/me`, {
-				headers: {'User-Agent': userAgent},
+				headers: { 'User-Agent': userAgent },
 				params: {
 					access_token: accessToken,
 					fields: fields.join(','),
@@ -23,7 +23,7 @@ function getPicture(accessToken) {
 	try {
 		return HTTP.get(
 			`https://graph.facebook.com/${ version }/me/picture`, {
-				headers: {'User-Agent': userAgent},
+				headers: { 'User-Agent': userAgent },
 				params: {
 					redirect: false,
 					height: 200,
@@ -53,4 +53,4 @@ export function getUser(accessToken) {
 }
 
 // Register Facebook OAuth
-Providers.register('facebook', {scope: ['public_profile', 'email']}, getUser);
+Providers.register('facebook', { scope: ['public_profile', 'email'] }, getUser);

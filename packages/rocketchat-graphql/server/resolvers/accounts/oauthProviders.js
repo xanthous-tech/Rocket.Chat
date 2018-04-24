@@ -1,5 +1,5 @@
-import {HTTP} from 'meteor/http';
-import {Meteor} from 'meteor/meteor';
+import { HTTP } from 'meteor/http';
+import { Meteor } from 'meteor/meteor';
 
 import schema from '../../schemas/accounts/oauthProviders.graphqls';
 
@@ -22,7 +22,7 @@ const resolver = {
 				if (isJSON(result)) {
 					const providers = JSON.parse(result).data;
 
-					return providers.map((name) => ({name}));
+					return providers.map((name) => ({ name }));
 				} else {
 					throw new Error('Could not parse the result');
 				}

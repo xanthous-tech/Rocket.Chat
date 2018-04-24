@@ -4,7 +4,7 @@ Meteor.methods({
 	getUserRoles() {
 
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'getUserRoles'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'getUserRoles' });
 		}
 
 		const options = {
@@ -17,7 +17,7 @@ Meteor.methods({
 			},
 		};
 
-		const roles = RocketChat.models.Roles.find({scope: 'Users', description: {$exists: 1, $ne: ''}}).fetch();
+		const roles = RocketChat.models.Roles.find({ scope: 'Users', description: { $exists: 1, $ne: '' } }).fetch();
 		const roleIds = _.pluck(roles, '_id');
 
 		// Security issue: we should not send all user's roles to all clients, only the 'public' roles

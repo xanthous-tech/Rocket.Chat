@@ -70,14 +70,14 @@ Template.directory.events({
 		let routeConfig;
 		if (Template.instance().searchType.get() === 'channels') {
 			searchType = 'c';
-			routeConfig = {name: this.name};
+			routeConfig = { name: this.name };
 		} else {
 			searchType = 'd';
-			routeConfig = {name: this.username};
+			routeConfig = { name: this.username };
 		}
 		FlowRouter.go(RocketChat.roomTypes.getRouteLink(searchType, routeConfig));
 	},
-	'scroll .rc-directory-content'({currentTarget}, instance) {
+	'scroll .rc-directory-content'({ currentTarget }, instance) {
 		if (instance.loading || instance.end.get()) {
 			return;
 		}

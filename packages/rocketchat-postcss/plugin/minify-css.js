@@ -115,7 +115,7 @@ const mergeCss = (css) => {
 
 			return {
 				type: 'stylesheet',
-				stylesheet: {rules: []},
+				stylesheet: { rules: [] },
 				filename,
 			};
 		}
@@ -130,7 +130,7 @@ const mergeCss = (css) => {
 	});
 
 	if (!stringifiedCss.code) {
-		return {code: ''};
+		return { code: '' };
 	}
 
 	stringifiedCss.map.sourcesContent =
@@ -195,4 +195,4 @@ class CssToolsMinifier {
 	}
 }
 
-Plugin.registerMinifier({extensions: ['css']}, () => new CssToolsMinifier);
+Plugin.registerMinifier({ extensions: ['css'] }, () => new CssToolsMinifier);

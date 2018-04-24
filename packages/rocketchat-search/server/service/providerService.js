@@ -1,7 +1,7 @@
 /* globals RocketChat */
 import _ from 'underscore';
 
-import {validationService} from '../service/validationService';
+import { validationService } from '../service/validationService';
 import SearchLogger from '../logger/logger';
 
 class SearchProviderService {
@@ -84,7 +84,7 @@ class SearchProviderService {
 
 			self.add('Search.Provider', 'defaultProvider', {
 				type: 'select',
-				values: Object.keys(providers).map((key) => ({key, i18nLabel: providers[key].i18nLabel})),
+				values: Object.keys(providers).map((key) => ({ key, i18nLabel: providers[key].i18nLabel })),
 				public: true,
 				i18nLabel: 'Search_Provider',
 			});

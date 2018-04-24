@@ -8,10 +8,10 @@ RocketChat.models.Integrations = new class Integrations extends RocketChat.model
 			throw new Meteor.Error('invalid-type-to-find');
 		}
 
-		return this.find({type}, options);
+		return this.find({ type }, options);
 	}
 
 	disableByUserId(userId) {
-		return this.update({userId}, {$set: {enabled: false}}, {multi: true});
+		return this.update({ userId }, { $set: { enabled: false } }, { multi: true });
 	}
 };

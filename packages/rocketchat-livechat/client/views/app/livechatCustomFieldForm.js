@@ -56,7 +56,7 @@ Template.livechatCustomFieldForm.onCreated(function() {
 	this.autorun(() => {
 		const sub = this.subscribe('livechat:customFields', FlowRouter.getParam('_id'));
 		if (sub.ready()) {
-			const customField = LivechatCustomField.findOne({_id: FlowRouter.getParam('_id')});
+			const customField = LivechatCustomField.findOne({ _id: FlowRouter.getParam('_id') });
 			if (customField) {
 				this.customField.set(customField);
 			}

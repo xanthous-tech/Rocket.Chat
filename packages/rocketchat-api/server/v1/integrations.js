@@ -1,4 +1,4 @@
-RocketChat.API.v1.addRoute('integrations.create', {authRequired: true}, {
+RocketChat.API.v1.addRoute('integrations.create', { authRequired: true }, {
 	post() {
 		check(this.bodyParams, Match.ObjectIncluding({
 			type: String,
@@ -35,11 +35,11 @@ RocketChat.API.v1.addRoute('integrations.create', {authRequired: true}, {
 				return RocketChat.API.v1.failure('Invalid integration type.');
 		}
 
-		return RocketChat.API.v1.success({integration});
+		return RocketChat.API.v1.success({ integration });
 	},
 });
 
-RocketChat.API.v1.addRoute('integrations.history', {authRequired: true}, {
+RocketChat.API.v1.addRoute('integrations.history', { authRequired: true }, {
 	get() {
 		if (!RocketChat.authz.hasPermission(this.userId, 'manage-integrations')) {
 			return RocketChat.API.v1.unauthorized();
@@ -50,12 +50,12 @@ RocketChat.API.v1.addRoute('integrations.history', {authRequired: true}, {
 		}
 
 		const id = this.queryParams.id;
-		const {offset, count} = this.getPaginationItems();
-		const {sort, fields, query} = this.parseJsonQuery();
+		const { offset, count } = this.getPaginationItems();
+		const { sort, fields, query } = this.parseJsonQuery();
 
-		const ourQuery = Object.assign({}, query, {'integration._id': id});
+		const ourQuery = Object.assign({}, query, { 'integration._id': id });
 		const history = RocketChat.models.IntegrationHistory.find(ourQuery, {
-			sort: sort ? sort : {_updatedAt: -1},
+			sort: sort ? sort : { _updatedAt: -1 },
 			skip: offset,
 			limit: count,
 			fields,
@@ -70,18 +70,18 @@ RocketChat.API.v1.addRoute('integrations.history', {authRequired: true}, {
 	},
 });
 
-RocketChat.API.v1.addRoute('integrations.list', {authRequired: true}, {
+RocketChat.API.v1.addRoute('integrations.list', { authRequired: true }, {
 	get() {
 		if (!RocketChat.authz.hasPermission(this.userId, 'manage-integrations')) {
 			return RocketChat.API.v1.unauthorized();
 		}
 
-		const {offset, count} = this.getPaginationItems();
-		const {sort, fields, query} = this.parseJsonQuery();
+		const { offset, count } = this.getPaginationItems();
+		const { sort, fields, query } = this.parseJsonQuery();
 
 		const ourQuery = Object.assign({}, query);
 		const integrations = RocketChat.models.Integrations.find(ourQuery, {
-			sort: sort ? sort : {ts: -1},
+			sort: sort ? sort : { ts: -1 },
 			skip: offset,
 			limit: count,
 			fields,
@@ -96,7 +96,7 @@ RocketChat.API.v1.addRoute('integrations.list', {authRequired: true}, {
 	},
 });
 
-RocketChat.API.v1.addRoute('integrations.remove', {authRequired: true}, {
+RocketChat.API.v1.addRoute('integrations.remove', { authRequired: true }, {
 	post() {
 		check(this.bodyParams, Match.ObjectIncluding({
 			type: String,
@@ -112,9 +112,9 @@ RocketChat.API.v1.addRoute('integrations.remove', {authRequired: true}, {
 		switch (this.bodyParams.type) {
 			case 'webhook-outgoing':
 				if (this.bodyParams.target_url) {
-					integration = RocketChat.models.Integrations.findOne({urls: this.bodyParams.target_url});
+					integration = RocketChat.models.Integrations.findOne({ urls: this.bodyParams.target_url });
 				} else if (this.bodyParams.integrationId) {
-					integration = RocketChat.models.Integrations.findOne({_id: this.bodyParams.integrationId});
+					integration = RocketChat.models.Integrations.findOne({ _id: this.bodyParams.integrationId });
 				}
 
 				if (!integration) {
@@ -129,7 +129,7 @@ RocketChat.API.v1.addRoute('integrations.remove', {authRequired: true}, {
 					integration,
 				});
 			case 'webhook-incoming':
-				integration = RocketChat.models.Integrations.findOne({_id: this.bodyParams.integrationId});
+				integration = RocketChat.models.Integrations.findOne({ _id: this.bodyParams.integrationId });
 
 				if (!integration) {
 					return RocketChat.API.v1.failure('No integration found.');

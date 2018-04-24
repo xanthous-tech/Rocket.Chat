@@ -19,7 +19,7 @@ Meteor.methods({
 			throw new Meteor.Error('error-invalid-room', 'Invalid room');
 		}
 
-		const messages = RocketChat.models.Messages.findVisibleByRoomId(rid, {sort: {ts : 1}});
+		const messages = RocketChat.models.Messages.findVisibleByRoomId(rid, { sort: { ts : 1 } });
 		const header = RocketChat.placeholders.replace(RocketChat.settings.get('Email_Header') || '');
 		const footer = RocketChat.placeholders.replace(RocketChat.settings.get('Email_Footer') || '');
 
@@ -31,7 +31,7 @@ Meteor.methods({
 
 			let author;
 			if (message.u._id === visitor._id) {
-				author = TAPi18n.__('You', {lng: userLanguage});
+				author = TAPi18n.__('You', { lng: userLanguage });
 			} else {
 				author = message.u.username;
 			}
@@ -58,7 +58,7 @@ Meteor.methods({
 			to: email,
 			from: fromEmail,
 			replyTo: fromEmail,
-			subject: TAPi18n.__('Transcript_of_your_livechat_conversation', {lng: userLanguage}),
+			subject: TAPi18n.__('Transcript_of_your_livechat_conversation', { lng: userLanguage }),
 			html: header + html + footer,
 		};
 

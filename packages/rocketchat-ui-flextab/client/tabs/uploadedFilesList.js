@@ -55,7 +55,7 @@ Template.uploadedFilesList.helpers({
 
 		const [, extension] = this.name.match(/.*?\.(.*)$/);
 
-		return {icon, extension, type};
+		return { icon, extension, type };
 	},
 	thumb() {
 		if (/image/.test(this.type)) {
@@ -66,11 +66,11 @@ Template.uploadedFilesList.helpers({
 		return moment(timestamp).format(RocketChat.settings.get('Message_TimeAndDateFormat') || 'LLL');
 	},
 	files() {
-		return roomFiles.find({rid: this.rid}, {sort: {uploadedAt: -1}});
+		return roomFiles.find({ rid: this.rid }, { sort: { uploadedAt: -1 } });
 	},
 
 	hasFiles() {
-		return roomFiles.find({rid: this.rid}).count() > 0;
+		return roomFiles.find({ rid: this.rid }).count() > 0;
 	},
 
 	hasMore() {
@@ -134,7 +134,7 @@ Template.uploadedFilesList.events({
 			});
 
 			// Check if the upload message for this file is currently loaded
-			const msg = ChatMessage.findOne({file: {_id: self._id}});
+			const msg = ChatMessage.findOne({ file: { _id: self._id } });
 			return RocketChat.models.Uploads.remove(self._id, function() {
 				if (msg) {
 					return chatMessages[Session.get('openedRoom')].deleteMsg(msg);
@@ -157,11 +157,11 @@ Template.uploadedFilesList.events({
 });
 
 Template.uploadedFilesList.onCreated(function() {
-	const {rid} = Template.currentData();
+	const { rid } = Template.currentData();
 	this.hasMore = new ReactiveVar(true);
 	this.limit = new ReactiveVar(50);
 	return this.autorun(() => this.subscribe('roomFiles', rid, this.limit.get(), () => {
-		if (roomFiles.find({rid}).fetch().length < this.limit.get()) {
+		if (roomFiles.find({ rid }).fetch().length < this.limit.get()) {
 			return this.hasMore.set(false);
 		}
 	}

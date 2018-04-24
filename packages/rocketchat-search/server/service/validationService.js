@@ -36,7 +36,7 @@ class ValidationService {
 				const subscription = getSubscription(msg.rid, uid);
 
 				if (subscription) {
-					msg.r = {name: subscription.name, t: subscription.t};
+					msg.r = { name: subscription.name, t: subscription.t };
 					msg.username = getUsername(msg.user);
 					msg.valid = true;
 					SearchLogger.debug(`user ${ uid } can access ${ msg.rid } ( ${ subscription.t === 'd' ? subscription.username : subscription.name } )`);

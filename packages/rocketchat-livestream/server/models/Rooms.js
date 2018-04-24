@@ -4,5 +4,5 @@ RocketChat.models.Rooms.setStreamingOptionsById = function(_id, streamingOptions
 			streamingOptions,
 		},
 	};
-	return this.update({_id}, update);
+	return this.update({ _id }, update);
 };

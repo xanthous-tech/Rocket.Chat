@@ -80,4 +80,4 @@ Template._autocompleteContainer.helpers({
 		return this.matchedRule().noMatchTemplate || Template._noMatch;
 	},
 });
-export {acEvents, attributes, autocompleteHelpers};
+export { acEvents, attributes, autocompleteHelpers };

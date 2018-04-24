@@ -1,4 +1,4 @@
-import {Template} from 'meteor/templating';
+import { Template } from 'meteor/templating';
 
 Template.message.helpers({
 	readReceipt() {

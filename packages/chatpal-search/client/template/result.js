@@ -90,7 +90,7 @@ Template.ChatpalSearchSingleMessage.helpers({
 	},
 
 	roomLink() {
-		const subscription = RocketChat.models.Subscriptions.findOne({rid: this.rid});
+		const subscription = RocketChat.models.Subscriptions.findOne({ rid: this.rid });
 		return RocketChat.roomTypes.getRouteLink(subscription.t, subscription);
 	},
 
@@ -116,7 +116,7 @@ Template.ChatpalSearchSingleRoom.helpers({
 		return RocketChat.roomTypes.getIcon(room && room.t);
 	},
 	roomLink() {
-		const subscription = RocketChat.models.Subscriptions.findOne({rid: this._id});
+		const subscription = RocketChat.models.Subscriptions.findOne({ rid: this._id });
 		return RocketChat.roomTypes.getRouteLink(subscription.t, subscription);
 	},
 });

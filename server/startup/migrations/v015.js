@@ -86,7 +86,7 @@ RocketChat.Migrations.add({
 					}
 				}
 
-				RocketChat.models.Messages.update({_id: message._id}, {
+				RocketChat.models.Messages.update({ _id: message._id }, {
 					$set: {
 						urls: message.urls,
 						msg: message.msg,
@@ -94,9 +94,9 @@ RocketChat.Migrations.add({
 				});
 			});
 
-			oldFilesCollection.remove({_id: cfsRecord._id});
-			oldGridFSCollection.remove({_id: oldGridFsFile._id});
-			oldChunkCollection.remove({files_id: new Mongo.Collection.ObjectID(cfsRecord.copies.files.key)});
+			oldFilesCollection.remove({ _id: cfsRecord._id });
+			oldGridFSCollection.remove({ _id: oldGridFsFile._id });
+			oldChunkCollection.remove({ files_id: new Mongo.Collection.ObjectID(cfsRecord.copies.files.key) });
 		});
 
 		return console.log('End of file migration');

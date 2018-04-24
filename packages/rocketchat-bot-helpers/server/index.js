@@ -8,8 +8,8 @@ import _ from 'underscore';
 class BotHelpers {
 	constructor() {
 		this.queries = {
-			online: {status: {$ne: 'offline'}},
-			users: {roles: {$not: {$all: ['bot']}}},
+			online: { status: { $ne: 'offline' } },
+			users: { roles: { $not: { $all: ['bot'] } } },
 		};
 	}
 
@@ -22,8 +22,8 @@ class BotHelpers {
 		fieldsSetting.forEach((n) => {
 			this.userFields[n.trim()] = 1;
 		});
-		this._allUsers = RocketChat.models.Users.find(this.queries.users, {fields: this.userFields});
-		this._onlineUsers = RocketChat.models.Users.find({$and: [this.queries.users, this.queries.online]}, {fields: this.userFields});
+		this._allUsers = RocketChat.models.Users.find(this.queries.users, { fields: this.userFields });
+		this._onlineUsers = RocketChat.models.Users.find({ $and: [this.queries.users, this.queries.online] }, { fields: this.userFields });
 	}
 
 	// request methods or props as arguments to Meteor.call
@@ -72,7 +72,7 @@ class BotHelpers {
 
 	// generic error whenever property access insufficient to fill request
 	requestError() {
-		throw new Meteor.Error('error-not-allowed', 'Bot request not allowed', {method: 'botRequest', action: 'bot_request'});
+		throw new Meteor.Error('error-not-allowed', 'Bot request not allowed', { method: 'botRequest', action: 'bot_request' });
 	}
 
 	// "public" properties accessed by getters
@@ -130,7 +130,7 @@ class BotHelpers {
 			this.requestError();
 			return false;
 		} else {
-			return this._allUsers.fetch().map((user) => ({id: user._id, name: user.username}));
+			return this._allUsers.fetch().map((user) => ({ id: user._id, name: user.username }));
 		}
 	}
 	get onlineIDs() {
@@ -138,7 +138,7 @@ class BotHelpers {
 			this.requestError();
 			return false;
 		} else {
-			return this._onlineUsers.fetch().map((user) => ({id: user._id, name: user.username}));
+			return this._onlineUsers.fetch().map((user) => ({ id: user._id, name: user.username }));
 		}
 	}
 }
@@ -157,7 +157,7 @@ Meteor.methods({
 		if (userID && RocketChat.authz.hasRole(userID, 'bot')) {
 			return botHelpers.request(...args);
 		} else {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'botRequest'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'botRequest' });
 		}
 	},
 });

@@ -22,7 +22,7 @@ Object.assign(RocketChat.models.Subscriptions, {
 		roles = [].concat(roles);
 
 		const query = {
-			roles: {$in: roles},
+			roles: { $in: roles },
 		};
 
 		if (scope) {
@@ -37,6 +37,6 @@ Object.assign(RocketChat.models.Subscriptions, {
 			}
 		}));
 
-		return RocketChat.models.Users.find({_id: {$in: users}}, options);
+		return RocketChat.models.Users.find({ _id: { $in: users } }, options);
 	},
 });

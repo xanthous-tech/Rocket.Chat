@@ -2,9 +2,9 @@
  * Markdown is a named function that will parse markdown syntax
  * @param {String} msg - The message html
  */
-import {Meteor} from 'meteor/meteor';
-import {Random} from 'meteor/random';
-import {RocketChat} from 'meteor/rocketchat:lib';
+import { Meteor } from 'meteor/meteor';
+import { Random } from 'meteor/random';
+import { RocketChat } from 'meteor/rocketchat:lib';
 import s from 'underscore.string';
 
 const parseNotEscaped = function(msg, message) {

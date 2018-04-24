@@ -5,7 +5,7 @@ Template.room.events({
 		const data = Blaze.getData(event.currentTarget);
 
 		const user = Meteor.user();
-		const room = RocketChat.models.Rooms.findOne({_id: data._arguments[1].rid});
+		const room = RocketChat.models.Rooms.findOne({ _id: data._arguments[1].rid });
 
 		if (Array.isArray(room.muted) && room.muted.indexOf(user.username) !== -1 && !room.reactWhenReadOnly) {
 			return false;
@@ -49,14 +49,14 @@ Meteor.startup(function() {
 			RocketChat.EmojiPicker.open(event.currentTarget, (emoji) => Meteor.call('setReaction', `:${ emoji }:`, this._arguments[1]._id));
 		},
 		condition(message) {
-			const room = RocketChat.models.Rooms.findOne({_id: message.rid});
+			const room = RocketChat.models.Rooms.findOne({ _id: message.rid });
 			const user = Meteor.user();
 
 			if (!room) {
 				return false;
 			} else if (Array.isArray(room.muted) && room.muted.indexOf(user.username) !== -1 && !room.reactWhenReadOnly) {
 				return false;
-			} else if (!RocketChat.models.Subscriptions.findOne({rid: message.rid})) {
+			} else if (!RocketChat.models.Subscriptions.findOne({ rid: message.rid })) {
 				return false;
 			} else if (message.private) {
 				return false;

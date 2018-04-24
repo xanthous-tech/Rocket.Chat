@@ -16,9 +16,9 @@ Package.onUse(function(api) {
 		'meteorhacks:inject-initial',
 	]);
 
-	api.addFiles('server/asset/chatpal-enter.svg', 'server', {isAsset:true});
-	api.addFiles('server/asset/chatpal-logo-icon-lightblue.svg', 'server', {isAsset:true});
-	api.addFiles('server/asset/chatpal-logo-icon-darkblue.svg', 'server', {isAsset:true});
+	api.addFiles('server/asset/chatpal-enter.svg', 'server', { isAsset:true });
+	api.addFiles('server/asset/chatpal-logo-icon-lightblue.svg', 'server', { isAsset:true });
+	api.addFiles('server/asset/chatpal-logo-icon-darkblue.svg', 'server', { isAsset:true });
 
 	api.addFiles([
 		'server/provider/provider.js',

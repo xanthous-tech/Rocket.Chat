@@ -4,6 +4,6 @@ FlowRouter.route('/admin/emoji-custom', {
 		this.register('EmojiCustom', Meteor.subscribe('EmojiCustom'));
 	},
 	action(/* params*/) {
-		BlazeLayout.render('main', {center: 'adminEmoji'});
+		BlazeLayout.render('main', { center: 'adminEmoji' });
 	},
 });

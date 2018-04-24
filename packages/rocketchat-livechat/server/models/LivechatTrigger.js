@@ -7,7 +7,7 @@ class LivechatTrigger extends RocketChat.models._Base {
 	}
 
 	updateById(_id, data) {
-		return this.update({_id}, {$set: data});
+		return this.update({ _id }, { $set: data });
 	}
 
 	removeAll() {
@@ -15,15 +15,15 @@ class LivechatTrigger extends RocketChat.models._Base {
 	}
 
 	findById(_id) {
-		return this.find({_id});
+		return this.find({ _id });
 	}
 
 	removeById(_id) {
-		return this.remove({_id});
+		return this.remove({ _id });
 	}
 
 	findEnabled() {
-		return this.find({enabled: true});
+		return this.find({ enabled: true });
 	}
 }
 

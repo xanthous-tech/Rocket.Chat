@@ -8,12 +8,12 @@ Meteor.methods({
 
 		const user = Meteor.user();
 
-		const message = RocketChat.models.Messages.findOne({_id: messageId});
-		const room = RocketChat.models.Rooms.findOne({_id: message.rid});
+		const message = RocketChat.models.Messages.findOne({ _id: messageId });
+		const room = RocketChat.models.Rooms.findOne({ _id: message.rid });
 
 		if (Array.isArray(room.muted) && room.muted.indexOf(user.username) !== -1 && !room.reactWhenReadOnly) {
 			return false;
-		} else if (!RocketChat.models.Subscriptions.findOne({rid: message.rid})) {
+		} else if (!RocketChat.models.Subscriptions.findOne({ rid: message.rid })) {
 			return false;
 		} else if (message.private) {
 			return false;

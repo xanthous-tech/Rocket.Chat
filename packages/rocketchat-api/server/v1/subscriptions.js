@@ -1,6 +1,6 @@
-RocketChat.API.v1.addRoute('subscriptions.get', {authRequired: true}, {
+RocketChat.API.v1.addRoute('subscriptions.get', { authRequired: true }, {
 	get() {
-		const {updatedSince} = this.queryParams;
+		const { updatedSince } = this.queryParams;
 
 		let updatedSinceDate;
 		if (updatedSince) {
@@ -25,9 +25,9 @@ RocketChat.API.v1.addRoute('subscriptions.get', {authRequired: true}, {
 	},
 });
 
-RocketChat.API.v1.addRoute('subscriptions.getOne', {authRequired: true}, {
+RocketChat.API.v1.addRoute('subscriptions.getOne', { authRequired: true }, {
 	get() {
-		const {roomId} = this.requestParams();
+		const { roomId } = this.requestParams();
 
 		if (!roomId) {
 			return RocketChat.API.v1.failure('The \'roomId\' param is required');
@@ -55,7 +55,7 @@ RocketChat.API.v1.addRoute('subscriptions.getOne', {authRequired: true}, {
 	Params:
 		- rid: The rid of the room to be marked as read.
  */
-RocketChat.API.v1.addRoute('subscriptions.read', {authRequired: true}, {
+RocketChat.API.v1.addRoute('subscriptions.read', { authRequired: true }, {
 	post() {
 		check(this.bodyParams, {
 			rid: String,

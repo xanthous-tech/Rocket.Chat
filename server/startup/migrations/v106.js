@@ -3,7 +3,7 @@ import LivechatVisitors from 'meteor/rocketchat:livechat/server/models/LivechatV
 RocketChat.Migrations.add({
 	version: 106,
 	up() {
-		const visitors = Meteor.users.find({type: 'visitor'});
+		const visitors = Meteor.users.find({ type: 'visitor' });
 		const total = visitors.count();
 		let current = 1;
 
@@ -37,7 +37,7 @@ RocketChat.Migrations.add({
 					token: user.profile.token,
 				});
 
-				Meteor.users.remove({_id});
+				Meteor.users.remove({ _id });
 			});
 
 			console.log('Livechat visitors migration finished.');

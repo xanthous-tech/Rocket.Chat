@@ -20,6 +20,6 @@ RocketChat.Migrations.add({
 			},
 		};
 
-		RocketChat.models.Integrations.update(query, update, {multi: true});
+		RocketChat.models.Integrations.update(query, update, { multi: true });
 	},
 });

@@ -5,7 +5,7 @@ import stream from 'stream';
 import mime from 'mime-type/with-db';
 import Future from 'fibers/future';
 import sharp from 'sharp';
-import {Cookies} from 'meteor/ostrio:cookies';
+import { Cookies } from 'meteor/ostrio:cookies';
 
 const cookie = new Cookies();
 
@@ -108,7 +108,7 @@ Object.assign(FileUpload, {
 							console.error(err);
 						}
 						const size = fs.lstatSync(tempFilePath).size;
-						this.getCollection().direct.update({_id: file._id}, {$set: {size}});
+						this.getCollection().direct.update({ _id: file._id }, { $set: { size } });
 						future.return();
 					}));
 				}));
@@ -166,7 +166,7 @@ Object.assign(FileUpload, {
 					fs.unlink(tmpFile, Meteor.bindEnvironment(() => {
 						fs.rename(`${ tmpFile }.tmp`, tmpFile, Meteor.bindEnvironment(() => {
 							const size = fs.lstatSync(tmpFile).size;
-							this.getCollection().direct.update({_id: file._id}, {
+							this.getCollection().direct.update({ _id: file._id }, {
 								$set: {
 									size,
 									identify,
@@ -195,12 +195,12 @@ Object.assign(FileUpload, {
 		// console.log('upload finished ->', file);
 	},
 
-	requestCanAccessFiles({headers = {}, query = {}}) {
+	requestCanAccessFiles({ headers = {}, query = {} }) {
 		if (!RocketChat.settings.get('FileUpload_ProtectFiles')) {
 			return true;
 		}
 
-		let {rc_uid, rc_token} = query;
+		let { rc_uid, rc_token } = query;
 
 		if (!rc_uid && headers.cookie) {
 			rc_uid = cookie.get('rc_uid', headers.cookie) ;
@@ -266,7 +266,7 @@ Object.assign(FileUpload, {
 });
 
 export class FileUploadClass {
-	constructor({name, model, store, get, insert, getStore, copy}) {
+	constructor({ name, model, store, get, insert, getStore, copy }) {
 		this.name = name;
 		this.model = model || this.getModelFromName();
 		this._store = store || UploadFS.getStore(name);

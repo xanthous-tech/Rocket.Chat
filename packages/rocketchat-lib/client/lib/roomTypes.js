@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-import {RoomTypesCommon} from '../../lib/RoomTypesCommon';
+import { RoomTypesCommon } from '../../lib/RoomTypesCommon';
 
 RocketChat.roomTypes = new class RocketChatRoomTypes extends RoomTypesCommon {
 	checkCondition(roomType) {
@@ -73,7 +73,7 @@ RocketChat.roomTypes = new class RocketChatRoomTypes extends RoomTypesCommon {
 		return room && room.archived === true;
 	}
 	verifyCanSendMessage(roomId) {
-		const room = ChatRoom.findOne({_id: roomId}, {fields: {t: 1}});
+		const room = ChatRoom.findOne({ _id: roomId }, { fields: { t: 1 } });
 
 		if (!room || !room.t) {
 			return;
@@ -103,7 +103,7 @@ RocketChat.roomTypes = new class RocketChatRoomTypes extends RoomTypesCommon {
 		return this.roomTypes[roomType].showJoinLink(roomId);
 	}
 	getNotSubscribedTpl(roomId) {
-		const room = ChatRoom.findOne({_id: roomId}, {fields: {t: 1}});
+		const room = ChatRoom.findOne({ _id: roomId }, { fields: { t: 1 } });
 		if (!room || !room.t) {
 			return;
 		}

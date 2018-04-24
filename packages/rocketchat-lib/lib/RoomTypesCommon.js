@@ -1,5 +1,5 @@
 /* globals roomExit */
-import {RoomTypeConfig} from './RoomTypeConfig';
+import { RoomTypeConfig } from './RoomTypeConfig';
 
 export class RoomTypesCommon {
 	constructor() {

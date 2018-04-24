@@ -67,7 +67,7 @@ Template.sidebarItem.onCreated(function() {
 				if (currentData.t === 'd' && Meteor.userId() !== currentData.lastMessage.u._id) {
 					this.renderedMessage = currentData.lastMessage.msg === '' ? t('Sent_an_attachment') : renderedMessage;
 				} else {
-					this.renderedMessage = currentData.lastMessage.msg === '' ? t('user_sent_an_attachment', {user: sender}) : `${ sender }: ${ renderedMessage }`;
+					this.renderedMessage = currentData.lastMessage.msg === '' ? t('user_sent_an_attachment', { user: sender }) : `${ sender }: ${ renderedMessage }`;
 				}
 
 				setLastMessageTs(this, currentData.lastMessage.ts);
@@ -96,9 +96,9 @@ Template.sidebarItem.events({
 			return !(((roomData.cl != null) && !roomData.cl) || (['d', 'l'].includes(roomData.t)));
 		};
 
-		const canFavorite = RocketChat.settings.get('Favorite_Rooms') && ChatSubscription.find({rid: this.rid}).count() > 0;
+		const canFavorite = RocketChat.settings.get('Favorite_Rooms') && ChatSubscription.find({ rid: this.rid }).count() > 0;
 		const isFavorite = () => {
-			const sub = ChatSubscription.findOne({rid: this.rid}, {fields: {f: 1}});
+			const sub = ChatSubscription.findOne({ rid: this.rid }, { fields: { f: 1 } });
 			if (((sub != null ? sub.f : undefined) != null) && sub.f) {
 				return true;
 			}

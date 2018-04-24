@@ -6,7 +6,7 @@ export class AppPersistenceBridge {
 	async purge(appId) {
 		console.log(`The App's persistent storage is being purged: ${ appId }`);
 
-		this.orch.getPersistenceModel().remove({appId});
+		this.orch.getPersistenceModel().remove({ appId });
 	}
 
 	async create(data, appId) {
@@ -16,7 +16,7 @@ export class AppPersistenceBridge {
 			throw new Error('Attempted to store an invalid data type, it must be an object.');
 		}
 
-		return this.orch.getPersistenceModel().insert({appId, data});
+		return this.orch.getPersistenceModel().insert({ appId, data });
 	}
 
 	async createWithAssociations(data, associations, appId) {
@@ -26,7 +26,7 @@ export class AppPersistenceBridge {
 			throw new Error('Attempted to store an invalid data type, it must be an object.');
 		}
 
-		return this.orch.getPersistenceModel().insert({appId, associations, data});
+		return this.orch.getPersistenceModel().insert({ appId, associations, data });
 	}
 
 	async readById(id, appId) {
@@ -42,7 +42,7 @@ export class AppPersistenceBridge {
 
 		const records = this.orch.getPersistenceModel().find({
 			appId,
-			associations: {$all: associations},
+			associations: { $all: associations },
 		}).fetch();
 
 		return Array.isArray(records) ? records.map((r) => r.data) : [];
@@ -51,13 +51,13 @@ export class AppPersistenceBridge {
 	async remove(id, appId) {
 		console.log(`The App ${ appId } is removing one of their records by the id: "${ id }"`);
 
-		const record = this.orch.getPersistenceModel().findOne({_id: id, appId});
+		const record = this.orch.getPersistenceModel().findOne({ _id: id, appId });
 
 		if (!record) {
 			return undefined;
 		}
 
-		this.orch.getPersistenceModel().remove({_id: id, appId});
+		this.orch.getPersistenceModel().remove({ _id: id, appId });
 
 		return record.data;
 	}

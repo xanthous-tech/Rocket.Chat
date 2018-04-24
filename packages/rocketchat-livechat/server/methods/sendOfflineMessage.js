@@ -38,7 +38,7 @@ Meteor.methods({
 			try {
 				Meteor.wrapAsync(dns.resolveMx)(emailDomain);
 			} catch (e) {
-				throw new Meteor.Error('error-invalid-email-address', 'Invalid email address', {method: 'livechat:sendOfflineMessage'});
+				throw new Meteor.Error('error-invalid-email-address', 'Invalid email address', { method: 'livechat:sendOfflineMessage' });
 			}
 		}
 

@@ -20,7 +20,7 @@ this.AudioRecorder = new class {
 			return cb(false);
 		}
 
-		return navigator.getUserMedia({audio: true}, ok, (e) => console.log(`No live audio input: ${ e }`));
+		return navigator.getUserMedia({ audio: true }, ok, (e) => console.log(`No live audio input: ${ e }`));
 	}
 
 	startUserMedia(stream) {

@@ -1,10 +1,10 @@
 Meteor.publish('livechat:appearance', function() {
 	if (!this.userId) {
-		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', {publish: 'livechat:appearance'}));
+		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', { publish: 'livechat:appearance' }));
 	}
 
 	if (!RocketChat.authz.hasPermission(this.userId, 'view-livechat-manager')) {
-		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', {publish: 'livechat:appearance'}));
+		return this.error(new Meteor.Error('error-not-authorized', 'Not authorized', { publish: 'livechat:appearance' }));
 	}
 
 	const query = {

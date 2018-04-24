@@ -5,7 +5,7 @@ RocketChat.API.helperMethods.set('parseJsonQuery', function _parseJsonQuery() {
 			sort = JSON.parse(this.queryParams.sort);
 		} catch (e) {
 			this.logger.warn(`Invalid sort parameter provided "${ this.queryParams.sort }":`, e);
-			throw new Meteor.Error('error-invalid-sort', `Invalid sort parameter provided: "${ this.queryParams.sort }"`, {helperMethod: 'parseJsonQuery'});
+			throw new Meteor.Error('error-invalid-sort', `Invalid sort parameter provided: "${ this.queryParams.sort }"`, { helperMethod: 'parseJsonQuery' });
 		}
 	}
 
@@ -15,7 +15,7 @@ RocketChat.API.helperMethods.set('parseJsonQuery', function _parseJsonQuery() {
 			fields = JSON.parse(this.queryParams.fields);
 		} catch (e) {
 			this.logger.warn(`Invalid fields parameter provided "${ this.queryParams.fields }":`, e);
-			throw new Meteor.Error('error-invalid-fields', `Invalid fields parameter provided: "${ this.queryParams.fields }"`, {helperMethod: 'parseJsonQuery'});
+			throw new Meteor.Error('error-invalid-fields', `Invalid fields parameter provided: "${ this.queryParams.fields }"`, { helperMethod: 'parseJsonQuery' });
 		}
 	}
 
@@ -45,7 +45,7 @@ RocketChat.API.helperMethods.set('parseJsonQuery', function _parseJsonQuery() {
 			query = JSON.parse(this.queryParams.query);
 		} catch (e) {
 			this.logger.warn(`Invalid query parameter provided "${ this.queryParams.query }":`, e);
-			throw new Meteor.Error('error-invalid-query', `Invalid query parameter provided: "${ this.queryParams.query }"`, {helperMethod: 'parseJsonQuery'});
+			throw new Meteor.Error('error-invalid-query', `Invalid query parameter provided: "${ this.queryParams.query }"`, { helperMethod: 'parseJsonQuery' });
 		}
 	}
 

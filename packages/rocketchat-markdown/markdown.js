@@ -3,12 +3,12 @@
  * @param {Object} message - The message object
  */
 import s from 'underscore.string';
-import {Meteor} from 'meteor/meteor';
-import {Blaze} from 'meteor/blaze';
-import {RocketChat} from 'meteor/rocketchat:lib';
+import { Meteor } from 'meteor/meteor';
+import { Blaze } from 'meteor/blaze';
+import { RocketChat } from 'meteor/rocketchat:lib';
 
-import {marked} from './parser/marked/marked.js';
-import {original} from './parser/original/original.js';
+import { marked } from './parser/marked/marked.js';
+import { original } from './parser/original/original.js';
 
 const parsers = {
 	original,
@@ -45,7 +45,7 @@ class MarkdownClass {
 
 	mountTokensBack(message) {
 		if (message.tokens && message.tokens.length > 0) {
-			for (const {token, text} of message.tokens) {
+			for (const { token, text } of message.tokens) {
 				message.html = message.html.replace(token, () => text); // Uses lambda so doesn't need to escape $
 			}
 		}

@@ -3,9 +3,9 @@ RocketChat.Migrations.add({
 	up() {
 
 		if (RocketChat && RocketChat.models && RocketChat.models.Settings) {
-			const setting = RocketChat.models.Settings.findOne({_id: 'Accounts_AllowAnonymousAccess'});
+			const setting = RocketChat.models.Settings.findOne({ _id: 'Accounts_AllowAnonymousAccess' });
 			if (setting && setting.value === true) {
-				RocketChat.models.Settings.update({_id: 'Accounts_AllowAnonymousRead'}, {$set: {value: setting.value}});
+				RocketChat.models.Settings.update({ _id: 'Accounts_AllowAnonymousRead' }, { $set: { value: setting.value } });
 			}
 		}
 
@@ -27,6 +27,6 @@ RocketChat.Migrations.add({
 			},
 		};
 
-		RocketChat.models.Permissions.update(query, update, {multi: true});
+		RocketChat.models.Permissions.update(query, update, { multi: true });
 	},
 });

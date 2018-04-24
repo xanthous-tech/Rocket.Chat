@@ -33,7 +33,7 @@ RocketChatFile.addPassThrough = function(st, fn) {
 
 RocketChatFile.GridFS = class {
 	constructor(config = {}) {
-		const {name = 'file', transformWrite} = config;
+		const { name = 'file', transformWrite } = config;
 
 		this.name = name;
 		this.transformWrite = transformWrite;
@@ -137,8 +137,8 @@ RocketChatFile.GridFS = class {
 
 RocketChatFile.FileSystem = class {
 	constructor(config = {}) {
-		let {absolutePath = '~/uploads'} = config;
-		const {transformWrite} = config;
+		let { absolutePath = '~/uploads' } = config;
+		const { transformWrite } = config;
 
 		this.transformWrite = transformWrite;
 		if (absolutePath.split(path.sep)[0] === '~') {

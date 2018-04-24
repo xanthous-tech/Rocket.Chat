@@ -12,7 +12,7 @@ Template.messageBox.events({
 			RocketChat.EmojiPicker.close();
 		} else {
 			RocketChat.EmojiPicker.open(event.currentTarget, (emoji) => {
-				const {input} = chatMessages[RocketChat.openedRoom];
+				const { input } = chatMessages[RocketChat.openedRoom];
 
 				const emojiValue = `:${ emoji }:`;
 

@@ -1,12 +1,12 @@
 Meteor.methods({
 	getUsersOfRoom(roomId, showAll) {
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'getUsersOfRoom'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'getUsersOfRoom' });
 		}
 
 		const room = Meteor.call('canAccessRoom', roomId, Meteor.userId());
 		if (!room) {
-			throw new Meteor.Error('error-invalid-room', 'Invalid room', {method: 'getUsersOfRoom'});
+			throw new Meteor.Error('error-invalid-room', 'Invalid room', { method: 'getUsersOfRoom' });
 		}
 
 		const filter = (record) => {

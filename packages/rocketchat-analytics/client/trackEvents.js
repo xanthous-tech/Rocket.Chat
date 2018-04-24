@@ -30,7 +30,7 @@ if (!window._paq || window.ga) {
 	// Messsages
 	RocketChat.callbacks.add('afterSaveMessage', (message) => {
 		if ((window._paq || window.ga) && RocketChat.settings.get('Analytics_features_messages')) {
-			const room = ChatRoom.findOne({_id: message.rid});
+			const room = ChatRoom.findOne({ _id: message.rid });
 			trackEvent('Message', 'Send', `${ room.name } (${ room._id })`);
 		}
 	}, 2000, 'trackEvents');

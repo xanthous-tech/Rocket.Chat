@@ -3,7 +3,7 @@ Meteor.methods({
 		integration = RocketChat.integrations.validateOutgoing(integration, this.userId);
 
 		if (!integration.token || integration.token.trim() === '') {
-			throw new Meteor.Error('error-invalid-token', 'Invalid token', {method: 'updateOutgoingIntegration'});
+			throw new Meteor.Error('error-invalid-token', 'Invalid token', { method: 'updateOutgoingIntegration' });
 		}
 
 		let currentIntegration;
@@ -11,9 +11,9 @@ Meteor.methods({
 		if (RocketChat.authz.hasPermission(this.userId, 'manage-integrations')) {
 			currentIntegration = RocketChat.models.Integrations.findOne(integrationId);
 		} else if (RocketChat.authz.hasPermission(this.userId, 'manage-own-integrations')) {
-			currentIntegration = RocketChat.models.Integrations.findOne({_id: integrationId, '_createdBy._id': this.userId});
+			currentIntegration = RocketChat.models.Integrations.findOne({ _id: integrationId, '_createdBy._id': this.userId });
 		} else {
-			throw new Meteor.Error('not_authorized', 'Unauthorized', {method: 'updateOutgoingIntegration'});
+			throw new Meteor.Error('not_authorized', 'Unauthorized', { method: 'updateOutgoingIntegration' });
 		}
 
 		if (!currentIntegration) {
@@ -46,7 +46,7 @@ Meteor.methods({
 				triggerWordAnywhere: integration.triggerWordAnywhere,
 				runOnEdits: integration.runOnEdits,
 				_updatedAt: new Date(),
-				_updatedBy: RocketChat.models.Users.findOne(this.userId, {fields: {username: 1}}),
+				_updatedBy: RocketChat.models.Users.findOne(this.userId, { fields: { username: 1 } }),
 			},
 		});
 

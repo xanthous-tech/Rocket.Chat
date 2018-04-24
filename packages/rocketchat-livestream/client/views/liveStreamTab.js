@@ -66,7 +66,7 @@ Template.liveStreamTab.onCreated(function() {
 	this.popoutOpen = new ReactiveVar(popout.context != null);
 
 	this.autorun(() => {
-		const room = RocketChat.models.Rooms.findOne(this.data.rid, {fields: {streamingOptions : 1}});
+		const room = RocketChat.models.Rooms.findOne(this.data.rid, { fields: { streamingOptions : 1 } });
 		this.streamingOptions.set(room.streamingOptions);
 	});
 });

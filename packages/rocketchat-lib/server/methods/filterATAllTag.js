@@ -18,7 +18,7 @@ RocketChat.callbacks.add('beforeSaveMessage', function(message) {
 				_id: Random.id(),
 				rid: message.rid,
 				ts: new Date,
-				msg: TAPi18n.__('error-action-not-allowed', {action}, language),
+				msg: TAPi18n.__('error-action-not-allowed', { action }, language),
 			});
 
 			// Also throw to stop propagation of 'sendMessage'.

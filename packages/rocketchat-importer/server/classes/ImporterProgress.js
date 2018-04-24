@@ -1,4 +1,4 @@
-import {ProgressStep} from '../../lib/ImporterProgressStep';
+import { ProgressStep } from '../../lib/ImporterProgressStep';
 
 export class Progress {
 	/**
@@ -11,6 +11,6 @@ export class Progress {
 		this.key = key;
 		this.name = name;
 		this.step = ProgressStep.NEW;
-		this.count = {completed: 0, total: 0};
+		this.count = { completed: 0, total: 0 };
 	}
 }

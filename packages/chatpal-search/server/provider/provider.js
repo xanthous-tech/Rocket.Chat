@@ -1,5 +1,5 @@
-import {searchProviderService} from 'meteor/rocketchat:search';
-import {SearchProvider} from 'meteor/rocketchat:search';
+import { searchProviderService } from 'meteor/rocketchat:search';
+import { SearchProvider } from 'meteor/rocketchat:search';
 import Index from './index';
 import ChatpalLogger from '../utils/logger';
 
@@ -18,8 +18,8 @@ class ChatpalProvider extends SearchProvider {
 
 		this._settings.add('Backend', 'select', 'cloud', {
 			values:[
-				{key: 'cloud', i18nLabel: 'Cloud Service'},
-				{key: 'onsite', i18nLabel: 'On-Site'},
+				{ key: 'cloud', i18nLabel: 'Cloud Service' },
+				{ key: 'onsite', i18nLabel: 'On-Site' },
 			],
 			i18nLabel: 'Chatpal_Backend',
 			i18nDescription: 'Chatpal_Backend_Description',
@@ -51,33 +51,33 @@ class ChatpalProvider extends SearchProvider {
 		});
 		this._settings.add('Main_Language', 'select', 'en', {
 			values: [
-				{key: 'en', i18nLabel: 'English'},
-				{key: 'none', i18nLabel: 'Language_Not_set'},
-				{key: 'cs', i18nLabel: 'Czech'},
-				{key: 'de', i18nLabel: 'Deutsch'},
-				{key: 'el', i18nLabel: 'Greek'},
-				{key: 'es', i18nLabel: 'Spanish'},
-				{key: 'fi', i18nLabel: 'Finish'},
-				{key: 'fr', i18nLabel: 'French'},
-				{key: 'hu', i18nLabel: 'Hungarian'},
-				{key: 'it', i18nLabel: 'Italian'},
-				{key: 'nl', i18nLabel: 'Dutsch'},
-				{key: 'pl', i18nLabel: 'Polish'},
-				{key: 'pt', i18nLabel: 'Portuguese'},
-				{key: 'pt_BR', i18nLabel: 'Brasilian'},
-				{key: 'ro', i18nLabel: 'Romanian'},
-				{key: 'ru', i18nLabel: 'Russian'},
-				{key: 'sv', i18nLabel: 'Swedisch'},
-				{key: 'tr', i18nLabel: 'Turkish'},
-				{key: 'uk', i18nLabel: 'Ukrainian'},
+				{ key: 'en', i18nLabel: 'English' },
+				{ key: 'none', i18nLabel: 'Language_Not_set' },
+				{ key: 'cs', i18nLabel: 'Czech' },
+				{ key: 'de', i18nLabel: 'Deutsch' },
+				{ key: 'el', i18nLabel: 'Greek' },
+				{ key: 'es', i18nLabel: 'Spanish' },
+				{ key: 'fi', i18nLabel: 'Finish' },
+				{ key: 'fr', i18nLabel: 'French' },
+				{ key: 'hu', i18nLabel: 'Hungarian' },
+				{ key: 'it', i18nLabel: 'Italian' },
+				{ key: 'nl', i18nLabel: 'Dutsch' },
+				{ key: 'pl', i18nLabel: 'Polish' },
+				{ key: 'pt', i18nLabel: 'Portuguese' },
+				{ key: 'pt_BR', i18nLabel: 'Brasilian' },
+				{ key: 'ro', i18nLabel: 'Romanian' },
+				{ key: 'ru', i18nLabel: 'Russian' },
+				{ key: 'sv', i18nLabel: 'Swedisch' },
+				{ key: 'tr', i18nLabel: 'Turkish' },
+				{ key: 'uk', i18nLabel: 'Ukrainian' },
 			],
 			i18nLabel: 'Chatpal_Main_Language',
 			i18nDescription: 'Chatpal_Main_Language_Description',
 		});
 		this._settings.add('DefaultResultType', 'select', 'All', {
 			values: [
-				{key: 'All', i18nLabel: 'All'},
-				{key: 'Messages', i18nLabel: 'Messages'},
+				{ key: 'All', i18nLabel: 'All' },
+				{ key: 'Messages', i18nLabel: 'Messages' },
 			],
 			i18nLabel: 'Chatpal_Default_Result_Type',
 			i18nDescription: 'Chatpal_Default_Result_Type_Description',
@@ -197,7 +197,7 @@ class ChatpalProvider extends SearchProvider {
 
 		if (stats) {
 			ChatpalLogger.debug('ping was successfull');
-			resolve({config, stats});
+			resolve({ config, stats });
 		} else {
 
 			ChatpalLogger.warn(`ping failed, retry in ${ timeout } ms`);
@@ -300,7 +300,7 @@ class ChatpalProvider extends SearchProvider {
 	 * @private
 	 */
 	_getAcl(context) {
-		return RocketChat.models.Subscriptions.find({'u._id': context.uid}).fetch().map((room) => room.rid);
+		return RocketChat.models.Subscriptions.find({ 'u._id': context.uid }).fetch().map((room) => room.rid);
 	}
 
 	/**
@@ -309,7 +309,7 @@ class ChatpalProvider extends SearchProvider {
 	 */
 	search(text, context, payload, callback) {
 
-		if (!this.index) { return callback({msg:'Chatpal_currently_not_active'}); }
+		if (!this.index) { return callback({ msg:'Chatpal_currently_not_active' }); }
 
 		const type = payload.resultType === 'All' ? ['message', 'user', 'room'] : ['message'];
 
@@ -330,7 +330,7 @@ class ChatpalProvider extends SearchProvider {
 	 */
 	suggest(text, context, payload, callback) {
 
-		if (!this.index) { return callback({msg:'Chatpal_currently_not_active'}); }
+		if (!this.index) { return callback({ msg:'Chatpal_currently_not_active' }); }
 
 		const type = payload.resultType === 'All' ? ['message', 'user', 'room'] : ['message'];
 

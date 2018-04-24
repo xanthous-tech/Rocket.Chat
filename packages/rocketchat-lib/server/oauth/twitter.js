@@ -23,7 +23,7 @@ const getIdentity = function(accessToken, appId, appSecret, accessTokenSecret) {
 		return syncTwitter('account/verify_credentials.json?include_email=true');
 	} catch (err) {
 		throw _.extend(new Error(`Failed to fetch identity from Twwiter. ${ err.message }`),
-			{response: err.response});
+			{ response: err.response });
 	}
 };
 

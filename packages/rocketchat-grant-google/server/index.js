@@ -1,5 +1,5 @@
-import {Providers, GrantError} from 'meteor/rocketchat:grant';
-import {HTTP} from 'meteor/http';
+import { Providers, GrantError } from 'meteor/rocketchat:grant';
+import { HTTP } from 'meteor/http';
 
 const userAgent = 'Meteor';
 
@@ -7,7 +7,7 @@ function getIdentity(accessToken) {
 	try {
 		return HTTP.get(
 			'https://www.googleapis.com/oauth2/v1/userinfo', {
-				headers: {'User-Agent': userAgent},
+				headers: { 'User-Agent': userAgent },
 				params: {
 					access_token: accessToken,
 				},
@@ -35,4 +35,4 @@ export function getUser(accessToken) {
 }
 
 // Register Google OAuth
-Providers.register('google', {scope: ['openid', 'email']}, getUser);
+Providers.register('google', { scope: ['openid', 'email'] }, getUser);

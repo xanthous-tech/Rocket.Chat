@@ -185,7 +185,7 @@ class CachedCollection {
 				this.log(`${ data.records.length } records loaded from cache`);
 				data.records.forEach((record) => {
 					record.__cache__ = true;
-					this.collection.upsert({_id: record._id}, _.omit(record, '_id'));
+					this.collection.upsert({ _id: record._id }, _.omit(record, '_id'));
 
 					if (record._updatedAt) {
 						const _updatedAt = new Date(record._updatedAt);
@@ -207,7 +207,7 @@ class CachedCollection {
 			this.log(`${ data.length } records loaded from server`);
 			data.forEach((record) => {
 				delete record.$loki;
-				this.collection.upsert({_id: record._id}, _.omit(record, '_id'));
+				this.collection.upsert({ _id: record._id }, _.omit(record, '_id'));
 
 				this.onSyncData('changed', record);
 
@@ -271,7 +271,7 @@ class CachedCollection {
 				delete record.$loki;
 
 				if (record._deletedAt) {
-					this.collection.remove({_id: record._id});
+					this.collection.remove({ _id: record._id });
 
 					this.onSyncData('removed', record);
 
@@ -279,7 +279,7 @@ class CachedCollection {
 						this.updatedAt = record._deletedAt;
 					}
 				} else {
-					this.collection.upsert({_id: record._id}, _.omit(record, '_id'));
+					this.collection.upsert({ _id: record._id }, _.omit(record, '_id'));
 
 					this.onSyncData('changed', record);
 
@@ -334,7 +334,7 @@ class CachedCollection {
 				RoomManager.close(record.t + record.name);
 			} else {
 				delete record.$loki;
-				this.collection.upsert({_id: record._id}, _.omit(record, '_id'));
+				this.collection.upsert({ _id: record._id }, _.omit(record, '_id'));
 			}
 
 			this.saveCache();

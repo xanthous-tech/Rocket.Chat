@@ -38,7 +38,7 @@ Template.livechatIntegrationFacebook.onCreated(function() {
 				case 'invalid-facebook-token':
 				case 'invalid-instance-url':
 				case 'integration-disabled':
-					return Meteor.call('livechat:facebook', {action: 'enable'}, this.result(() => {
+					return Meteor.call('livechat:facebook', { action: 'enable' }, this.result(() => {
 						this.enabled.set(true);
 						this.loadPages();
 					}, () => this.loadPages()));
@@ -70,7 +70,7 @@ Template.livechatIntegrationFacebook.onCreated(function() {
 	this.loadPages = () => {
 		this.pages.set([]);
 		this.loading.set(true);
-		Meteor.call('livechat:facebook', {action: 'list-pages'}, this.result((result) => {
+		Meteor.call('livechat:facebook', { action: 'list-pages' }, this.result((result) => {
 			this.pages.set(result.pages);
 			this.loading.set(false);
 		}, () => this.loading.set(false)));
@@ -79,7 +79,7 @@ Template.livechatIntegrationFacebook.onCreated(function() {
 
 Template.livechatIntegrationFacebook.onRendered(function() {
 	this.loading.set(true);
-	Meteor.call('livechat:facebook', {action: 'initialState'}, this.result((result) => {
+	Meteor.call('livechat:facebook', { action: 'initialState' }, this.result((result) => {
 		this.enabled.set(result.enabled);
 		this.hasToken.set(result.hasToken);
 		this.loading.set(false);
@@ -95,7 +95,7 @@ Template.livechatIntegrationFacebook.events({
 	'click .enable'(event, instance) {
 		event.preventDefault();
 
-		Meteor.call('livechat:facebook', {action: 'enable'}, instance.result(() => {
+		Meteor.call('livechat:facebook', { action: 'enable' }, instance.result(() => {
 			instance.enabled.set(true);
 		}, () => instance.enabled.set(true)));
 	},
@@ -113,7 +113,7 @@ Template.livechatIntegrationFacebook.events({
 			closeOnConfirm: false,
 			html: false,
 		}, () => {
-			Meteor.call('livechat:facebook', {action: 'disable'}, (err) => {
+			Meteor.call('livechat:facebook', { action: 'disable' }, (err) => {
 				if (err) {
 					return handleError(err);
 				}

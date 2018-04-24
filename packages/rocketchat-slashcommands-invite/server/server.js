@@ -57,7 +57,7 @@ function Invite(command, params, item) {
 				rid: item.rid,
 				username: user.username,
 			});
-		} catch ({error}) {
+		} catch ({ error }) {
 			if (error === 'cant-invite-for-direct-room') {
 				RocketChat.Notifications.notifyUser(Meteor.userId(), 'message', {
 					_id: Random.id(),

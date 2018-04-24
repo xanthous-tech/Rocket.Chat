@@ -1,13 +1,13 @@
-import {Importers} from 'meteor/rocketchat:importer';
+import { Importers } from 'meteor/rocketchat:importer';
 
 Meteor.methods({
 	prepareImport(key, dataURI, contentType, fileName) {
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'prepareImport'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'prepareImport' });
 		}
 
 		if (!RocketChat.authz.hasPermission(Meteor.userId(), 'run-import')) {
-			throw new Meteor.Error('error-action-not-allowed', 'Importing is not allowed', {method: 'setupImporter'});
+			throw new Meteor.Error('error-action-not-allowed', 'Importing is not allowed', { method: 'setupImporter' });
 		}
 
 		check(key, String);
@@ -17,7 +17,7 @@ Meteor.methods({
 		const importer = Importers.get(key);
 
 		if (!importer) {
-			throw new Meteor.Error('error-importer-not-defined', `The importer (${ key }) has no import class defined.`, {method: 'prepareImport'});
+			throw new Meteor.Error('error-importer-not-defined', `The importer (${ key }) has no import class defined.`, { method: 'prepareImport' });
 		}
 
 		const results = importer.instance.prepare(dataURI, contentType, fileName);

@@ -1,7 +1,7 @@
 /* globals FileUpload */
 
 import _ from 'underscore';
-import {FileUploadClass} from '../lib/FileUpload';
+import { FileUploadClass } from '../lib/FileUpload';
 import '../../ufs/GoogleStorage/server.js';
 import http from 'http';
 import https from 'https';

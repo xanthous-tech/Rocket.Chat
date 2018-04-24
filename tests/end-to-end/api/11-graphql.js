@@ -3,13 +3,13 @@
 const supertest = require('supertest');
 const request = supertest('http://localhost:3000');
 
-import {adminUsername, adminPassword, adminEmail} from '../../data/user.js';
+import { adminUsername, adminPassword, adminEmail } from '../../data/user.js';
 
-const user = {username: adminUsername, password: adminPassword, email: adminEmail, accessToken: null};
+const user = { username: adminUsername, password: adminPassword, email: adminEmail, accessToken: null };
 const channel = {};
-const message = {content: 'Test Message GraphQL', modifiedContent: 'Test Message GraphQL Modified'};
+const message = { content: 'Test Message GraphQL', modifiedContent: 'Test Message GraphQL Modified' };
 
-const {expect} = require('chai');
+const { expect } = require('chai');
 
 const credentials = {
 	['X-Auth-Token']: undefined,
@@ -45,7 +45,7 @@ describe('GraphQL Tests', function() {
 	before((done) => {
 		request.post('/api/v1/settings/Graphql_Enabled')
 			.set(credentials)
-			.send({value: true})
+			.send({ value: true })
 			.expect('Content-Type', 'application/json')
 			.expect(200)
 			.expect((res) => {
@@ -57,7 +57,7 @@ describe('GraphQL Tests', function() {
 	after((done) => {
 		request.post('/api/v1/settings/Graphql_Enabled')
 			.set(credentials)
-			.send({value: false})
+			.send({ value: false })
 			.expect('Content-Type', 'application/json')
 			.expect(200)
 			.expect((res) => {

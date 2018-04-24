@@ -1,10 +1,10 @@
 import _ from 'underscore';
 
 this.ChatMessage = new Mongo.Collection(null);
-this.CachedChatRoom = new RocketChat.CachedCollection({name: 'rooms'});
+this.CachedChatRoom = new RocketChat.CachedCollection({ name: 'rooms' });
 this.ChatRoom = this.CachedChatRoom.collection;
 
-this.CachedChatSubscription = new RocketChat.CachedCollection({name: 'subscriptions'});
+this.CachedChatSubscription = new RocketChat.CachedCollection({ name: 'subscriptions' });
 this.ChatSubscription = this.CachedChatSubscription.collection;
 this.UserRoles = new Mongo.Collection(null);
 this.RoomRoles = new Mongo.Collection(null);

@@ -116,7 +116,7 @@ RocketChat.saveUser = function(userId, userData) {
 			updateUser.$set['emails.0.verified'] = userData.verified;
 		}
 
-		Meteor.users.update({_id}, updateUser);
+		Meteor.users.update({ _id }, updateUser);
 
 		if (userData.sendWelcomeEmail) {
 			const header = RocketChat.placeholders.replace(RocketChat.settings.get('Email_Header') || '');
@@ -129,8 +129,8 @@ RocketChat.saveUser = function(userId, userData) {
 				subject = RocketChat.settings.get('Accounts_UserAddedEmailSubject');
 				html = RocketChat.settings.get('Accounts_UserAddedEmail');
 			} else {
-				subject = TAPi18n.__('Accounts_UserAddedEmailSubject_Default', {lng: user.language || RocketChat.settings.get('language') || 'en'});
-				html = TAPi18n.__('Accounts_UserAddedEmail_Default', {lng: user.language || RocketChat.settings.get('language') || 'en'});
+				subject = TAPi18n.__('Accounts_UserAddedEmailSubject_Default', { lng: user.language || RocketChat.settings.get('language') || 'en' });
+				html = TAPi18n.__('Accounts_UserAddedEmail_Default', { lng: user.language || RocketChat.settings.get('language') || 'en' });
 			}
 
 			subject = RocketChat.placeholders.replace(subject);
@@ -162,7 +162,7 @@ RocketChat.saveUser = function(userId, userData) {
 		userData._id = _id;
 
 		if (RocketChat.settings.get('Accounts_SetDefaultAvatar') === true && userData.email) {
-			const gravatarUrl = Gravatar.imageUrl(userData.email, {default: '404', size: 200, secure: true});
+			const gravatarUrl = Gravatar.imageUrl(userData.email, { default: '404', size: 200, secure: true });
 
 			try {
 				RocketChat.setUserAvatar(userData, gravatarUrl, '', 'url');
@@ -200,7 +200,7 @@ RocketChat.saveUser = function(userId, userData) {
 		}
 
 		if (userData.settings) {
-			updateUser.$set.settings = {preferences: userData.settings.preferences};
+			updateUser.$set.settings = { preferences: userData.settings.preferences };
 		}
 
 		if (typeof userData.requirePasswordChange !== 'undefined') {
@@ -211,7 +211,7 @@ RocketChat.saveUser = function(userId, userData) {
 			updateUser.$set['emails.0.verified'] = userData.verified;
 		}
 
-		Meteor.users.update({_id: userData._id}, updateUser);
+		Meteor.users.update({ _id: userData._id }, updateUser);
 
 		return true;
 	}

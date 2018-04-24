@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import s from 'underscore.string';
 
-import {RocketChatTabBar} from 'meteor/rocketchat:lib';
+import { RocketChatTabBar } from 'meteor/rocketchat:lib';
 
 Template.adminUsers.helpers({
 	isReady() {
@@ -83,7 +83,7 @@ Template.adminUsers.onCreated(function() {
 
 		if (filter) {
 			const filterReg = new RegExp(s.escapeRegExp(filter), 'i');
-			query = {$or: [{username: filterReg}, {name: filterReg}, {'emails.address': filterReg}]};
+			query = { $or: [{ username: filterReg }, { name: filterReg }, { 'emails.address': filterReg }] };
 		} else {
 			query = {};
 		}
@@ -92,7 +92,7 @@ Template.adminUsers.onCreated(function() {
 		};
 
 		const limit = instance.limit && instance.limit.get();
-		return Meteor.users.find(query, {limit, sort: {username: 1, name: 1}}).fetch();
+		return Meteor.users.find(query, { limit, sort: { username: 1, name: 1 } }).fetch();
 	};
 });
 

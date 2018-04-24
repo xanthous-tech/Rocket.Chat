@@ -71,7 +71,7 @@
 		"spaced-comment": 2,
 		"space-infix-ops": 2,
 		"array-bracket-spacing": [2, "never"],
-		"object-curly-spacing": [2, "never"],
+		"object-curly-spacing": [2, "always"],
 		"one-var": [2, "never"],
 		"no-lonely-if": 2,
 		"no-trailing-spaces": 2,

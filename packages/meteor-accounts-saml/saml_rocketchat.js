@@ -88,8 +88,8 @@ Meteor.methods({
 		RocketChat.settings.add(`SAML_Custom_${ name }_logout_behaviour`, 'SAML', {
 			type: 'select',
 			values: [
-				{key: 'SAML', i18nLabel: 'SAML_Custom_Logout_Behaviour_Terminate_SAML_Session'},
-				{key: 'Local', i18nLabel: 'SAML_Custom_Logout_Behaviour_End_Only_RocketChat'},
+				{ key: 'SAML', i18nLabel: 'SAML_Custom_Logout_Behaviour_Terminate_SAML_Session' },
+				{ key: 'Local', i18nLabel: 'SAML_Custom_Logout_Behaviour_End_Only_RocketChat' },
 			],
 			group: 'SAML',
 			section: name,

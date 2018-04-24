@@ -955,7 +955,7 @@ const WebRTC = new class {
 	}
 
 	getInstanceByRoomId(roomId) {
-		const subscription = ChatSubscription.findOne({rid: roomId});
+		const subscription = ChatSubscription.findOne({ rid: roomId });
 		if (!subscription) {
 			return;
 		}
@@ -994,4 +994,4 @@ Meteor.startup(function() {
 	});
 });
 
-export {WebRTC};
+export { WebRTC };

@@ -24,7 +24,7 @@ function applyMd(e, t) {
 
 	e.preventDefault();
 	const box = t.find('.js-input-message');
-	const {selectionEnd = box.value.length, selectionStart = 0} = box;
+	const { selectionEnd = box.value.length, selectionStart = 0 } = box;
 	const initText = box.value.slice(0, selectionStart);
 	const selectedText = box.value.slice(selectionStart, selectionEnd);
 	const finalText = box.value.slice(selectionEnd, box.value.length);
@@ -290,7 +290,7 @@ function firefoxPasteUpload(fn) {
 	return function(event, instance) {
 		if ((event.originalEvent.ctrlKey || event.originalEvent.metaKey) && (event.keyCode === 86)) {
 			const textarea = instance.find('textarea');
-			const {selectionStart, selectionEnd} = textarea;
+			const { selectionStart, selectionEnd } = textarea;
 			const contentEditableDiv = instance.find('#msg_contenteditable');
 			contentEditableDiv.focus();
 			Meteor.setTimeout(function() {
@@ -335,7 +335,7 @@ function firefoxPasteUpload(fn) {
 Template.messageBox.events({
 	'click .js-message-actions .rc-popover__item, click .js-message-actions .js-message-action'(event, instance) {
 		const action = this.action || Template.parentData().action;
-		action.apply(this, [{rid: Template.parentData()._id, messageBox: instance.find('.rc-message-box'), element: event.currentTarget, event}]);
+		action.apply(this, [{ rid: Template.parentData()._id, messageBox: instance.find('.rc-message-box'), element: event.currentTarget, event }]);
 	},
 	'click .join'(event) {
 		event.stopPropagation();
@@ -555,7 +555,7 @@ Template.messageBox.events({
 			upload.onProgress = function(progress) {
 				uploading = Session.get('uploading');
 
-				const item = _.findWhere(uploading, {id: upload.id});
+				const item = _.findWhere(uploading, { id: upload.id });
 				if (item != null) {
 					item.percentage = Math.round(progress * 100) || 0;
 					return Session.set('uploading', uploading);
@@ -569,7 +569,7 @@ Template.messageBox.events({
 						uploading = [];
 					}
 
-					const item = _.findWhere(uploading, {id: upload.id});
+					const item = _.findWhere(uploading, { id: upload.id });
 
 					if (_.isObject(item)) {
 						item.error = error.message;
@@ -610,7 +610,7 @@ Template.messageBox.events({
 
 					uploading = Session.get('uploading');
 					if (uploading != null) {
-						item = _.findWhere(uploading, {id: upload.id});
+						item = _.findWhere(uploading, { id: upload.id });
 						if (item != null) {
 							item.percentage = 0;
 						}
@@ -620,7 +620,7 @@ Template.messageBox.events({
 					return Meteor.setTimeout(function() {
 						uploading = Session.get('uploading');
 						if (uploading != null) {
-							item = _.findWhere(uploading, {id: upload.id});
+							item = _.findWhere(uploading, { id: upload.id });
 							return Session.set('uploading', _.without(uploading, item));
 						}
 					}, 1000);

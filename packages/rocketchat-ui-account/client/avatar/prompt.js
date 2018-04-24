@@ -11,7 +11,7 @@ Template.avatarPrompt.onCreated(function() {
 	self.getSuggestions = function() {
 		self.suggestions.set(undefined);
 		Meteor.call('getAvatarSuggestion', function(error, avatars) {
-			self.suggestions.set({ready: true, avatars});
+			self.suggestions.set({ ready: true, avatars });
 		});
 	};
 	self.getSuggestions();
@@ -88,7 +88,7 @@ Template.avatarPrompt.events({
 
 			for (let i = 0; i < files.length; i++) {
 				const file = files[i];
-				Object.defineProperty(file, 'type', {value: mime.lookup(file.name)});
+				Object.defineProperty(file, 'type', { value: mime.lookup(file.name) });
 			}
 
 			const record = {

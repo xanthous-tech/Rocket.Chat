@@ -19,7 +19,7 @@ const KonchatNotification = {
 
 	notify(notification) {
 		if (window.Notification && Notification.permission === 'granted') {
-			const message = {rid: (notification.payload != null ? notification.payload.rid : undefined), msg: notification.text, notification: true};
+			const message = { rid: (notification.payload != null ? notification.payload.rid : undefined), msg: notification.text, notification: true };
 			return RocketChat.promises.run('onClientMessageReceived', message).then(function(message) {
 				const n = new Notification(notification.title, {
 					icon: notification.icon || getAvatarUrlFromUsername(notification.payload.sender.username),
@@ -37,7 +37,7 @@ const KonchatNotification = {
 
 				if (notification.payload && notification.payload.rid) {
 					if (n.addEventListener) {
-						n.addEventListener('reply', ({response}) =>
+						n.addEventListener('reply', ({ response }) =>
 							Meteor.call('sendMessage', {
 								_id: Random.id(),
 								rid: notification.payload.rid,
@@ -51,11 +51,11 @@ const KonchatNotification = {
 						window.focus();
 						switch (notification.payload.type) {
 							case 'd':
-								return FlowRouter.go('direct', {username: notification.payload.sender.username}, FlowRouter.current().queryParams);
+								return FlowRouter.go('direct', { username: notification.payload.sender.username }, FlowRouter.current().queryParams);
 							case 'c':
-								return FlowRouter.go('channel', {name: notification.payload.name}, FlowRouter.current().queryParams);
+								return FlowRouter.go('channel', { name: notification.payload.name }, FlowRouter.current().queryParams);
 							case 'p':
-								return FlowRouter.go('group', {name: notification.payload.name}, FlowRouter.current().queryParams);
+								return FlowRouter.go('group', { name: notification.payload.name }, FlowRouter.current().queryParams);
 						}
 					};
 				}
@@ -84,7 +84,7 @@ const KonchatNotification = {
 			const newMessageNotification = RocketChat.getUserPreference(user, 'newMessageNotification');
 			const audioVolume = RocketChat.getUserPreference(user, 'notificationsSoundVolume');
 
-			const sub = ChatSubscription.findOne({rid}, {fields: {audioNotificationValue: 1}});
+			const sub = ChatSubscription.findOne({ rid }, { fields: { audioNotificationValue: 1 } });
 
 			if (sub && sub.audioNotificationValue !== 'none') {
 				if (sub && sub.audioNotificationValue) {
@@ -159,5 +159,5 @@ Meteor.startup(() => {
 		}
 	});
 });
-export {KonchatNotification};
+export { KonchatNotification };
 this.KonchatNotification = KonchatNotification;

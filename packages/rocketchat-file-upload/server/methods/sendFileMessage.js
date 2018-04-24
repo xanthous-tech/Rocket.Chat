@@ -3,7 +3,7 @@ import _ from 'underscore';
 Meteor.methods({
 	async 'sendFileMessage'(roomId, store, file, msgData = {}) {
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'sendFileMessage'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'sendFileMessage' });
 		}
 
 		const room = Meteor.call('canAccessRoom', roomId, Meteor.userId());
@@ -67,7 +67,7 @@ Meteor.methods({
 
 		msg = Meteor.call('sendMessage', msg);
 
-		Meteor.defer(() => RocketChat.callbacks.run('afterFileUpload', {user, room, message: msg}));
+		Meteor.defer(() => RocketChat.callbacks.run('afterFileUpload', { user, room, message: msg }));
 
 		return msg;
 	},

@@ -26,7 +26,7 @@ Template.liveStreamView.onRendered(function() {
 			},
 			events: {
 				onStateChange: (e) => {
-					const playerStateChangedEvent = new CustomEvent('playerStateChanged', {detail: e.data});
+					const playerStateChangedEvent = new CustomEvent('playerStateChanged', { detail: e.data });
 					document.querySelector('.rc-popout').dispatchEvent(playerStateChangedEvent);
 				},
 			},
@@ -57,7 +57,7 @@ Template.liveStreamView.events({
 			},
 			events: {
 				onStateChange: (e) => {
-					const playerStateChangedEvent = new CustomEvent('playerStateChanged', {detail: e.data});
+					const playerStateChangedEvent = new CustomEvent('playerStateChanged', { detail: e.data });
 					document.querySelector('.rc-popout').dispatchEvent(playerStateChangedEvent);
 				},
 			},

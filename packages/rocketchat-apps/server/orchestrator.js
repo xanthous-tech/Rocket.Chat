@@ -1,9 +1,9 @@
-import {RealAppBridges} from './bridges';
-import {AppMethods, AppsRestApi, AppServerNotifier} from './communication';
-import {AppMessagesConverter, AppRoomsConverter, AppSettingsConverter, AppUsersConverter} from './converters';
-import {AppsLogsModel, AppsModel, AppsPersistenceModel, AppRealStorage, AppRealLogsStorage} from './storage';
+import { RealAppBridges } from './bridges';
+import { AppMethods, AppsRestApi, AppServerNotifier } from './communication';
+import { AppMessagesConverter, AppRoomsConverter, AppSettingsConverter, AppUsersConverter } from './converters';
+import { AppsLogsModel, AppsModel, AppsPersistenceModel, AppRealStorage, AppRealLogsStorage } from './storage';
 
-import {AppManager} from '@rocket.chat/apps-engine/server/AppManager';
+import { AppManager } from '@rocket.chat/apps-engine/server/AppManager';
 
 class AppServerOrchestrator {
 	constructor() {

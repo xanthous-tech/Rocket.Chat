@@ -13,7 +13,7 @@ Meteor.methods({
 			email = (user.emails || []).map((item) => item.address).find((userEmail) => regex.test(userEmail));
 
 			if (RocketChat.settings.get('Forgot_Password_Customized')) {
-				const data = {name: user.name, email};
+				const data = { name: user.name, email };
 				const subject = RocketChat.placeholders.replace(RocketChat.settings.get('Forgot_Password_Email_Subject') || '', data);
 				const html = RocketChat.placeholders.replace(RocketChat.settings.get('Forgot_Password_Email') || '', data);
 

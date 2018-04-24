@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-import {getCredentials, api, request, credentials} from '../../data/api-data.js';
+import { getCredentials, api, request, credentials } from '../../data/api-data.js';
 
 describe('Incoming Integrations', function() {
 	this.retries(0);

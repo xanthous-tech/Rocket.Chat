@@ -1,18 +1,18 @@
 /* globals readMessage UserRoles RoomRoles*/
 import _ from 'underscore';
 
-export const upsertMessage = ({msg, subscription}) => {
+export const upsertMessage = ({ msg, subscription }) => {
 	const userId = msg.u && msg.u._id;
 
 	if (subscription && subscription.ignored && subscription.ignored.indexOf(userId) > -1) {
 		msg.ignored = true;
 	}
 	const roles = [
-		(userId && UserRoles.findOne(userId, {fields: {roles: 1}})) || {},
-		(userId && RoomRoles.findOne({rid: msg.rid, 'u._id': userId})) || {},
+		(userId && UserRoles.findOne(userId, { fields: { roles: 1 } })) || {},
+		(userId && RoomRoles.findOne({ rid: msg.rid, 'u._id': userId })) || {},
 	].map((e) => e.roles);
 	msg.roles = _.union.apply(_.union, roles);
-	return ChatMessage.upsert({_id: msg._id}, msg);
+	return ChatMessage.upsert({ _id: msg._id }, msg);
 };
 
 export const RoomHistoryManager = new class {
@@ -46,11 +46,11 @@ export const RoomHistoryManager = new class {
 		room.isLoading.set(true);
 
 		// ScrollListener.setLoader true
-		const lastMessage = ChatMessage.findOne({rid}, {sort: {ts: 1}});
+		const lastMessage = ChatMessage.findOne({ rid }, { sort: { ts: 1 } });
 		// lastMessage ?= ChatMessage.findOne({rid: rid}, {sort: {ts: 1}})
 
 		if (lastMessage != null) {
-			({ts} = lastMessage);
+			({ ts } = lastMessage);
 		} else {
 			ts = undefined;
 		}
@@ -58,12 +58,12 @@ export const RoomHistoryManager = new class {
 		let ls = undefined;
 		let typeName = undefined;
 
-		const subscription = ChatSubscription.findOne({rid});
+		const subscription = ChatSubscription.findOne({ rid });
 		if (subscription != null) {
-			({ls} = subscription);
+			({ ls } = subscription);
 			typeName = subscription.t + subscription.name;
 		} else {
-			const curRoomDoc = ChatRoom.findOne({_id: rid});
+			const curRoomDoc = ChatRoom.findOne({ _id: rid });
 			typeName = (curRoomDoc != null ? curRoomDoc.t : undefined) + (curRoomDoc != null ? curRoomDoc.name : undefined);
 		}
 
@@ -72,7 +72,7 @@ export const RoomHistoryManager = new class {
 				return;
 			}
 			let previousHeight;
-			const {messages = []} = result;
+			const { messages = [] } = result;
 			room.unreadNotLoaded.set(result.unreadNotLoaded);
 			room.firstUnread.set(result.firstUnread);
 
@@ -81,7 +81,7 @@ export const RoomHistoryManager = new class {
 				previousHeight = wrapper.scrollHeight;
 			}
 
-			messages.forEach((msg) => msg.t !== 'command' && upsertMessage({msg, subscription}));
+			messages.forEach((msg) => msg.t !== 'command' && upsertMessage({ msg, subscription }));
 
 			if (wrapper) {
 				const heightDiff = wrapper.scrollHeight - previousHeight;
@@ -114,26 +114,26 @@ export const RoomHistoryManager = new class {
 
 		room.isLoading.set(true);
 
-		const lastMessage = ChatMessage.findOne({rid}, {sort: {ts: -1}});
+		const lastMessage = ChatMessage.findOne({ rid }, { sort: { ts: -1 } });
 
 		let typeName = undefined;
 
-		const subscription = ChatSubscription.findOne({rid});
+		const subscription = ChatSubscription.findOne({ rid });
 		if (subscription != null) {
 			// const { ls } = subscription;
 			typeName = subscription.t + subscription.name;
 		} else {
-			const curRoomDoc = ChatRoom.findOne({_id: rid});
+			const curRoomDoc = ChatRoom.findOne({ _id: rid });
 			typeName = (curRoomDoc != null ? curRoomDoc.t : undefined) + (curRoomDoc != null ? curRoomDoc.name : undefined);
 		}
 
-		const {ts} = lastMessage;
+		const { ts } = lastMessage;
 
 		if (ts) {
 			return Meteor.call('loadNextMessages', rid, ts, limit, function(err, result) {
 				for (const msg of Array.from((result != null ? result.messages : undefined) || [])) {
 					if (msg.t !== 'command') {
-						upsertMessage({msg, subscription});
+						upsertMessage({ msg, subscription });
 					}
 				}
 
@@ -176,23 +176,23 @@ export const RoomHistoryManager = new class {
 		} else {
 			const room = this.getRoom(message.rid);
 			room.isLoading.set(true);
-			ChatMessage.remove({rid: message.rid});
+			ChatMessage.remove({ rid: message.rid });
 
 			let typeName = undefined;
 
-			const subscription = ChatSubscription.findOne({rid: message.rid});
+			const subscription = ChatSubscription.findOne({ rid: message.rid });
 			if (subscription) {
 				// const { ls } = subscription;
 				typeName = subscription.t + subscription.name;
 			} else {
-				const curRoomDoc = ChatRoom.findOne({_id: message.rid});
+				const curRoomDoc = ChatRoom.findOne({ _id: message.rid });
 				typeName = (curRoomDoc != null ? curRoomDoc.t : undefined) + (curRoomDoc != null ? curRoomDoc.name : undefined);
 			}
 
 			return Meteor.call('loadSurroundingMessages', message, limit, function(err, result) {
 				for (const msg of Array.from((result != null ? result.messages : undefined) || [])) {
 					if (msg.t !== 'command') {
-						upsertMessage({msg, subscription});
+						upsertMessage({ msg, subscription });
 					}
 				}
 
@@ -251,7 +251,7 @@ export const RoomHistoryManager = new class {
 	}
 
 	clear(rid) {
-		ChatMessage.remove({rid});
+		ChatMessage.remove({ rid });
 		if (this.histories[rid] != null) {
 			this.histories[rid].hasMore.set(true);
 			this.histories[rid].isLoading.set(false);

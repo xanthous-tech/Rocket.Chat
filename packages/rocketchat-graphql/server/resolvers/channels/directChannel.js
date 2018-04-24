@@ -1,12 +1,12 @@
-import {RocketChat} from 'meteor/rocketchat:lib';
+import { RocketChat } from 'meteor/rocketchat:lib';
 
-import {authenticated} from '../../helpers/authenticated';
-import {roomPublicFields} from './settings';
+import { authenticated } from '../../helpers/authenticated';
+import { roomPublicFields } from './settings';
 import schema from '../../schemas/channels/directChannel.graphqls';
 
 const resolver = {
 	Query: {
-		directChannel: authenticated((root, {username, channelId}, {user}) => {
+		directChannel: authenticated((root, { username, channelId }, { user }) => {
 			const query = {
 				t: 'd',
 				usernames: user.username,
@@ -17,7 +17,7 @@ const resolver = {
 					throw new Error('You cannot specify your username');
 				}
 
-				query.usernames = {$all: [user.username, username]};
+				query.usernames = { $all: [user.username, username] };
 			} else if (typeof channelId !== 'undefined') {
 				query.id = channelId;
 			} else {

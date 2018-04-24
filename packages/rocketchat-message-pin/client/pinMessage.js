@@ -6,7 +6,7 @@ Meteor.methods({
 		if (!RocketChat.settings.get('Message_AllowPinning')) {
 			return false;
 		}
-		if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null) {
+		if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null) {
 			return false;
 		}
 		return ChatMessage.update({
@@ -24,7 +24,7 @@ Meteor.methods({
 		if (!RocketChat.settings.get('Message_AllowPinning')) {
 			return false;
 		}
-		if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null) {
+		if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null) {
 			return false;
 		}
 		return ChatMessage.update({

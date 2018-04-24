@@ -63,7 +63,7 @@ Meteor.startup(function() {
 		}
 	}
 
-	return RocketChat.models.Messages._db.on('change', function({action, id, data/* , oplog*/}) {
+	return RocketChat.models.Messages._db.on('change', function({ action, id, data/* , oplog*/ }) {
 		switch (action) {
 			case 'insert':
 				data._id = id;

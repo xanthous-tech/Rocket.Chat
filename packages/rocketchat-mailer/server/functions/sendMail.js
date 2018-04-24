@@ -15,9 +15,9 @@ Mailer.sendMail = function(from, subject, body, dryrun, query) {
 	const header = RocketChat.placeholders.replace(RocketChat.settings.get('Email_Header') || '');
 	const footer = RocketChat.placeholders.replace(RocketChat.settings.get('Email_Footer') || '');
 
-	let userQuery = {'mailer.unsubscribed': {$exists: 0}};
+	let userQuery = { 'mailer.unsubscribed': { $exists: 0 } };
 	if (query) {
-		userQuery = {$and: [userQuery, EJSON.parse(query)]};
+		userQuery = { $and: [userQuery, EJSON.parse(query)] };
 	}
 
 	if (dryrun) {

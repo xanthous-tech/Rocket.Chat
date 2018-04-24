@@ -3,7 +3,7 @@ import s from 'underscore.string';
 Meteor.methods({
 	'livechat:saveIntegration'(values) {
 		if (!Meteor.userId() || !RocketChat.authz.hasPermission(Meteor.userId(), 'view-livechat-manager')) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'livechat:saveIntegration'});
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'livechat:saveIntegration' });
 		}
 
 		if (typeof values.Livechat_webhookUrl !== 'undefined') {

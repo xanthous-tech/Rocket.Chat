@@ -36,7 +36,7 @@ Template.livechatCustomFields.events({
 
 	'click .custom-field-info'(e/* , instance*/) {
 		e.preventDefault();
-		FlowRouter.go('livechat-customfield-edit', {_id: this._id});
+		FlowRouter.go('livechat-customfield-edit', { _id: this._id });
 	},
 });
 

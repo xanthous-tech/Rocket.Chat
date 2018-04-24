@@ -263,7 +263,7 @@ export default class LDAP {
 				}));
 			});
 
-			filter = new this.ldapjs.filters.OrFilter({filters});
+			filter = new this.ldapjs.filters.OrFilter({ filters });
 		}
 
 		const searchOptions = {
@@ -371,15 +371,15 @@ export default class LDAP {
 	searchAllPaged(BaseDN, options, page) {
 		this.bindIfNecessary();
 
-		const processPage = ({entries, title, end, next}) => {
+		const processPage = ({ entries, title, end, next }) => {
 			logger.search.info(title);
 			// Force LDAP idle to wait the record processing
 			this.client._updateIdle(true);
-			page(null, entries, {end, next: () => {
+			page(null, entries, { end, next: () => {
 				// Reset idle timer
 				this.client._updateIdle();
 				next && next();
-			}});
+			} });
 		};
 
 		this.client.search(BaseDN, options, (error, res) => {

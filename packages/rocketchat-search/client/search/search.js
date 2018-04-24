@@ -28,7 +28,7 @@ Template.RocketSearch.onCreated(function() {
 
 			this.scope.searching.set(true);
 
-			Meteor.call('rocketchatSearch.search', this.scope.text.get(), {rid:Session.get('openedRoom'), uid:Meteor.userId()}, _p, (err, result) => {
+			Meteor.call('rocketchatSearch.search', this.scope.text.get(), { rid:Session.get('openedRoom'), uid:Meteor.userId() }, _p, (err, result) => {
 				if (err) {
 					toastr.error(TAPi18n.__('Search_message_search_failed'));
 					this.scope.searching.set(false);
@@ -62,7 +62,7 @@ Template.RocketSearch.onCreated(function() {
 
 		const _p = Object.assign({}, this.scope.parentPayload, this.scope.payload);
 
-		Meteor.call('rocketchatSearch.suggest', value, {rid:Session.get('openedRoom'), uid:Meteor.userId()}, this.scope.parentPayload, _p, (err, result) => {
+		Meteor.call('rocketchatSearch.suggest', value, { rid:Session.get('openedRoom'), uid:Meteor.userId() }, this.scope.parentPayload, _p, (err, result) => {
 			if (err) {
 				// TODO what should happen
 			} else {

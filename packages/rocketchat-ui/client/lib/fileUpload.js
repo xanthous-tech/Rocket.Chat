@@ -180,7 +180,7 @@ fileUpload = function(filesToUpload) {
 				upload.onProgress = function(progress) {
 					uploading = Session.get('uploading');
 
-					const item = _.findWhere(uploading, {id: upload.id});
+					const item = _.findWhere(uploading, { id: upload.id });
 					if (item != null) {
 						item.percentage = Math.round(progress * 100) || 0;
 						return Session.set('uploading', uploading);
@@ -194,7 +194,7 @@ fileUpload = function(filesToUpload) {
 							uploading = [];
 						}
 
-						const item = _.findWhere(uploading, {id: upload.id});
+						const item = _.findWhere(uploading, { id: upload.id });
 
 						if (_.isObject(item)) {
 							item.error = error.message;
@@ -235,7 +235,7 @@ fileUpload = function(filesToUpload) {
 
 						uploading = Session.get('uploading');
 						if (uploading != null) {
-							item = _.findWhere(uploading, {id: upload.id});
+							item = _.findWhere(uploading, { id: upload.id });
 							if (item != null) {
 								item.percentage = 0;
 							}
@@ -245,7 +245,7 @@ fileUpload = function(filesToUpload) {
 						return Meteor.setTimeout(function() {
 							uploading = Session.get('uploading');
 							if (uploading != null) {
-								item = _.findWhere(uploading, {id: upload.id});
+								item = _.findWhere(uploading, { id: upload.id });
 								return Session.set('uploading', _.without(uploading, item));
 							}
 						}, 1000);

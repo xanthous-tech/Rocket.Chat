@@ -2,7 +2,7 @@
 import 'babel-polyfill';
 import assert from 'assert';
 import './client.mocks.js';
-import {original} from '../parser/original/original';
+import { original } from '../parser/original/original';
 // import {marked} from '../parser/marked/marked';
 
 const wrapper = (text, tag) => `<span class="copyonly">${ tag }</span>${ text }<span class="copyonly">${ tag }</span>`;
@@ -223,7 +223,7 @@ const defaultObjectTest = (result, object, objectKey) => assert.equal(result.htm
 const testObject = (object, parser = original, test = defaultObjectTest) => {
 	Object.keys(object).forEach((objectKey) => {
 		describe(objectKey, () => {
-			const result = parser({html: objectKey});
+			const result = parser({ html: objectKey });
 			result.tokens.forEach((token) => {
 				result.html = result.html.replace(token.token, token.text);
 			});

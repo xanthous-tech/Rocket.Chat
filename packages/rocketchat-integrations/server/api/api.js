@@ -16,7 +16,7 @@ const Api = new Restivus({
 			if (payloadIsWrapped && this.request.headers['content-type'] === 'application/x-www-form-urlencoded') {
 				try {
 					this.bodyParams = JSON.parse(this.bodyParams.payload);
-				} catch ({message}) {
+				} catch ({ message }) {
 					return {
 						error: {
 							statusCode: 400,
@@ -52,7 +52,7 @@ const Api = new Restivus({
 				_id: this.integration.userId,
 			});
 
-			return {user};
+			return { user };
 		},
 	},
 });
@@ -87,7 +87,7 @@ function buildSandbox(store = {}) {
 	};
 
 	Object.keys(RocketChat.models).filter((k) => !k.startsWith('_')).forEach((k) => sandbox[k] = RocketChat.models[k]);
-	return {store, sandbox};
+	return { store, sandbox };
 }
 
 function getIntegrationScript(integration) {
@@ -97,7 +97,7 @@ function getIntegrationScript(integration) {
 	}
 
 	const script = integration.scriptCompiled;
-	const {sandbox, store} = buildSandbox();
+	const { sandbox, store } = buildSandbox();
 	try {
 		logger.incoming.info('Will evaluate script of Trigger', integration.name);
 		logger.incoming.debug(script);
@@ -113,7 +113,7 @@ function getIntegrationScript(integration) {
 
 			return compiledScripts[integration._id].script;
 		}
-	} catch ({stack}) {
+	} catch ({ stack }) {
 		logger.incoming.error('[Error evaluating Script in Trigger', integration.name, ':]');
 		logger.incoming.error(script.replace(/^/gm, '  '));
 		logger.incoming.error('[Stack:]');
@@ -230,7 +230,7 @@ function executeIntegrationRest() {
 		};
 
 		try {
-			const {sandbox} = buildSandbox(compiledScripts[this.integration._id].store);
+			const { sandbox } = buildSandbox(compiledScripts[this.integration._id].store);
 			sandbox.script = script;
 			sandbox.request = request;
 
@@ -253,7 +253,7 @@ function executeIntegrationRest() {
 
 			logger.incoming.debug('[Process Incoming Request result of Trigger', this.integration.name, ':]');
 			logger.incoming.debug('result', this.bodyParams);
-		} catch ({stack}) {
+		} catch ({ stack }) {
 			logger.incoming.error('[Error running Script in Trigger', this.integration.name, ':]');
 			logger.incoming.error(this.integration.scriptCompiled.replace(/^/gm, '  '));
 			logger.incoming.error('[Stack:]');
@@ -269,7 +269,7 @@ function executeIntegrationRest() {
 		return RocketChat.API.v1.success();
 	}
 
-	this.bodyParams.bot = {i: this.integration._id};
+	this.bodyParams.bot = { i: this.integration._id };
 
 	try {
 		const message = processWebhookMessage(this.bodyParams, this.user, defaultValues);
@@ -282,7 +282,7 @@ function executeIntegrationRest() {
 		}
 
 		return RocketChat.API.v1.success(this.scriptResponse);
-	} catch ({error, message}) {
+	} catch ({ error, message }) {
 		return RocketChat.API.v1.failure(error || message);
 	}
 }
@@ -342,44 +342,44 @@ function integrationInfoRest() {
 	};
 }
 
-Api.addRoute(':integrationId/:userId/:token', {authRequired: true}, {
+Api.addRoute(':integrationId/:userId/:token', { authRequired: true }, {
 	post: executeIntegrationRest,
 	get: executeIntegrationRest,
 });
 
-Api.addRoute(':integrationId/:token', {authRequired: true}, {
+Api.addRoute(':integrationId/:token', { authRequired: true }, {
 	post: executeIntegrationRest,
 	get: executeIntegrationRest,
 });
 
-Api.addRoute('sample/:integrationId/:userId/:token', {authRequired: true}, {
+Api.addRoute('sample/:integrationId/:userId/:token', { authRequired: true }, {
 	get: integrationSampleRest,
 });
 
-Api.addRoute('sample/:integrationId/:token', {authRequired: true}, {
+Api.addRoute('sample/:integrationId/:token', { authRequired: true }, {
 	get: integrationSampleRest,
 });
 
-Api.addRoute('info/:integrationId/:userId/:token', {authRequired: true}, {
+Api.addRoute('info/:integrationId/:userId/:token', { authRequired: true }, {
 	get: integrationInfoRest,
 });
 
-Api.addRoute('info/:integrationId/:token', {authRequired: true}, {
+Api.addRoute('info/:integrationId/:token', { authRequired: true }, {
 	get: integrationInfoRest,
 });
 
-Api.addRoute('add/:integrationId/:userId/:token', {authRequired: true}, {
+Api.addRoute('add/:integrationId/:userId/:token', { authRequired: true }, {
 	post: addIntegrationRest,
 });
 
-Api.addRoute('add/:integrationId/:token', {authRequired: true}, {
+Api.addRoute('add/:integrationId/:token', { authRequired: true }, {
 	post: addIntegrationRest,
 });
 
-Api.addRoute('remove/:integrationId/:userId/:token', {authRequired: true}, {
+Api.addRoute('remove/:integrationId/:userId/:token', { authRequired: true }, {
 	post: removeIntegrationRest,
 });
 
-Api.addRoute('remove/:integrationId/:token', {authRequired: true}, {
+Api.addRoute('remove/:integrationId/:token', { authRequired: true }, {
 	post: removeIntegrationRest,
 });

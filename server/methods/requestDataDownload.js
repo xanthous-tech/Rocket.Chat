@@ -9,7 +9,7 @@ if (RocketChat.settings.get('UserData_FileSystemPath') != null) {
 }
 
 Meteor.methods({
-	requestDataDownload({fullExport = false}) {
+	requestDataDownload({ fullExport = false }) {
 		const currentUserData = Meteor.user();
 		const userId = currentUserData._id;
 

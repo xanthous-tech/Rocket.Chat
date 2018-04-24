@@ -3,9 +3,9 @@ RocketChat.Migrations.add({
 	up() {
 		if (RocketChat && RocketChat.models) {
 			if (RocketChat.models.Users) {
-				RocketChat.models.Users.find({'settings.preferences.unreadRoomsMode': {$exists: 1}}).forEach(function(user) {
+				RocketChat.models.Users.find({ 'settings.preferences.unreadRoomsMode': { $exists: 1 } }).forEach(function(user) {
 					const newPreference = user.settings.preferences.unreadRoomsMode ? 'unread' : 'category';
-					RocketChat.models.Users.update({_id: user._id}, {$unset: {'settings.preferences.unreadRoomsMode': 1}, $set: {'settings.preferences.roomsListExhibitionMode': newPreference}});
+					RocketChat.models.Users.update({ _id: user._id }, { $unset: { 'settings.preferences.unreadRoomsMode': 1 }, $set: { 'settings.preferences.roomsListExhibitionMode': newPreference } });
 				});
 			}
 			if (RocketChat.models.Settings) {
@@ -16,14 +16,14 @@ RocketChat.Migrations.add({
 					Desktop_Notifications_Duration: 'Accounts_Default_User_Preferences_desktopNotificationDuration',
 					Audio_Notifications_Value: undefined,
 				};
-				RocketChat.models.Settings.find({_id: {$in: Object.keys(settingsMap)}}).forEach((oldSetting) => {
+				RocketChat.models.Settings.find({ _id: { $in: Object.keys(settingsMap) } }).forEach((oldSetting) => {
 					const newSettingKey = settingsMap[oldSetting._id];
-					const newSetting = newSettingKey && RocketChat.models.Settings.findOne({_id: newSettingKey});
+					const newSetting = newSettingKey && RocketChat.models.Settings.findOne({ _id: newSettingKey });
 
 					if (newSetting && newSetting.value !== oldSetting.value) {
-						RocketChat.models.Settings.update({_id: newSettingKey}, {$set: {value: oldSetting.value}});
+						RocketChat.models.Settings.update({ _id: newSettingKey }, { $set: { value: oldSetting.value } });
 					}
-					RocketChat.models.Settings.remove({_id: oldSetting._id});
+					RocketChat.models.Settings.remove({ _id: oldSetting._id });
 				});
 			}
 		}

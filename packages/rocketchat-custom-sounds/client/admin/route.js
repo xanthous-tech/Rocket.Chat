@@ -4,6 +4,6 @@ FlowRouter.route('/admin/custom-sounds', {
 		this.register('customSounds', Meteor.subscribe('customSounds'));
 	},
 	action(/* params*/) {
-		BlazeLayout.render('main', {center: 'adminSounds'});
+		BlazeLayout.render('main', { center: 'adminSounds' });
 	},
 });

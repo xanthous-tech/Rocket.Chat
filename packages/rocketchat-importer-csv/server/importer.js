@@ -57,7 +57,7 @@ export class CsvImporter extends Base {
 			if (entry.entryName.toLowerCase() === 'users.csv') {
 				super.updateProgress(ProgressStep.PREPARING_USERS);
 				const parsedUsers = this.csvParser(entry.getData().toString());
-				tempUsers = parsedUsers.map((u) => ({id: u[0].trim().replace('.', '_'), username: u[0].trim(), email: u[1].trim(), name: u[2].trim()}));
+				tempUsers = parsedUsers.map((u) => ({ id: u[0].trim().replace('.', '_'), username: u[0].trim(), email: u[1].trim(), name: u[2].trim() }));
 				continue;
 			}
 
@@ -80,22 +80,22 @@ export class CsvImporter extends Base {
 					continue;
 				}
 
-				tempMessages.get(channelName).set(msgGroupData, msgs.map((m) => ({username: m[0], ts: m[1], text: m[2]})));
+				tempMessages.get(channelName).set(msgGroupData, msgs.map((m) => ({ username: m[0], ts: m[1], text: m[2] })));
 				continue;
 			}
 		}
 
 		// Insert the users record, eventually this might have to be split into several ones as well
 		// if someone tries to import a several thousands users instance
-		const usersId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'users', users: tempUsers});
+		const usersId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'users', users: tempUsers });
 		this.users = this.collection.findOne(usersId);
-		super.updateRecord({'count.users': tempUsers.length});
+		super.updateRecord({ 'count.users': tempUsers.length });
 		super.addCountToTotal(tempUsers.length);
 
 		// Insert the channels records.
-		const channelsId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'channels', channels: tempChannels});
+		const channelsId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'channels', channels: tempChannels });
 		this.channels = this.collection.findOne(channelsId);
-		super.updateRecord({'count.channels': tempChannels.length});
+		super.updateRecord({ 'count.channels': tempChannels.length });
 		super.addCountToTotal(tempChannels.length);
 
 		// Save the messages records to the import record for `startImport` usage
@@ -108,21 +108,21 @@ export class CsvImporter extends Base {
 
 			for (const [msgGroupData, msgs] of messagesMap.entries()) {
 				messagesCount += msgs.length;
-				super.updateRecord({messagesstatus: `${ channel }/${ msgGroupData }`});
+				super.updateRecord({ messagesstatus: `${ channel }/${ msgGroupData }` });
 
 				if (Base.getBSONSize(msgs) > Base.getMaxBSONSize()) {
 					Base.getBSONSafeArraysFromAnArray(msgs).forEach((splitMsg, i) => {
-						const messagesId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }/${ msgGroupData }.${ i }`, messages: splitMsg});
+						const messagesId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }/${ msgGroupData }.${ i }`, messages: splitMsg });
 						this.messages.get(channel).set(`${ msgGroupData }.${ i }`, this.collection.findOne(messagesId));
 					});
 				} else {
-					const messagesId = this.collection.insert({import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }/${ msgGroupData }`, messages: msgs});
+					const messagesId = this.collection.insert({ import: this.importRecord._id, importer: this.name, type: 'messages', name: `${ channel }/${ msgGroupData }`, messages: msgs });
 					this.messages.get(channel).set(msgGroupData, this.collection.findOne(messagesId));
 				}
 			}
 		}
 
-		super.updateRecord({'count.messages': messagesCount, messagesstatus: null});
+		super.updateRecord({ 'count.messages': messagesCount, messagesstatus: null });
 		super.addCountToTotal(messagesCount);
 
 		// Ensure we have at least a single user, channel, or message
@@ -152,7 +152,7 @@ export class CsvImporter extends Base {
 				}
 			}
 		}
-		this.collection.update({_id: this.users._id}, {$set: {users: this.users.users}});
+		this.collection.update({ _id: this.users._id }, { $set: { users: this.users.users } });
 
 		// Ensure we're only importing the channels the user has selected.
 		for (const channel of importSelection.channels) {
@@ -162,7 +162,7 @@ export class CsvImporter extends Base {
 				}
 			}
 		}
-		this.collection.update({_id: this.channels._id}, {$set: {channels: this.channels.channels}});
+		this.collection.update({ _id: this.channels._id }, { $set: { channels: this.channels.channels } });
 
 		const startedByUserId = Meteor.userId();
 		Meteor.defer(() => {
@@ -186,13 +186,13 @@ export class CsvImporter extends Base {
 						if (existantUser) {
 							// since we have an existing user, let's try a few things
 							u.rocketId = existantUser._id;
-							RocketChat.models.Users.update({_id: u.rocketId}, {$addToSet: {importIds: u.id}});
+							RocketChat.models.Users.update({ _id: u.rocketId }, { $addToSet: { importIds: u.id } });
 						} else {
-							const userId = Accounts.createUser({email: u.email, password: Date.now() + u.name + u.email.toUpperCase()});
+							const userId = Accounts.createUser({ email: u.email, password: Date.now() + u.name + u.email.toUpperCase() });
 							Meteor.runAsUser(userId, () => {
-								Meteor.call('setUsername', u.username, {joinDefaultChannelsSilenced: true});
+								Meteor.call('setUsername', u.username, { joinDefaultChannelsSilenced: true });
 								RocketChat.models.Users.setName(userId, u.name);
-								RocketChat.models.Users.update({_id: userId}, {$addToSet: {importIds: u.id}});
+								RocketChat.models.Users.update({ _id: userId }, { $addToSet: { importIds: u.id } });
 								u.rocketId = userId;
 							});
 						}
@@ -200,7 +200,7 @@ export class CsvImporter extends Base {
 						super.addCountCompleted(1);
 					});
 				}
-				this.collection.update({_id: this.users._id}, {$set: {users: this.users.users}});
+				this.collection.update({ _id: this.users._id }, { $set: { users: this.users.users } });
 
 				// Import the channels
 				super.updateProgress(ProgressStep.IMPORTING_CHANNELS);
@@ -214,7 +214,7 @@ export class CsvImporter extends Base {
 						// If the room exists or the name of it is 'general', then we don't need to create it again
 						if (existantRoom || c.name.toUpperCase() === 'GENERAL') {
 							c.rocketId = c.name.toUpperCase() === 'GENERAL' ? 'GENERAL' : existantRoom._id;
-							RocketChat.models.Rooms.update({_id: c.rocketId}, {$addToSet: {importIds: c.id}});
+							RocketChat.models.Rooms.update({ _id: c.rocketId }, { $addToSet: { importIds: c.id } });
 						} else {
 							// Find the rocketchatId of the user who created this channel
 							let creatorId = startedByUserId;
@@ -230,13 +230,13 @@ export class CsvImporter extends Base {
 								c.rocketId = roomInfo.rid;
 							});
 
-							RocketChat.models.Rooms.update({_id: c.rocketId}, {$addToSet: {importIds: c.id}});
+							RocketChat.models.Rooms.update({ _id: c.rocketId }, { $addToSet: { importIds: c.id } });
 						}
 
 						super.addCountCompleted(1);
 					});
 				}
-				this.collection.update({_id: this.channels._id}, {$set: {channels: this.channels.channels}});
+				this.collection.update({ _id: this.channels._id }, { $set: { channels: this.channels.channels } });
 
 				// If no channels file, collect channel map from DB for message-only import
 				if (this.channels.channels.length === 0) {
@@ -288,11 +288,11 @@ export class CsvImporter extends Base {
 						continue;
 					}
 
-					const room = RocketChat.models.Rooms.findOneById(csvChannel.rocketId, {fields: {usernames: 1, t: 1, name: 1}});
+					const room = RocketChat.models.Rooms.findOneById(csvChannel.rocketId, { fields: { usernames: 1, t: 1, name: 1 } });
 					Meteor.runAsUser(startedByUserId, () => {
 						const timestamps = {};
 						for (const [msgGroupData, msgs] of messagesMap.entries()) {
-							super.updateRecord({messagesstatus: `${ ch }/${ msgGroupData }.${ msgs.messages.length }`});
+							super.updateRecord({ messagesstatus: `${ ch }/${ msgGroupData }.${ msgs.messages.length }` });
 							for (const msg of msgs.messages) {
 								if (isNaN(new Date(parseInt(msg.ts)))) {
 									this.logger.warn(`Timestamp on a message in ${ ch }/${ msgGroupData } is invalid`);
@@ -362,7 +362,7 @@ export class CsvImporter extends Base {
 	getUserFromUsername(username) {
 		for (const u of this.users.users) {
 			if (u.username === username) {
-				return RocketChat.models.Users.findOneById(u.rocketId, {fields: {username: 1}});
+				return RocketChat.models.Users.findOneById(u.rocketId, { fields: { username: 1 } });
 			}
 		}
 	}

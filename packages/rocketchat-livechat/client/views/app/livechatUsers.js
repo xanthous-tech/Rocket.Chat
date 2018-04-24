@@ -8,10 +8,10 @@ Meteor.startup(function() {
 
 Template.livechatUsers.helpers({
 	managers() {
-		return ManagerUsers.find({}, {sort: {name: 1}});
+		return ManagerUsers.find({}, { sort: { name: 1 } });
 	},
 	agents() {
-		return AgentUsers.find({}, {sort: {name: 1}});
+		return AgentUsers.find({}, { sort: { name: 1 } });
 	},
 	emailAddress() {
 		if (this.emails && this.emails.length > 0) {
@@ -31,10 +31,10 @@ Template.livechatUsers.helpers({
 				noMatchTemplate: Template.userSearchEmpty,
 				matchAll: true,
 				filter: {
-					exceptions: _.map(AgentUsers.find({}, {fields: {username: 1}}).fetch(), (user) => user.username),
+					exceptions: _.map(AgentUsers.find({}, { fields: { username: 1 } }).fetch(), (user) => user.username),
 				},
 				selector(match) {
-					return {term: match};
+					return { term: match };
 				},
 				sort: 'username',
 			}],
@@ -53,10 +53,10 @@ Template.livechatUsers.helpers({
 				noMatchTemplate: Template.userSearchEmpty,
 				matchAll: true,
 				filter: {
-					exceptions: _.map(ManagerUsers.find({}, {fields: {username: 1}}).fetch(), (user) => user.username),
+					exceptions: _.map(ManagerUsers.find({}, { fields: { username: 1 } }).fetch(), (user) => user.username),
 				},
 				selector(match) {
-					return {term: match};
+					return { term: match };
 				},
 				sort: 'username',
 			}],

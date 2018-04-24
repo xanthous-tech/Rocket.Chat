@@ -1,5 +1,5 @@
 /* globals openRoom */
-import {RoomTypeConfig, RoomTypeRouteConfig, RoomSettingsEnum, UiTextContext} from '../RoomTypeConfig';
+import { RoomTypeConfig, RoomTypeRouteConfig, RoomSettingsEnum, UiTextContext } from '../RoomTypeConfig';
 
 export class PublicRoomRoute extends RoomTypeRouteConfig {
 	constructor() {
@@ -48,7 +48,7 @@ export class PublicRoomType extends RoomTypeConfig {
 	}
 
 	showJoinLink(roomId) {
-		return !!ChatRoom.findOne({_id: roomId, t: 'c'});
+		return !!ChatRoom.findOne({ _id: roomId, t: 'c' });
 	}
 
 	includeInRoomSearch() {

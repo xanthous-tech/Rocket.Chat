@@ -1,16 +1,16 @@
-import {AppBridges} from '@rocket.chat/apps-engine/server/bridges';
+import { AppBridges } from '@rocket.chat/apps-engine/server/bridges';
 
-import {AppActivationBridge} from './activation';
-import {AppDetailChangesBridge} from './details';
-import {AppCommandsBridge} from './commands';
-import {AppEnvironmentalVariableBridge} from './environmental';
-import {AppHttpBridge} from './http';
-import {AppListenerBridge} from './listeners';
-import {AppMessageBridge} from './messages';
-import {AppPersistenceBridge} from './persistence';
-import {AppRoomBridge} from './rooms';
-import {AppSettingBridge} from './settings';
-import {AppUserBridge} from './users';
+import { AppActivationBridge } from './activation';
+import { AppDetailChangesBridge } from './details';
+import { AppCommandsBridge } from './commands';
+import { AppEnvironmentalVariableBridge } from './environmental';
+import { AppHttpBridge } from './http';
+import { AppListenerBridge } from './listeners';
+import { AppMessageBridge } from './messages';
+import { AppPersistenceBridge } from './persistence';
+import { AppRoomBridge } from './rooms';
+import { AppSettingBridge } from './settings';
+import { AppUserBridge } from './users';
 
 export class RealAppBridges extends AppBridges {
 	constructor(orch) {

@@ -1,7 +1,7 @@
 /* globals popover isRtl */
 import _ from 'underscore';
 
-import {hide, leave} from 'meteor/rocketchat:lib';
+import { hide, leave } from 'meteor/rocketchat:lib';
 
 this.popover = {
 	renderedPopover: null,
@@ -38,7 +38,7 @@ Template.popover.onRendered(function() {
 			popover.close();
 		}
 	});
-	const {offsetVertical = 0, offsetHorizontal = 0} = this.data;
+	const { offsetVertical = 0, offsetHorizontal = 0 } = this.data;
 	const activeElement = this.data.activeElement;
 	const popoverContent = this.firstNode.children[0];
 	const position = _.throttle(() => {
@@ -143,7 +143,7 @@ Template.popover.events({
 		const id = event.currentTarget.dataset.id;
 		const action = RocketChat.messageBox.actions.getById(id);
 		if ((action[0] != null ? action[0].action : undefined) != null) {
-			action[0].action({rid: t.data.data.rid, messageBox: document.querySelector('.rc-message-box'), element: event.currentTarget, event});
+			action[0].action({ rid: t.data.data.rid, messageBox: document.querySelector('.rc-message-box'), element: event.currentTarget, event });
 			if (id !== 'audio-message') {
 				popover.close();
 			}
@@ -195,7 +195,7 @@ Template.popover.events({
 	},
 	'click [data-type="sidebar-item"]'(e, instance) {
 		popover.close();
-		const {rid, name, template} = instance.data.data;
+		const { rid, name, template } = instance.data.data;
 		const action = e.currentTarget.dataset.id;
 
 		if (action === 'hide') {
@@ -217,7 +217,7 @@ Template.popover.events({
 					return handleError(error);
 				}
 
-				const subscription = ChatSubscription.findOne({rid});
+				const subscription = ChatSubscription.findOne({ rid });
 				if (subscription == null) {
 					return;
 				}

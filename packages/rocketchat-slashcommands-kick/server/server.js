@@ -1,7 +1,7 @@
 
 // Kick is a named function that will replace /kick commands
 
-const Kick = function(command, params, {rid}) {
+const Kick = function(command, params, { rid }) {
 	if (command !== 'kick' || !Match.test(params, String)) {
 		return;
 	}
@@ -34,7 +34,7 @@ const Kick = function(command, params, {rid}) {
 			}, user.language),
 		});
 	}
-	Meteor.call('removeUserFromRoom', {rid, username});
+	Meteor.call('removeUserFromRoom', { rid, username });
 };
 
 RocketChat.slashCommands.add('kick', Kick, {

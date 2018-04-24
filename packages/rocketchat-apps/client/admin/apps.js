@@ -1,4 +1,4 @@
-import {AppEvents} from '../communication';
+import { AppEvents } from '../communication';
 
 Template.apps.onCreated(function() {
 	const instance = this;

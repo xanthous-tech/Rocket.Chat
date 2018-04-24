@@ -22,7 +22,7 @@ Meteor.methods({
 				subject: 'SMTP Test Email',
 				html: `${ header }<p>You have successfully sent an email</p>${ footer }`,
 			});
-		} catch ({message}) {
+		} catch ({ message }) {
 			throw new Meteor.Error('error-email-send-failed', `Error trying to send email: ${ message }`, {
 				method: 'sendSMTPTestEmail',
 				message,

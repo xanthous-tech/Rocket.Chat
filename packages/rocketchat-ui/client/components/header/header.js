@@ -1,6 +1,6 @@
 /* globals fireGlobalEvent*/
 
-const isSubscribed = (_id) => ChatSubscription.find({rid: _id}).count() > 0;
+const isSubscribed = (_id) => ChatSubscription.find({ rid: _id }).count() > 0;
 
 const favoritesEnabled = () => RocketChat.settings.get('Favorite_Rooms');
 
@@ -18,18 +18,18 @@ Template.header.helpers({
 	},
 
 	isTranslated() {
-		const sub = ChatSubscription.findOne({rid: this._id}, {fields: {autoTranslate: 1, autoTranslateLanguage: 1}});
+		const sub = ChatSubscription.findOne({ rid: this._id }, { fields: { autoTranslate: 1, autoTranslateLanguage: 1 } });
 		return RocketChat.settings.get('AutoTranslate_Enabled') && ((sub != null ? sub.autoTranslate : undefined) === true) && (sub.autoTranslateLanguage != null);
 	},
 
 	state() {
-		const sub = ChatSubscription.findOne({rid: this._id}, {fields: {f: 1}});
+		const sub = ChatSubscription.findOne({ rid: this._id }, { fields: { f: 1 } });
 		if (((sub != null ? sub.f : undefined) != null) && sub.f && favoritesEnabled()) { return ' favorite-room'; }
 		return 'empty';
 	},
 
 	favoriteLabel() {
-		const sub = ChatSubscription.findOne({rid: this._id}, {fields: {f: 1}});
+		const sub = ChatSubscription.findOne({ rid: this._id }, { fields: { f: 1 } });
 		if (((sub != null ? sub.f : undefined) != null) && sub.f && favoritesEnabled()) { return 'Unfavorite'; }
 		return 'Favorite';
 	},
@@ -105,7 +105,7 @@ Template.header.helpers({
 
 Template.header.events({
 	'click .iframe-toolbar button'() {
-		fireGlobalEvent('click-toolbar-button', {id: this.id});
+		fireGlobalEvent('click-toolbar-button', { id: this.id });
 	},
 
 	'click .rc-header__toggle-favorite'(event) {

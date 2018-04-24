@@ -25,7 +25,7 @@ RocketChat.Migrations.add({
 		];
 
 		return toMigrate.forEach((collection) => {
-			const {target, source} = collection;
+			const { target, source } = collection;
 
 			// rawCollection available as of Meteor 1.0.4
 			console.log(`Migrating data from: ${ source.rawCollection().collectionName } to: ${ target.rawCollection().collectionName }`);

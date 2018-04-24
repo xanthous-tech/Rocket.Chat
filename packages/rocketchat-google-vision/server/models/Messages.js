@@ -6,5 +6,5 @@ RocketChat.models.Messages.setGoogleVisionData = function(messageId, visionData)
 		}
 	}
 
-	return this.update({_id: messageId}, {$set: updateObj});
+	return this.update({ _id: messageId }, { $set: updateObj });
 };

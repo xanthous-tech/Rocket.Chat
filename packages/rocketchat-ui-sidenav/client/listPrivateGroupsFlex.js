@@ -12,7 +12,7 @@ Template.listPrivateGroupsFlex.helpers({
 		return Template.instance().sort.get() === sort;
 	},
 	hidden() {
-		return !!RocketChat.models.Subscriptions.findOne({name: this.name, open: false});
+		return !!RocketChat.models.Subscriptions.findOne({ name: this.name, open: false });
 	},
 });
 
@@ -51,17 +51,17 @@ Template.listPrivateGroupsFlex.onCreated(function() {
 
 	return this.autorun(() => {
 		this.hasMore.set(true);
-		const options = {fields: {name: 1}};
+		const options = { fields: { name: 1 } };
 		if (_.isNumber(this.limit.get())) {
 			options.limit = this.limit.get();
 		}
 		if (s.trim(this.sort.get())) {
 			switch (this.sort.get()) {
 				case 'name':
-					options.sort = {name: 1};
+					options.sort = { name: 1 };
 					break;
 				case 'ls':
-					options.sort = {ls: -1};
+					options.sort = { ls: -1 };
 					break;
 			}
 		}
@@ -69,7 +69,7 @@ Template.listPrivateGroupsFlex.onCreated(function() {
 		this.groups.set(RocketChat.models.Subscriptions.find({
 			name: new RegExp(s.trim(s.escapeRegExp(this.nameFilter.get())), 'i'),
 			t: 'p',
-			archived: {$ne: true},
+			archived: { $ne: true },
 		}, options).fetch()
 		);
 		if (this.groups.get().length < this.limit.get()) {

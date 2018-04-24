@@ -2,7 +2,7 @@ import s from 'underscore.string';
 
 RocketChat.saveRoomAnnouncement = function(rid, roomAnnouncement, user, sendMessage = true) {
 	if (!Match.test(rid, String)) {
-		throw new Meteor.Error('invalid-room', 'Invalid room', {function: 'RocketChat.saveRoomAnnouncement'});
+		throw new Meteor.Error('invalid-room', 'Invalid room', { function: 'RocketChat.saveRoomAnnouncement' });
 	}
 
 	let message;
@@ -10,7 +10,7 @@ RocketChat.saveRoomAnnouncement = function(rid, roomAnnouncement, user, sendMess
 	if (typeof roomAnnouncement === 'string') {
 		message = roomAnnouncement;
 	} else {
-		({message, ...announcementDetails} = roomAnnouncement);
+		({ message, ...announcementDetails } = roomAnnouncement);
 	}
 
 	const escapedMessage = s.escapeHTML(message);

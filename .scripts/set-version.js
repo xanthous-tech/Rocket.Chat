@@ -78,7 +78,7 @@ git.status()
 		}
 		return answers;
 	})
-	.then(({version}) => {
+	.then(({ version }) => {
 		selectedVersion = version;
 		return Promise.all(files.map((file) => readFile(file)
 			.then((data) => writeFile(file, data.replace(pkgJson.version, version)))));
@@ -103,7 +103,7 @@ git.status()
 		type: 'checkbox',
 		message: 'Select files to commit?',
 		name: 'files',
-		choices: status.files.map((file) => ({name: `${ file.working_dir } ${ file.path }`, checked: true})),
+		choices: status.files.map((file) => ({ name: `${ file.working_dir } ${ file.path }`, checked: true })),
 	}]))
 	.then((answers) => answers.files.length && git.add(answers.files.map((file) => file.slice(2))))
 	.then(() => git.commit(`Bump version to ${ selectedVersion }`))

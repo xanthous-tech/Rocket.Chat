@@ -54,7 +54,7 @@ Meteor.loginWithCas = function(options, callback) {
 		popup.addEventListener('exit', function() {
 			// check auth on server.
 			Accounts.callLoginMethod({
-				methodArguments: [{cas: {credentialToken}}],
+				methodArguments: [{ cas: { credentialToken } }],
 				userCallback: callback,
 			});
 		});
@@ -79,7 +79,7 @@ Meteor.loginWithCas = function(options, callback) {
 
 				// check auth on server.
 				Accounts.callLoginMethod({
-					methodArguments: [{cas: {credentialToken}}],
+					methodArguments: [{ cas: { credentialToken } }],
 					userCallback: callback,
 				});
 			}

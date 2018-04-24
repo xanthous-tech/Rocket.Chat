@@ -6,11 +6,11 @@ Meteor.methods({
 		check(name, String);
 
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'removeOAuthService'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'removeOAuthService' });
 		}
 
 		if (RocketChat.authz.hasPermission(Meteor.userId(), 'add-oauth-service') !== true) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'removeOAuthService'});
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'removeOAuthService' });
 		}
 
 		name = name.toLowerCase().replace(/[^a-z0-9_]/g, '');

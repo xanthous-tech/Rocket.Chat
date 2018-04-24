@@ -6,9 +6,9 @@ RocketChat.models.Subscriptions.updateAudioNotificationsById = function(_id, aud
 	const update = {};
 
 	if (audioNotifications === 'default') {
-		update.$unset = {audioNotifications: 1};
+		update.$unset = { audioNotifications: 1 };
 	} else {
-		update.$set = {audioNotifications};
+		update.$set = { audioNotifications };
 	}
 
 	return this.update(query, update);
@@ -36,9 +36,9 @@ RocketChat.models.Subscriptions.updateDesktopNotificationsById = function(_id, d
 	const update = {};
 
 	if (desktopNotifications === 'default') {
-		update.$unset = {desktopNotifications: 1};
+		update.$unset = { desktopNotifications: 1 };
 	} else {
-		update.$set = {desktopNotifications};
+		update.$set = { desktopNotifications };
 	}
 
 	return this.update(query, update);
@@ -66,9 +66,9 @@ RocketChat.models.Subscriptions.updateMobilePushNotificationsById = function(_id
 	const update = {};
 
 	if (mobilePushNotifications === 'default') {
-		update.$unset = {mobilePushNotifications: 1};
+		update.$unset = { mobilePushNotifications: 1 };
 	} else {
-		update.$set = {mobilePushNotifications};
+		update.$set = { mobilePushNotifications };
 	}
 
 	return this.update(query, update);
@@ -192,22 +192,22 @@ RocketChat.models.Subscriptions.findDontNotifyMobileUsersByRoomId = function(roo
 RocketChat.models.Subscriptions.findNotificationPreferencesByRoom = function(roomId, explicit) {
 	const query = {
 		rid: roomId,
-		'u._id': {$exists: true},
+		'u._id': { $exists: true },
 	};
 
 	if (explicit) {
 		query.$or = [
-			{audioNotifications: {$exists: true}},
-			{audioNotificationValue: {$exists: true}},
-			{desktopNotifications: {$exists: true}},
-			{desktopNotificationDuration: {$exists: true}},
-			{mobilePushNotifications: {$exists: true}},
-			{disableNotifications: {$exists: true}},
-			{muteGroupMentions: {$exists: true}},
+			{ audioNotifications: { $exists: true } },
+			{ audioNotificationValue: { $exists: true } },
+			{ desktopNotifications: { $exists: true } },
+			{ desktopNotificationDuration: { $exists: true } },
+			{ mobilePushNotifications: { $exists: true } },
+			{ disableNotifications: { $exists: true } },
+			{ muteGroupMentions: { $exists: true } },
 		];
 	}
 
-	return this.find(query, {fields: {'u._id': 1, audioNotifications: 1, audioNotificationValue: 1, desktopNotificationDuration: 1, desktopNotifications: 1, mobilePushNotifications: 1, disableNotifications: 1, muteGroupMentions: 1}});
+	return this.find(query, { fields: { 'u._id': 1, audioNotifications: 1, audioNotificationValue: 1, desktopNotificationDuration: 1, desktopNotifications: 1, mobilePushNotifications: 1, disableNotifications: 1, muteGroupMentions: 1 } });
 };
 
 RocketChat.models.Subscriptions.findWithSendEmailByRoomId = function(roomId) {
@@ -218,5 +218,5 @@ RocketChat.models.Subscriptions.findWithSendEmailByRoomId = function(roomId) {
 		},
 	};
 
-	return this.find(query, {fields: {emailNotifications: 1, u: 1}});
+	return this.find(query, { fields: { emailNotifications: 1, u: 1 } });
 };

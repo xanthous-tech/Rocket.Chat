@@ -1,4 +1,4 @@
-import {ImporterInfo} from './ImporterInfo';
+import { ImporterInfo } from './ImporterInfo';
 
 /** Container class which holds all of the importer details. */
 class ImportersContainer {

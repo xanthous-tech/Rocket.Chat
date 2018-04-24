@@ -1,10 +1,10 @@
 /* eslint new-cap:0 */
 
-import {Template} from 'meteor/templating';
-import {Blaze} from 'meteor/blaze';
-import {HTML} from 'meteor/htmljs';
-import {Spacebars} from 'meteor/spacebars';
-import {Tracker} from 'meteor/tracker';
+import { Template } from 'meteor/templating';
+import { Blaze } from 'meteor/blaze';
+import { HTML } from 'meteor/htmljs';
+import { Spacebars } from 'meteor/spacebars';
+import { Tracker } from 'meteor/tracker';
 
 Blaze.toHTMLWithDataNonReactive = function(content, data) {
 	const makeCursorReactive = function(obj) {
@@ -37,7 +37,7 @@ Blaze.registerHelper('nrrargs', function() {
 });
 
 Blaze.renderNonReactive = function(templateName, data) {
-	const {_arguments} = this.parentView.dataVar.get();
+	const { _arguments } = this.parentView.dataVar.get();
 
 	[templateName, data] = _arguments;
 
@@ -45,12 +45,12 @@ Blaze.renderNonReactive = function(templateName, data) {
 		const view = new Blaze.View('nrr', () => HTML.Raw(Blaze.toHTMLWithDataNonReactive(Template[templateName], data)));
 
 		view.onViewReady(() => {
-			const {onViewReady} = Template[templateName];
+			const { onViewReady } = Template[templateName];
 			return onViewReady && onViewReady.call(view, data);
 		});
 
 		view._onViewRendered(() => {
-			const {onViewRendered} = Template[templateName];
+			const { onViewRendered } = Template[templateName];
 			return onViewRendered && onViewRendered.call(view, data);
 		});
 

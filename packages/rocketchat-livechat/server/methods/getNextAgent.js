@@ -1,5 +1,5 @@
 Meteor.methods({
-	'livechat:getNextAgent'({token, department}) {
+	'livechat:getNextAgent'({ token, department }) {
 		check(token, String);
 
 		const room = RocketChat.models.Rooms.findOpenByVisitorToken(token).fetch();

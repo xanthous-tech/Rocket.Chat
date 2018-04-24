@@ -21,7 +21,7 @@ Template.starredMessages.helpers({
 		});
 	},
 	message() {
-		return _.extend(this, {customClass: 'starred', actionContext: 'starred'});
+		return _.extend(this, { customClass: 'starred', actionContext: 'starred' });
 	},
 	hasMore() {
 		return Template.instance().hasMore.get();
@@ -33,7 +33,7 @@ Template.starredMessages.onCreated(function() {
 	this.limit = new ReactiveVar(50);
 	this.autorun(() => {
 		const sub = this.subscribe('starredMessages', this.data.rid, this.limit.get());
-		const findStarredMessage = StarredMessage.find({rid: this.data.rid});
+		const findStarredMessage = StarredMessage.find({ rid: this.data.rid });
 		if (sub.ready()) {
 			if (findStarredMessage.count() < this.limit.get()) {
 				return this.hasMore.set(false);

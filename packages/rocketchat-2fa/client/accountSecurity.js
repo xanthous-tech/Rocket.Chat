@@ -22,7 +22,7 @@ Template.accountSecurity.helpers({
 	},
 	codesRemaining() {
 		if (Template.instance().codesRemaining.get()) {
-			return t('You_have_n_codes_remaining', {number: Template.instance().codesRemaining.get()});
+			return t('You_have_n_codes_remaining', { number: Template.instance().codesRemaining.get() });
 		}
 	},
 });
@@ -33,7 +33,7 @@ Template.accountSecurity.events({
 
 		Meteor.call('2fa:enable', (error, result) => {
 			instance.imageSecret.set(result.secret);
-			instance.imageData.set(qrcode(result.url, {size: 200}));
+			instance.imageData.set(qrcode(result.url, { size: 200 }));
 
 			instance.state.set('registering');
 
@@ -136,7 +136,7 @@ Template.accountSecurity.onCreated(function() {
 		const codes = `<code class="text-center allow-text-selection">${ backupCodes }</code>`;
 		modal.open({
 			title: t('Backup_codes'),
-			text: `${ t('Make_sure_you_have_a_copy_of_your_codes', {codes}) }`,
+			text: `${ t('Make_sure_you_have_a_copy_of_your_codes', { codes }) }`,
 			html: true,
 		});
 	};

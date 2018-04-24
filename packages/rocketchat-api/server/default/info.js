@@ -1,4 +1,4 @@
-RocketChat.API.default.addRoute('info', {authRequired: false}, {
+RocketChat.API.default.addRoute('info', { authRequired: false }, {
 	get() {
 		const user = this.getLoggedInUser();
 

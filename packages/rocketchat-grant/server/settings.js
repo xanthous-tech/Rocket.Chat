@@ -1,6 +1,6 @@
-import {check} from 'meteor/check';
+import { check } from 'meteor/check';
 
-import {Storage} from './storage';
+import { Storage } from './storage';
 
 class Apps extends Storage {
 	add(name, body) {

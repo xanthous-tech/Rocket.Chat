@@ -1,7 +1,7 @@
 import AccountsServer from '@accounts/server';
 import MongoAdapter from '@accounts/mongo';
-import {MongoInternals} from 'meteor/mongo';
-import {Meteor} from 'meteor/meteor';
+import { MongoInternals } from 'meteor/mongo';
+import { Meteor } from 'meteor/meteor';
 
 Meteor.startup(() => {
 	const mongodb = MongoInternals.defaultRemoteCollectionDriver().mongo.db;

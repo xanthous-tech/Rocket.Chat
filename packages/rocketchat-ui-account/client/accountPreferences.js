@@ -34,7 +34,7 @@ Template.accountPreferences.helpers({
 
 		const result = Object.keys(languages).map((key) => {
 			const language = languages[key];
-			return _.extend(language, {key});
+			return _.extend(language, { key });
 		});
 
 		return _.sortBy(result, 'key');
@@ -207,7 +207,7 @@ Template.accountPreferences.onCreated(function() {
 	};
 
 	this.downloadMyData = function(fullExport = false) {
-		Meteor.call('requestDataDownload', {fullExport}, function(error, results) {
+		Meteor.call('requestDataDownload', { fullExport }, function(error, results) {
 			if (results) {
 				if (results.requested) {
 					modal.open({
@@ -285,7 +285,7 @@ Template.accountPreferences.events({
 		e.preventDefault();
 		KonchatNotification.notify({
 			duration: $('input[name=desktopNotificationDuration]').val(),
-			payload: {sender: {username: 'rocket.cat'},
+			payload: { sender: { username: 'rocket.cat' },
 			},
 			title: TAPi18n.__('Desktop_Notification_Test'),
 			text: TAPi18n.__('This_is_a_desktop_notification'),

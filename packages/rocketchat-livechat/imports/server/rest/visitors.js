@@ -1,6 +1,6 @@
 import LivechatVisitors from '../../../server/models/LivechatVisitors';
 
-RocketChat.API.v1.addRoute('livechat/visitor/:visitorToken', {authRequired: true}, {
+RocketChat.API.v1.addRoute('livechat/visitor/:visitorToken', { authRequired: true }, {
 	get() {
 		if (!RocketChat.authz.hasPermission(this.userId, 'view-livechat-manager')) {
 			return RocketChat.API.v1.unauthorized();
@@ -11,7 +11,7 @@ RocketChat.API.v1.addRoute('livechat/visitor/:visitorToken', {authRequired: true
 	},
 });
 
-RocketChat.API.v1.addRoute('livechat/visitor/:visitorToken/room', {authRequired: true}, {
+RocketChat.API.v1.addRoute('livechat/visitor/:visitorToken/room', { authRequired: true }, {
 	get() {
 		if (!RocketChat.authz.hasPermission(this.userId, 'view-livechat-manager')) {
 			return RocketChat.API.v1.unauthorized();
@@ -27,6 +27,6 @@ RocketChat.API.v1.addRoute('livechat/visitor/:visitorToken/room', {authRequired:
 				servedBy: 1,
 			},
 		}).fetch();
-		return RocketChat.API.v1.success({rooms});
+		return RocketChat.API.v1.success({ rooms });
 	},
 });

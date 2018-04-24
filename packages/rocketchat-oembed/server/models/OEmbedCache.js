@@ -2,7 +2,7 @@
 RocketChat.models.OEmbedCache = new class extends RocketChat.models._Base {
 	constructor() {
 		super('oembed_cache');
-		this.tryEnsureIndex({updatedAt: 1});
+		this.tryEnsureIndex({ updatedAt: 1 });
 	}
 
 	// FIND ONE

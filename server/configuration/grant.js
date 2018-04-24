@@ -1,4 +1,4 @@
-import {Settings} from 'meteor/rocketchat:grant';
+import { Settings } from 'meteor/rocketchat:grant';
 
 Settings.add({
 	enabled: true,

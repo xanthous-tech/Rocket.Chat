@@ -1,8 +1,8 @@
 class ModelRoles extends RocketChat.models._Base {
 	constructor() {
 		super(...arguments);
-		this.tryEnsureIndex({name: 1});
-		this.tryEnsureIndex({scope: 1});
+		this.tryEnsureIndex({ name: 1 });
+		this.tryEnsureIndex({ scope: 1 });
 	}
 
 	findUsersInRole(name, scope, options) {
@@ -37,7 +37,7 @@ class ModelRoles extends RocketChat.models._Base {
 			updateData.protected = protectedRole;
 		}
 
-		this.upsert({_id: name}, {$set: updateData});
+		this.upsert({ _id: name }, { $set: updateData });
 	}
 
 	addUserRoles(userId, roles, scope) {

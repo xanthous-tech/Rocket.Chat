@@ -7,7 +7,7 @@ Template.visitorHistory.helpers({
 
 	previousChats() {
 		return ChatRoom.find({
-			_id: {$ne: this.rid},
+			_id: { $ne: this.rid },
 			'v._id': Template.instance().visitorId.get(),
 		}, {
 			sort: {
@@ -32,11 +32,11 @@ Template.visitorHistory.onCreated(function() {
 	this.visitorId = new ReactiveVar();
 
 	this.autorun(() => {
-		const room = ChatRoom.findOne({_id: Template.currentData().rid});
+		const room = ChatRoom.findOne({ _id: Template.currentData().rid });
 		this.visitorId.set(room.v._id);
 	});
 
 	if (currentData && currentData.rid) {
-		this.loadHistory = this.subscribe('livechat:visitorHistory', {rid: currentData.rid});
+		this.loadHistory = this.subscribe('livechat:visitorHistory', { rid: currentData.rid });
 	}
 });

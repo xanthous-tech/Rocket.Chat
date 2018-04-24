@@ -15,7 +15,7 @@ export class AppsRestApi {
 
 	_handleFile(request, fileField) {
 		const Busboy = Npm.require('busboy');
-		const busboy = new Busboy({headers: request.headers});
+		const busboy = new Busboy({ headers: request.headers });
 
 		return Meteor.wrapAsync((callback) => {
 			busboy.on('file', Meteor.bindEnvironment((fieldname, file) => {
@@ -40,7 +40,7 @@ export class AppsRestApi {
 		const manager = this._manager;
 		const fileHandler = this._handleFile;
 
-		this.api.addRoute('', {authRequired: true}, {
+		this.api.addRoute('', { authRequired: true }, {
 			get() {
 				const apps = manager.get().map((prl) => {
 					const info = prl.getInfo();
@@ -50,16 +50,16 @@ export class AppsRestApi {
 					return info;
 				});
 
-				return RocketChat.API.v1.success({apps});
+				return RocketChat.API.v1.success({ apps });
 			},
 			post() {
 				let buff;
 
 				if (this.bodyParams.url) {
-					const result = HTTP.call('GET', this.bodyParams.url, {npmRequestOptions: {encoding: 'base64'}});
+					const result = HTTP.call('GET', this.bodyParams.url, { npmRequestOptions: { encoding: 'base64' } });
 
 					if (result.statusCode !== 200 || !result.headers['content-type'] || result.headers['content-type'] !== 'application/zip') {
-						return RocketChat.API.v1.failure({error: 'Invalid url. It doesn\'t exist or is not "application/zip".'});
+						return RocketChat.API.v1.failure({ error: 'Invalid url. It doesn\'t exist or is not "application/zip".' });
 					}
 
 					buff = Buffer.from(result.content, 'base64');
@@ -68,7 +68,7 @@ export class AppsRestApi {
 				}
 
 				if (!buff) {
-					return RocketChat.API.v1.failure({error: 'Failed to get a file to install for the App. '});
+					return RocketChat.API.v1.failure({ error: 'Failed to get a file to install for the App. ' });
 				}
 
 				const aff = Promise.await(manager.add(buff.toString('base64'), false));
@@ -83,18 +83,18 @@ export class AppsRestApi {
 			},
 		});
 
-		this.api.addRoute('languages', {authRequired: false}, {
+		this.api.addRoute('languages', { authRequired: false }, {
 			get() {
 				const apps = manager.get().map((prl) => ({
 					id: prl.getID(),
 					languages: prl.getStorageItem().languageContent,
 				}));
 
-				return RocketChat.API.v1.success({apps});
+				return RocketChat.API.v1.success({ apps });
 			},
 		});
 
-		this.api.addRoute(':id', {authRequired: true}, {
+		this.api.addRoute(':id', { authRequired: true }, {
 			get() {
 				console.log('Getting:', this.urlParams.id);
 				const prl = manager.getOneById(this.urlParams.id);
@@ -103,7 +103,7 @@ export class AppsRestApi {
 					const info = prl.getInfo();
 					info.status = prl.getStatus();
 
-					return RocketChat.API.v1.success({app: info});
+					return RocketChat.API.v1.success({ app: info });
 				} else {
 					return RocketChat.API.v1.notFound(`No App found by the id of: ${ this.urlParams.id }`);
 				}
@@ -115,10 +115,10 @@ export class AppsRestApi {
 				let buff;
 
 				if (this.bodyParams.url) {
-					const result = HTTP.call('GET', this.bodyParams.url, {npmRequestOptions: {encoding: 'base64'}});
+					const result = HTTP.call('GET', this.bodyParams.url, { npmRequestOptions: { encoding: 'base64' } });
 
 					if (result.statusCode !== 200 || !result.headers['content-type'] || result.headers['content-type'] !== 'application/zip') {
-						return RocketChat.API.v1.failure({error: 'Invalid url. It doesn\'t exist or is not "application/zip".'});
+						return RocketChat.API.v1.failure({ error: 'Invalid url. It doesn\'t exist or is not "application/zip".' });
 					}
 
 					buff = Buffer.from(result.content, 'base64');
@@ -127,7 +127,7 @@ export class AppsRestApi {
 				}
 
 				if (!buff) {
-					return RocketChat.API.v1.failure({error: 'Failed to get a file to install for the App. '});
+					return RocketChat.API.v1.failure({ error: 'Failed to get a file to install for the App. ' });
 				}
 
 				const aff = Promise.await(manager.update(buff.toString('base64')));
@@ -150,14 +150,14 @@ export class AppsRestApi {
 					const info = prl.getInfo();
 					info.status = prl.getStatus();
 
-					return RocketChat.API.v1.success({app: info});
+					return RocketChat.API.v1.success({ app: info });
 				} else {
 					return RocketChat.API.v1.notFound(`No App found by the id of: ${ this.urlParams.id }`);
 				}
 			},
 		});
 
-		this.api.addRoute(':id/icon', {authRequired: true}, {
+		this.api.addRoute(':id/icon', { authRequired: true }, {
 			get() {
 				console.log('Getting the App\'s Icon:', this.urlParams.id);
 				const prl = manager.getOneById(this.urlParams.id);
@@ -165,14 +165,14 @@ export class AppsRestApi {
 				if (prl) {
 					const info = prl.getInfo();
 
-					return RocketChat.API.v1.success({iconFileContent: info.iconFileContent});
+					return RocketChat.API.v1.success({ iconFileContent: info.iconFileContent });
 				} else {
 					return RocketChat.API.v1.notFound(`No App found by the id of: ${ this.urlParams.id }`);
 				}
 			},
 		});
 
-		this.api.addRoute(':id/languages', {authRequired: false}, {
+		this.api.addRoute(':id/languages', { authRequired: false }, {
 			get() {
 				console.log(`Getting ${ this.urlParams.id }'s languages..`);
 				const prl = manager.getOneById(this.urlParams.id);
@@ -180,25 +180,25 @@ export class AppsRestApi {
 				if (prl) {
 					const languages = prl.getStorageItem().languageContent || {};
 
-					return RocketChat.API.v1.success({languages});
+					return RocketChat.API.v1.success({ languages });
 				} else {
 					return RocketChat.API.v1.notFound(`No App found by the id of: ${ this.urlParams.id }`);
 				}
 			},
 		});
 
-		this.api.addRoute(':id/logs', {authRequired: true}, {
+		this.api.addRoute(':id/logs', { authRequired: true }, {
 			get() {
 				console.log(`Getting ${ this.urlParams.id }'s logs..`);
 				const prl = manager.getOneById(this.urlParams.id);
 
 				if (prl) {
-					const {offset, count} = this.getPaginationItems();
-					const {sort, fields, query} = this.parseJsonQuery();
+					const { offset, count } = this.getPaginationItems();
+					const { sort, fields, query } = this.parseJsonQuery();
 
-					const ourQuery = Object.assign({}, query, {appId: prl.getID()});
+					const ourQuery = Object.assign({}, query, { appId: prl.getID() });
 					const options = {
-						sort: sort ? sort : {_updatedAt: -1},
+						sort: sort ? sort : { _updatedAt: -1 },
 						skip: offset,
 						limit: count,
 						fields,
@@ -206,14 +206,14 @@ export class AppsRestApi {
 
 					const logs = Promise.await(orchestrator.getLogStorage().find(ourQuery, options));
 
-					return RocketChat.API.v1.success({logs});
+					return RocketChat.API.v1.success({ logs });
 				} else {
 					return RocketChat.API.v1.notFound(`No App found by the id of: ${ this.urlParams.id }`);
 				}
 			},
 		});
 
-		this.api.addRoute(':id/settings', {authRequired: true}, {
+		this.api.addRoute(':id/settings', { authRequired: true }, {
 			get() {
 				console.log(`Getting ${ this.urlParams.id }'s settings..`);
 				const prl = manager.getOneById(this.urlParams.id);
@@ -227,7 +227,7 @@ export class AppsRestApi {
 						}
 					});
 
-					return RocketChat.API.v1.success({settings});
+					return RocketChat.API.v1.success({ settings });
 				} else {
 					return RocketChat.API.v1.notFound(`No App found by the id of: ${ this.urlParams.id }`);
 				}
@@ -255,18 +255,18 @@ export class AppsRestApi {
 					}
 				});
 
-				return RocketChat.API.v1.success({updated});
+				return RocketChat.API.v1.success({ updated });
 			},
 		});
 
-		this.api.addRoute(':id/settings/:settingId', {authRequired: true}, {
+		this.api.addRoute(':id/settings/:settingId', { authRequired: true }, {
 			get() {
 				console.log(`Getting the App ${ this.urlParams.id }'s setting ${ this.urlParams.settingId }`);
 
 				try {
 					const setting = manager.getSettingsManager().getAppSetting(this.urlParams.id, this.urlParams.settingId);
 
-					RocketChat.API.v1.success({setting});
+					RocketChat.API.v1.success({ setting });
 				} catch (e) {
 					if (e.message.includes('No setting found')) {
 						return RocketChat.API.v1.notFound(`No Setting found on the App by the id of: "${ this.urlParams.settingId }"`);
@@ -300,13 +300,13 @@ export class AppsRestApi {
 			},
 		});
 
-		this.api.addRoute(':id/status', {authRequired: true}, {
+		this.api.addRoute(':id/status', { authRequired: true }, {
 			get() {
 				console.log(`Getting ${ this.urlParams.id }'s status..`);
 				const prl = manager.getOneById(this.urlParams.id);
 
 				if (prl) {
-					return RocketChat.API.v1.success({status: prl.getStatus()});
+					return RocketChat.API.v1.success({ status: prl.getStatus() });
 				} else {
 					return RocketChat.API.v1.notFound(`No App found by the id of: ${ this.urlParams.id }`);
 				}
@@ -322,7 +322,7 @@ export class AppsRestApi {
 				if (prl) {
 					const result = Promise.await(manager.changeStatus(prl.getID(), this.bodyParams.status));
 
-					return RocketChat.API.v1.success({status: result.getStatus()});
+					return RocketChat.API.v1.success({ status: result.getStatus() });
 				} else {
 					return RocketChat.API.v1.notFound(`No App found by the id of: ${ this.urlParams.id }`);
 				}

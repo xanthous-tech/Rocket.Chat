@@ -394,7 +394,7 @@ this.AutoComplete = class {
 
 			}
 		} else { // Normal positioning, at token word
-			pos = {left: position.left + offset.left};
+			pos = { left: position.left + offset.left };
 		}
 
 		// Position menu from top (above) or from bottom of caret (below, default)

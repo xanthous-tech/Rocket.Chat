@@ -34,7 +34,7 @@ Template.appInstall.onCreated(function() {
 	// Allow passing in a url as a query param to show installation of
 	if (FlowRouter.getQueryParam('url')) {
 		instance.appUrl.set(FlowRouter.getQueryParam('url'));
-		FlowRouter.setQueryParams({url: null});
+		FlowRouter.setQueryParams({ url: null });
 	}
 
 	if (FlowRouter.getQueryParam('isUpdatingId')) {
@@ -63,9 +63,9 @@ Template.appInstall.events({
 				let result;
 
 				if (t.isUpdatingId.get()) {
-					result = await RocketChat.API.post(`apps/${ t.isUpdatingId.get() }`, {url});
+					result = await RocketChat.API.post(`apps/${ t.isUpdatingId.get() }`, { url });
 				} else {
-					result = await RocketChat.API.post('apps', {url});
+					result = await RocketChat.API.post('apps', { url });
 				}
 
 				FlowRouter.go(`/admin/apps/${ result.app.id }`);

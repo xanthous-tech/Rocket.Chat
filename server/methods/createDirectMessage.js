@@ -82,12 +82,12 @@ Meteor.methods({
 
 		RocketChat.models.Subscriptions.upsert({
 			rid,
-			$and: [{'u._id': me._id}], // work around to solve problems with upsert and dot
+			$and: [{ 'u._id': me._id }], // work around to solve problems with upsert and dot
 		}, upsertSubscription);
 
 		RocketChat.models.Subscriptions.upsert({
 			rid,
-			$and: [{'u._id': to._id}], // work around to solve problems with upsert and dot
+			$and: [{ 'u._id': to._id }], // work around to solve problems with upsert and dot
 		}, {
 			$setOnInsert: {
 				name: me.username,

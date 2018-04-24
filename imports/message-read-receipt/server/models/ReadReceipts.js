@@ -12,7 +12,7 @@ class ModelReadReceipts extends RocketChat.models._Base {
 	}
 
 	findByMessageId(messageId) {
-		return this.find({messageId});
+		return this.find({ messageId });
 	}
 }
 

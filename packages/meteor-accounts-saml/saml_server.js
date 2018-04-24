@@ -23,7 +23,7 @@ function getSamlProviderConfig(provider) {
 	if (! provider) {
 		throw new Meteor.Error('no-saml-provider',
 			'SAML internal error',
-			{method: 'getSamlProviderConfig'});
+			{ method: 'getSamlProviderConfig' });
 	}
 	const samlProvider = function(element) {
 		return (element.provider === provider);
@@ -35,7 +35,7 @@ Meteor.methods({
 	samlLogout(provider) {
 		// Make sure the user is logged in before initiate SAML SLO
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'samlLogout'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'samlLogout' });
 		}
 		const providerConfig = getSamlProviderConfig(provider);
 

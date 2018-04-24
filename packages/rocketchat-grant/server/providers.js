@@ -1,7 +1,7 @@
-import {check} from 'meteor/check';
+import { check } from 'meteor/check';
 
-import {Storage} from './storage';
-import {routes} from './routes';
+import { Storage } from './storage';
+import { routes } from './routes';
 
 class Providers extends Storage {
 	register(name, options, getUser) {

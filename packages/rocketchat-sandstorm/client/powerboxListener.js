@@ -20,9 +20,9 @@ if (Meteor.settings.public.sandstorm) {
 	RocketChat.Sandstorm.request = function(interfaceName, cb) {
 		const rpcId = Math.random().toString();
 		callbackMap[rpcId] = cb;
-		window.parent.postMessage({powerboxRequest: {
+		window.parent.postMessage({ powerboxRequest: {
 			rpcId,
 			query: [interfaces[interfaceName]],
-		}}, '*');
+		} }, '*');
 	};
 }

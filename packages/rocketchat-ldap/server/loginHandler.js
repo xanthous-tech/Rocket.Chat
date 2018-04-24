@@ -1,6 +1,6 @@
 /* eslint new-cap: [2, {"capIsNewExceptions": ["SHA256"]}] */
 
-import {slug, getLdapUsername, getLdapUserUniqueID, syncUserData, addLdapUser} from './sync';
+import { slug, getLdapUsername, getLdapUserUniqueID, syncUserData, addLdapUser } from './sync';
 import LDAP from './ldap';
 
 const logger = new Logger('LDAPHandler', {});
@@ -8,9 +8,9 @@ const logger = new Logger('LDAPHandler', {});
 function fallbackDefaultAccountSystem(bind, username, password) {
 	if (typeof username === 'string') {
 		if (username.indexOf('@') === -1) {
-			username = {username};
+			username = { username };
 		} else {
-			username = {email: username};
+			username = { email: username };
 		}
 	}
 
@@ -127,7 +127,7 @@ Accounts.registerLoginHandler('ldap', function(loginRequest) {
 		syncUserData(user, ldapUser);
 
 		if (RocketChat.settings.get('LDAP_Login_Fallback') === true) {
-			Accounts.setPassword(user._id, loginRequest.ldapPass, {logout: false});
+			Accounts.setPassword(user._id, loginRequest.ldapPass, { logout: false });
 		}
 
 		return {

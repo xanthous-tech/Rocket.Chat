@@ -11,9 +11,9 @@ function reportError(error, callback) {
 Meteor.loginWithPasswordAndTOTP = function(selector, password, code, callback) {
 	if (typeof selector === 'string') {
 		if (selector.indexOf('@') === -1) {
-			selector = {username: selector};
+			selector = { username: selector };
 		} else {
-			selector = {email: selector};
+			selector = { email: selector };
 		}
 	}
 

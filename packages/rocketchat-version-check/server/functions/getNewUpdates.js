@@ -1,6 +1,6 @@
 /* global MongoInternals */
 import os from 'os';
-import {HTTP} from 'meteor/http';
+import { HTTP } from 'meteor/http';
 // import checkUpdate from '../checkUpdate';
 
 export default () => {

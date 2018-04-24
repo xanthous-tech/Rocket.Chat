@@ -10,12 +10,12 @@ Meteor.methods({
 		}
 
 		if (emoji == null) {
-			throw new Meteor.Error('Custom_Emoji_Error_Invalid_Emoji', 'Invalid emoji', {method: 'deleteEmojiCustom'});
+			throw new Meteor.Error('Custom_Emoji_Error_Invalid_Emoji', 'Invalid emoji', { method: 'deleteEmojiCustom' });
 		}
 
 		RocketChatFileEmojiCustomInstance.deleteFile(encodeURIComponent(`${ emoji.name }.${ emoji.extension }`));
 		RocketChat.models.EmojiCustom.removeByID(emojiID);
-		RocketChat.Notifications.notifyLogged('deleteEmojiCustom', {emojiData: emoji});
+		RocketChat.Notifications.notifyLogged('deleteEmojiCustom', { emojiData: emoji });
 
 		return true;
 	},

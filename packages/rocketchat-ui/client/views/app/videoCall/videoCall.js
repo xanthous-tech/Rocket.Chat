@@ -13,8 +13,8 @@ Template.videoCall.helpers({
 		if (overlay !== (webrtc != null ? webrtc.overlayEnabled.get() : null)) {
 			return false;
 		}
-		let {remoteItems} = webrtc;
-		const {localUrl} = webrtc;
+		let { remoteItems } = webrtc;
+		const { localUrl } = webrtc;
 		remoteItems = remoteItems.get() || [];
 		return (localUrl.get() != null) || remoteItems.length > 0;
 	},

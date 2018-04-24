@@ -1,6 +1,6 @@
 /* globals getEmojiUrlFromName:true, updateEmojiCustom:true, deleteEmojiCustom:true, isSetNotNull */
 RocketChat.emoji.packages.emojiCustom = {
-	emojiCategories: {rocket: 'Custom'},
+	emojiCategories: { rocket: 'Custom' },
 	toneList: {},
 	list: [],
 
@@ -105,7 +105,7 @@ updateEmojiCustom = function(emojiData) {
 		RocketChat.emoji.packages.emojiCustom.emojisByCategory.rocket.push(`${ emojiData.name }`);
 		RocketChat.emoji.packages.emojiCustom.list.push(`:${ emojiData.name }:`);
 	}
-	RocketChat.emoji.list[`:${ emojiData.name }:`] = Object.assign({emojiPackage: 'emojiCustom'}, RocketChat.emoji.list[`:${ emojiData.name }:`], emojiData);
+	RocketChat.emoji.list[`:${ emojiData.name }:`] = Object.assign({ emojiPackage: 'emojiCustom' }, RocketChat.emoji.list[`:${ emojiData.name }:`], emojiData);
 	if (currentAliases) {
 		for (const alias of emojiData.aliases) {
 			RocketChat.emoji.packages.emojiCustom.list.push(`:${ alias }:`);
@@ -149,7 +149,7 @@ updateEmojiCustom = function(emojiData) {
 
 Meteor.startup(() =>
 	Meteor.call('listEmojiCustom', (error, result) => {
-		RocketChat.emoji.packages.emojiCustom.emojisByCategory = {rocket: []};
+		RocketChat.emoji.packages.emojiCustom.emojisByCategory = { rocket: [] };
 		for (const emoji of result) {
 			RocketChat.emoji.packages.emojiCustom.emojisByCategory.rocket.push(emoji.name);
 			RocketChat.emoji.packages.emojiCustom.list.push(`:${ emoji.name }:`);

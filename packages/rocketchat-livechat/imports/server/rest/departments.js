@@ -1,4 +1,4 @@
-RocketChat.API.v1.addRoute('livechat/department', {authRequired: true}, {
+RocketChat.API.v1.addRoute('livechat/department', { authRequired: true }, {
 	get() {
 		if (!RocketChat.authz.hasPermission(this.userId, 'view-livechat-manager')) {
 			return RocketChat.API.v1.unauthorized();
@@ -24,7 +24,7 @@ RocketChat.API.v1.addRoute('livechat/department', {authRequired: true}, {
 			if (department) {
 				return RocketChat.API.v1.success({
 					department,
-					agents: RocketChat.models.LivechatDepartmentAgents.find({departmentId: department._id}).fetch(),
+					agents: RocketChat.models.LivechatDepartmentAgents.find({ departmentId: department._id }).fetch(),
 				});
 			}
 
@@ -35,7 +35,7 @@ RocketChat.API.v1.addRoute('livechat/department', {authRequired: true}, {
 	},
 });
 
-RocketChat.API.v1.addRoute('livechat/department/:_id', {authRequired: true}, {
+RocketChat.API.v1.addRoute('livechat/department/:_id', { authRequired: true }, {
 	get() {
 		if (!RocketChat.authz.hasPermission(this.userId, 'view-livechat-manager')) {
 			return RocketChat.API.v1.unauthorized();
@@ -48,7 +48,7 @@ RocketChat.API.v1.addRoute('livechat/department/:_id', {authRequired: true}, {
 
 			return RocketChat.API.v1.success({
 				department: RocketChat.models.LivechatDepartment.findOneById(this.urlParams._id),
-				agents: RocketChat.models.LivechatDepartmentAgents.find({departmentId: this.urlParams._id}).fetch(),
+				agents: RocketChat.models.LivechatDepartmentAgents.find({ departmentId: this.urlParams._id }).fetch(),
 			});
 		} catch (e) {
 			return RocketChat.API.v1.failure(e.error);
@@ -72,7 +72,7 @@ RocketChat.API.v1.addRoute('livechat/department/:_id', {authRequired: true}, {
 			if (RocketChat.Livechat.saveDepartment(this.urlParams._id, this.bodyParams.department, this.bodyParams.agents)) {
 				return RocketChat.API.v1.success({
 					department: RocketChat.models.LivechatDepartment.findOneById(this.urlParams._id),
-					agents: RocketChat.models.LivechatDepartmentAgents.find({departmentId: this.urlParams._id}).fetch(),
+					agents: RocketChat.models.LivechatDepartmentAgents.find({ departmentId: this.urlParams._id }).fetch(),
 				});
 			}
 

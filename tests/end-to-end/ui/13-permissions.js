@@ -5,11 +5,11 @@ import sideNav from '../../pageobjects/side-nav.page';
 import flexTab from '../../pageobjects/flex-tab.page';
 import admin from '../../pageobjects/administration.page';
 import mainContent from '../../pageobjects/main-content.page';
-import {checkIfUserIsValid} from '../../data/checks';
+import { checkIfUserIsValid } from '../../data/checks';
 
 // test data imports
-import {checkIfUserIsAdmin} from '../../data/checks';
-import {username, email, password, adminUsername, adminEmail, adminPassword} from '../../data/user.js';
+import { checkIfUserIsAdmin } from '../../data/checks';
+import { username, email, password, adminUsername, adminEmail, adminPassword } from '../../data/user.js';
 
 describe.skip('[Permissions]', () => {
 	before(() => {

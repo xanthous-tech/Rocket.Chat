@@ -21,10 +21,10 @@ Template.listCombinedFlex.helpers({
 		return Template.instance().channelType.get() === type;
 	},
 	member() {
-		return !!RocketChat.models.Subscriptions.findOne({name: this.name, open: true});
+		return !!RocketChat.models.Subscriptions.findOne({ name: this.name, open: true });
 	},
 	hidden() {
-		return !!RocketChat.models.Subscriptions.findOne({name: this.name, open: false});
+		return !!RocketChat.models.Subscriptions.findOne({ name: this.name, open: false });
 	},
 	roomIcon() {
 		return RocketChat.roomTypes.getIcon(this.t);
@@ -94,21 +94,21 @@ Template.listCombinedFlex.onCreated(function() {
 	return this.autorun(() => {
 		if (this.show.get() === 'joined') {
 			this.hasMore.set(true);
-			const options = {fields: {name: 1, t: 1}};
+			const options = { fields: { name: 1, t: 1 } };
 			if (_.isNumber(this.limit.get())) {
 				options.limit = this.limit.get();
 			}
 			if (s.trim(this.sortSubscriptions.get())) {
 				switch (this.sortSubscriptions.get()) {
 					case 'name':
-						options.sort = {name: 1};
+						options.sort = { name: 1 };
 						break;
 					case 'ls':
-						options.sort = {ls: -1};
+						options.sort = { ls: -1 };
 						break;
 				}
 			}
-			let type = {$in: ['c', 'p']};
+			let type = { $in: ['c', 'p'] };
 			if (s.trim(this.channelType.get())) {
 				switch (this.channelType.get()) {
 					case 'public':

@@ -157,12 +157,12 @@ export class HipChatImporter extends Base {
 				}
 			});
 		});
-		this.collection.update({_id: this.users._id}, {$set: {users: this.users.users}});
+		this.collection.update({ _id: this.users._id }, { $set: { users: this.users.users } });
 
 		importSelection.channels.forEach((channel) =>
 			this.channels.channels.forEach((c) => c.room_id === channel.channel_id && (c.do_import = channel.do_import))
 		);
-		this.collection.update({_id: this.channels._id}, {$set: {channels: this.channels.channels}});
+		this.collection.update({ _id: this.channels._id }, { $set: { channels: this.channels.channels } });
 
 		const startedByUserId = Meteor.userId();
 		Meteor.defer(() => {
@@ -210,7 +210,7 @@ export class HipChatImporter extends Base {
 					});
 				});
 
-				this.collection.update({_id: this.users._id}, {$set: {users: this.users.users}});
+				this.collection.update({ _id: this.users._id }, { $set: { users: this.users.users } });
 
 				super.updateProgress(ProgressStep.IMPORTING_CHANNELS);
 				this.channels.channels.forEach((channel) => {
@@ -249,7 +249,7 @@ export class HipChatImporter extends Base {
 					});
 				});
 
-				this.collection.update({_id: this.channels._id}, {$set: {channels: this.channels.channels}});
+				this.collection.update({ _id: this.channels._id }, { $set: { channels: this.channels.channels } });
 
 				super.updateProgress(ProgressStep.IMPORTING_MESSAGES);
 				const nousers = {};

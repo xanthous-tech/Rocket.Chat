@@ -1,13 +1,13 @@
 Meteor.methods({
 	'livechat:takeInquiry'(inquiryId) {
 		if (!Meteor.userId() || !RocketChat.authz.hasPermission(Meteor.userId(), 'view-l-room')) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'livechat:takeInquiry'});
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'livechat:takeInquiry' });
 		}
 
 		const inquiry = RocketChat.models.LivechatInquiry.findOneById(inquiryId);
 
 		if (!inquiry || inquiry.status === 'taken') {
-			throw new Meteor.Error('error-not-allowed', 'Inquiry already taken', {method: 'livechat:takeInquiry'});
+			throw new Meteor.Error('error-not-allowed', 'Inquiry already taken', { method: 'livechat:takeInquiry' });
 		}
 
 		const user = RocketChat.models.Users.findOneById(Meteor.userId());

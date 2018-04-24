@@ -22,7 +22,7 @@ RocketChat.settings.get('Accounts_UseDNSDomainCheck', function(key, value) {
 RocketChat.validateEmailDomain = function(email) {
 	const emailValidation = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 	if (!emailValidation.test(email)) {
-		throw new Meteor.Error('error-invalid-email', `Invalid email ${ email }`, {function: 'RocketChat.validateEmailDomain', email});
+		throw new Meteor.Error('error-invalid-email', `Invalid email ${ email }`, { function: 'RocketChat.validateEmailDomain', email });
 	}
 
 	const emailDomain = email.substr(email.lastIndexOf('@') + 1);
@@ -30,7 +30,7 @@ RocketChat.validateEmailDomain = function(email) {
 	// if not in whitelist
 	if (emailDomainWhiteList.indexOf(emailDomain) === -1) {
 		if (emailDomainBlackList.indexOf(emailDomain) !== -1 || (useDefaultBlackList && RocketChat.emailDomainDefaultBlackList.indexOf(emailDomain) !== -1)) {
-			throw new Meteor.Error('error-email-domain-blacklisted', 'The email domain is blacklisted', {function: 'RocketChat.validateEmailDomain'});
+			throw new Meteor.Error('error-email-domain-blacklisted', 'The email domain is blacklisted', { function: 'RocketChat.validateEmailDomain' });
 		}
 	}
 
@@ -38,7 +38,7 @@ RocketChat.validateEmailDomain = function(email) {
 		try {
 			Meteor.wrapAsync(dns.resolveMx)(emailDomain);
 		} catch (e) {
-			throw new Meteor.Error('error-invalid-domain', 'Invalid domain', {function: 'RocketChat.validateEmailDomain'});
+			throw new Meteor.Error('error-invalid-domain', 'Invalid domain', { function: 'RocketChat.validateEmailDomain' });
 		}
 	}
 };

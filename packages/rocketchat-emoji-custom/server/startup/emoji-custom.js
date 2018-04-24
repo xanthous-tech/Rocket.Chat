@@ -30,7 +30,7 @@ Meteor.startup(function() {
 
 	return WebApp.connectHandlers.use('/emoji-custom/', Meteor.bindEnvironment(function(req, res/* , next*/) {
 		const params =
-			{emoji: decodeURIComponent(req.url.replace(/^\//, '').replace(/\?.*$/, ''))};
+			{ emoji: decodeURIComponent(req.url.replace(/^\//, '').replace(/\?.*$/, '')) };
 
 		if (_.isEmpty(params.emoji)) {
 			res.writeHead(403);

@@ -200,7 +200,7 @@ class IrcClient {
 		} else {
 			room = this.createDirectRoomWhenNotExist(source, this.user);
 		}
-		const message = {msg: content, ts: now};
+		const message = { msg: content, ts: now };
 		cacheKey = `${ source.username }${ timestamp }`;
 		ircReceiveMessageCache.set(cacheKey, true);
 		console.log('[irc] ircReceiveMessageCache.set -> '.yellow, 'key:', cacheKey);
@@ -266,7 +266,7 @@ class IrcClient {
 	}
 
 	initRoomList() {
-		const roomsCursor = RocketChat.models.Rooms.findByTypeContainingUsername('c', this.user.username, {fields: {name: 1, t: 1}});
+		const roomsCursor = RocketChat.models.Rooms.findByTypeContainingUsername('c', this.user.username, { fields: { name: 1, t: 1 } });
 		const rooms = roomsCursor.fetch();
 		rooms.forEach((room) => this.joinRoom(room));
 	}
@@ -319,11 +319,11 @@ class IrcClient {
 	onQuitMember(member) {
 		console.log('[irc] onQuitMember ->'.yellow, 'username:', member);
 		RocketChat.models.Rooms.removeUsernameFromAll(member);
-		Meteor.users.update({name: member}, {$set: {status: 'offline'}});
+		Meteor.users.update({ name: member }, { $set: { status: 'offline' } });
 	}
 
 	createUserWhenNotExist(name) {
-		const user = Meteor.users.findOne({name});
+		const user = Meteor.users.findOne({ name });
 		if (user) {
 			return user;
 		}
@@ -333,20 +333,20 @@ class IrcClient {
 			pass: 'rocketchat',
 			name,
 		});
-		Meteor.users.update({name}, {
+		Meteor.users.update({ name }, {
 			$set: {
 				status: 'online',
 				username: name,
 			},
 		});
-		return Meteor.users.findOne({name});
+		return Meteor.users.findOne({ name });
 	}
 
 	createDirectRoomWhenNotExist(source, target) {
 		console.log('[irc] createDirectRoomWhenNotExist -> '.yellow, 'source:', source, 'target:', target);
 		const rid = [source._id, target._id].sort().join('');
 		const now = new Date();
-		RocketChat.models.Rooms.upsert({_id: rid}, {
+		RocketChat.models.Rooms.upsert({ _id: rid }, {
 			$set: {
 				usernames: [source.username, target.username],
 			},
@@ -356,7 +356,7 @@ class IrcClient {
 				ts: now,
 			},
 		});
-		RocketChat.models.Subscriptions.upsert({rid, $and: [{'u._id': target._id}]}, {
+		RocketChat.models.Subscriptions.upsert({ rid, $and: [{ 'u._id': target._id }] }, {
 			$setOnInsert: {
 				name: source.username,
 				t: 'd',
@@ -365,9 +365,9 @@ class IrcClient {
 				unread: 0,
 				userMentions: 0,
 				groupMentions: 0,
-				u: {_id: target._id, username: target.username}},
+				u: { _id: target._id, username: target.username } },
 		});
-		return {t: 'd', _id: rid};
+		return { t: 'd', _id: rid };
 	}
 }
 
@@ -399,7 +399,7 @@ function IrcSender(message) {
 	if (ircReceiveMessageCache.get(cacheKey)) {
 		return message;
 	}
-	const room = RocketChat.models.Rooms.findOneById(message.rid, {fields: {name: 1, usernames: 1, t: 1}});
+	const room = RocketChat.models.Rooms.findOneById(message.rid, { fields: { name: 1, usernames: 1, t: 1 } });
 	const ircClient = IrcClient.getByUid(message.u._id);
 	ircClient.sendMessage(room, message);
 	return message;

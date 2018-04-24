@@ -1,6 +1,6 @@
 RocketChat.settings.addGroup('Analytics', function addSettings() {
 	this.section('Piwik', function() {
-		const enableQuery = {_id: 'PiwikAnalytics_enabled', value: true};
+		const enableQuery = { _id: 'PiwikAnalytics_enabled', value: true };
 		this.add('PiwikAnalytics_enabled', false, {
 			type: 'boolean',
 			public: true,
@@ -47,7 +47,7 @@ RocketChat.settings.addGroup('Analytics', function addSettings() {
 	});
 
 	this.section('Analytics_Google', function() {
-		const enableQuery = {_id: 'GoogleAnalytics_enabled', value: true};
+		const enableQuery = { _id: 'GoogleAnalytics_enabled', value: true };
 		this.add('GoogleAnalytics_enabled', false, {
 			type: 'boolean',
 			public: true,

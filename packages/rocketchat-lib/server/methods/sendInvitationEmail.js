@@ -49,7 +49,7 @@ Meteor.methods({
 					subject,
 					html: header + html + footer,
 				});
-			} catch ({message}) {
+			} catch ({ message }) {
 				throw new Meteor.Error('error-email-send-failed', `Error trying to send email: ${ message }`, {
 					method: 'sendInvitationEmail',
 					message,

@@ -56,7 +56,7 @@ function getPRInfo(number, commit) {
 		process.exit(1);
 	}
 
-	return promiseRetryRateLimit(() => octokit.pullRequests.get({owner, repo, number}))
+	return promiseRetryRateLimit(() => octokit.pullRequests.get({ owner, repo, number }))
 		.catch(onError)
 		.then((pr) => {
 			const info = {
@@ -70,7 +70,7 @@ function getPRInfo(number, commit) {
 				info.milestone = pr.data.milestone.title;
 			}
 
-			return promiseRetryRateLimit(() => octokit.pullRequests.getCommits({owner, repo, number}))
+			return promiseRetryRateLimit(() => octokit.pullRequests.getCommits({ owner, repo, number }))
 				.catch(onError)
 				.then((commits) => {
 					info.contributors = _.unique(_.flatten(commits.data.map((i) => {
@@ -94,7 +94,7 @@ function getPRNumeberFromMessage(message, item) {
 	const number = match[2] || match[4];
 
 	if (!/^\d+$/.test(number)) {
-		console.error('Invalid number', {number, message});
+		console.error('Invalid number', { number, message });
 		process.exit(1);
 	}
 

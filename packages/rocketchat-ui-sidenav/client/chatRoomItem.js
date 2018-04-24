@@ -1,6 +1,6 @@
 Template.chatRoomItem.helpers({
 	roomData() {
-		let {name} = this;
+		let { name } = this;
 		const realNameForDirectMessages = RocketChat.settings.get('UI_Use_Real_Name') && this.t === 'd';
 		const realNameForChannel = RocketChat.settings.get('UI_Allow_room_names_with_special_chars') && this.t !== 'd';
 		if ((realNameForDirectMessages || realNameForChannel) && this.fname) {
@@ -41,8 +41,8 @@ Template.chatRoomItem.helpers({
 			if (this.lastMessage) {
 				roomData.lastMessage = this.lastMessage;
 			} else {
-				const room = RocketChat.models.Rooms.findOne(this.rid || this._id, {fields: {lastMessage: 1}});
-				roomData.lastMessage = room && room.lastMessage || {msg: t('No_messages_yet')};
+				const room = RocketChat.models.Rooms.findOne(this.rid || this._id, { fields: { lastMessage: 1 } });
+				roomData.lastMessage = room && room.lastMessage || { msg: t('No_messages_yet') };
 			}
 		}
 

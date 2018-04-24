@@ -18,7 +18,7 @@ const extendedViewOption = (user) => {
 			name: t('Extended'),
 			modifier: RocketChat.getUserPreference(user, 'sidebarViewMode') === 'extended' ? 'bold' : null,
 			action: () => {
-				Meteor.call('saveUserPreferences', {sidebarViewMode: 'extended'}, function(error) {
+				Meteor.call('saveUserPreferences', { sidebarViewMode: 'extended' }, function(error) {
 					if (error) {
 						return handleError(error);
 					}
@@ -65,7 +65,7 @@ const toolbarButtons = (user) => [{
 									name: t('Medium'),
 									modifier: RocketChat.getUserPreference(user, 'sidebarViewMode') === 'medium' ? 'bold' : null,
 									action: () => {
-										Meteor.call('saveUserPreferences', {sidebarViewMode: 'medium'}, function(error) {
+										Meteor.call('saveUserPreferences', { sidebarViewMode: 'medium' }, function(error) {
 											if (error) {
 												return handleError(error);
 											}
@@ -77,7 +77,7 @@ const toolbarButtons = (user) => [{
 									name: t('Condensed'),
 									modifier: RocketChat.getUserPreference(user, 'sidebarViewMode') === 'condensed' ? 'bold' : null,
 									action: () => {
-										Meteor.call('saveUserPreferences', {sidebarViewMode: 'condensed'}, function(error) {
+										Meteor.call('saveUserPreferences', { sidebarViewMode: 'condensed' }, function(error) {
 											if (error) {
 												return handleError(error);
 											}
@@ -92,7 +92,7 @@ const toolbarButtons = (user) => [{
 									icon: 'user-rounded',
 									name: hideAvatarSetting ? t('Show_Avatars') : t('Hide_Avatars'),
 									action: () => {
-										Meteor.call('saveUserPreferences', {sidebarHideAvatar: !hideAvatarSetting}, function(error) {
+										Meteor.call('saveUserPreferences', { sidebarHideAvatar: !hideAvatarSetting }, function(error) {
 											if (error) {
 												return handleError(error);
 											}
@@ -212,7 +212,7 @@ Template.sidebarHeader.helpers({
 		}
 
 		const user = Meteor.user() || {};
-		const {username} = user;
+		const { username } = user;
 		const userStatus = Session.get(`user_${ username }_status`);
 
 		return {

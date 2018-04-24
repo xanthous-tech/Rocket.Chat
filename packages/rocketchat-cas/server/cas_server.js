@@ -9,7 +9,7 @@ import CAS from 'cas';
 RoutePolicy.declare('/_cas/', 'network');
 
 const closePopup = function(res) {
-	res.writeHead(200, {'Content-Type': 'text/html'});
+	res.writeHead(200, { 'Content-Type': 'text/html' });
 	const content = '<html><head><script>window.close()</script></head></html>';
 	res.end(content, 'utf-8');
 };
@@ -41,11 +41,11 @@ const casTicket = function(req, token, callback) {
 			logger.error(`error when trying to validate: ${ err.message }`);
 		} else if (status) {
 			logger.info(`Validated user: ${ username }`);
-			const user_info = {username};
+			const user_info = { username };
 
 			// CAS 2.0 attributes handling
 			if (details && details.attributes) {
-				_.extend(user_info, {attributes: details.attributes});
+				_.extend(user_info, { attributes: details.attributes });
 			}
 			RocketChat.models.CredentialTokens.create(token, user_info);
 		} else {
@@ -167,7 +167,7 @@ Accounts.registerLoginHandler(function(options) {
 
 	// Search existing user by its external service id
 	logger.debug(`Looking up user by id: ${ result.username }`);
-	let user = Meteor.users.findOne({'services.cas.external_id': result.username});
+	let user = Meteor.users.findOne({ 'services.cas.external_id': result.username });
 
 	if (user) {
 		logger.debug(`Using existing user for '${ result.username }' with id: ${ user._id }`);
@@ -180,7 +180,7 @@ Accounts.registerLoginHandler(function(options) {
 
 			// Update email
 			if (int_attrs.email) {
-				Meteor.users.update(user, {$set: {emails: [{address: int_attrs.email, verified: true}]}});
+				Meteor.users.update(user, { $set: { emails: [{ address: int_attrs.email, verified: true }] } });
 			}
 		}
 	} else {
@@ -210,7 +210,7 @@ Accounts.registerLoginHandler(function(options) {
 		// Add email
 		if (int_attrs.email) {
 			_.extend(newUser, {
-				emails: [{address: int_attrs.email, verified: true}],
+				emails: [{ address: int_attrs.email, verified: true }],
 			});
 		}
 
@@ -246,5 +246,5 @@ Accounts.registerLoginHandler(function(options) {
 
 	}
 
-	return {userId: user._id};
+	return { userId: user._id };
 });

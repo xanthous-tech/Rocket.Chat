@@ -1,4 +1,4 @@
-import {EmailReplyParser as reply} from 'emailreplyparser';
+import { EmailReplyParser as reply } from 'emailreplyparser';
 import moment from 'moment';
 
 RocketChat.processDirectEmail = function(email) {

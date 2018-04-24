@@ -1,4 +1,4 @@
-import {Importers} from 'meteor/rocketchat:importer';
+import { Importers } from 'meteor/rocketchat:importer';
 import toastr from 'toastr';
 
 Template.adminImportPrepare.helpers({
@@ -33,7 +33,7 @@ Template.adminImportPrepare.events({
 		if (!importer || !importer.key) { return; }
 
 		const e = event.originalEvent || event;
-		let {files} = e.target;
+		let { files } = e.target;
 		if (!files || (files.length === 0)) {
 			files = (e.dataTransfer != null ? e.dataTransfer.files : undefined) || [];
 		}
@@ -86,7 +86,7 @@ Template.adminImportPrepare.events({
 			channel.do_import = $(`[name=${ channel.channel_id }]`).is(':checked');
 		}
 
-		Meteor.call('startImport', FlowRouter.getParam('importer'), {users: template.users.get(), channels: template.channels.get()}, function(error) {
+		Meteor.call('startImport', FlowRouter.getParam('importer'), { users: template.users.get(), channels: template.channels.get() }, function(error) {
 			if (error) {
 				console.warn('Error on starting the import:', error);
 				handleError(error);

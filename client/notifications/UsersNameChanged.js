@@ -1,5 +1,5 @@
 Meteor.startup(function() {
-	RocketChat.Notifications.onLogged('Users:NameChanged', function({_id, name, username}) {
+	RocketChat.Notifications.onLogged('Users:NameChanged', function({ _id, name, username }) {
 		RocketChat.models.Messages.update({
 			'u._id': _id,
 		}, {
@@ -12,7 +12,7 @@ Meteor.startup(function() {
 
 		RocketChat.models.Messages.update({
 			mentions: {
-				$elemMatch: {_id},
+				$elemMatch: { _id },
 			},
 		}, {
 			$set: {

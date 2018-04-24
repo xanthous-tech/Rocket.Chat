@@ -36,7 +36,7 @@ Template.mailMessagesInstructions.helpers({
 		return Meteor.user().name;
 	},
 	email() {
-		const {emails} = Meteor.user();
+		const { emails } = Meteor.user();
 		return emails && emails[0] && emails[0].address;
 	},
 	roomName() {
@@ -125,7 +125,7 @@ Template.mailMessagesInstructions.events({
 		if ($emailsInput.val() !== '') {
 			if (isEmail($emailsInput.val())) {
 				const emailsArr = selectedEmails.get();
-				emailsArr.push({text: $emailsInput.val()});
+				emailsArr.push({ text: $emailsInput.val() });
 				$('[name="emails"]').val('');
 				selectedEmails.set(emailsArr);
 			} else {
@@ -157,12 +157,12 @@ Template.mailMessagesInstructions.events({
 			instance.reset(true);
 		});
 	},
-	'click .rc-input--usernames .rc-tags__tag'({target}, t) {
-		const {username} = Blaze.getData(target);
+	'click .rc-input--usernames .rc-tags__tag'({ target }, t) {
+		const { username } = Blaze.getData(target);
 		t.selectedUsers.set(t.selectedUsers.get().filter((user) => user.username !== username));
 	},
-	'click .rc-input--emails .rc-tags__tag'({target}, t) {
-		const {text} = Blaze.getData(target);
+	'click .rc-input--emails .rc-tags__tag'({ target }, t) {
+		const { text } = Blaze.getData(target);
 		t.selectedEmails.set(t.selectedEmails.get().filter((email) => email.text !== text));
 	},
 	'click .rc-popup-list__item'(e, t) {
@@ -184,7 +184,7 @@ Template.mailMessagesInstructions.events({
 			e.preventDefault();
 			const emails = t.selectedEmails;
 			const emailsArr = emails.get();
-			emailsArr.push({text: input.value});
+			emailsArr.push({ text: input.value });
 			input.value = '';
 			return emails.set(emailsArr);
 		}
@@ -223,7 +223,7 @@ Template.mailMessagesInstructions.onRendered(function() {
 	this.firstNode.querySelector('[name="users"]').focus();
 	this.ac.element = this.firstNode.querySelector('[name="users"]');
 	this.ac.$element = $(this.ac.element);
-	this.ac.$element.on('autocompleteselect', function(e, {item}) {
+	this.ac.$element.on('autocompleteselect', function(e, { item }) {
 		const usersArr = users.get();
 		usersArr.push(item);
 		users.set(usersArr);
@@ -252,7 +252,7 @@ Template.mailMessagesInstructions.onCreated(function() {
 	this.selectedUsers = new ReactiveVar([]);
 	this.userFilter = new ReactiveVar('');
 
-	const filter = {exceptions :[Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username))};
+	const filter = { exceptions :[Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username)) };
 	Deps.autorun(() => {
 		filter.exceptions = [Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username));
 	});
@@ -275,7 +275,7 @@ Template.mailMessagesInstructions.onCreated(function() {
 					filter,
 					doNotChangeWidth: false,
 					selector(match) {
-						return {term: match};
+						return { term: match };
 					},
 					sort: 'username',
 				},

@@ -1,6 +1,6 @@
 Template.avatar.helpers({
 	imageUrl() {
-		let {url} = Template.instance().data;
+		let { url } = Template.instance().data;
 		if (!url) {
 			let username = this.username;
 			if (username == null && this.userId != null) {

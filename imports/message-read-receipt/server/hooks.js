@@ -1,4 +1,4 @@
-import {ReadReceipt} from './lib/ReadReceipt';
+import { ReadReceipt } from './lib/ReadReceipt';
 
 RocketChat.callbacks.add('afterSaveMessage', (message, room) => {
 

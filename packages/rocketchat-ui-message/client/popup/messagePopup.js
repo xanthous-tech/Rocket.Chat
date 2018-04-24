@@ -300,10 +300,10 @@ Template.messagePopup.helpers({
 	},
 	data() {
 		const template = Template.instance();
-		return Object.assign(template.records.get(), {toolbar: true});
+		return Object.assign(template.records.get(), { toolbar: true });
 	},
 	toolbarData() {
-		return {...Template.currentData(), toolbar: true};
+		return { ...Template.currentData(), toolbar: true };
 	},
 	sidebarHeaderHeight() {
 		return `${ document.querySelector('.sidebar__header').offsetHeight }px`;

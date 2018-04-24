@@ -2,10 +2,10 @@ RocketChat.Migrations.add({
 	version: 94,
 	up() {
 		const query = {
-			'emails.address.address': {$exists: true},
+			'emails.address.address': { $exists: true },
 		};
 
-		RocketChat.models.Users.find(query, {'emails.address.address': 1}).forEach((user) => {
+		RocketChat.models.Users.find(query, { 'emails.address.address': 1 }).forEach((user) => {
 			let emailAddress;
 			user.emails.some((email) => {
 				if (email.address && email.address.address) {
@@ -13,7 +13,7 @@ RocketChat.Migrations.add({
 					return true;
 				}
 			});
-			const existingUser = RocketChat.models.Users.findOne({'emails.address': emailAddress}, {fields: {_id: 1}});
+			const existingUser = RocketChat.models.Users.findOne({ 'emails.address': emailAddress }, { fields: { _id: 1 } });
 			if (existingUser) {
 				RocketChat.models.Users.update({
 					_id: user._id,

@@ -140,13 +140,13 @@ Template.RoomsActionTab.events({
 			}
 			return true;
 		});
-		const groups = [{items:(instance.small.get() ? buttons : buttons.slice(4)).map((item) => {
+		const groups = [{ items:(instance.small.get() ? buttons : buttons.slice(4)).map((item) => {
 			item.name = TAPi18n.__(item.i18nTitle);
 			item.action = action;
 			return item;
-		})}];
+		}) }];
 		const columns = [groups];
-		columns[0] = {groups};
+		columns[0] = { groups };
 		const config = {
 			columns,
 			popoverClass: 'message-box',

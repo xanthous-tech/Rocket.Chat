@@ -13,7 +13,7 @@ Meteor.methods({
 		if (!userSubscription) {
 			throw new Meteor.Error('error-invalid-subscription',
 				'You must be part of a room to favorite it',
-				{method: 'toggleFavorite'}
+				{ method: 'toggleFavorite' }
 			);
 		}
 

@@ -1,5 +1,5 @@
 /* globals openRoom, LivechatInquiry */
-import {RoomSettingsEnum, RoomTypeConfig, RoomTypeRouteConfig, UiTextContext} from 'meteor/rocketchat:lib';
+import { RoomSettingsEnum, RoomTypeConfig, RoomTypeRouteConfig, UiTextContext } from 'meteor/rocketchat:lib';
 
 class LivechatRoomRoute extends RoomTypeRouteConfig {
 	constructor() {
@@ -36,7 +36,7 @@ class LivechatRoomType extends RoomTypeConfig {
 	}
 
 	findRoom(identifier) {
-		return ChatRoom.findOne({code: parseInt(identifier)});
+		return ChatRoom.findOne({ code: parseInt(identifier) });
 	}
 
 	roomName(roomData) {
@@ -52,7 +52,7 @@ class LivechatRoomType extends RoomTypeConfig {
 	}
 
 	canSendMessage(roomId) {
-		const room = ChatRoom.findOne({_id: roomId}, {fields: {open: 1}});
+		const room = ChatRoom.findOne({ _id: roomId }, { fields: { open: 1 } });
 		return room && room.open === true;
 	}
 
@@ -62,7 +62,7 @@ class LivechatRoomType extends RoomTypeConfig {
 			return room.v && room.v.status;
 		}
 
-		const inquiry = LivechatInquiry.findOne({rid: roomId});
+		const inquiry = LivechatInquiry.findOne({ rid: roomId });
 		return inquiry && inquiry.v && inquiry.v.status;
 	}
 

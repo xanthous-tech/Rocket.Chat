@@ -27,12 +27,12 @@ const commands = {
 		}
 
 		if (typeof data.service === 'string' && window.ServiceConfiguration) {
-			const customOauth = ServiceConfiguration.configurations.findOne({service: data.service});
+			const customOauth = ServiceConfiguration.configurations.findOne({ service: data.service });
 
 			if (customOauth) {
 				const customLoginWith = Meteor[`loginWith${ s.capitalize(customOauth.service, true) }`];
 				const customRedirectUri = data.redirectUrl || siteUrl;
-				customLoginWith.call(Meteor, {redirectUrl: customRedirectUri}, customOAuthCallback);
+				customLoginWith.call(Meteor, { redirectUrl: customRedirectUri }, customOAuthCallback);
 			}
 		}
 	},
@@ -54,14 +54,14 @@ const commands = {
 		});
 	},
 
-	'set-toolbar-button'({id, icon, label}) {
-		const toolbar = Session.get('toolbarButtons') || {buttons: {}};
-		toolbar.buttons[id] = {icon, label};
+	'set-toolbar-button'({ id, icon, label }) {
+		const toolbar = Session.get('toolbarButtons') || { buttons: {} };
+		toolbar.buttons[id] = { icon, label };
 		Session.set('toolbarButtons', toolbar);
 	},
 
-	'remove-toolbar-button'({id}) {
-		const toolbar = Session.get('toolbarButtons') || {buttons: {}};
+	'remove-toolbar-button'({ id }) {
+		const toolbar = Session.get('toolbarButtons') || { buttons: {} };
 		delete toolbar.buttons[id];
 		Session.set('toolbarButtons', toolbar);
 	},

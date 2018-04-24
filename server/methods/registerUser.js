@@ -12,9 +12,9 @@ Meteor.methods({
 				],
 			});
 
-			const {id, token} = Accounts._loginUser(this, userId);
+			const { id, token } = Accounts._loginUser(this, userId);
 
-			return {id, token};
+			return { id, token };
 		} else {
 			check(formData, Match.ObjectIncluding({
 				email: String,
@@ -26,9 +26,9 @@ Meteor.methods({
 		}
 
 		if (RocketChat.settings.get('Accounts_RegistrationForm') === 'Disabled') {
-			throw new Meteor.Error('error-user-registration-disabled', 'User registration is disabled', {method: 'registerUser'});
+			throw new Meteor.Error('error-user-registration-disabled', 'User registration is disabled', { method: 'registerUser' });
 		} else if (RocketChat.settings.get('Accounts_RegistrationForm') === 'Secret URL' && (!formData.secretURL || formData.secretURL !== RocketChat.settings.get('Accounts_RegistrationForm_SecretURL'))) {
-			throw new Meteor.Error ('error-user-registration-secret', 'User registration is only allowed via Secret URL', {method: 'registerUser'});
+			throw new Meteor.Error ('error-user-registration-secret', 'User registration is only allowed via Secret URL', { method: 'registerUser' });
 		}
 
 		RocketChat.validateEmailDomain(formData.email);

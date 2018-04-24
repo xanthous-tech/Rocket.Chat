@@ -3,7 +3,7 @@ import OmniChannel from '../lib/OmniChannel';
 Meteor.methods({
 	'livechat:facebook'(options) {
 		if (!Meteor.userId() || !RocketChat.authz.hasPermission(Meteor.userId(), 'view-livechat-manager')) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'livechat:addAgent'});
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'livechat:addAgent' });
 		}
 
 		try {

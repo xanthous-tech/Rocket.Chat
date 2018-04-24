@@ -1,6 +1,6 @@
 import s from 'underscore.string';
 
-import {RocketChatTabBar} from 'meteor/rocketchat:lib';
+import { RocketChatTabBar } from 'meteor/rocketchat:lib';
 
 Template.adminEmoji.helpers({
 	isReady() {
@@ -76,12 +76,12 @@ Template.adminEmoji.onCreated(function() {
 
 		if (filter) {
 			const filterReg = new RegExp(s.escapeRegExp(filter), 'i');
-			query = {$or: [{name: filterReg}, {aliases: filterReg}]};
+			query = { $or: [{ name: filterReg }, { aliases: filterReg }] };
 		}
 
 		const limit = (instance.limit != null) ? instance.limit.get() : 0;
 
-		return RocketChat.models.EmojiCustom.find(query, {limit, sort: {name: 1}}).fetch();
+		return RocketChat.models.EmojiCustom.find(query, { limit, sort: { name: 1 } }).fetch();
 	};
 });
 
@@ -109,7 +109,7 @@ Template.adminEmoji.events({
 
 	'click .emoji-info'(e, instance) {
 		e.preventDefault();
-		instance.tabBarData.set(RocketChat.models.EmojiCustom.findOne({_id: this._id}));
+		instance.tabBarData.set(RocketChat.models.EmojiCustom.findOne({ _id: this._id }));
 		instance.tabBar.open('admin-emoji-info');
 	},
 

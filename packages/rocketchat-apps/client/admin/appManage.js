@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import s from 'underscore.string';
 
-import {AppEvents} from '../communication';
+import { AppEvents } from '../communication';
 
 
 Template.appManage.onCreated(function() {
@@ -42,7 +42,7 @@ Template.appManage.onCreated(function() {
 		instance.theError.set(e.message);
 	});
 
-	instance.onStatusChanged = function _onStatusChanged({appId, status}) {
+	instance.onStatusChanged = function _onStatusChanged({ appId, status }) {
 		if (appId !== id) {
 			return;
 		}
@@ -52,7 +52,7 @@ Template.appManage.onCreated(function() {
 		instance.app.set(app);
 	};
 
-	instance.onSettingUpdated = function _onSettingUpdated({appId}) {
+	instance.onSettingUpdated = function _onSettingUpdated({ appId }) {
 		if (appId !== id) {
 			return;
 		}
@@ -79,7 +79,7 @@ Template.appManage.helpers({
 
 		let result = Object.keys(languages).map((key) => {
 			const language = languages[key];
-			return _.extend(language, {key});
+			return _.extend(language, { key });
 		});
 
 		result = _.sortBy(result, 'key');
@@ -150,7 +150,7 @@ Template.appManage.helpers({
 		return Object.values(Template.instance().settings.get());
 	},
 	parseDescription(i18nDescription) {
-		const item = RocketChat.Markdown.parseMessageNotEscaped({html: t(i18nDescription)});
+		const item = RocketChat.Markdown.parseMessageNotEscaped({ html: t(i18nDescription) });
 
 		item.tokens.forEach((t) => item.html = item.html.replace(t.token, t.text));
 
@@ -180,7 +180,7 @@ Template.appManage.events({
 		$('#enabled').prop('disabled', true);
 
 		const status = $('#enabled').prop('checked') ? 'manually_enabled' : 'manually_disabled';
-		RocketChat.API.post(`apps/${ t.id.get() }/status`, {status}).then((result) => {
+		RocketChat.API.post(`apps/${ t.id.get() }/status`, { status }).then((result) => {
 			const info = t.app.get();
 			info.status = result.status;
 			t.app.set(info);
@@ -237,7 +237,7 @@ Template.appManage.events({
 			if (toSave.length === 0) {
 				throw 'Nothing to save..';
 			}
-			const result = await RocketChat.API.post(`apps/${ t.id.get() }/settings`, undefined, {settings: toSave});
+			const result = await RocketChat.API.post(`apps/${ t.id.get() }/settings`, undefined, { settings: toSave });
 			console.log('Updating results:', result);
 			result.updated.forEach((setting) => {
 				settings[setting.id].value = settings[setting.id].oldValue = setting.value;

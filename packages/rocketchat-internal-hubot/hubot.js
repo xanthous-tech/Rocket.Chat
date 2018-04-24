@@ -51,7 +51,7 @@ class Robot extends Hubot.Robot {
 		this.topic = bind(this.topic);
 		this.error = bind(this.error);
 		this.catchAll = bind(this.catchAll);
-		this.user = Meteor.users.findOne({username: this.name}, {fields: {username: 1}});
+		this.user = Meteor.users.findOne({ username: this.name }, { fields: { username: 1 } });
 	}
 	loadAdapter() { return false; }
 	hear(regex, callback) { return super.hear(regex, Meteor.bindEnvironment(callback)); }
@@ -75,7 +75,7 @@ class RocketChatAdapter extends Hubot.Adapter {
 		// console.log envelope, strings
 		return sendHelper(this.robot, envelope, strings, (string) => {
 			if (DEBUG) { console.log(`send ${ envelope.room }: ${ string } (${ envelope.user.id })`); }
-			return RocketChat.sendMessage(InternalHubot.user, {msg: string}, {_id: envelope.room});
+			return RocketChat.sendMessage(InternalHubot.user, { msg: string }, { _id: envelope.room });
 		});
 	}
 
@@ -183,7 +183,7 @@ const InternalHubotReceiver = (message) => {
 			|| (room.t === 'd' && enabledForD)
 			|| (room.t === 'p' && enabledForP && subscribedToP)
 		) {
-			const InternalHubotUser = new Hubot.User(message.u.username, {room: message.rid});
+			const InternalHubotUser = new Hubot.User(message.u.username, { room: message.rid });
 			const InternalHubotTextMessage = new Hubot.TextMessage(InternalHubotUser, message.msg, message._id);
 			InternalHubot.adapter.receive(InternalHubotTextMessage);
 		}

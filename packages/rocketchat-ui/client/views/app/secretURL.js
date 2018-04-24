@@ -1,7 +1,7 @@
 /* globals KonchatNotification */
 Template.secretURL.helpers({
 	registrationAllowed() {
-		const {hashIsValid} = Template.instance();
+		const { hashIsValid } = Template.instance();
 		return RocketChat.settings.get('Accounts_RegistrationForm') === 'Secret URL' && hashIsValid && hashIsValid.get();
 	},
 	ready() {

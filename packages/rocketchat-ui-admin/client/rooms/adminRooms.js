@@ -2,7 +2,7 @@
 import _ from 'underscore';
 import s from 'underscore.string';
 
-import {RocketChatTabBar} from 'meteor/rocketchat:lib';
+import { RocketChatTabBar } from 'meteor/rocketchat:lib';
 
 this.AdminChatRoom = new Mongo.Collection('rocketchat_room');
 
@@ -100,13 +100,13 @@ Template.adminRooms.onCreated(function() {
 		filter = s.trim(filter);
 		if (filter) {
 			const filterReg = new RegExp(s.escapeRegExp(filter), 'i');
-			query = {$or: [{name: filterReg}, {t: 'd', usernames: filterReg}]};
+			query = { $or: [{ name: filterReg }, { t: 'd', usernames: filterReg }] };
 		}
 		if (types.length) {
-			query.t = {$in: types};
+			query.t = { $in: types };
 		}
 		const limit = instance.limit && instance.limit.get();
-		return AdminChatRoom.find(query, {limit, sort: {default: -1, name: 1}});
+		return AdminChatRoom.find(query, { limit, sort: { default: -1, name: 1 } });
 	};
 	this.getSearchTypes = function() {
 		return _.map($('[name=room-type]:checked'), function(input) {

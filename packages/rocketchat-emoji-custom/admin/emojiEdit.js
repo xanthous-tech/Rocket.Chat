@@ -91,7 +91,7 @@ Template.emojiEdit.onCreated(function() {
 		}
 
 		for (const error of errors) {
-			toastr.error(TAPi18n.__('error-the-field-is-required', {field: TAPi18n.__(error)}));
+			toastr.error(TAPi18n.__('error-the-field-is-required', { field: TAPi18n.__(error) }));
 		}
 
 		if (this.emojiFile) {

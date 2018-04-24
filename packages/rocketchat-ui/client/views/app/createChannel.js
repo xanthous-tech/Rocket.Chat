@@ -144,8 +144,8 @@ Template.createChannel.helpers({
 
 Template.createChannel.events({
 	...acEvents,
-	'click .rc-tags__tag'({target}, t) {
-		const {username} = Blaze.getData(target);
+	'click .rc-tags__tag'({ target }, t) {
+		const { username } = Blaze.getData(target);
 		t.selectedUsers.set(t.selectedUsers.get().filter((user) => user.username !== username));
 	},
 	'change [name=setTokensRequired]'(e, t) {
@@ -205,7 +205,7 @@ Template.createChannel.events({
 		}
 
 		const extraData = Object.keys(instance.extensions_submits)
-			.reduce((result, key) => ({...result, ...instance.extensions_submits[key](instance)}), {broadcast});
+			.reduce((result, key) => ({ ...result, ...instance.extensions_submits[key](instance) }), { broadcast });
 
 		Meteor.call(isPrivate ? 'createPrivateGroup' : 'createChannel', name, instance.selectedUsers.get().map((user) => user.username), readOnly, {}, extraData, function(err, result) {
 			if (err) {
@@ -219,10 +219,10 @@ Template.createChannel.events({
 			}
 
 			if (!isPrivate) {
-				RocketChat.callbacks.run('aftercreateCombined', {_id: result.rid, name: result.name});
+				RocketChat.callbacks.run('aftercreateCombined', { _id: result.rid, name: result.name });
 			}
 
-			return FlowRouter.go(isPrivate ? 'group' : 'channel', {name: result.name}, FlowRouter.current().queryParams);
+			return FlowRouter.go(isPrivate ? 'group' : 'channel', { name: result.name }, FlowRouter.current().queryParams);
 		});
 		return false;
 	},
@@ -234,7 +234,7 @@ Template.createChannel.onRendered(function() {
 	this.firstNode.querySelector('[name="users"]').focus();
 	this.ac.element = this.firstNode.querySelector('[name="users"]');
 	this.ac.$element = $(this.ac.element);
-	this.ac.$element.on('autocompleteselect', function(e, {item}) {
+	this.ac.$element.on('autocompleteselect', function(e, { item }) {
 		const usersArr = users.get();
 		usersArr.push(item);
 		users.set(usersArr);
@@ -244,7 +244,7 @@ Template.createChannel.onRendered(function() {
 Template.createChannel.onCreated(function() {
 	this.selectedUsers = new ReactiveVar([]);
 
-	const filter = {exceptions :[Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username))};
+	const filter = { exceptions :[Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username)) };
 	// this.onViewRead:??y(function() {
 	Tracker.autorun(() => {
 		filter.exceptions = [Meteor.user().username].concat(this.selectedUsers.get().map((u) => u.username));
@@ -304,7 +304,7 @@ Template.createChannel.onCreated(function() {
 					filter,
 					doNotChangeWidth: false,
 					selector(match) {
-						return {term: match};
+						return { term: match };
 					},
 					sort: 'username',
 				},
@@ -345,7 +345,7 @@ Template.tokenpass.helpers({
 		return Template.instance().invalid.get();
 	},
 	addIsDisabled() {
-		const {balance, token} = Template.instance();
+		const { balance, token } = Template.instance();
 		return (balance.get().length && token.get().length) ? '' : 'disabled';
 	},
 	tokenRequiment() {
@@ -358,18 +358,18 @@ Template.tokenpass.helpers({
 
 Template.tokenpass.events({
 	'click [data-button=add]'(e, instance) {
-		const {balance, token, selectedTokens} = instance;
+		const { balance, token, selectedTokens } = instance;
 		const text = token.get();
 		const arr = selectedTokens.get();
-		selectedTokens.set([...arr.filter((token) => token.token !== text), {token: text, balance: balance.get()}]);
+		selectedTokens.set([...arr.filter((token) => token.token !== text), { token: text, balance: balance.get() }]);
 		balance.set('');
 		token.set('');
 		[...instance.findAll('input[type=text],input[type=number]')].forEach((el) => el.value = '');
 		instance.data.change();
 		return false;
 	},
-	'click .rc-tags__tag'({target}, t) {
-		const {token} = Blaze.getData(target);
+	'click .rc-tags__tag'({ target }, t) {
+		const { token } = Blaze.getData(target);
 		t.selectedTokens.set(t.selectedTokens.get().filter((t) => t.token !== token));
 		t.data.change();
 	},

@@ -2,7 +2,7 @@
 
 import _ from 'underscore';
 import fs from 'fs';
-import {FileUploadClass} from '../lib/FileUpload';
+import { FileUploadClass } from '../lib/FileUpload';
 
 const FileSystemUploads = new FileUploadClass({
 	name: 'FileSystem:Uploads',

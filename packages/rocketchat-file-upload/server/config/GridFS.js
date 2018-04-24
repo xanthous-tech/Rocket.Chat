@@ -3,7 +3,7 @@ import stream from 'stream';
 import zlib from 'zlib';
 import util from 'util';
 
-import {FileUploadClass} from '../lib/FileUpload';
+import { FileUploadClass } from '../lib/FileUpload';
 
 const logger = new Logger('FileUpload');
 
@@ -115,7 +115,7 @@ const readFromGridFS = function(storeName, fileId, file, req, res) {
 		res.setHeader('Content-Length', range.stop - range.start + 1);
 		res.writeHead(206);
 		logger.debug('File upload extracting range');
-		ws.pipe(new ExtractRange({start: range.start, stop: range.stop})).pipe(res);
+		ws.pipe(new ExtractRange({ start: range.start, stop: range.stop })).pipe(res);
 	} else {
 		res.writeHead(200);
 		ws.pipe(res);

@@ -4,22 +4,22 @@ class ModelSubscriptions extends RocketChat.models._Base {
 	constructor() {
 		super(...arguments);
 
-		this.tryEnsureIndex({rid: 1, 'u._id': 1}, {unique: 1});
-		this.tryEnsureIndex({rid: 1, alert: 1, 'u._id': 1});
-		this.tryEnsureIndex({rid: 1, roles: 1});
-		this.tryEnsureIndex({'u._id': 1, name: 1, t: 1});
-		this.tryEnsureIndex({'u._id': 1, name: 1, t: 1, code: 1}, {unique: 1});
-		this.tryEnsureIndex({open: 1});
-		this.tryEnsureIndex({alert: 1});
-		this.tryEnsureIndex({unread: 1});
-		this.tryEnsureIndex({ts: 1});
-		this.tryEnsureIndex({ls: 1});
-		this.tryEnsureIndex({audioNotifications: 1}, {sparse: 1});
-		this.tryEnsureIndex({desktopNotifications: 1}, {sparse: 1});
-		this.tryEnsureIndex({mobilePushNotifications: 1}, {sparse: 1});
-		this.tryEnsureIndex({emailNotifications: 1}, {sparse: 1});
-		this.tryEnsureIndex({autoTranslate: 1}, {sparse: 1});
-		this.tryEnsureIndex({autoTranslateLanguage: 1}, {sparse: 1});
+		this.tryEnsureIndex({ rid: 1, 'u._id': 1 }, { unique: 1 });
+		this.tryEnsureIndex({ rid: 1, alert: 1, 'u._id': 1 });
+		this.tryEnsureIndex({ rid: 1, roles: 1 });
+		this.tryEnsureIndex({ 'u._id': 1, name: 1, t: 1 });
+		this.tryEnsureIndex({ 'u._id': 1, name: 1, t: 1, code: 1 }, { unique: 1 });
+		this.tryEnsureIndex({ open: 1 });
+		this.tryEnsureIndex({ alert: 1 });
+		this.tryEnsureIndex({ unread: 1 });
+		this.tryEnsureIndex({ ts: 1 });
+		this.tryEnsureIndex({ ls: 1 });
+		this.tryEnsureIndex({ audioNotifications: 1 }, { sparse: 1 });
+		this.tryEnsureIndex({ desktopNotifications: 1 }, { sparse: 1 });
+		this.tryEnsureIndex({ mobilePushNotifications: 1 }, { sparse: 1 });
+		this.tryEnsureIndex({ emailNotifications: 1 }, { sparse: 1 });
+		this.tryEnsureIndex({ autoTranslate: 1 }, { sparse: 1 });
+		this.tryEnsureIndex({ autoTranslateLanguage: 1 }, { sparse: 1 });
 
 		this.cache.ensureIndex('rid', 'array');
 		this.cache.ensureIndex('u._id', 'array');
@@ -61,7 +61,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 		}
 
 		const query =
-			{'u._id': userId};
+			{ 'u._id': userId };
 
 		return this.find(query, options);
 	}
@@ -82,7 +82,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 		roles = [].concat(roles);
 		const query = {
 			rid: roomId,
-			roles: {$in: roles},
+			roles: { $in: roles },
 		};
 
 		return this.find(query, options);
@@ -123,7 +123,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 		}
 
 		const query =
-			{rid: roomId};
+			{ rid: roomId };
 
 		return this.find(query, options);
 	}
@@ -143,8 +143,8 @@ class ModelSubscriptions extends RocketChat.models._Base {
 		if (options == null) {
 			options = {};
 		}
-		const query = {ls: {$exists: 1}};
-		options.sort = {ls: -1};
+		const query = { ls: { $exists: 1 } };
+		options.sort = { ls: -1 };
 		options.limit = 1;
 		const [subscription] = this.find(query, options).fetch();
 		return subscription && subscription.ls;
@@ -165,8 +165,8 @@ class ModelSubscriptions extends RocketChat.models._Base {
 		const query = {
 			rid: roomId,
 			$or: [
-				{'u._id': {$in: userIds}},
-				{emailNotifications: 'all'},
+				{ 'u._id': { $in: userIds } },
+				{ emailNotifications: 'all' },
 			],
 		};
 
@@ -181,7 +181,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.find(query, {fields: {unread: 1}});
+		return this.find(query, { fields: { unread: 1 } });
 	}
 
 	getMinimumLastSeenByRoomId(rid) {
@@ -200,7 +200,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 	// UPDATE
 	archiveByRoomId(roomId) {
 		const query =
-			{rid: roomId};
+			{ rid: roomId };
 
 		const update = {
 			$set: {
@@ -210,12 +210,12 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
 	unarchiveByRoomId(roomId) {
 		const query =
-			{rid: roomId};
+			{ rid: roomId };
 
 		const update = {
 			$set: {
@@ -225,7 +225,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
 	hideByRoomIdAndUserId(roomId, userId) {
@@ -306,8 +306,8 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			'u._id': userId,
 			t: 'd',
 		};
-		const update = {$set: values};
-		const options = {multi: true};
+		const update = { $set: values };
+		const options = { multi: true };
 
 		return this.update(query, update, options);
 	}
@@ -332,7 +332,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 
 	updateNameAndAlertByRoomId(roomId, name, fname) {
 		const query =
-			{rid: roomId};
+			{ rid: roomId };
 
 		const update = {
 			$set: {
@@ -342,12 +342,12 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
 	updateNameByRoomId(roomId, name) {
 		const query =
-			{rid: roomId};
+			{ rid: roomId };
 
 		const update = {
 			$set: {
@@ -355,12 +355,12 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
 	setUserUsernameByUserId(userId, username) {
 		const query =
-			{'u._id': userId};
+			{ 'u._id': userId };
 
 		const update = {
 			$set: {
@@ -368,7 +368,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
 	setNameForDirectRoomsWithOldName(oldName, name) {
@@ -383,7 +383,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
 	incUnreadForRoomIdExcludingUserId(roomId, userId, inc) {
@@ -407,7 +407,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
 	incGroupMentionsAndUnreadForRoomIdExcludingUserId(roomId, userId, incGroup = 1, incUnread = 1) {
@@ -429,7 +429,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
 	incUserMentionsAndUnreadForRoomIdAndUserIds(roomId, userIds, incUser = 1, incUnread = 1) {
@@ -451,19 +451,19 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
-	ignoreUser({_id, ignoredUser : ignored, ignore = true}) {
+	ignoreUser({ _id, ignoredUser : ignored, ignore = true }) {
 		const query = {
 			_id,
 		};
 		const update = {
 		};
 		if (ignore) {
-			update.$addToSet = {ignored};
+			update.$addToSet = { ignored };
 		} else {
-			update.$pull = {ignored};
+			update.$pull = { ignored };
 		}
 
 		return this.update(query, update);
@@ -476,8 +476,8 @@ class ModelSubscriptions extends RocketChat.models._Base {
 				$ne: userId,
 			},
 			$or: [
-				{alert: {$ne: true}},
-				{open: {$ne: true}},
+				{ alert: { $ne: true } },
+				{ open: { $ne: true } },
 			],
 		};
 
@@ -487,7 +487,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 				open: true,
 			},
 		};
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
 	setBlockedByRoomId(rid, blocked, blocker) {
@@ -544,7 +544,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 
 	updateTypeByRoomId(roomId, type) {
 		const query =
-			{rid: roomId};
+			{ rid: roomId };
 
 		const update = {
 			$set: {
@@ -552,12 +552,12 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
 	addRoleById(_id, role) {
 		const query =
-			{_id};
+			{ _id };
 
 		const update = {
 			$addToSet: {
@@ -570,7 +570,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 
 	removeRoleById(_id, role) {
 		const query =
-			{_id};
+			{ _id };
 
 		const update = {
 			$pull: {
@@ -593,7 +593,7 @@ class ModelSubscriptions extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 
 	// INSERT
@@ -626,14 +626,14 @@ class ModelSubscriptions extends RocketChat.models._Base {
 	// REMOVE
 	removeByUserId(userId) {
 		const query =
-			{'u._id': userId};
+			{ 'u._id': userId };
 
 		return this.remove(query);
 	}
 
 	removeByRoomId(roomId) {
 		const query =
-			{rid: roomId};
+			{ rid: roomId };
 
 		return this.remove(query);
 	}

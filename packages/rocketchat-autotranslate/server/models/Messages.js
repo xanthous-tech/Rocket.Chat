@@ -4,7 +4,7 @@ RocketChat.models.Messages.addTranslations = function(messageId, translations) {
 		const translation = translations[key];
 		updateObj[`translations.${ key }`] = translation;
 	});
-	return this.update({_id: messageId}, {$set: updateObj});
+	return this.update({ _id: messageId }, { $set: updateObj });
 };
 
 RocketChat.models.Messages.addAttachmentTranslations = function(messageId, attachmentIndex, translations) {
@@ -13,5 +13,5 @@ RocketChat.models.Messages.addAttachmentTranslations = function(messageId, attac
 		const translation = translations[key];
 		updateObj[`attachments.${ attachmentIndex }.translations.${ key }`] = translation;
 	});
-	return this.update({_id: messageId}, {$set: updateObj});
+	return this.update({ _id: messageId }, { $set: updateObj });
 };

@@ -4,12 +4,12 @@ RocketChat.models.UserDataFiles = new class ModelUserDataFiles extends RocketCha
 	constructor() {
 		super('user_data_files');
 
-		this.tryEnsureIndex({userId: 1});
+		this.tryEnsureIndex({ userId: 1 });
 	}
 
 	// FIND
 	findById(id) {
-		const query = {_id: id};
+		const query = { _id: id };
 		return this.find(query);
 	}
 
@@ -18,7 +18,7 @@ RocketChat.models.UserDataFiles = new class ModelUserDataFiles extends RocketCha
 			userId,
 		};
 
-		options.sort = {_updatedAt : -1};
+		options.sort = { _updatedAt : -1 };
 		return this.findOne(query, options);
 	}
 

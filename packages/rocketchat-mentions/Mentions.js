@@ -4,7 +4,7 @@
 */
 import _ from 'underscore';
 export default class {
-	constructor({pattern, useRealName, me}) {
+	constructor({ pattern, useRealName, me }) {
 		this.pattern = pattern;
 		this.useRealName = useRealName;
 		this.me = me;
@@ -39,7 +39,7 @@ export default class {
 				return `<a class="mention-link mention-link-me mention-link-all background-attention-color">${ match }</a>`;
 			}
 
-			const mentionObj = _.findWhere(message.mentions, {username});
+			const mentionObj = _.findWhere(message.mentions, { username });
 			if (message.temp == null && mentionObj == null) {
 				return match;
 			}
@@ -52,7 +52,7 @@ export default class {
 		// since apostrophe escaped contains # we need to unescape it
 		return str.replace(/&#39;/g, '\'').replace(this.channelMentionRegex, (match, n1, n2) => {
 			const name = n1 || n2;
-			if (message.temp == null && _.findWhere(message.channels, {name}) == null) {
+			if (message.temp == null && _.findWhere(message.channels, { name }) == null) {
 				return match;
 			}
 

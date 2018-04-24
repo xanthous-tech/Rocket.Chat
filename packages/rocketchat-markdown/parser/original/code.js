@@ -2,7 +2,7 @@
  * code() is a named function that will parse `inline code` and ```codeblock``` syntaxes
  * @param {Object} message - The message object
  */
-import {Random} from 'meteor/random';
+import { Random } from 'meteor/random';
 import s from 'underscore.string';
 import hljs from 'highlight.js';
 

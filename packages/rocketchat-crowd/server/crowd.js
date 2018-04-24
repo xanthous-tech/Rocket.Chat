@@ -5,9 +5,9 @@ const logger = new Logger('CROWD', {});
 function fallbackDefaultAccountSystem(bind, username, password) {
 	if (typeof username === 'string') {
 		if (username.indexOf('@') === -1) {
-			username = {username};
+			username = { username };
 		} else {
-			username = {email: username};
+			username = { email: username };
 		}
 	}
 
@@ -227,11 +227,11 @@ Meteor.methods({
 	crowd_test_connection() {
 		const user = Meteor.user();
 		if (!user) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'crowd_test_connection'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'crowd_test_connection' });
 		}
 
 		if (!RocketChat.authz.hasRole(user._id, 'admin')) {
-			throw new Meteor.Error('error-not-authorized', 'Not authorized', {method: 'crowd_test_connection'});
+			throw new Meteor.Error('error-not-authorized', 'Not authorized', { method: 'crowd_test_connection' });
 		}
 
 		if (RocketChat.settings.get('CROWD_Enable') !== true) {
@@ -244,7 +244,7 @@ Meteor.methods({
 			crowd.checkConnection();
 		} catch (error) {
 			logger.error('Invalid crowd connection details, check the url and application username/password and make sure this server is allowed to speak to crowd');
-			throw new Meteor.Error('Invalid connection details', '', {method: 'crowd_test_connection'});
+			throw new Meteor.Error('Invalid connection details', '', { method: 'crowd_test_connection' });
 		}
 
 		return {

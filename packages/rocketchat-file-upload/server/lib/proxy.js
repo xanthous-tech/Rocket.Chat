@@ -44,7 +44,7 @@ WebApp.connectHandlers.stack.unshift({
 
 		// Get file
 		const fileId = match[2];
-		const file = store.getCollection().findOne({_id: fileId});
+		const file = store.getCollection().findOne({ _id: fileId });
 		if (file === undefined) {
 			res.writeHead(404);
 			res.end();
@@ -57,7 +57,7 @@ WebApp.connectHandlers.stack.unshift({
 		}
 
 		// Proxy to other instance
-		const instance = InstanceStatus.getCollection().findOne({_id: file.instanceId});
+		const instance = InstanceStatus.getCollection().findOne({ _id: file.instanceId });
 
 		if (instance == null) {
 			res.writeHead(404);

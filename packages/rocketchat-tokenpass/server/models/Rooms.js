@@ -15,7 +15,7 @@ RocketChat.models.Rooms.setTokensById = function(_id, tokens) {
 		},
 	};
 
-	return this.update({_id}, update);
+	return this.update({ _id }, update);
 };
 
 RocketChat.models.Rooms.setTokenpassById = function(_id, tokenpass) {
@@ -25,12 +25,12 @@ RocketChat.models.Rooms.setTokenpassById = function(_id, tokenpass) {
 		},
 	};
 
-	return this.update({_id}, update);
+	return this.update({ _id }, update);
 };
 
 RocketChat.models.Rooms.findAllTokenChannels = function() {
 	const query = {
-		tokenpass: {$exists: true},
+		tokenpass: { $exists: true },
 	};
 	const options = {
 		fields: {

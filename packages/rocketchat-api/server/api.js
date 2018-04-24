@@ -140,7 +140,7 @@ class API extends Restivus {
 			if (this.hasHelperMethods()) {
 				Object.keys(endpoints).forEach((method) => {
 					if (typeof endpoints[method] === 'function') {
-						endpoints[method] = {action: endpoints[method]};
+						endpoints[method] = { action: endpoints[method] };
 					}
 
 					// Add a try/catch for each endpoint
@@ -174,7 +174,7 @@ class API extends Restivus {
 	_initAuth() {
 		const loginCompatibility = (bodyParams) => {
 			// Grab the username or email that the user is logging in with
-			const {user, username, email, password, code} = bodyParams;
+			const { user, username, email, password, code } = bodyParams;
 
 			if (password == null) {
 				return bodyParams;
@@ -189,11 +189,11 @@ class API extends Restivus {
 			};
 
 			if (typeof user === 'string') {
-				auth.user = user.includes('@') ? {email: user} : {username: user};
+				auth.user = user.includes('@') ? { email: user } : { username: user };
 			} else if (username) {
-				auth.user = {username};
+				auth.user = { username };
 			} else if (email) {
-				auth.user = {email};
+				auth.user = { email };
 			}
 
 			if (auth.user == null) {
@@ -221,7 +221,7 @@ class API extends Restivus {
 
 		const self = this;
 
-		this.addRoute('login', {authRequired: false}, {
+		this.addRoute('login', { authRequired: false }, {
 			post() {
 				const args = loginCompatibility(this.bodyParams);
 

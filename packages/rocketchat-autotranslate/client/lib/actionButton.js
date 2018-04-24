@@ -14,12 +14,12 @@ Meteor.startup(function() {
 					const language = RocketChat.AutoTranslate.getLanguage(message.rid);
 					if ((!message.translations || !message.translations[language])) { // } && !_.find(message.attachments, attachment => { return attachment.translations && attachment.translations[language]; })) {
 						RocketChat.AutoTranslate.messageIdsToWait[message._id] = true;
-						RocketChat.models.Messages.update({_id: message._id}, {$set: {autoTranslateFetching: true}});
+						RocketChat.models.Messages.update({ _id: message._id }, { $set: { autoTranslateFetching: true } });
 						Meteor.call('autoTranslate.translateMessage', message, language);
 					} else if (message.autoTranslateShowInverse) {
-						RocketChat.models.Messages.update({_id: message._id}, {$unset: {autoTranslateShowInverse: true}});
+						RocketChat.models.Messages.update({ _id: message._id }, { $unset: { autoTranslateShowInverse: true } });
 					} else {
-						RocketChat.models.Messages.update({_id: message._id}, {$set: {autoTranslateShowInverse: true}});
+						RocketChat.models.Messages.update({ _id: message._id }, { $set: { autoTranslateShowInverse: true } });
 					}
 				},
 				condition(message) {

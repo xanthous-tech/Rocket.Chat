@@ -20,9 +20,9 @@ Template.integrationsIncoming.helpers({
 		if (params && params.id) {
 			let data;
 			if (RocketChat.authz.hasAllPermission('manage-integrations')) {
-				data = ChatIntegrations.findOne({_id: params.id});
+				data = ChatIntegrations.findOne({ _id: params.id });
 			} else if (RocketChat.authz.hasAllPermission('manage-own-integrations')) {
-				data = ChatIntegrations.findOne({_id: params.id, '_createdBy._id': Meteor.userId()});
+				data = ChatIntegrations.findOne({ _id: params.id, '_createdBy._id': Meteor.userId() });
 			}
 
 			if (data) {
@@ -247,7 +247,7 @@ Template.integrationsIncoming.events({
 				}
 
 				toastr.success(TAPi18n.__('Integration_added'));
-				FlowRouter.go('admin-integrations-incoming', {id: data._id});
+				FlowRouter.go('admin-integrations-incoming', { id: data._id });
 			});
 		}
 	},

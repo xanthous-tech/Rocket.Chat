@@ -20,7 +20,7 @@ FlowRouter.subscriptions = function() {
 FlowRouter.route('/', {
 	name: 'index',
 	action() {
-		BlazeLayout.render('main', {modal: RocketChat.Layout.isEmbedded(), center: 'loading'});
+		BlazeLayout.render('main', { modal: RocketChat.Layout.isEmbedded(), center: 'loading' });
 		if (!Meteor.userId()) {
 			return FlowRouter.go('home');
 		}
@@ -30,7 +30,7 @@ FlowRouter.route('/', {
 				Meteor.defer(function() {
 					if (Meteor.user() && Meteor.user().defaultRoom) {
 						const room = Meteor.user().defaultRoom.split('/');
-						FlowRouter.go(room[0], {name: room[1]}, FlowRouter.current().queryParams);
+						FlowRouter.go(room[0], { name: room[1] }, FlowRouter.current().queryParams);
 					} else {
 						FlowRouter.go('home');
 					}
@@ -61,10 +61,10 @@ FlowRouter.route('/home', {
 					saml: true,
 					credentialToken: queryParams.saml_idp_credentialToken,
 				}],
-				userCallback() { BlazeLayout.render('main', {center: 'home'}); },
+				userCallback() { BlazeLayout.render('main', { center: 'home' }); },
 			});
 		} else {
-			BlazeLayout.render('main', {center: 'home'});
+			BlazeLayout.render('main', { center: 'home' });
 		}
 	},
 });
@@ -73,7 +73,7 @@ FlowRouter.route('/directory', {
 	name: 'directory',
 
 	action() {
-		BlazeLayout.render('main', {center: 'directory'});
+		BlazeLayout.render('main', { center: 'directory' });
 	},
 	triggersExit: [function() {
 		$('.main-content').addClass('rc-old');
@@ -88,7 +88,7 @@ FlowRouter.route('/account/:group?', {
 			params.group = 'Preferences';
 		}
 		params.group = s.capitalize(params.group, true);
-		BlazeLayout.render('main', {center: `account${ params.group }`});
+		BlazeLayout.render('main', { center: `account${ params.group }` });
 	},
 	triggersExit: [function() {
 		$('.main-content').addClass('rc-old');
@@ -117,8 +117,8 @@ FlowRouter.route('/room-not-found/:type/:name', {
 	name: 'room-not-found',
 
 	action(params) {
-		Session.set('roomNotFound', {type: params.type, name: params.name});
-		BlazeLayout.render('main', {center: 'roomNotFound'});
+		Session.set('roomNotFound', { type: params.type, name: params.name });
+		BlazeLayout.render('main', { center: 'roomNotFound' });
 	},
 });
 

@@ -1,11 +1,11 @@
 /* global processWebhookMessage */
 
-import {authenticated} from '../../helpers/authenticated';
+import { authenticated } from '../../helpers/authenticated';
 import schema from '../../schemas/messages/sendMessage.graphqls';
 
 const resolver = {
 	Mutation: {
-		sendMessage: authenticated((root, {channelId, directTo, content}, {user}) => {
+		sendMessage: authenticated((root, { channelId, directTo, content }, { user }) => {
 			const options = {
 				text: content,
 				channel: channelId || directTo,

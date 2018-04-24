@@ -56,7 +56,7 @@ Meteor.methods({
 		if (data.language !== 'en') {
 			const localeFn = Meteor.call('loadLocale', data.language);
 			if (localeFn) {
-				Function(localeFn).call({moment});
+				Function(localeFn).call({ moment });
 				moment.locale(data.language);
 			}
 		}
@@ -64,7 +64,7 @@ Meteor.methods({
 		const header = RocketChat.placeholders.replace(RocketChat.settings.get('Email_Header') || '');
 		const footer = RocketChat.placeholders.replace(RocketChat.settings.get('Email_Footer') || '');
 		const html = RocketChat.models.Messages.findByRoomIdAndMessageIds(data.rid, data.messages, {
-			sort: {ts: 1},
+			sort: { ts: 1 },
 		}).map(function(message) {
 			const dateTime = moment(message.ts).locale(data.language).format('L LT');
 			return `<p style='margin-bottom: 5px'><b>${ message.u.username }</b> <span style='color: #aaa; font-size: 12px'>${ dateTime }</span><br />${ RocketChat.Message.parse(message, data.language) }</p>`;

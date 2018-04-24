@@ -12,8 +12,8 @@ class GoogleVision {
 		RocketChat.settings.get('GoogleVision_ServiceAccount', (key, value) => {
 			try {
 				this.serviceAccount = JSON.parse(value);
-				this.storageClient = this.storage({credentials: this.serviceAccount});
-				this.visionClient = this.vision({credentials: this.serviceAccount});
+				this.storageClient = this.storage({ credentials: this.serviceAccount });
+				this.visionClient = this.vision({ credentials: this.serviceAccount });
 			} catch (e) {
 				this.serviceAccount = {};
 			}
@@ -41,13 +41,13 @@ class GoogleVision {
 				return false;
 			}
 		}
-		RocketChat.models.Settings.update({_id: 'GoogleVision_Current_Month_Calls'}, {$inc: {value: count}});
+		RocketChat.models.Settings.update({ _id: 'GoogleVision_Current_Month_Calls' }, { $inc: { value: count } });
 		return true;
 	}
 
 	blockUnsafeImages(message) {
 		if (this.enabled && this.serviceAccount && message && message.file && message.file._id) {
-			const file = RocketChat.models.Uploads.findOne({_id: message.file._id});
+			const file = RocketChat.models.Uploads.findOne({ _id: message.file._id });
 			if (file && file.type && file.type.indexOf('image') !== -1 && file.store === 'GoogleCloudStorage:Uploads' && file.GoogleStorage) {
 				if (this.incCallCount(1)) {
 					const bucket = this.storageClient.bucket(RocketChat.settings.get('FileUpload_GoogleStorage_Bucket'));
@@ -74,7 +74,7 @@ class GoogleVision {
 		}
 	}
 
-	annotate({message}) {
+	annotate({ message }) {
 		const visionTypes = [];
 		if (RocketChat.settings.get('GoogleVision_Type_Document')) {
 			visionTypes.push('document');
@@ -101,7 +101,7 @@ class GoogleVision {
 			visionTypes.push('similar');
 		}
 		if (this.enabled && this.serviceAccount && visionTypes.length > 0 && message.file && message.file._id) {
-			const file = RocketChat.models.Uploads.findOne({_id: message.file._id});
+			const file = RocketChat.models.Uploads.findOne({ _id: message.file._id });
 			if (file && file.type && file.type.indexOf('image') !== -1 && file.store === 'GoogleCloudStorage:Uploads' && file.GoogleStorage) {
 				if (this.incCallCount(visionTypes.length)) {
 					const bucket = this.storageClient.bucket(RocketChat.settings.get('FileUpload_GoogleStorage_Bucket'));

@@ -1,6 +1,6 @@
 RocketChat.addUserToDefaultChannels = function(user, silenced) {
 	RocketChat.callbacks.run('beforeJoinDefaultChannels', user);
-	const defaultRooms = RocketChat.models.Rooms.findByDefaultAndTypes(true, ['c', 'p'], {fields: {usernames: 0}}).fetch();
+	const defaultRooms = RocketChat.models.Rooms.findByDefaultAndTypes(true, ['c', 'p'], { fields: { usernames: 0 } }).fetch();
 	defaultRooms.forEach((room) => {
 
 		// put user in default rooms

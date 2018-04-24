@@ -5,11 +5,11 @@ class LivechatPageVisited extends RocketChat.models._Base {
 	constructor() {
 		super('livechat_page_visited');
 
-		this.tryEnsureIndex({token: 1});
-		this.tryEnsureIndex({ts: 1});
+		this.tryEnsureIndex({ token: 1 });
+		this.tryEnsureIndex({ ts: 1 });
 
 		// keep history for 1 month if the visitor does not register
-		this.tryEnsureIndex({expireAt: 1}, {sparse: 1, expireAfterSeconds: 0});
+		this.tryEnsureIndex({ expireAt: 1 }, { sparse: 1, expireAfterSeconds: 0 });
 	}
 
 	saveByToken(token, pageInfo) {
@@ -25,7 +25,7 @@ class LivechatPageVisited extends RocketChat.models._Base {
 	}
 
 	findByToken(token) {
-		return this.find({token}, {sort : {ts: -1}, limit: 20});
+		return this.find({ token }, { sort : { ts: -1 }, limit: 20 });
 	}
 
 	keepHistoryForToken(token) {

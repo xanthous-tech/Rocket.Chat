@@ -28,7 +28,7 @@ Accounts.registerLoginHandler(function(options) {
 	}
 
 	// Make sure we're configured
-	if (!ServiceConfiguration.configurations.findOne({service: service.serviceName})) {
+	if (!ServiceConfiguration.configurations.findOne({ service: service.serviceName })) {
 		throw new ServiceConfiguration.ConfigError();
 	}
 

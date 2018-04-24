@@ -17,15 +17,15 @@ class ModelPermissions extends RocketChat.models._Base {
 	}
 
 	createOrUpdate(name, roles) {
-		this.upsert({_id: name}, {$set: {roles}});
+		this.upsert({ _id: name }, { $set: { roles } });
 	}
 
 	addRole(permission, role) {
-		this.update({_id: permission}, {$addToSet: {roles: role}});
+		this.update({ _id: permission }, { $addToSet: { roles: role } });
 	}
 
 	removeRole(permission, role) {
-		this.update({_id: permission}, {$pull: {roles: role}});
+		this.update({ _id: permission }, { $pull: { roles: role } });
 	}
 }
 

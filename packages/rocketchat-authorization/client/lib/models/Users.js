@@ -18,7 +18,7 @@ Object.assign(RocketChat.models.Users, {
 		roles = [].concat(roles);
 
 		const query = {
-			roles: {$in: roles},
+			roles: { $in: roles },
 		};
 
 		return this.find(query, options);

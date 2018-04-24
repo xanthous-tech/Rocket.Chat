@@ -8,7 +8,7 @@ class LivechatDepartmentAgents extends RocketChat.models._Base {
 	}
 
 	findByDepartmentId(departmentId) {
-		return this.find({departmentId});
+		return this.find({ departmentId });
 	}
 
 	saveAgent(agent) {
@@ -25,7 +25,7 @@ class LivechatDepartmentAgents extends RocketChat.models._Base {
 	}
 
 	removeByDepartmentIdAndAgentId(departmentId, agentId) {
-		this.remove({departmentId, agentId});
+		this.remove({ departmentId, agentId });
 	}
 
 	getNextAgentForDepartment(departmentId) {
@@ -120,7 +120,7 @@ class LivechatDepartmentAgents extends RocketChat.models._Base {
 	}
 
 	replaceUsernameOfAgentByUserId(userId, username) {
-		const query = {agentId: userId};
+		const query = { agentId: userId };
 
 		const update = {
 			$set: {
@@ -128,7 +128,7 @@ class LivechatDepartmentAgents extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update(query, update, {multi: true});
+		return this.update(query, update, { multi: true });
 	}
 }
 

@@ -3,7 +3,7 @@ Meteor.methods({
 		if (!Meteor.userId()) {
 			return false;
 		}
-		if (RocketChat.models.Subscriptions.findOne({rid: message.rid}) == null) {
+		if (RocketChat.models.Subscriptions.findOne({ rid: message.rid }) == null) {
 			return false;
 		}
 		if (!RocketChat.settings.get('Message_AllowStarring')) {

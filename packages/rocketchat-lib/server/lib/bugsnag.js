@@ -14,7 +14,7 @@ const notify = function(message, stack) {
 	}
 	let options = {};
 	if (RocketChat.Info) {
-		options = {app: {version: RocketChat.Info.version, info: RocketChat.Info}};
+		options = { app: { version: RocketChat.Info.version, info: RocketChat.Info } };
 	}
 	const error = new Error(message);
 	error.stack = stack;

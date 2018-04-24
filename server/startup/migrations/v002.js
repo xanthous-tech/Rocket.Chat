@@ -23,7 +23,7 @@ RocketChat.Migrations.add({
 			console.log(user.username, '->', service);
 
 			const dataURI = avatars[service].blob;
-			const {image, contentType} = RocketChatFile.dataURIParse(dataURI);
+			const { image, contentType } = RocketChatFile.dataURIParse(dataURI);
 
 			const rs = RocketChatFile.bufferToStream(new Buffer(image, 'base64'));
 			const fileStore = FileUpload.getStore('Avatars');

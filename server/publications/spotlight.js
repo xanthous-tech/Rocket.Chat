@@ -12,7 +12,7 @@ function fetchRooms(userId, rooms) {
 }
 
 Meteor.methods({
-	spotlight(text, usernames, type = {users: true, rooms: true}, rid) {
+	spotlight(text, usernames, type = { users: true, rooms: true }, rid) {
 		const searchForChannels = text[0] === '#';
 		const searchForDMs = text[0] === '@';
 		if (searchForChannels) {
@@ -83,8 +83,8 @@ Meteor.methods({
 					$regex: regex,
 					$nin: [...usernames, Meteor.user().username],
 				},
-			}, {limit: userOptions.limit}).fetch().map(({u}) => u._id);
-			result.users = RocketChat.models.Users.find({_id: {$in: subscriptions}}, {
+			}, { limit: userOptions.limit }).fetch().map(({ u }) => u._id);
+			result.users = RocketChat.models.Users.find({ _id: { $in: subscriptions } }, {
 				fields: userOptions.fields,
 				sort: userOptions.sort,
 			}).fetch();

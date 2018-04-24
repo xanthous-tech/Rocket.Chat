@@ -104,5 +104,5 @@ this.Modal = (function() {
 		}
 	}
 
-	return {init, open, close, focus, setContent};
+	return { init, open, close, focus, setContent };
 }());

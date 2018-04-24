@@ -5,7 +5,7 @@ const LivechatRoom = new Mongo.Collection('livechatRoom');
 
 Template.livechatCurrentChats.helpers({
 	livechatRoom() {
-		return LivechatRoom.find({t: 'l'}, {sort: {ts: -1}});
+		return LivechatRoom.find({ t: 'l' }, { sort: { ts: -1 } });
 	},
 	startedAt() {
 		return moment(this.ts).format('L LTS');
@@ -20,13 +20,13 @@ Template.livechatCurrentChats.helpers({
 		return this.open ? t('Opened') : t('Closed');
 	},
 	agents() {
-		return AgentUsers.find({}, {sort: {name: 1}});
+		return AgentUsers.find({}, { sort: { name: 1 } });
 	},
 });
 
 Template.livechatCurrentChats.events({
 	'click .row-link'() {
-		FlowRouter.go('live', {code: this.code});
+		FlowRouter.go('live', { code: this.code });
 	},
 	'click .load-more'(event, instance) {
 		instance.limit.set(instance.limit.get() + 20);

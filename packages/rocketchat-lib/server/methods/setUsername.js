@@ -2,17 +2,17 @@ import _ from 'underscore';
 
 Meteor.methods({
 	setUsername(username, param = {}) {
-		const {joinDefaultChannelsSilenced} = param;
+		const { joinDefaultChannelsSilenced } = param;
 		check(username, String);
 
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'setUsername'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'setUsername' });
 		}
 
 		const user = Meteor.user();
 
 		if (user.username && !RocketChat.settings.get('Accounts_AllowUsernameChange')) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'setUsername'});
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'setUsername' });
 		}
 
 		if (user.username === username || (user.username && user.username.toLowerCase() === username.toLowerCase())) {
@@ -31,11 +31,11 @@ Meteor.methods({
 		}
 
 		if (!RocketChat.checkUsernameAvailability(username)) {
-			throw new Meteor.Error('error-field-unavailable', `<strong>${ _.escape(username) }</strong> is already in use :(`, {method: 'setUsername', field: username});
+			throw new Meteor.Error('error-field-unavailable', `<strong>${ _.escape(username) }</strong> is already in use :(`, { method: 'setUsername', field: username });
 		}
 
 		if (!RocketChat.setUsername(user._id, username)) {
-			throw new Meteor.Error('error-could-not-change-username', 'Could not change username', {method: 'setUsername'});
+			throw new Meteor.Error('error-could-not-change-username', 'Could not change username', { method: 'setUsername' });
 		}
 
 		if (!user.username) {

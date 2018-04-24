@@ -6,22 +6,22 @@ import {
 Meteor.methods({
 	restartImport(key) {
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'restartImport'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'restartImport' });
 		}
 
 		if (!RocketChat.authz.hasPermission(Meteor.userId(), 'run-import')) {
-			throw new Meteor.Error('error-action-not-allowed', 'Importing is not allowed', {method: 'setupImporter'});
+			throw new Meteor.Error('error-action-not-allowed', 'Importing is not allowed', { method: 'setupImporter' });
 		}
 
 		const importer = Importers.get(key);
 
 		if (!importer) {
-			throw new Meteor.Error('error-importer-not-defined', `The importer (${ key }) has no import class defined.`, {method: 'restartImport'});
+			throw new Meteor.Error('error-importer-not-defined', `The importer (${ key }) has no import class defined.`, { method: 'restartImport' });
 		}
 
 		if (importer.instance) {
 			importer.instance.updateProgress(ProgressStep.CANCELLED);
-			importer.instance.updateRecord({valid: false});
+			importer.instance.updateRecord({ valid: false });
 			importer.instance = undefined;
 		}
 

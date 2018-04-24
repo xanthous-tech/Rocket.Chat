@@ -87,10 +87,10 @@ export function getDataToSyncUserData(ldapUser, user) {
 
 					if (_.isObject(ldapUser[ldapField])) {
 						_.map(ldapUser[ldapField], function(item) {
-							emailList.push({address: item, verified: true});
+							emailList.push({ address: item, verified: true });
 						});
 					} else {
-						emailList.push({address: ldapUser[ldapField], verified: true});
+						emailList.push({ address: ldapUser[ldapField], verified: true });
 					}
 					break;
 
@@ -165,7 +165,7 @@ export function getDataToSyncUserData(ldapUser, user) {
 
 export function syncUserData(user, ldapUser) {
 	logger.info('Syncing user data');
-	logger.debug('user', {email: user.email, _id: user._id});
+	logger.debug('user', { email: user.email, _id: user._id });
 	logger.debug('ldapUser', ldapUser.object);
 
 	const userData = getDataToSyncUserData(ldapUser, user);
@@ -175,8 +175,8 @@ export function syncUserData(user, ldapUser) {
 			RocketChat._setRealName(user._id, userData.name);
 			delete userData.name;
 		}
-		Meteor.users.update(user._id, {$set: userData});
-		user = Meteor.users.findOne({_id: user._id});
+		Meteor.users.update(user._id, { $set: userData });
+		user = Meteor.users.findOne({ _id: user._id });
 	}
 
 	if (RocketChat.settings.get('LDAP_Username_Field') !== '') {
@@ -205,7 +205,7 @@ export function syncUserData(user, ldapUser) {
 				fileStore.insert(file, rs, () => {
 					Meteor.setTimeout(function() {
 						RocketChat.models.Users.setAvatarOrigin(user._id, 'ldap');
-						RocketChat.Notifications.notifyLogged('updateAvatar', {username: user.username});
+						RocketChat.Notifications.notifyLogged('updateAvatar', { username: user.username });
 					}, 500);
 				});
 			});
@@ -272,7 +272,7 @@ export function importNewUsers(ldap) {
 	}
 
 	let count = 0;
-	ldap.searchUsersSync('*', Meteor.bindEnvironment((error, ldapUsers, {next, end} = {}) => {
+	ldap.searchUsersSync('*', Meteor.bindEnvironment((error, ldapUsers, { next, end } = {}) => {
 		if (error) {
 			throw error;
 		}

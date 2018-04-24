@@ -25,7 +25,7 @@ RocketChat.models.Rooms.updateLivechatDataByToken = function(token, key, value, 
 	};
 
 	if (!overwrite) {
-		const room = this.findOne(query, {fields: {livechatData: 1}});
+		const room = this.findOne(query, { fields: { livechatData: 1 } });
 		if (room.livechatData && typeof room.livechatData[key] !== 'undefined') {
 			return true;
 		}
@@ -45,7 +45,7 @@ RocketChat.models.Rooms.findLivechat = function(filter = {}, offset = 0, limit =
 		t: 'l',
 	});
 
-	return this.find(query, {sort: {ts: - 1}, offset, limit});
+	return this.find(query, { sort: { ts: - 1 }, offset, limit });
 };
 
 RocketChat.models.Rooms.findLivechatByCode = function(code, fields) {
@@ -163,7 +163,7 @@ RocketChat.models.Rooms.closeByRoomId = function(roomId, closeInfo) {
 };
 
 RocketChat.models.Rooms.setLabelByRoomId = function(roomId, label) {
-	return this.update({_id: roomId}, {$set: {label}});
+	return this.update({ _id: roomId }, { $set: { label } });
 };
 
 RocketChat.models.Rooms.findOpenByAgent = function(userId) {

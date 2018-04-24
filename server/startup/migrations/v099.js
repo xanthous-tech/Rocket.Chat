@@ -11,13 +11,13 @@ function logError(...args) {
 	console.error('[AVATAR]', ...args);
 }
 
-function insertAvatar({details, avatarsFileStore, stream, callback = () => {}}) {
+function insertAvatar({ details, avatarsFileStore, stream, callback = () => {} }) {
 	return new Promise((resolve) => {
 		Meteor.defer(() => {
 			Meteor.runAsUser('rocket.cat', () => {
 				avatarsFileStore.insert(details, stream, (err) => {
 					if (err) {
-						logError({err});
+						logError({ err });
 						resolve();
 					} else {
 						Meteor.setTimeout(() => {
@@ -57,7 +57,7 @@ RocketChat.Migrations.add({
 
 		RocketChat.models.Uploads.find(query).forEach((record) => {
 			if (record.s3) {
-				RocketChat.models.Uploads.model.direct.update({_id: record._id}, {
+				RocketChat.models.Uploads.model.direct.update({ _id: record._id }, {
 					$set: {
 						store: 'AmazonS3:Uploads',
 						AmazonS3: {
@@ -67,9 +67,9 @@ RocketChat.Migrations.add({
 					$unset: {
 						s3: 1,
 					},
-				}, {multi: true});
+				}, { multi: true });
 			} else {
-				RocketChat.models.Uploads.model.direct.update({_id: record._id}, {
+				RocketChat.models.Uploads.model.direct.update({ _id: record._id }, {
 					$set: {
 						store: 'GoogleCloudStorage:Uploads',
 						GoogleStorage: {
@@ -79,7 +79,7 @@ RocketChat.Migrations.add({
 					$unset: {
 						googleCloudStorage: 1,
 					},
-				}, {multi: true});
+				}, { multi: true });
 			}
 		});
 
@@ -114,8 +114,8 @@ RocketChat.Migrations.add({
 			'linkedin',
 		];
 
-		const avatarsPathRecord = RocketChat.models.Settings.findOne({_id: 'Accounts_AvatarStorePath'});
-		const avatarStoreTypeRecord = RocketChat.models.Settings.findOne({_id: 'Accounts_AvatarStoreType'});
+		const avatarsPathRecord = RocketChat.models.Settings.findOne({ _id: 'Accounts_AvatarStorePath' });
+		const avatarStoreTypeRecord = RocketChat.models.Settings.findOne({ _id: 'Accounts_AvatarStoreType' });
 
 		const avatarsPath = avatarsPathRecord ? avatarsPathRecord.value : process.env.AVATARS_PATH;
 		let avatarStoreType = avatarStoreTypeRecord && avatarStoreTypeRecord.value;
@@ -140,7 +140,7 @@ RocketChat.Migrations.add({
 			Meteor.setTimeout(function() {
 				const avatarsFileStore = FileUpload.getStore('Avatars');
 
-				const users = RocketChat.models.Users.find({avatarOrigin: {$in: avatarOrigins}}, {avatarOrigin: 1, username: 1}).fetch();
+				const users = RocketChat.models.Users.find({ avatarOrigin: { $in: avatarOrigins } }, { avatarOrigin: 1, username: 1 }).fetch();
 
 				const usersTotal = users.length;
 
@@ -200,8 +200,8 @@ RocketChat.Migrations.add({
 					const avatarsChunks = new Mongo.Collection('avatars.chunks');
 					avatarsFiles.rawCollection().drop();
 					avatarsChunks.rawCollection().drop();
-					RocketChat.models.Settings.remove({_id: 'Accounts_AvatarStoreType'});
-					RocketChat.models.Settings.remove({_id: 'Accounts_AvatarStorePath'});
+					RocketChat.models.Settings.remove({ _id: 'Accounts_AvatarStoreType' });
+					RocketChat.models.Settings.remove({ _id: 'Accounts_AvatarStorePath' });
 				});
 			}, 1000);
 		});

@@ -218,7 +218,7 @@ function sort(a, b) {
 }
 
 Object.keys(historyData).sort(sort).forEach((tag) => {
-	const {prs, rcs} = historyData[tag];
+	const { prs, rcs } = historyData[tag];
 
 	if (!prs.length && !rcs.length) {
 		return;
@@ -226,7 +226,7 @@ Object.keys(historyData).sort(sort).forEach((tag) => {
 
 	const tagDate = tag === 'HEAD' ? getLatestCommitDate() : getTagDate(tag);
 
-	const {data, summary} = renderPRs(prs);
+	const { data, summary } = renderPRs(prs);
 
 	const tagText = tag === 'HEAD' ? 'Next' : tag;
 
@@ -241,7 +241,7 @@ Object.keys(historyData).sort(sort).forEach((tag) => {
 
 	if (Array.isArray(rcs)) {
 		rcs.reverse().forEach((rc) => {
-			const {data, summary} = renderPRs(rc.prs);
+			const { data, summary } = renderPRs(rc.prs);
 
 			if (historyData[tag].noMainRelease) {
 				const tagDate = getTagDate(rc.tag);

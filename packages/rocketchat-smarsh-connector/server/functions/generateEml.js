@@ -26,11 +26,11 @@ RocketChat.smarsh.generateEml = () => {
 		const timeZone = RocketChat.settings.get('Smarsh_Timezone');
 
 		RocketChat.models.Rooms.find().forEach((room) => {
-			const smarshHistory = RocketChat.smarsh.History.findOne({_id: room._id});
-			const query = {rid: room._id};
+			const smarshHistory = RocketChat.smarsh.History.findOne({ _id: room._id });
+			const query = { rid: room._id };
 
 			if (smarshHistory) {
-				query.ts = {$gt: smarshHistory.lastRan};
+				query.ts = { $gt: smarshHistory.lastRan };
 			}
 
 			const date = new Date();
@@ -53,7 +53,7 @@ RocketChat.smarsh.generateEml = () => {
 
 				// The sender
 				rows.push(open20td);
-				const sender = RocketChat.models.Users.findOne({_id: message.u._id});
+				const sender = RocketChat.models.Users.findOne({ _id: message.u._id });
 				if (data.users.indexOf(sender._id) === -1) {
 					data.users.push(sender._id);
 				}
@@ -103,7 +103,7 @@ RocketChat.smarsh.generateEml = () => {
 			if (rows.length !== 0) {
 				const result = start + rows.join('') + end;
 
-				RocketChat.smarsh.History.upsert({_id: room._id}, {
+				RocketChat.smarsh.History.upsert({ _id: room._id }, {
 					_id: room._id,
 					lastRan: date,
 					lastResult: result,

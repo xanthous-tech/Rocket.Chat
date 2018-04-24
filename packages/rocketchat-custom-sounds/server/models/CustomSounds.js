@@ -2,7 +2,7 @@ class CustomSounds extends RocketChat.models._Base {
 	constructor() {
 		super('custom_sounds');
 
-		this.tryEnsureIndex({name: 1});
+		this.tryEnsureIndex({ name: 1 });
 	}
 
 	// find one
@@ -21,7 +21,7 @@ class CustomSounds extends RocketChat.models._Base {
 
 	findByNameExceptID(name, except, options) {
 		const query = {
-			_id: {$nin: [except]},
+			_id: { $nin: [except] },
 			name,
 		};
 
@@ -36,7 +36,7 @@ class CustomSounds extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update({_id}, update);
+		return this.update({ _id }, update);
 	}
 
 	// INSERT

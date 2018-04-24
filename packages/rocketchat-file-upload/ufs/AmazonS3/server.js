@@ -1,4 +1,4 @@
-import {UploadFS} from 'meteor/jalik:ufs';
+import { UploadFS } from 'meteor/jalik:ufs';
 import _ from 'underscore';
 import S3 from 'aws-sdk/clients/s3';
 import stream from 'stream';
@@ -81,7 +81,7 @@ export class AmazonS3Store extends UploadFS.Store {
 		 * @param callback
 		 */
 		this.delete = function(fileId, callback) {
-			const file = this.getCollection().findOne({_id: fileId});
+			const file = this.getCollection().findOne({ _id: fileId });
 			const params = {
 				Key: this.getPath(file),
 			};

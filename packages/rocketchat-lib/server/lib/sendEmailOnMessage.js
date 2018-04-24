@@ -1,7 +1,7 @@
 import moment from 'moment';
 import s from 'underscore.string';
 
-function getEmailContent({messageContent, message, user, room}) {
+function getEmailContent({ messageContent, message, user, room }) {
 	const lng = user && user.language || RocketChat.settings.get('language') || 'en';
 
 	const roomName = `#${ RocketChat.settings.get('UI_Allow_room_names_with_special_chars') ? room.fname || room.name : room.name }`;
@@ -123,7 +123,7 @@ RocketChat.callbacks.add('afterSaveMessage', function(message, room) {
 				return delete usersToSendEmail[sub.u._id];
 			}
 
-			const {emailNotifications, muteGroupMentions} = sub;
+			const { emailNotifications, muteGroupMentions } = sub;
 
 			if (emailNotifications === 'nothing') {
 				return delete usersToSendEmail[sub.u._id];

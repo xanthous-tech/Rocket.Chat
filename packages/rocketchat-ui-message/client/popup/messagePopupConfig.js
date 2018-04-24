@@ -160,14 +160,14 @@ Template.messagePopupConfig.helpers({
 					const messageUsers = _.pluck(items, 'username');
 					const user = Meteor.user();
 					if (!RocketChat.authz.hasAllPermission('view-outside-room')) {
-						const usernames = RocketChat.models.Subscriptions.find({$or :[{name: exp}, {fname: exp}]}).fetch().map(({name}) => name);
-						items.push(...RocketChat.models.Users.find({username:{$in:usernames}}, {fields:{
+						const usernames = RocketChat.models.Subscriptions.find({ $or :[{ name: exp }, { fname: exp }] }).fetch().map(({ name }) => name);
+						items.push(...RocketChat.models.Users.find({ username:{ $in:usernames } }, { fields:{
 							username: 1,
 							name: 1,
 							status: 1,
-						}}, {
+						} }, {
 							limit: 5 - messageUsers.length,
-						}).fetch().map(({username, name, status}) => ({_id: username, username, name, status, sort: 1})));
+						}).fetch().map(({ username, name, status }) => ({ _id: username, username, name, status, sort: 1 })));
 					} else {
 						items.push(...Meteor.users.find({
 							$and: [
@@ -187,7 +187,7 @@ Template.messagePopupConfig.helpers({
 							],
 						}, {
 							limit: 5 - messageUsers.length,
-						}).fetch().map(({username, name, status}) => ({_id: username, username, name, status, sort: 1})));
+						}).fetch().map(({ username, name, status }) => ({ _id: username, username, name, status, sort: 1 })));
 					}
 				}
 				// Get users from db

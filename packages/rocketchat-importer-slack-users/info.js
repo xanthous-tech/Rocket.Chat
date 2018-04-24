@@ -1,4 +1,4 @@
-import {ImporterInfo} from 'meteor/rocketchat:importer';
+import { ImporterInfo } from 'meteor/rocketchat:importer';
 
 export class SlackUsersImporterInfo extends ImporterInfo {
 	constructor() {

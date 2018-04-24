@@ -46,9 +46,9 @@ Template.integrationsOutgoing.onCreated(function _integrationsOutgoingOnCreated(
 				let intRecord;
 
 				if (RocketChat.authz.hasAllPermission('manage-integrations')) {
-					intRecord = ChatIntegrations.findOne({_id: id});
+					intRecord = ChatIntegrations.findOne({ _id: id });
 				} else if (RocketChat.authz.hasAllPermission('manage-own-integrations')) {
-					intRecord = ChatIntegrations.findOne({_id: id, '_createdBy._id': Meteor.userId()});
+					intRecord = ChatIntegrations.findOne({ _id: id, '_createdBy._id': Meteor.userId() });
 				}
 
 				if (intRecord) {
@@ -303,7 +303,7 @@ Template.integrationsOutgoing.events({
 			channel = $('[name=channel]').val().trim();
 
 			if (!channel || channel.trim() === '') {
-				return toastr.error(TAPi18n.__('error-the-field-is-required', {field: TAPi18n.__('Channel')}));
+				return toastr.error(TAPi18n.__('error-the-field-is-required', { field: TAPi18n.__('Channel') }));
 			}
 		}
 
@@ -312,7 +312,7 @@ Template.integrationsOutgoing.events({
 			targetRoom = $('[name=targetRoom]').val().trim();
 
 			if (!targetRoom || targetRoom.trim() === '') {
-				return toastr.error(TAPi18n.__('error-the-field-is-required', {field: TAPi18n.__('TargetRoom')}));
+				return toastr.error(TAPi18n.__('error-the-field-is-required', { field: TAPi18n.__('TargetRoom') }));
 			}
 		}
 
@@ -362,7 +362,7 @@ Template.integrationsOutgoing.events({
 				}
 
 				toastr.success(TAPi18n.__('Integration_added'));
-				FlowRouter.go('admin-integrations-outgoing', {id: data._id});
+				FlowRouter.go('admin-integrations-outgoing', { id: data._id });
 			});
 		}
 	},

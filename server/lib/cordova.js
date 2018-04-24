@@ -164,7 +164,7 @@ function configurePush() {
 		});
 
 		if (RocketChat.settings.get('Push_enable_gateway') === true) {
-			Push.serverSend = function(options = {badge: 0}) {
+			Push.serverSend = function(options = { badge: 0 }) {
 				if (options.from !== String(options.from)) {
 					throw new Error('Push.send: option "from" not a string');
 				}

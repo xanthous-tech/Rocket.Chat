@@ -1,8 +1,8 @@
-import {RocketChat} from 'meteor/rocketchat:lib';
+import { RocketChat } from 'meteor/rocketchat:lib';
 
 import Providers from './providers';
 import Settings from './settings';
-import {path, generateCallback, generateAppCallback} from './routes';
+import { path, generateCallback, generateAppCallback } from './routes';
 
 function addProviders(config) {
 	Settings.forEach((settings, providerName) => {

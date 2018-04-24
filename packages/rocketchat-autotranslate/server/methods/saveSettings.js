@@ -1,11 +1,11 @@
 Meteor.methods({
 	'autoTranslate.saveSettings'(rid, field, value, options) {
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'saveAutoTranslateSettings'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'saveAutoTranslateSettings' });
 		}
 
 		if (!RocketChat.authz.hasPermission(Meteor.userId(), 'auto-translate')) {
-			throw new Meteor.Error('error-action-now-allowed', 'Auto-Translate is not allowed', {method: 'autoTranslate.saveSettings'});
+			throw new Meteor.Error('error-action-now-allowed', 'Auto-Translate is not allowed', { method: 'autoTranslate.saveSettings' });
 		}
 
 		check(rid, String);
@@ -13,12 +13,12 @@ Meteor.methods({
 		check(value, String);
 
 		if (['autoTranslate', 'autoTranslateLanguage'].indexOf(field) === -1) {
-			throw new Meteor.Error('error-invalid-settings', 'Invalid settings field', {method: 'saveAutoTranslateSettings'});
+			throw new Meteor.Error('error-invalid-settings', 'Invalid settings field', { method: 'saveAutoTranslateSettings' });
 		}
 
 		const subscription = RocketChat.models.Subscriptions.findOneByRoomIdAndUserId(rid, Meteor.userId());
 		if (!subscription) {
-			throw new Meteor.Error('error-invalid-subscription', 'Invalid subscription', {method: 'saveAutoTranslateSettings'});
+			throw new Meteor.Error('error-invalid-subscription', 'Invalid subscription', { method: 'saveAutoTranslateSettings' });
 		}
 
 		switch (field) {

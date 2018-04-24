@@ -10,7 +10,7 @@ function Leave(command, params, item) {
 
 	try {
 		Meteor.call('leaveRoom', item.rid);
-	} catch ({error}) {
+	} catch ({ error }) {
 		RocketChat.Notifications.notifyUser(Meteor.userId(), 'message', {
 			_id: Random.id(),
 			rid: item.rid,
@@ -20,5 +20,5 @@ function Leave(command, params, item) {
 	}
 }
 
-RocketChat.slashCommands.add('leave', Leave, {description: 'Leave_the_current_channel'});
-RocketChat.slashCommands.add('part', Leave, {description: 'Leave_the_current_channel'});
+RocketChat.slashCommands.add('leave', Leave, { description: 'Leave_the_current_channel' });
+RocketChat.slashCommands.add('part', Leave, { description: 'Leave_the_current_channel' });

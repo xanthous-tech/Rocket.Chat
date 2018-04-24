@@ -26,7 +26,7 @@ Template.visitorInfo.helpers({
 	},
 
 	room() {
-		return ChatRoom.findOne({_id: this.rid});
+		return ChatRoom.findOne({ _id: this.rid });
 	},
 
 	joinTags() {
@@ -54,9 +54,9 @@ Template.visitorInfo.helpers({
 				if (livechatData.hasOwnProperty(_id)) {
 					const customFields = Template.instance().customFields.get();
 					if (customFields) {
-						const field = _.findWhere(customFields, {_id});
+						const field = _.findWhere(customFields, { _id });
 						if (field && field.visibility !== 'hidden') {
-							fields.push({label: field.label, value: livechatData[_id]});
+							fields.push({ label: field.label, value: livechatData[_id] });
 						}
 					}
 				}
@@ -118,7 +118,7 @@ Template.visitorInfo.helpers({
 	},
 
 	roomOpen() {
-		const room = ChatRoom.findOne({_id: this.rid});
+		const room = ChatRoom.findOne({ _id: this.rid });
 
 		return room.open;
 	},
@@ -140,7 +140,7 @@ Template.visitorInfo.helpers({
 
 		const data = Template.currentData();
 		if (data && data.rid) {
-			const subscription = RocketChat.models.Subscriptions.findOne({rid: data.rid});
+			const subscription = RocketChat.models.Subscriptions.findOne({ rid: data.rid });
 			return subscription !== undefined;
 		}
 		return false;
@@ -241,10 +241,10 @@ Template.visitorInfo.onCreated(function() {
 			}
 		});
 
-		this.subscribe('livechat:visitorInfo', {rid: currentData.rid});
+		this.subscribe('livechat:visitorInfo', { rid: currentData.rid });
 	}
 
 	this.autorun(() => {
-		this.user.set(LivechatVisitor.findOne({_id: this.visitorId.get()}));
+		this.user.set(LivechatVisitor.findOne({ _id: this.visitorId.get() }));
 	});
 });

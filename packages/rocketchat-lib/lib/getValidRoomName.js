@@ -7,9 +7,9 @@ RocketChat.getValidRoomName = function getValidRoomName(displayName, rid = '') {
 		const room = RocketChat.models.Rooms.findOneByDisplayName(displayName);
 		if (room && room._id !== rid) {
 			if (room.archived) {
-				throw new Meteor.Error('error-archived-duplicate-name', `There's an archived channel with name ${ displayName }`, {function: 'RocketChat.getValidRoomName', channel_name: displayName});
+				throw new Meteor.Error('error-archived-duplicate-name', `There's an archived channel with name ${ displayName }`, { function: 'RocketChat.getValidRoomName', channel_name: displayName });
 			} else {
-				throw new Meteor.Error('error-duplicate-channel-name', `A channel with name '${ displayName }' exists`, {function: 'RocketChat.getValidRoomName', channel_name: displayName});
+				throw new Meteor.Error('error-duplicate-channel-name', `A channel with name '${ displayName }' exists`, { function: 'RocketChat.getValidRoomName', channel_name: displayName });
 			}
 		}
 		slugifiedName = s.slugify(displayName);
@@ -38,9 +38,9 @@ RocketChat.getValidRoomName = function getValidRoomName(displayName, rid = '') {
 			}
 			slugifiedName = tmpName;
 		} else if (room.archived) {
-			throw new Meteor.Error('error-archived-duplicate-name', `There's an archived channel with name ${ slugifiedName }`, {function: 'RocketChat.getValidRoomName', channel_name: slugifiedName});
+			throw new Meteor.Error('error-archived-duplicate-name', `There's an archived channel with name ${ slugifiedName }`, { function: 'RocketChat.getValidRoomName', channel_name: slugifiedName });
 		} else {
-			throw new Meteor.Error('error-duplicate-channel-name', `A channel with name '${ slugifiedName }' exists`, {function: 'RocketChat.getValidRoomName', channel_name: slugifiedName});
+			throw new Meteor.Error('error-duplicate-channel-name', `A channel with name '${ slugifiedName }' exists`, { function: 'RocketChat.getValidRoomName', channel_name: slugifiedName });
 		}
 	}
 

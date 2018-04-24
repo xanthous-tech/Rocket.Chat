@@ -6,10 +6,10 @@ import mainContent from '../../pageobjects/main-content.page';
 import sideNav from '../../pageobjects/side-nav.page';
 import Global from '../../pageobjects/global';
 
-import {username, email, password} from '../../data/user.js';
-import {checkIfUserIsValid, publicChannelCreated, setPublicChannelCreated} from '../../data/checks';
-import {publicChannelName} from '../../data/channel.js';
-import {targetUser} from '../../data/interactions.js';
+import { username, email, password } from '../../data/user.js';
+import { checkIfUserIsValid, publicChannelCreated, setPublicChannelCreated } from '../../data/checks';
+import { publicChannelName } from '../../data/channel.js';
+import { targetUser } from '../../data/interactions.js';
 
 describe('[Channel]', () => {
 	before(() => {

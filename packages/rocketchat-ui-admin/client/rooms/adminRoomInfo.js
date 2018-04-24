@@ -11,18 +11,18 @@ Template.adminRoomInfo.helpers({
 		return Template.instance().editing.get() === field;
 	},
 	notDirect() {
-		const room = AdminChatRoom.findOne(this.rid, {fields: {t: 1}});
+		const room = AdminChatRoom.findOne(this.rid, { fields: { t: 1 } });
 		return room && room.t !== 'd';
 	},
 	roomType() {
-		const room = AdminChatRoom.findOne(this.rid, {fields: {t: 1}});
+		const room = AdminChatRoom.findOne(this.rid, { fields: { t: 1 } });
 		return room && room.t;
 	},
 	channelSettings() {
 		return RocketChat.ChannelSettings.getOptions(undefined, 'admin-room');
 	},
 	roomTypeDescription() {
-		const room = AdminChatRoom.findOne(this.rid, {fields: {t: 1}});
+		const room = AdminChatRoom.findOne(this.rid, { fields: { t: 1 } });
 		const roomType = room && room.t;
 		if (roomType === 'c') {
 			return t('Channel');
@@ -31,19 +31,19 @@ Template.adminRoomInfo.helpers({
 		}
 	},
 	roomName() {
-		const room = AdminChatRoom.findOne(this.rid, {fields: {name: 1}});
+		const room = AdminChatRoom.findOne(this.rid, { fields: { name: 1 } });
 		return room && room.name;
 	},
 	roomTopic() {
-		const room = AdminChatRoom.findOne(this.rid, {fields: {topic: 1}});
+		const room = AdminChatRoom.findOne(this.rid, { fields: { topic: 1 } });
 		return room && room.topic;
 	},
 	archivationState() {
-		const room = AdminChatRoom.findOne(this.rid, {fields: {archived: 1}});
+		const room = AdminChatRoom.findOne(this.rid, { fields: { archived: 1 } });
 		return room && room.archived;
 	},
 	archivationStateDescription() {
-		const room = AdminChatRoom.findOne(this.rid, {fields: {archived: 1}});
+		const room = AdminChatRoom.findOne(this.rid, { fields: { archived: 1 } });
 		const archivationState = room && room.archived;
 		if (archivationState === true) {
 			return t('Room_archivation_state_true');
@@ -52,16 +52,16 @@ Template.adminRoomInfo.helpers({
 		}
 	},
 	canDeleteRoom() {
-		const room = AdminChatRoom.findOne(this.rid, {fields: {t: 1}});
+		const room = AdminChatRoom.findOne(this.rid, { fields: { t: 1 } });
 		const roomType = room && room.t;
 		return (roomType != null) && RocketChat.authz.hasAtLeastOnePermission(`delete-${ roomType }`);
 	},
 	readOnly() {
-		const room = AdminChatRoom.findOne(this.rid, {fields: {ro: 1}});
+		const room = AdminChatRoom.findOne(this.rid, { fields: { ro: 1 } });
 		return room && room.ro;
 	},
 	readOnlyDescription() {
-		const room = AdminChatRoom.findOne(this.rid, {fields: {ro: 1}});
+		const room = AdminChatRoom.findOne(this.rid, { fields: { ro: 1 } });
 		const readOnly = room && room.ro;
 
 		if (readOnly === true) {
@@ -128,7 +128,7 @@ Template.adminRoomInfo.onCreated(function() {
 	this.validateRoomType = () => {
 		const type = this.$('input[name=roomType]:checked').val();
 		if (type !== 'c' && type !== 'p') {
-			toastr.error(t('error-invalid-room-type', {type}));
+			toastr.error(t('error-invalid-room-type', { type }));
 		}
 		return true;
 	};
@@ -202,7 +202,7 @@ Template.adminRoomInfo.onCreated(function() {
 							}
 						});
 					};
-					if (!AdminChatRoom.findOne(rid, {fields: {default: 1}}).default) {
+					if (!AdminChatRoom.findOne(rid, { fields: { default: 1 } }).default) {
 						return saveRoomSettings();
 					}
 					modal.open({

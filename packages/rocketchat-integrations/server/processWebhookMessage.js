@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import s from 'underscore.string';
 
-this.processWebhookMessage = function(messageObj, user, defaultValues = {channel: '', alias: '', avatar: '', emoji: ''}, mustBeJoined = false) {
+this.processWebhookMessage = function(messageObj, user, defaultValues = { channel: '', alias: '', avatar: '', emoji: '' }, mustBeJoined = false) {
 	const sentData = [];
 	const channels = [].concat(messageObj.channel || messageObj.roomId || defaultValues.channel);
 
@@ -13,22 +13,22 @@ this.processWebhookMessage = function(messageObj, user, defaultValues = {channel
 
 		switch (channelType) {
 			case '#':
-				room = RocketChat.getRoomByNameOrIdWithOptionToJoin({currentUserId: user._id, nameOrId: channelValue, joinChannel: true});
+				room = RocketChat.getRoomByNameOrIdWithOptionToJoin({ currentUserId: user._id, nameOrId: channelValue, joinChannel: true });
 				break;
 			case '@':
-				room = RocketChat.getRoomByNameOrIdWithOptionToJoin({currentUserId: user._id, nameOrId: channelValue, type: 'd'});
+				room = RocketChat.getRoomByNameOrIdWithOptionToJoin({ currentUserId: user._id, nameOrId: channelValue, type: 'd' });
 				break;
 			default:
 				channelValue = channelType + channelValue;
 
 				// Try to find the room by id or name if they didn't include the prefix.
-				room = RocketChat.getRoomByNameOrIdWithOptionToJoin({currentUserId: user._id, nameOrId: channelValue, joinChannel: true, errorOnEmpty: false});
+				room = RocketChat.getRoomByNameOrIdWithOptionToJoin({ currentUserId: user._id, nameOrId: channelValue, joinChannel: true, errorOnEmpty: false });
 				if (room) {
 					break;
 				}
 
 				// We didn't get a room, let's try finding direct messages
-				room = RocketChat.getRoomByNameOrIdWithOptionToJoin({currentUserId: user._id, nameOrId: channelValue, type: 'd', tryDirectByUserIdOnly: true});
+				room = RocketChat.getRoomByNameOrIdWithOptionToJoin({ currentUserId: user._id, nameOrId: channelValue, type: 'd', tryDirectByUserIdOnly: true });
 				if (room) {
 					break;
 				}
@@ -77,7 +77,7 @@ this.processWebhookMessage = function(messageObj, user, defaultValues = {channel
 		}
 
 		const messageReturn = RocketChat.sendMessage(user, message, room);
-		sentData.push({channel, message: messageReturn});
+		sentData.push({ channel, message: messageReturn });
 	}
 
 	return sentData;

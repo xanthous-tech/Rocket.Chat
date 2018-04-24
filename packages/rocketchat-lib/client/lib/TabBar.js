@@ -51,7 +51,7 @@ RocketChat.TabBar = new (class TabBar {
 	}
 
 	getButton(id) {
-		return _.findWhere(this.buttons.get(), {id});
+		return _.findWhere(this.buttons.get(), { id });
 	}
 
 	addGroup(id, groups) {

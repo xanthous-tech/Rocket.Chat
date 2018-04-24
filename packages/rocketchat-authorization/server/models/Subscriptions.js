@@ -5,7 +5,7 @@ RocketChat.models.Subscriptions.roleBaseQuery = function(userId, scope) {
 		return;
 	}
 
-	const query = {'u._id': userId};
+	const query = { 'u._id': userId };
 	if (!_.isUndefined(scope)) {
 		query.rid = scope;
 	}
@@ -16,7 +16,7 @@ RocketChat.models.Subscriptions.findUsersInRoles = function(roles, scope, option
 	roles = [].concat(roles);
 
 	const query = {
-		roles: {$in: roles},
+		roles: { $in: roles },
 	};
 
 	if (scope) {
@@ -31,5 +31,5 @@ RocketChat.models.Subscriptions.findUsersInRoles = function(roles, scope, option
 		}
 	}));
 
-	return RocketChat.models.Users.find({_id: {$in: users}}, options);
+	return RocketChat.models.Users.find({ _id: { $in: users } }, options);
 };

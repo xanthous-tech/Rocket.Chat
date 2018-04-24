@@ -1,10 +1,10 @@
-import {Progress} from './ImporterProgress';
-import {ProgressStep} from '../../lib/ImporterProgressStep';
-import {Selection} from './ImporterSelection';
-import {Imports} from '../models/Imports';
-import {ImporterInfo} from '../../lib/ImporterInfo';
-import {RawImports} from '../models/RawImports';
-import {ImporterWebsocket} from './ImporterWebsocket';
+import { Progress } from './ImporterProgress';
+import { ProgressStep } from '../../lib/ImporterProgressStep';
+import { Selection } from './ImporterSelection';
+import { Imports } from '../models/Imports';
+import { ImporterInfo } from '../../lib/ImporterInfo';
+import { RawImports } from '../models/RawImports';
+import { ImporterWebsocket } from './ImporterWebsocket';
 
 import http from 'http';
 import https from 'https';
@@ -26,7 +26,7 @@ export class Base {
 	 * @static
 	 */
 	static getBSONSize(item) {
-		const {BSON} = require('bson');
+		const { BSON } = require('bson');
 		const bson = new BSON();
 		return bson.calculateObjectSize(item);
 	}
@@ -95,7 +95,7 @@ export class Base {
 		this.progress = new Progress(this.info.key, this.info.name);
 		this.collection = RawImports;
 
-		const importId = Imports.insert({type: this.info.name, ts: Date.now(), status: this.progress.step, valid: true, user: Meteor.user()._id});
+		const importId = Imports.insert({ type: this.info.name, ts: Date.now(), status: this.progress.step, valid: true, user: Meteor.user()._id });
 		this.importRecord = Imports.findOne(importId);
 
 		this.users = {};
@@ -124,12 +124,12 @@ export class Base {
 			if (!fileType || (fileType.mime !== this.info.mimeType)) {
 				this.logger.warn(`Invalid file uploaded for the ${ this.info.name } importer.`);
 				this.updateProgress(ProgressStep.ERROR);
-				throw new Meteor.Error('error-invalid-file-uploaded', `Invalid file uploaded to import ${ this.info.name } data from.`, {step: 'prepare'});
+				throw new Meteor.Error('error-invalid-file-uploaded', `Invalid file uploaded to import ${ this.info.name } data from.`, { step: 'prepare' });
 			}
 		}
 
 		this.updateProgress(ProgressStep.PREPARING_STARTED);
-		return this.updateRecord({file: fileName});
+		return this.updateRecord({ file: fileName });
 	}
 
 	/**
@@ -202,7 +202,7 @@ export class Base {
 		}
 
 		this.logger.debug(`${ this.info.name } is now at ${ step }.`);
-		this.updateRecord({status: this.progress.step});
+		this.updateRecord({ status: this.progress.step });
 
 		ImporterWebsocket.progressUpdated(this.progress);
 
@@ -217,7 +217,7 @@ export class Base {
 	 */
 	addCountToTotal(count) {
 		this.progress.count.total = this.progress.count.total + count;
-		this.updateRecord({'count.total': this.progress.count.total});
+		this.updateRecord({ 'count.total': this.progress.count.total });
 
 		return this.progress;
 	}
@@ -234,7 +234,7 @@ export class Base {
 		// Only update the database every 500 records
 		// Or the completed is greater than or equal to the total amount
 		if (((this.progress.count.completed % 500) === 0) || (this.progress.count.completed >= this.progress.count.total)) {
-			this.updateRecord({'count.completed': this.progress.count.completed});
+			this.updateRecord({ 'count.completed': this.progress.count.completed });
 		}
 
 		ImporterWebsocket.progressUpdated(this.progress);
@@ -249,7 +249,7 @@ export class Base {
 	 * @returns {Imports} The import record.
 	 */
 	updateRecord(fields) {
-		Imports.update({_id: this.importRecord._id}, {$set: fields});
+		Imports.update({ _id: this.importRecord._id }, { $set: fields });
 		this.importRecord = Imports.findOne(this.importRecord._id);
 
 		return this.importRecord;

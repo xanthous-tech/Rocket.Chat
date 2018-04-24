@@ -1,7 +1,7 @@
-import {authenticate} from './authenticate';
+import { authenticate } from './authenticate';
 import Settings from './settings';
-import {routes} from './routes';
-import {GrantError} from './error';
+import { routes } from './routes';
+import { GrantError } from './error';
 
 function parseUrl(url, config) {
 	return url.replace(/\{[\ ]*(provider|accessToken|refreshToken|error)[\ ]*\}/g, (_, key) => config[key]);

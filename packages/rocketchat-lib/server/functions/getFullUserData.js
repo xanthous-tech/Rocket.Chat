@@ -2,7 +2,7 @@
 import _ from 'underscore';
 import s from 'underscore.string';
 
-RocketChat.getFullUserData = function({userId, filter, limit}) {
+RocketChat.getFullUserData = function({ userId, filter, limit }) {
 	let fields = {
 		name: 1,
 		username: 1,
@@ -39,7 +39,7 @@ RocketChat.getFullUserData = function({userId, filter, limit}) {
 	const options = {
 		fields,
 		limit,
-		sort: {username: 1},
+		sort: { username: 1 },
 	};
 
 	if (filter) {

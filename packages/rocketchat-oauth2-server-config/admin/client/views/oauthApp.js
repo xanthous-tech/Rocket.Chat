@@ -17,7 +17,7 @@ Template.oauthApp.helpers({
 		if (typeof instance.data.params === 'function') {
 			const params = instance.data.params();
 			if (params && params.id) {
-				const data = ChatOAuthApps.findOne({_id: params.id});
+				const data = ChatOAuthApps.findOne({ _id: params.id });
 				if (data) {
 					data.authorization_url = Meteor.absoluteUrl('oauth/authorize');
 					data.access_token_url = Meteor.absoluteUrl('oauth/token');
@@ -88,7 +88,7 @@ Template.oauthApp.events({
 				return handleError(err);
 			}
 			toastr.success(TAPi18n.__('Application_added'));
-			FlowRouter.go('admin-oauth-app', {id: data._id});
+			FlowRouter.go('admin-oauth-app', { id: data._id });
 		});
 	},
 });

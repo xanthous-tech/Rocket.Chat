@@ -35,11 +35,11 @@ Template.autoTranslateFlexTab.helpers({
 		});
 		const autoTranslateLanguage = sub && sub.autoTranslateLanguage || Meteor.user().language || window.defaultUserLanguage() || '';
 		const supportedLanguages = Template.instance().supportedLanguages.get();
-		let language = _.findWhere(supportedLanguages, {language: autoTranslateLanguage});
+		let language = _.findWhere(supportedLanguages, { language: autoTranslateLanguage });
 		if (language) {
 			return language.language;
 		} else if (autoTranslateLanguage.indexOf('-') !== -1) {
-			language = _.findWhere(supportedLanguages, {language: autoTranslateLanguage.substr(0, 2)});
+			language = _.findWhere(supportedLanguages, { language: autoTranslateLanguage.substr(0, 2) });
 			return language && language.language;
 		}
 	},
@@ -55,11 +55,11 @@ Template.autoTranslateFlexTab.helpers({
 	languageName(targetLanguage) {
 		if (targetLanguage) {
 			const supportedLanguages = Template.instance().supportedLanguages.get();
-			let language = _.findWhere(supportedLanguages, {language: targetLanguage});
+			let language = _.findWhere(supportedLanguages, { language: targetLanguage });
 			if (language) {
 				return language.name;
 			} else if (targetLanguage.indexOf('-') !== -1) {
-				language = _.findWhere(supportedLanguages, {language: targetLanguage.substr(0, 2)});
+				language = _.findWhere(supportedLanguages, { language: targetLanguage.substr(0, 2) });
 				return language && language.name;
 			}
 		}
@@ -82,7 +82,7 @@ Template.autoTranslateFlexTab.onCreated(function() {
 				return true;
 			case 'autoTranslateLanguage':
 				value = this.$(`select[name=${ field }]`).val();
-				if (!_.findWhere(this.supportedLanguages.get(), {language: value})) {
+				if (!_.findWhere(this.supportedLanguages.get(), { language: value })) {
 					toastr.error(t('Invalid_setting_s', value || ''));
 					return false;
 				}
@@ -92,7 +92,7 @@ Template.autoTranslateFlexTab.onCreated(function() {
 
 	this.saveSetting = () => {
 		const field = this.editing.get();
-		const subscription = RocketChat.models.Subscriptions.findOne({rid: this.rid, 'u._id': Meteor.userId()});
+		const subscription = RocketChat.models.Subscriptions.findOne({ rid: this.rid, 'u._id': Meteor.userId() });
 		const previousLanguage = subscription.autoTranslateLanguage;
 		let value;
 		switch (field) {
@@ -105,30 +105,30 @@ Template.autoTranslateFlexTab.onCreated(function() {
 		}
 
 		if (this.validateSetting(field)) {
-			Meteor.call('autoTranslate.saveSettings', this.data.rid, field, value, {defaultLanguage: Meteor.user().language || window.defaultUserLanguage()}, (err/* , result*/) => {
+			Meteor.call('autoTranslate.saveSettings', this.data.rid, field, value, { defaultLanguage: Meteor.user().language || window.defaultUserLanguage() }, (err/* , result*/) => {
 				if (err) {
 					return handleError(err);
 				}
 
-				const query = {rid: this.data.rid, 'u._id': {$ne: Meteor.userId()}};
+				const query = { rid: this.data.rid, 'u._id': { $ne: Meteor.userId() } };
 				if (field === 'autoTranslateLanguage') {
-					query.$or = [{[`translations.${ previousLanguage }`]: {$exists: 1}}, {[`translations.${ value }`]: {$exists: 1}}, {[`attachments.translations.${ previousLanguage }`]: {$exists: 1}}, {[`attachments.translations.${ value }`]: {$exists: 1}}];
+					query.$or = [{ [`translations.${ previousLanguage }`]: { $exists: 1 } }, { [`translations.${ value }`]: { $exists: 1 } }, { [`attachments.translations.${ previousLanguage }`]: { $exists: 1 } }, { [`attachments.translations.${ value }`]: { $exists: 1 } }];
 				} else {
-					query.$or = [{[`translations.${ subscription.autoTranslateLanguage }`]: {$exists: 1}}, {[`attachments.translations.${ subscription.autoTranslateLanguage }`]: {$exists: 1}}];
+					query.$or = [{ [`translations.${ subscription.autoTranslateLanguage }`]: { $exists: 1 } }, { [`attachments.translations.${ subscription.autoTranslateLanguage }`]: { $exists: 1 } }];
 				}
 
 				if (field === 'autoTranslate' && value === '0') {
-					RocketChat.models.Messages.update(query, {$unset: {autoTranslateShowInverse: 1}}, {multi: true});
+					RocketChat.models.Messages.update(query, { $unset: { autoTranslateShowInverse: 1 } }, { multi: true });
 				}
 
 				const display = field === 'autoTranslate' ? true : subscription && subscription.autoTranslate;
 				if (display) {
-					query.autoTranslateShowInverse = {$ne: true};
+					query.autoTranslateShowInverse = { $ne: true };
 				} else {
 					query.autoTranslateShowInverse = true;
 				}
 
-				RocketChat.models.Messages.update(query, {$set: {random: Random.id()}}, {multi: true});
+				RocketChat.models.Messages.update(query, { $set: { random: Random.id() } }, { multi: true });
 
 				this.editing.set();
 			});

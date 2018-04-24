@@ -142,12 +142,12 @@ class _Logger {
 			_.each(this.config.sections, (name, section) => {
 				this[section] = {};
 				_.each(defaultTypes, (typeConfig, type) => {
-					self[section][type] = (...args) => this[type].apply({__section: name}, args);
-					self[section][`${ type }_box`] = (...args) => this[`${ type }_box`].apply({__section: name}, args);
+					self[section][type] = (...args) => this[type].apply({ __section: name }, args);
+					self[section][`${ type }_box`] = (...args) => this[`${ type }_box`].apply({ __section: name }, args);
 				});
 				_.each(this.config.methods, (typeConfig, method) => {
-					self[section][method] = (...args) => self[method].apply({__section: name}, args);
-					self[section][`${ method }_box`] = (...args) => self[`${ method }_box`].apply({__section: name}, args);
+					self[section][method] = (...args) => self[method].apply({ __section: name }, args);
+					self[section][`${ method }_box`] = (...args) => self[`${ method }_box`].apply({ __section: name }, args);
 				});
 			});
 		}
@@ -190,7 +190,7 @@ class _Logger {
 			// We do NOT use Error.prepareStackTrace here (a V8 extension that gets us a
 			// core-parsed stack) since it's impossible to compose it with the use of
 			// Error.prepareStackTrace used on the server for source maps.
-			const {stack} = new Error();
+			const { stack } = new Error();
 			return stack;
 		};
 		const stack = getStack();
@@ -203,7 +203,7 @@ class _Logger {
 		let line = lines[0];
 		for (let index = 0, len = lines.length; index < len, index++; line = lines[index]) {
 			if (line.match(/^\s*at eval \(eval/)) {
-				return {file: 'eval'};
+				return { file: 'eval' };
 			}
 
 			if (!line.match(/packages\/rocketchat_logger(?:\/|\.js)/)) {
@@ -308,7 +308,7 @@ const processString = function(string, date) {
 				level: 'info',
 			};
 		}
-		return Log.format(obj, {color: true});
+		return Log.format(obj, { color: true });
 	} catch (error) {
 		return string;
 	}
@@ -374,4 +374,4 @@ Meteor.publish('stdout', function() {
 });
 
 
-export {SystemLogger, StdOut, LoggerManager, processString, Logger};
+export { SystemLogger, StdOut, LoggerManager, processString, Logger };

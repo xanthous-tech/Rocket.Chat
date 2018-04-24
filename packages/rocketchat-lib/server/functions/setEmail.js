@@ -3,11 +3,11 @@ import s from 'underscore.string';
 RocketChat._setEmail = function(userId, email, shouldSendVerificationEmail = true) {
 	email = s.trim(email);
 	if (!userId) {
-		throw new Meteor.Error('error-invalid-user', 'Invalid user', {function: '_setEmail'});
+		throw new Meteor.Error('error-invalid-user', 'Invalid user', { function: '_setEmail' });
 	}
 
 	if (!email) {
-		throw new Meteor.Error('error-invalid-email', 'Invalid email', {function: '_setEmail'});
+		throw new Meteor.Error('error-invalid-email', 'Invalid email', { function: '_setEmail' });
 	}
 
 	RocketChat.validateEmailDomain(email);
@@ -21,7 +21,7 @@ RocketChat._setEmail = function(userId, email, shouldSendVerificationEmail = tru
 
 	// Check email availability
 	if (!RocketChat.checkEmailAvailability(email)) {
-		throw new Meteor.Error('error-field-unavailable', `${ email } is already in use :(`, {function: '_setEmail', field: email});
+		throw new Meteor.Error('error-field-unavailable', `${ email } is already in use :(`, { function: '_setEmail', field: email });
 	}
 
 	// Set new email

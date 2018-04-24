@@ -20,7 +20,7 @@ Meteor.methods({
 		const me = Meteor.users.findOne(Meteor.userId());
 
 		if (!(hasPermission || (editAllowed && editOwn))) {
-			toastr.error(t('error-action-not-allowed', {action: t('Message_editing')}));
+			toastr.error(t('error-action-not-allowed', { action: t('Message_editing') }));
 			return false;
 		}
 
@@ -52,7 +52,7 @@ Meteor.methods({
 			};
 
 			message = RocketChat.callbacks.run('beforeSaveMessage', message);
-			const messageObject = {editedAt: message.editedAt, editedBy: message.editedBy, msg: message.msg};
+			const messageObject = { editedAt: message.editedAt, editedBy: message.editedBy, msg: message.msg };
 
 			if (originalMessage.attachments) {
 				if (originalMessage.attachments[0].description !== undefined) {
@@ -62,7 +62,7 @@ Meteor.methods({
 			ChatMessage.update({
 				_id: message._id,
 				'u._id': Meteor.userId(),
-			}, {$set : messageObject});
+			}, { $set : messageObject });
 		});
 	},
 });

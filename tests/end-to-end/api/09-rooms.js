@@ -1,8 +1,8 @@
 /* eslint-env mocha */
 /* globals expect */
 
-import {getCredentials, api, request, credentials} from '../../data/api-data.js';
-import {password} from '../../data/user';
+import { getCredentials, api, request, credentials } from '../../data/api-data.js';
+import { password } from '../../data/user';
 
 describe('[Rooms]', function() {
 	this.retries(0);
@@ -167,7 +167,7 @@ describe('[Rooms]', function() {
 			const email = `${ username }@rocket.chat`;
 			request.post(api('users.create'))
 				.set(credentials)
-				.send({email, name: username, username, password})
+				.send({ email, name: username, username, password })
 				.end((err, res) => {
 					user = res.body.user;
 					done();

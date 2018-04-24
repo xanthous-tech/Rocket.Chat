@@ -5,7 +5,7 @@ Meteor.methods({
 		check(rid, String);
 
 		if (!Meteor.userId() && RocketChat.settings.get('Accounts_AllowAnonymousRead') === false) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', {method: 'getRoomRoles'});
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'getRoomRoles' });
 		}
 
 		check(rid, String);
@@ -23,7 +23,7 @@ Meteor.methods({
 
 		const UI_Use_Real_Name = RocketChat.settings.get('UI_Use_Real_Name') === true;
 
-		const roles = RocketChat.models.Roles.find({scope: 'Subscriptions', description: {$exists: 1, $ne: ''}}).fetch();
+		const roles = RocketChat.models.Roles.find({ scope: 'Subscriptions', description: { $exists: 1, $ne: '' } }).fetch();
 		const subscriptions = RocketChat.models.Subscriptions.findByRoomIdAndRoles(rid, _.pluck(roles, '_id'), options).fetch();
 
 		if (!UI_Use_Real_Name) {

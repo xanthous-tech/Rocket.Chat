@@ -36,8 +36,8 @@ Meteor.methods({
 				const email = {
 					to: destinations,
 					from: RocketChat.settings.get('From_Email'),
-					subject: Accounts.emailTemplates.userActivated.subject({active}),
-					html: Accounts.emailTemplates.userActivated.html({active, name: user.name, username: user.username}),
+					subject: Accounts.emailTemplates.userActivated.subject({ active }),
+					html: Accounts.emailTemplates.userActivated.html({ active, name: user.name, username: user.username }),
 				};
 
 				Meteor.defer(() => Email.send(email));

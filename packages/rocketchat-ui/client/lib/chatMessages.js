@@ -30,7 +30,7 @@ this.ChatMessages = class ChatMessages {
 	}
 
 	recordInputAsDraft() {
-		const {id} = this.editing;
+		const { id } = this.editing;
 
 		const message = this.getMessageById(id);
 		const record = this.records[id] || {};
@@ -70,12 +70,12 @@ this.ChatMessages = class ChatMessages {
 	}
 
 	toPrevMessage() {
-		const {index} = this.editing;
+		const { index } = this.editing;
 		return this.editByIndex((index != null) ? index - 1 : undefined);
 	}
 
 	toNextMessage() {
-		const {index} = this.editing;
+		const { index } = this.editing;
 		if (!this.editByIndex(index + 1)) { return this.clearEditing(); }
 	}
 
@@ -190,7 +190,7 @@ this.ChatMessages = class ChatMessages {
 			if (reply !== undefined) {
 				const url = RocketChat.MessageAction.getPermaLink(reply._id);
 				msg = `[ ](${ url }) `;
-				const roomInfo = RocketChat.models.Rooms.findOne(reply.rid, {fields: {t: 1}});
+				const roomInfo = RocketChat.models.Rooms.findOne(reply.rid, { fields: { t: 1 } });
 				if (roomInfo.t !== 'd' && reply.u.username !== Meteor.user().username) {
 					msg += `@${ reply.u.username } `;
 				}
@@ -200,12 +200,12 @@ this.ChatMessages = class ChatMessages {
 				.removeData('reply')
 				.trigger('dataChange');
 
-			const msgObject = {_id: Random.id(), rid, msg};
+			const msgObject = { _id: Random.id(), rid, msg };
 
 			if (msg.slice(0, 2) === '+:') {
 				const reaction = msg.slice(1).trim();
 				if (RocketChat.emoji.list[reaction]) {
-					const lastMessage = ChatMessage.findOne({rid}, {fields: {ts: 1}, sort: {ts: -1}});
+					const lastMessage = ChatMessage.findOne({ rid }, { fields: { ts: 1 }, sort: { ts: -1 } });
 					Meteor.call('setReaction', reaction, lastMessage._id);
 					input.value = '';
 					$(input).trigger('change').trigger('input');
@@ -251,7 +251,7 @@ this.ChatMessages = class ChatMessages {
 								if (commandOptions.clientOnly) {
 									commandOptions.callback(command, param, msgObject);
 								} else {
-									Meteor.call('slashCommand', {cmd: command, params: param, msg: msgObject}, (err, result) => typeof commandOptions.result === 'function' && commandOptions.result(err, result, {cmd: command, params: param, msg: msgObject}));
+									Meteor.call('slashCommand', { cmd: command, params: param, msg: msgObject }, (err, result) => typeof commandOptions.result === 'function' && commandOptions.result(err, result, { cmd: command, params: param, msg: msgObject }));
 								}
 
 								return;
@@ -263,14 +263,14 @@ this.ChatMessages = class ChatMessages {
 								_id: Random.id(),
 								rid,
 								ts: new Date,
-								msg: TAPi18n.__('No_such_command', {command: match[1]}),
+								msg: TAPi18n.__('No_such_command', { command: match[1] }),
 								u: {
 									username: RocketChat.settings.get('InternalHubot_Username'),
 								},
 								private: true,
 							};
 
-							ChatMessage.upsert({_id: invalidCommandMsg._id}, invalidCommandMsg);
+							ChatMessage.upsert({ _id: invalidCommandMsg._id }, invalidCommandMsg);
 							return;
 						}
 					}
@@ -340,7 +340,7 @@ this.ChatMessages = class ChatMessages {
 			}
 		}
 
-		return Meteor.call('deleteMessage', {_id: message._id}, function(error) {
+		return Meteor.call('deleteMessage', { _id: message._id }, function(error) {
 			if (error) {
 				return handleError(error);
 			}
@@ -367,7 +367,7 @@ this.ChatMessages = class ChatMessages {
 
 	update(id, rid, msg, isDescription) {
 		if ((s.trim(msg) !== '') || (isDescription === true)) {
-			Meteor.call('updateMessage', {_id: id, msg, rid});
+			Meteor.call('updateMessage', { _id: id, msg, rid });
 			this.clearEditing();
 			return this.stopTyping(rid);
 		}
@@ -395,7 +395,7 @@ this.ChatMessages = class ChatMessages {
 		const [value] = input.value.match(/[^\s]+$/) || [];
 		if (!value) { return; }
 		const re = new RegExp(value, 'i');
-		const user = Meteor.users.findOne({username: re});
+		const user = Meteor.users.findOne({ username: re });
 		if (user) {
 			return input.value = input.value.replace(value, `@${ user.username } `);
 		}

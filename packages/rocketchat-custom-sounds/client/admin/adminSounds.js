@@ -1,6 +1,6 @@
 import s from 'underscore.string';
 
-import {RocketChatTabBar} from 'meteor/rocketchat:lib';
+import { RocketChatTabBar } from 'meteor/rocketchat:lib';
 
 Template.adminSounds.helpers({
 	isReady() {
@@ -80,12 +80,12 @@ Template.adminSounds.onCreated(function() {
 
 		if (filter) {
 			const filterReg = new RegExp(s.escapeRegExp(filter), 'i');
-			query = {name: filterReg};
+			query = { name: filterReg };
 		}
 
 		const limit = (instance.limit != null) ? instance.limit.get() : 0;
 
-		return RocketChat.models.CustomSounds.find(query, {limit, sort: {name: 1}}).fetch();
+		return RocketChat.models.CustomSounds.find(query, { limit, sort: { name: 1 } }).fetch();
 	};
 });
 
@@ -113,7 +113,7 @@ Template.adminSounds.events({
 
 	'click .sound-info'(e, instance) {
 		e.preventDefault();
-		instance.tabBarData.set(RocketChat.models.CustomSounds.findOne({_id: this._id}));
+		instance.tabBarData.set(RocketChat.models.CustomSounds.findOne({ _id: this._id }));
 		instance.tabBar.showGroup('custom-sounds-selected');
 		instance.tabBar.open('admin-sound-info');
 	},

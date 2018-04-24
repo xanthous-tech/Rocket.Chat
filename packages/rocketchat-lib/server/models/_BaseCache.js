@@ -1,7 +1,7 @@
 /* eslint new-cap: 0 */
 import _ from 'underscore';
 import loki from 'lokijs';
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 import objectPath from 'object-path';
 
 const logger = new Logger('BaseCache');
@@ -120,7 +120,7 @@ class Adapter {
 	deleteDatabase(/* dbname, callback*/) {}
 }
 
-const db = new loki('rocket.chat.json', {adapter: Adapter});
+const db = new loki('rocket.chat.json', { adapter: Adapter });
 
 class ModelsBaseCache extends EventEmitter {
 	constructor(model) {
@@ -158,42 +158,42 @@ class ModelsBaseCache extends EventEmitter {
 		this.collection = this.db.addCollection(this.collectionName);
 	}
 
-	hasOne(join, {field, link}) {
-		this.join({join, field, link, multi: false});
+	hasOne(join, { field, link }) {
+		this.join({ join, field, link, multi: false });
 	}
 
-	hasMany(join, {field, link}) {
-		this.join({join, field, link, multi: true});
+	hasMany(join, { field, link }) {
+		this.join({ join, field, link, multi: true });
 	}
 
-	join({join, field, link, multi}) {
+	join({ join, field, link, multi }) {
 		if (!RocketChat.models[join]) {
 			console.log(`Invalid cache model ${ join }`);
 			return;
 		}
 
 		RocketChat.models[join].cache.on('inserted', (record) => {
-			this.processRemoteJoinInserted({join, field, link, multi, record});
+			this.processRemoteJoinInserted({ join, field, link, multi, record });
 		});
 
 		RocketChat.models[join].cache.on('beforeupdate', (record, diff) => {
 			if (diff[link.remote]) {
-				this.processRemoteJoinRemoved({join, field, link, multi, record});
+				this.processRemoteJoinRemoved({ join, field, link, multi, record });
 			}
 		});
 
 		RocketChat.models[join].cache.on('updated', (record, diff) => {
 			if (diff[link.remote]) {
-				this.processRemoteJoinInserted({join, field, link, multi, record});
+				this.processRemoteJoinInserted({ join, field, link, multi, record });
 			}
 		});
 
 		RocketChat.models[join].cache.on('removed', (record) => {
-			this.processRemoteJoinRemoved({join, field, link, multi, record});
+			this.processRemoteJoinRemoved({ join, field, link, multi, record });
 		});
 
 		this.on('inserted', (localRecord) => {
-			this.processLocalJoinInserted({join, field, link, multi, localRecord});
+			this.processLocalJoinInserted({ join, field, link, multi, localRecord });
 		});
 
 		this.on('beforeupdate', (localRecord, diff) => {
@@ -208,12 +208,12 @@ class ModelsBaseCache extends EventEmitter {
 
 		this.on('updated', (localRecord, diff) => {
 			if (diff[link.local]) {
-				this.processLocalJoinInserted({join, field, link, multi, localRecord});
+				this.processLocalJoinInserted({ join, field, link, multi, localRecord });
 			}
 		});
 	}
 
-	processRemoteJoinInserted({field, link, multi, record}) {
+	processRemoteJoinInserted({ field, link, multi, record }) {
 		let localRecords = this._findByIndex(link.local, objectPath.get(record, link.remote));
 
 		if (!localRecords) {
@@ -251,7 +251,7 @@ class ModelsBaseCache extends EventEmitter {
 		}
 	}
 
-	processLocalJoinInserted({join, field, link, multi, localRecord}) {
+	processLocalJoinInserted({ join, field, link, multi, localRecord }) {
 		let records = RocketChat.models[join].cache._findByIndex(link.remote, objectPath.get(localRecord, link.local));
 
 		if (!Array.isArray(records)) {
@@ -280,7 +280,7 @@ class ModelsBaseCache extends EventEmitter {
 		}
 	}
 
-	processRemoteJoinRemoved({field, link, multi, record}) {
+	processRemoteJoinRemoved({ field, link, multi, record }) {
 		let localRecords = this._findByIndex(link.local, objectPath.get(record, link.remote));
 
 		if (!localRecords) {
@@ -468,7 +468,7 @@ class ModelsBaseCache extends EventEmitter {
 			return;
 		}
 
-		this.model._db.on('change', ({action, id, data/* , oplog*/}) => {
+		this.model._db.on('change', ({ action, id, data/* , oplog*/ }) => {
 			switch (action) {
 				case 'insert':
 					data._id = id;
@@ -621,7 +621,7 @@ class ModelsBaseCache extends EventEmitter {
 					});
 				}
 			}
-			query = {$and: and};
+			query = { $and: and };
 		}
 
 		for (const field in query) {
@@ -664,8 +664,8 @@ class ModelsBaseCache extends EventEmitter {
 			count: () => {
 				try {
 					query = this.processQuery(query);
-					const {limit, skip} = options;
-					return this.processQueryOptionsOnResult(this.collection.find(query), {limit, skip}).length;
+					const { limit, skip } = options;
+					return this.processQueryOptionsOnResult(this.collection.find(query), { limit, skip }).length;
 				} catch (e) {
 					console.error('Exception on cache find for', this.collectionName);
 					console.error('Query:', JSON.stringify(query, null, 2));
@@ -712,7 +712,7 @@ class ModelsBaseCache extends EventEmitter {
 	}
 
 	findOneByIds(ids, options) {
-		const query = this.processQuery({_id: {$in: ids}});
+		const query = this.processQuery({ _id: { $in: ids } });
 		return this.processQueryOptionsOnResult(this.collection.findOne(query), options);
 	}
 
@@ -934,7 +934,7 @@ class ModelsBaseCache extends EventEmitter {
 		const record = this._findByIndex('_id', id);
 		if (record) {
 			this.emit('beforeremove', record);
-			this.collection.removeWhere({_id: id});
+			this.collection.removeWhere({ _id: id });
 			this.removeFromAllIndexes(record);
 			this.emit('removed', record);
 		}

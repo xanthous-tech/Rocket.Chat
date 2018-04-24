@@ -16,10 +16,10 @@ Meteor.methods({
 		});
 
 		if (verified) {
-			const {codes, hashedCodes} = RocketChat.TOTP.generateCodes();
+			const { codes, hashedCodes } = RocketChat.TOTP.generateCodes();
 
 			RocketChat.models.Users.enable2FAAndSetSecretAndCodesByUserId(Meteor.userId(), user.services.totp.tempSecret, hashedCodes);
-			return {codes};
+			return { codes };
 		}
 	},
 });

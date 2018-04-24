@@ -31,7 +31,7 @@ const setFieldValue = function(settingId, value, type, editor) {
 			const selectedRooms = Template.instance().selectedRooms.get();
 			selectedRooms[settingId] = value;
 			Template.instance().selectedRooms.set(selectedRooms);
-			TempSettings.update({_id: settingId}, {$set: {value, changed: JSON.stringify(RocketChat.settings.collectionPrivate.findOne(settingId).value) !== JSON.stringify(value)}});
+			TempSettings.update({ _id: settingId }, { $set: { value, changed: JSON.stringify(RocketChat.settings.collectionPrivate.findOne(settingId).value) !== JSON.stringify(value) } });
 			break;
 		default:
 			input.val(value).change();
@@ -86,7 +86,7 @@ Template.admin.helpers({
 
 		let result = Object.keys(languages).map((key) => {
 			const language = languages[key];
-			return _.extend(language, {key});
+			return _.extend(language, { key });
 		});
 
 		result = _.sortBy(result, 'key');
@@ -110,7 +110,7 @@ Template.admin.helpers({
 		if (!group) {
 			return;
 		}
-		const settings = RocketChat.settings.collectionPrivate.find({group: groupId}, {sort: {section: 1, sorter: 1, i18nLabel: 1}}).fetch();
+		const settings = RocketChat.settings.collectionPrivate.find({ group: groupId }, { sort: { section: 1, sorter: 1, i18nLabel: 1 } }).fetch();
 		const sections = {};
 
 		Object.keys(settings).forEach((key) => {
@@ -262,7 +262,7 @@ Template.admin.helpers({
 		return Meteor.absoluteUrl(url);
 	},
 	selectedOption(_id, val) {
-		const option = RocketChat.settings.collectionPrivate.findOne({_id});
+		const option = RocketChat.settings.collectionPrivate.findOne({ _id });
 		return option && option.value === val;
 	},
 	random() {
@@ -293,7 +293,7 @@ Template.admin.helpers({
 			}
 			const onChange = function() {
 				const value = codeMirror.getValue();
-				TempSettings.update({_id}, {$set: {value, changed: RocketChat.settings.collectionPrivate.findOne(_id).value !== value}});
+				TempSettings.update({ _id }, { $set: { value, changed: RocketChat.settings.collectionPrivate.findOne(_id).value !== value } });
 			};
 			const onChangeDelayed = _.debounce(onChange, 500);
 			codeMirror.on('change', onChangeDelayed);
@@ -335,7 +335,7 @@ Template.admin.helpers({
 		return color.replace(/theme-color-/, '@');
 	},
 	showResetButton() {
-		const setting = TempSettings.findOne({_id: this._id}, {fields: {value: 1, packageValue: 1}});
+		const setting = TempSettings.findOne({ _id: this._id }, { fields: { value: 1, packageValue: 1 } });
 		return this.type !== 'asset' && setting.value !== setting.packageValue && !this.blocked;
 	},
 });
@@ -364,8 +364,8 @@ Template.admin.events({
 	}, 500),
 	'change select[name=color-editor]'(e) {
 		const value = s.trim($(e.target).val());
-		TempSettings.update({_id: this._id}, {$set: {editor: value}});
-		RocketChat.settings.collectionPrivate.update({_id: this._id}, {$set: {editor: value}});
+		TempSettings.update({ _id: this._id }, { $set: { editor: value } });
+		RocketChat.settings.collectionPrivate.update({ _id: this._id }, { $set: { editor: value } });
 	},
 	'click .rc-header__section-button .discard'() {
 		const group = FlowRouter.getParam('group');
@@ -374,9 +374,9 @@ Template.admin.events({
 			changed: true,
 		};
 		const settings = TempSettings.find(query, {
-			fields: {_id: 1, value: 1, packageValue: 1}}).fetch();
+			fields: { _id: 1, value: 1, packageValue: 1 } }).fetch();
 		settings.forEach(function(setting) {
-			const oldSetting = RocketChat.settings.collectionPrivate.findOne({_id: setting._id}, {fields: {value: 1, type: 1, editor: 1}});
+			const oldSetting = RocketChat.settings.collectionPrivate.findOne({ _id: setting._id }, { fields: { value: 1, type: 1, editor: 1 } });
 			setFieldValue(setting._id, oldSetting.value, oldSetting.type, oldSetting.editor);
 		});
 	},
@@ -395,14 +395,14 @@ Template.admin.events({
 		const group = FlowRouter.getParam('group');
 		const section = $(e.target).data('section');
 		if (section === '') {
-			settings = TempSettings.find({group, section: {$exists: false}}, {fields: {_id: 1}}).fetch();
+			settings = TempSettings.find({ group, section: { $exists: false } }, { fields: { _id: 1 } }).fetch();
 		} else {
-			settings = TempSettings.find({group, section}, {fields: {_id: 1}}).fetch();
+			settings = TempSettings.find({ group, section }, { fields: { _id: 1 } }).fetch();
 		}
 		settings.forEach(function(setting) {
 			const defaultValue = getDefaultSetting(setting._id);
 			setFieldValue(setting._id, defaultValue.packageValue, defaultValue.type, defaultValue.editor);
-			TempSettings.update({_id: setting._id}, {
+			TempSettings.update({ _id: setting._id }, {
 				$set: {
 					value: defaultValue.packageValue,
 					changed: RocketChat.settings.collectionPrivate.findOne(setting._id).value !== defaultValue.packageValue,
@@ -412,14 +412,14 @@ Template.admin.events({
 	},
 	'click .rc-header__section-button .save'() {
 		const group = FlowRouter.getParam('group');
-		const query = {group, changed: true};
-		const settings = TempSettings.find(query, {fields: {_id: 1, value: 1, editor: 1}}).fetch();
+		const query = { group, changed: true };
+		const settings = TempSettings.find(query, { fields: { _id: 1, value: 1, editor: 1 } }).fetch();
 		if (!_.isEmpty(settings)) {
 			RocketChat.settings.batchSet(settings, function(err) {
 				if (err) {
 					return handleError(err);
 				}
-				TempSettings.update({changed: true}, {$unset: {changed: 1}});
+				TempSettings.update({ changed: true }, { $unset: { changed: 1 } });
 				toastr.success(TAPi18n.__('Settings_updated'));
 			});
 		}
@@ -549,7 +549,7 @@ Template.admin.events({
 		selectedRooms[this.id] = (selectedRooms[this.id] || []).concat(doc);
 		instance.selectedRooms.set(selectedRooms);
 		const value = selectedRooms[this.id];
-		TempSettings.update({_id: this.id}, {$set: {value}});
+		TempSettings.update({ _id: this.id }, { $set: { value } });
 		event.currentTarget.value = '';
 		event.currentTarget.focus();
 	},
@@ -562,7 +562,7 @@ Template.admin.events({
 		});
 		instance.selectedRooms.set(selectedRooms);
 		const value = selectedRooms[settingId];
-		TempSettings.update({_id: settingId}, {
+		TempSettings.update({ _id: settingId }, {
 			$set: {
 				value,
 			},
@@ -579,7 +579,7 @@ Template.admin.onRendered(function() {
 		const hasColor = TempSettings.find({
 			group: FlowRouter.getParam('group'),
 			type: 'color',
-		}, {fields: {_id: 1, editor: 1}}).fetch().length;
+		}, { fields: { _id: 1, editor: 1 } }).fetch().length;
 		if (hasColor) {
 			Meteor.setTimeout(function() {
 				$('.colorpicker-input').each(function(index, el) {

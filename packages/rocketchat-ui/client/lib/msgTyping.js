@@ -13,13 +13,13 @@ export const MsgTyping = (function() {
 		if (!_.isEmpty(usersTyping[room] && usersTyping[room].users)) {
 			return;
 		}
-		usersTyping[room] = {users: {}};
+		usersTyping[room] = { users: {} };
 		return RocketChat.Notifications.onRoom(room, 'typing', function(username, typing) {
 			const user = Meteor.user();
 			if (username === (user && user.username)) {
 				return;
 			}
-			const {users} = usersTyping[room];
+			const { users } = usersTyping[room];
 			if (typing === true) {
 				users[username] = Meteor.setTimeout(function() {
 					delete users[username];
@@ -62,13 +62,13 @@ export const MsgTyping = (function() {
 	const get = function(room) {
 		dep.depend();
 		if (!usersTyping[room]) {
-			usersTyping[room] = {users: {}};
+			usersTyping[room] = { users: {} };
 		}
-		const {users} = usersTyping[room];
+		const { users } = usersTyping[room];
 		return _.keys(users) || [];
 	};
 
-	return {start, stop, get, selfTyping};
+	return { start, stop, get, selfTyping };
 }());
 
 this.MsgTyping = MsgTyping;

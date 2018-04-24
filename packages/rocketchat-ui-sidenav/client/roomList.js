@@ -1,7 +1,7 @@
 /* globals RocketChat */
 import _ from 'underscore';
 
-import {UiTextContext} from 'meteor/rocketchat:lib';
+import { UiTextContext } from 'meteor/rocketchat:lib';
 
 Template.roomList.helpers({
 	rooms() {
@@ -14,7 +14,7 @@ Template.roomList.helpers({
 		*/
 
 		if (this.anonymous) {
-			return RocketChat.models.Rooms.find({t: 'c'}, {sort: {name: 1}});
+			return RocketChat.models.Rooms.find({ t: 'c' }, { sort: { name: 1 } });
 		}
 		const user = Meteor.user();
 		const sortBy = RocketChat.getUserPreference(user, 'sidebarSortby') || 'alphabetical';
@@ -32,8 +32,8 @@ Template.roomList.helpers({
 
 		if (this.identifier === 'unread') {
 			query.alert = true;
-			query.hideUnreadStatus = {$ne: true};
-			return ChatSubscription.find(query, {sort});
+			query.hideUnreadStatus = { $ne: true };
+			return ChatSubscription.find(query, { sort });
 		}
 
 		const favoritesEnabled = !!(RocketChat.settings.get('Favorite_Rooms') && RocketChat.getUserPreference(user, 'sidebarShowFavorites'));
@@ -52,20 +52,20 @@ Template.roomList.helpers({
 			}
 
 			if (['c', 'p'].includes(this.identifier)) {
-				query.tokens = {$exists: false};
+				query.tokens = { $exists: false };
 			} else if (this.identifier === 'tokens' && user && user.services && user.services.tokenpass) {
-				query.tokens = {$exists: true};
+				query.tokens = { $exists: true };
 			}
 
 			if (RocketChat.getUserPreference(user, 'sidebarShowUnread')) {
 				query.$or = [
-					{alert: {$ne: true}},
-					{hideUnreadStatus: true},
+					{ alert: { $ne: true } },
+					{ hideUnreadStatus: true },
 				];
 			}
-			query.t = {$in: types};
+			query.t = { $in: types };
 			if (favoritesEnabled) {
-				query.f = {$ne: favoritesEnabled};
+				query.f = { $ne: favoritesEnabled };
 			}
 		}
 
@@ -82,7 +82,7 @@ Template.roomList.helpers({
 				};
 			}), 'lm').reverse();
 		}
-		return ChatSubscription.find(query, {sort});
+		return ChatSubscription.find(query, { sort });
 	},
 
 	isLivechat() {

@@ -14,9 +14,9 @@ import {
 	targetUser,
 	log,
 } from '../../data/api-data.js';
-import {adminEmail, preferences, password} from '../../data/user.js';
-import {imgURL} from '../../data/interactions.js';
-import {customFieldText, clearCustomFields, setCustomFields} from '../../data/custom-fields.js';
+import { adminEmail, preferences, password } from '../../data/user.js';
+import { imgURL } from '../../data/interactions.js';
+import { customFieldText, clearCustomFields, setCustomFields } from '../../data/custom-fields.js';
 
 describe('[Users]', function() {
 	this.retries(0);
@@ -57,14 +57,14 @@ describe('[Users]', function() {
 		});
 
 		it('should create a new user with custom fields', (done) => {
-			setCustomFields({customFieldText}, (error) => {
+			setCustomFields({ customFieldText }, (error) => {
 				if (error) {
 					return done(error);
 				}
 
 				const username = `customField_${ apiUsername }`;
 				const email = `customField_${ apiEmail }`;
-				const customFields = {customFieldText: 'success'};
+				const customFields = { customFieldText: 'success' };
 
 				request.post(api('users.create'))
 					.set(credentials)
@@ -95,7 +95,7 @@ describe('[Users]', function() {
 
 		function failUserWithCustomField(field) {
 			it(`should not create a user if a custom field ${ field.reason }`, (done) => {
-				setCustomFields({customFieldText}, (error) => {
+				setCustomFields({ customFieldText }, (error) => {
 					if (error) {
 						return done(error);
 					}
@@ -128,9 +128,9 @@ describe('[Users]', function() {
 		}
 
 		[
-			{name: 'customFieldText', value: '', reason: 'is required and missing'},
-			{name: 'customFieldText', value: '0', reason: 'length is less than minLength'},
-			{name: 'customFieldText', value: '0123456789-0', reason: 'length is more than maxLength'},
+			{ name: 'customFieldText', value: '', reason: 'is required and missing' },
+			{ name: 'customFieldText', value: '0', reason: 'length is less than minLength' },
+			{ name: 'customFieldText', value: '0123456789-0', reason: 'length is more than maxLength' },
 		].forEach((field) => {
 			failUserWithCustomField(field);
 		});
@@ -192,7 +192,7 @@ describe('[Users]', function() {
 			request.get(api('users.list'))
 				.set(credentials)
 				.query({
-					name: {$regex: 'g'},
+					name: { $regex: 'g' },
 				})
 				.field('username', 1)
 				.sort('createdAt', -1)
@@ -295,7 +295,7 @@ describe('[Users]', function() {
 			const email = `${ username }@rocket.chat`;
 			request.post(api('users.create'))
 				.set(credentials)
-				.send({email, name: username, username, password})
+				.send({ email, name: username, username, password })
 				.end((err, res) => {
 					user = res.body.user;
 					done();
@@ -424,7 +424,7 @@ describe('[Users]', function() {
 			const email = `${ username }@rocket.chat`;
 			request.post(api('users.create'))
 				.set(credentials)
-				.send({email, name: username, username, password})
+				.send({ email, name: username, username, password })
 				.end((err, res) => {
 					user = res.body.user;
 					done();
@@ -525,10 +525,10 @@ describe('[Users]', function() {
 		describe('Testing if the returned token is valid:', (done) => {
 			it('should return 200', (done) => request.post(api('users.createToken'))
 				.set(credentials)
-				.send({username: user.username})
+				.send({ username: user.username })
 				.expect('Content-Type', 'application/json')
 				.end((err, res) => err ? done() : request.get(api('me'))
-					.set({'X-Auth-Token': `${ res.body.data.authToken }`, 'X-User-Id': res.body.data.userId})
+					.set({ 'X-Auth-Token': `${ res.body.data.authToken }`, 'X-User-Id': res.body.data.userId })
 					.expect(200)
 					.expect((res) => {
 						expect(res.body).to.have.property('success', true);

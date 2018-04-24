@@ -1,4 +1,4 @@
-import {getCredentials, request, api, credentials} from './api-data.js';
+import { getCredentials, request, api, credentials } from './api-data.js';
 
 export const customFieldText = {
 	type: 'text',
@@ -17,7 +17,7 @@ export function setCustomFields(customFields, done) {
 
 		request.post(api('settings/Accounts_CustomFields'))
 			.set(credentials)
-			.send({value: stringified})
+			.send({ value: stringified })
 			.expect(200)
 			.end(done);
 	});

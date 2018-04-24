@@ -38,7 +38,7 @@ WebApp.connectHandlers.use('/snippet/download', function(req, res) {
 				snippeted: true,
 			}
 		);
-		const room = RocketChat.models.Rooms.findOne({_id: snippet.rid, usernames: {$in: [user.username]}});
+		const room = RocketChat.models.Rooms.findOne({ _id: snippet.rid, usernames: { $in: [user.username] } });
 		if (room === undefined) {
 			res.writeHead(403);
 			res.end();

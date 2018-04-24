@@ -24,7 +24,7 @@ function DolphinOnCreateUser(options, user) {
 
 if (Meteor.isServer) {
 	Meteor.startup(() =>
-		RocketChat.models.Settings.find({_id: 'Accounts_OAuth_Dolphin_URL'}).observe({
+		RocketChat.models.Settings.find({ _id: 'Accounts_OAuth_Dolphin_URL' }).observe({
 			added() {
 				config.serverURL = RocketChat.settings.get('Accounts_OAuth_Dolphin_URL');
 				return Dolphin.configure(config);
@@ -47,7 +47,7 @@ if (Meteor.isServer) {
 			loginStyle: RocketChat.settings.get('Accounts_OAuth_Dolphin_login_style'),
 		};
 
-		ServiceConfiguration.configurations.upsert({service: 'dolphin'}, {$set: data});
+		ServiceConfiguration.configurations.upsert({ service: 'dolphin' }, { $set: data });
 	}
 
 	RocketChat.callbacks.add('beforeCreateUser', DolphinOnCreateUser, RocketChat.callbacks.priority.HIGH);

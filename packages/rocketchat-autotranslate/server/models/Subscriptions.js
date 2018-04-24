@@ -40,7 +40,7 @@ RocketChat.models.Subscriptions.getAutoTranslateLanguagesByRoomAndNotUser = func
 	const distinct = Meteor.wrapAsync(subscriptionsRaw.distinct, subscriptionsRaw);
 	const query = {
 		rid,
-		'u._id': {$ne: userId},
+		'u._id': { $ne: userId },
 		autoTranslate: true,
 	};
 	return distinct('autoTranslateLanguage', query);

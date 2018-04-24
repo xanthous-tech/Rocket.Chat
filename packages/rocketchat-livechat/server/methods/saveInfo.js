@@ -3,7 +3,7 @@
 Meteor.methods({
 	'livechat:saveInfo'(guestData, roomData) {
 		if (!Meteor.userId() || !RocketChat.authz.hasPermission(Meteor.userId(), 'view-l-room')) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'livechat:saveInfo'});
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'livechat:saveInfo' });
 		}
 
 		check(guestData, Match.ObjectIncluding({
@@ -19,14 +19,14 @@ Meteor.methods({
 			tags: Match.Optional(String),
 		}));
 
-		const room = RocketChat.models.Rooms.findOneById(roomData._id, {fields: {t: 1, servedBy: 1}});
+		const room = RocketChat.models.Rooms.findOneById(roomData._id, { fields: { t: 1, servedBy: 1 } });
 
 		if (room == null || room.t !== 'l') {
-			throw new Meteor.Error('error-invalid-room', 'Invalid room', {method: 'livechat:saveInfo'});
+			throw new Meteor.Error('error-invalid-room', 'Invalid room', { method: 'livechat:saveInfo' });
 		}
 
 		if ((!room.servedBy || room.servedBy._id !== Meteor.userId()) && !RocketChat.authz.hasPermission(Meteor.userId(), 'save-others-livechat-room-info')) {
-			throw new Meteor.Error('error-not-allowed', 'Not allowed', {method: 'livechat:saveInfo'});
+			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'livechat:saveInfo' });
 		}
 
 		const ret = RocketChat.Livechat.saveGuest(guestData) && RocketChat.Livechat.saveRoomInfo(roomData, guestData);

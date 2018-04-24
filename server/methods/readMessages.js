@@ -1,4 +1,4 @@
-import {ReadReceipt} from '../../imports/message-read-receipt/server/lib/ReadReceipt';
+import { ReadReceipt } from '../../imports/message-read-receipt/server/lib/ReadReceipt';
 
 Meteor.methods({
 	readMessages(rid) {

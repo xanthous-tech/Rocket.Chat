@@ -2,9 +2,9 @@ class EmojiCustom extends RocketChat.models._Base {
 	constructor() {
 		super('custom_emoji');
 
-		this.tryEnsureIndex({name: 1});
-		this.tryEnsureIndex({aliases: 1});
-		this.tryEnsureIndex({extension: 1});
+		this.tryEnsureIndex({ name: 1 });
+		this.tryEnsureIndex({ aliases: 1 });
+		this.tryEnsureIndex({ extension: 1 });
 	}
 
 	// find one
@@ -22,8 +22,8 @@ class EmojiCustom extends RocketChat.models._Base {
 
 		const query = {
 			$or: [
-				{name},
-				{aliases: name},
+				{ name },
+				{ aliases: name },
 			],
 		};
 
@@ -32,10 +32,10 @@ class EmojiCustom extends RocketChat.models._Base {
 
 	findByNameOrAliasExceptID(name, except, options) {
 		const query = {
-			_id: {$nin: [except]},
+			_id: { $nin: [except] },
 			$or: [
-				{name},
-				{aliases: name},
+				{ name },
+				{ aliases: name },
 			],
 		};
 
@@ -51,7 +51,7 @@ class EmojiCustom extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update({_id}, update);
+		return this.update({ _id }, update);
 	}
 
 	setAliases(_id, aliases) {
@@ -61,7 +61,7 @@ class EmojiCustom extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update({_id}, update);
+		return this.update({ _id }, update);
 	}
 
 	setExtension(_id, extension) {
@@ -71,7 +71,7 @@ class EmojiCustom extends RocketChat.models._Base {
 			},
 		};
 
-		return this.update({_id}, update);
+		return this.update({ _id }, update);
 	}
 
 	// INSERT

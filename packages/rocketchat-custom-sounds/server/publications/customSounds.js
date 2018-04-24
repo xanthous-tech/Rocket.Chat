@@ -15,7 +15,7 @@ Meteor.publish('customSounds', function(filter, limit) {
 	const options = {
 		fields,
 		limit,
-		sort: {name: 1},
+		sort: { name: 1 },
 	};
 
 	if (filter) {

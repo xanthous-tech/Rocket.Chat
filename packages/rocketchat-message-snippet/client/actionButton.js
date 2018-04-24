@@ -44,7 +44,7 @@ Meteor.startup(function() {
 
 		},
 		condition(message) {
-			if (RocketChat.models.Subscriptions.findOne({rid: message.rid, 'u._id': Meteor.userId()}) === undefined) {
+			if (RocketChat.models.Subscriptions.findOne({ rid: message.rid, 'u._id': Meteor.userId() }) === undefined) {
 				return false;
 			}
 

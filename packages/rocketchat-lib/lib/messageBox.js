@@ -29,7 +29,7 @@ RocketChat.messageBox.actions = new class {
 			return;
 		}
 
-		this.actions[group].push({...config, label});
+		this.actions[group].push({ ...config, label });
 	}
 
 	get(group) {

@@ -12,7 +12,7 @@ import {
 	log,
 	apiPrivateChannelName,
 } from '../../data/api-data.js';
-import {adminEmail, password} from '../../data/user.js';
+import { adminEmail, password } from '../../data/user.js';
 import supertest from 'supertest';
 
 describe('[Chat]', function() {

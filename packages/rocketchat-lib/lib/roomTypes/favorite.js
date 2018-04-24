@@ -1,4 +1,4 @@
-import {RoomTypeConfig} from '../RoomTypeConfig';
+import { RoomTypeConfig } from '../RoomTypeConfig';
 
 export class FavoriteRoomType extends RoomTypeConfig {
 	constructor() {

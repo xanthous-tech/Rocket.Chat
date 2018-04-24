@@ -1,7 +1,7 @@
 import LivechatVisitors from '../models/LivechatVisitors';
 
 Meteor.methods({
-	'livechat:getAgentData'({roomId, token}) {
+	'livechat:getAgentData'({ roomId, token }) {
 		check(roomId, String);
 		check(token, String);
 

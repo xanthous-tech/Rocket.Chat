@@ -20,7 +20,7 @@ this.VideoRecorder = new class {
 			return cb(false);
 		}
 
-		return navigator.getUserMedia({audio: true, video: true}, ok, (e) => console.log(`No live video input: ${ e }`));
+		return navigator.getUserMedia({ audio: true, video: true }, ok, (e) => console.log(`No live video input: ${ e }`));
 	}
 
 	record() {
@@ -76,7 +76,7 @@ this.VideoRecorder = new class {
 			this.recordingAvailable.set(false);
 
 			if (cb && this.chunks) {
-				const blob = new Blob(this.chunks, {type :  'video/webm'});
+				const blob = new Blob(this.chunks, { type :  'video/webm' });
 				cb(blob);
 			}
 

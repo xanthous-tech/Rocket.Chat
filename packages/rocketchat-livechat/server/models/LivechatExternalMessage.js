@@ -8,10 +8,10 @@ class LivechatExternalMessage extends RocketChat.models._Base {
 	}
 
 	// FIND
-	findByRoomId(roomId, sort = {ts: -1}) {
-		const query = {rid: roomId};
+	findByRoomId(roomId, sort = { ts: -1 }) {
+		const query = { rid: roomId };
 
-		return this.find(query, {sort});
+		return this.find(query, { sort });
 	}
 }
 

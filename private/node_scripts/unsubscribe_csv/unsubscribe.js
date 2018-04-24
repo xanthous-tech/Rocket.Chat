@@ -1,7 +1,7 @@
 import lineReader from 'line-reader';
 import program from 'commander';
 import wait from 'wait.for';
-import {MongoClient} from 'mongodb';
+import { MongoClient } from 'mongodb';
 
 program.usage('[options]').option('-v, --verbose', 'Verbose', (function(v, total) {
 	return total + 1;

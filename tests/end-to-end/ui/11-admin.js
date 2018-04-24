@@ -6,8 +6,8 @@ import flexTab from '../../pageobjects/flex-tab.page';
 import admin from '../../pageobjects/administration.page';
 
 // test data imports
-import {checkIfUserIsAdmin} from '../../data/checks';
-import {adminUsername, adminEmail, adminPassword} from '../../data/user.js';
+import { checkIfUserIsAdmin } from '../../data/checks';
+import { adminUsername, adminEmail, adminPassword } from '../../data/user.js';
 
 describe('[Administration]', () => {
 	before(() => {

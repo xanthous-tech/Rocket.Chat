@@ -1,7 +1,7 @@
-import {RocketChat} from 'meteor/rocketchat:lib';
+import { RocketChat } from 'meteor/rocketchat:lib';
 
-import {authenticated} from '../../helpers/authenticated';
-import {roomPublicFields} from './settings';
+import { authenticated } from '../../helpers/authenticated';
+import { roomPublicFields } from './settings';
 import schema from '../../schemas/channels/channels.graphqls';
 
 const resolver = {
