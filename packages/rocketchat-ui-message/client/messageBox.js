@@ -6,11 +6,11 @@ import _ from 'underscore';
 let audioMessageIntervalId;
 
 function katexSyntax() {
-	if (RocketChat.katex.katex_enabled()) {
-		if (RocketChat.katex.dollar_syntax_enabled()) {
+	if (RocketChat.settings.get('Katex_Enabled')) {
+		if (RocketChat.settings.get('Katex_Dollar_Syntax')) {
 			return '$$KaTeX$$';
 		}
-		if (RocketChat.katex.parenthesis_syntax_enabled()) {
+		if (RocketChat.settings.get('Katex_Parenthesis_Syntax')) {
 			return '\\[KaTeX\\]';
 		}
 	}
@@ -129,7 +129,7 @@ const markdownButtons = [
 	{
 		label: katexSyntax,
 		link: 'https://khan.github.io/KaTeX/function-support.html',
-		condition: () => RocketChat.katex.katex_enabled()
+		condition: () => RocketChat.settings.get('Katex_Enabled')
 	}
 ];
 
