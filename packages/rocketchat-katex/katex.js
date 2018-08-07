@@ -161,7 +161,10 @@ class Katex {
 		let rendered;
 		try {
 			rendered = katex.renderToString(latex, {
-				displayMode
+				displayMode,
+				macros: {
+					'\\href': '' // override \href since allowedProtocols isn't working
+				}
 			});
 		} catch (error) {
 			const e = error;
