@@ -162,7 +162,7 @@ class Katex {
 	}
 
 	// Takes a string and renders all latex blocks inside it
-	render(str) {
+	render(str, renderFunction) {
 		let result = '';
 		while (this.findLatex(str) != null) {
 			// Find the first latex block in the string
@@ -171,7 +171,9 @@ class Katex {
 
 			// Add to the reuslt what comes before the latex block as well as
 			// the rendered latex content
-			const rendered = this.renderLatex(parts.latex, match.options.displayMode);
+			const rendered = renderFunction ?
+				renderFunction(parts.latex, match.options.displayMode) :
+				this.renderLatex(parts.latex, match.options.displayMode);
 			result += parts.before + rendered;
 			// Set what comes after the latex block to be examined next
 			str = parts.after;
@@ -193,7 +195,15 @@ class Katex {
 			return message;
 		}
 
-		message.html = this.render(message.html);
+		message.tokens = message.tokens || [];
+		message.html = this.render(message.html, (latex, displayMode) => {
+			const token = `=!=${ Random.id() }=!=`;
+			message.tokens.push({
+				token,
+				text: this.renderLatex(latex, displayMode)
+			});
+			return token;
+		});
 
 		return message;
 	}
