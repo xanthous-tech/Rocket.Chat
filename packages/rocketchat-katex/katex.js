@@ -2,9 +2,8 @@
  * KaTeX is a fast, easy-to-use JavaScript library for TeX math rendering on the web.
  * https://github.com/Khan/KaTeX
  */
-import s from 'underscore.string';
-
 import katex from 'katex';
+import s from 'underscore.string';
 
 class Boundary {
 	length() {
@@ -133,8 +132,8 @@ class Katex {
 	extractLatex(str, match) {
 		const before = str.substr(0, match.outer.start);
 		const after = str.substr(match.outer.end);
-		let latex = match.inner.extract(str);
-		latex = s.unescapeHTML(latex);
+		const latex = s.unescapeHTML(match.inner.extract(str));
+
 		return {
 			before,
 			latex,
@@ -143,9 +142,8 @@ class Katex {
 	}
 
 	renderLatex(latex, displayMode) {
-		let rendered;
 		try {
-			rendered = katex.renderToString(latex, {
+			return katex.renderToString(latex, {
 				displayMode,
 				macros: {
 					'\\href': '\\@secondoftwo' // override \href since allowedProtocols isn't working
@@ -154,11 +152,13 @@ class Katex {
 		} catch (error) {
 			const e = error;
 			const display_mode = displayMode ? 'block' : 'inline';
-			rendered = `<div class="katex-error katex-${ display_mode }-error">`;
-			rendered += `${ s.escapeHTML(e.message) }`;
-			rendered += '</div>';
+
+			return (
+				`<div class="katex-error katex-${ display_mode }-error">` +
+				`${ s.escapeHTML(e.message) }` +
+				'</div>'
+			);
 		}
-		return rendered;
 	}
 
 	// Takes a string and renders all latex blocks inside it
