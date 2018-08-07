@@ -142,15 +142,13 @@ class Katex {
 		};
 	}
 
-	// Takes a latex math string and the desired display mode and renders it
-	// to HTML using the KaTeX library
 	renderLatex(latex, displayMode) {
 		let rendered;
 		try {
 			rendered = katex.renderToString(latex, {
 				displayMode,
 				macros: {
-					'\\href': '' // override \href since allowedProtocols isn't working
+					'\\href': '\\@secondoftwo' // override \href since allowedProtocols isn't working
 				}
 			});
 		} catch (error) {
